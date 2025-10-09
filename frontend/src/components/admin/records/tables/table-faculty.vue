@@ -9,9 +9,8 @@
 
     <!-- Table Container -->
     <div class="mt-4 overflow-x-auto border p-3 rounded-xl bg-white">
-      <!-- Top controls -->
       <div
-        class="flex justify-between items-center flex-wrap gap-3 sm:gap-4 text-gray-700 bg-white"
+        class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
       >
         <!-- Items per page -->
         <div class="flex items-center gap-2">
@@ -74,14 +73,12 @@
       </div>
 
       <!-- Faculty Table -->
-      <div class="w-full rounded-xl mt-1 overflow-hidden">
+      <div class="w-full mt-3 rounded-xl overflow-hidden">
         <div
-          class="overflow-y-auto transition-all duration-300 border"
+          class="overflow-y-auto transition-all duration-300"
           :class="tableHeightClass"
         >
-          <table
-            class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
-          >
+          <table class="min-w-full table-auto border text-sm text-gray-700">
             <thead
               class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
@@ -102,21 +99,19 @@
               <tr
                 v-for="(user, index) in paginatedData"
                 :key="user.id"
-                class="bg-white hover:bg-green-50 transition-all border rounded-md"
+                class="bg-white hover:bg-green-50 transition border rounded-md shadow-sm"
               >
                 <td class="px-4 py-3">{{ startIndex + index }}</td>
                 <td class="px-4 py-3">
                   {{ user.first_name }} {{ user.last_name }}
                 </td>
                 <td class="px-4 py-3">
-                  {{ user.institute ? user.institute.institute_name : "N/A" }}
+                  {{ user.institute?.institute_name || "N/A" }}
                 </td>
                 <td class="px-4 py-3">
-                  {{ user.program ? user.program.program_name : "N/A" }}
+                  {{ user.program?.program_name || "N/A" }}
                 </td>
-                <td class="px-4 py-3">
-                  {{ user.role }}
-                </td>
+                <td class="px-4 py-3 text-center">{{ user.role }}</td>
                 <td class="px-4 py-3">
                   <div class="flex gap-2">
                     <!-- View button -->
@@ -130,7 +125,7 @@
                 </td>
               </tr>
               <tr v-if="paginatedData.length === 0">
-                <td colspan="5" class="text-center py-6 text-gray-400">
+                <td colspan="6" class="text-center py-8 text-gray-400">
                   No faculty found
                 </td>
               </tr>

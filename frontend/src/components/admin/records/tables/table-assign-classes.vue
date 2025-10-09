@@ -358,31 +358,39 @@ export default {
       viewLevel: "institute",
       selectedInstitute: null,
       selectedProgram: null,
+      activeYear: null,
     };
   },
   computed: {
-    ...mapState(useFetchDataStore, ["assignClass"]),
+    ...mapState(useFetchDataStore, ["assignClass", "year"]),
     filteredData() {
       const query = this.searchQuery.toLowerCase().trim();
 
       // ============= Institute View =============
       if (this.viewLevel === "institute") {
         const grouped = {};
-        this.localAssignClass.forEach((item) => {
-          const inst = item.program?.institute;
-          if (inst) {
-            if (!grouped[inst.institute_id]) {
-              grouped[inst.institute_id] = { ...inst, programs: [] };
+        this.localAssignClass
+          .filter(
+            (item) =>
+              !this.activeYear ||
+              String(item.course?.curriculum?.curriculum_effective) ===
+                String(this.activeYear)
+          )
+          .forEach((item) => {
+            const inst = item.program?.institute;
+            if (inst) {
+              if (!grouped[inst.institute_id]) {
+                grouped[inst.institute_id] = { ...inst, programs: [] };
+              }
+              if (
+                !grouped[inst.institute_id].programs.find(
+                  (p) => p.program_id === item.program.program_id
+                )
+              ) {
+                grouped[inst.institute_id].programs.push(item.program);
+              }
             }
-            if (
-              !grouped[inst.institute_id].programs.find(
-                (p) => p.program_id === item.program.program_id
-              )
-            ) {
-              grouped[inst.institute_id].programs.push(item.program);
-            }
-          }
-        });
+          });
         let result = Object.values(grouped);
 
         if (query) {
@@ -402,7 +410,10 @@ export default {
           .filter(
             (item) =>
               item.program?.institute_id ===
-              this.selectedInstitute?.institute_id
+                this.selectedInstitute?.institute_id &&
+              (!this.activeYear ||
+                String(item.course?.curriculum?.curriculum_effective) ===
+                  String(this.activeYear))
           )
           .forEach((item) => {
             const prog = item.program;
@@ -429,7 +440,10 @@ export default {
       if (this.viewLevel === "assignClass") {
         let result = this.localAssignClass.filter(
           (item) =>
-            item.program?.program_id === this.selectedProgram?.program_id
+            item.program?.program_id === this.selectedProgram?.program_id &&
+            (!this.activeYear ||
+              String(item.course?.curriculum?.curriculum_effective) ===
+                String(this.activeYear))
         );
 
         if (query) {
@@ -591,6 +605,11 @@ export default {
     async loadAssignClass() {
       await this.loadAssignClassByRole();
     },
+    async loadActiveYear() {
+      const store = useFetchDataStore();
+      await store.fetchActiveYear();
+      this.activeYear = store.year;
+    },
     toggleAdd() {
       this.isAdd = true;
     },
@@ -607,16 +626,20 @@ export default {
         toast.error("Invalid assign class ID.");
         return;
       }
+
       const assignClassId = this.recordToDelete.assign_class_id;
       axios
         .delete(`http://localhost:8000/assign-class/delete-id/${assignClassId}`)
         .then(() => {
-          this.recordToDelete = null;
-          this.showDeleteModal = false;
           const audio = new Audio(require("@/assets/delete.mp3"));
           audio.play();
-          this.loadAssignClass();
           toast.success("Class deleted successfully");
+
+          this.showDeleteModal = false;
+          this.recordToDelete = null;
+
+          // Reload table data
+          this.loadAssignClass();
         })
         .catch((error) => {
           console.error("Delete failed:", error);
@@ -634,8 +657,16 @@ export default {
       this.selectedAssignClass = null;
     },
   },
+  // If gusto nako i automatic refresh ang data every time mag change ang active year
+  watch: {
+    year(newYear) {
+      this.activeYear = newYear;
+      this.loadAssignClass(); // refresh table
+    },
+  },
   mounted() {
     this.fetchUser();
+    this.loadActiveYear();
   },
 };
 </script>
