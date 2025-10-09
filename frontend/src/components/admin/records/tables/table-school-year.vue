@@ -2,7 +2,7 @@
   <div v-if="isTable">
     <!-- Header -->
     <div class="text-sm flex justify-between">
-      <div class="text-[13px] text-text mt-4">Pages / Classes</div>
+      <div class="text-[13px] text-text mt-4">Pages / School Years</div>
 
       <div
         @click="toggleAdd"
@@ -16,7 +16,7 @@
             class="w-4 h-4 text-green-600 transition-colors duration-300 group-hover:text-green-600"
           />
         </div>
-        <span class="font-medium text-sm">Add Class</span>
+        <span class="font-medium text-sm">Add School Year</span>
       </div>
     </div>
 
@@ -62,42 +62,6 @@
 
         <!-- Filters -->
         <div class="flex items-center gap-3 flex-wrap">
-          <!-- Program Filter -->
-          <div class="relative">
-            <select
-              v-model="selectedProgram"
-              class="appearance-none rounded-full border border-green-600 bg-white px-4 py-2 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
-              @change="changePage(1)"
-            >
-              <option value="">All Programs</option>
-              <option
-                v-for="(prog, idx) in uniquePrograms"
-                :key="idx"
-                :value="prog"
-              >
-                {{ prog }}
-              </option>
-            </select>
-            <!-- Custom arrow -->
-            <div
-              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
-            >
-              <svg
-                class="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </div>
-          </div>
-
           <!-- Search -->
           <div class="relative">
             <input
@@ -141,34 +105,45 @@
               <tr>
                 <th class="px-4 py-3 text-left rounded-tl-lg">#</th>
                 <th class="px-4 py-2 text-left">School Year</th>
-                <th class="px-4 py-2 text-left">Program</th>
-                <th class="px-4 py-2 text-left">Set Name</th>
-                <th class="px-4 py-2 text-center">Class Size</th>
+                <th class="px-4 py-2 text-center">Start Year</th>
+                <th class="px-4 py-2 text-center">End Year</th>
+                <th class="px-4 py-2 text-center">Status</th>
                 <th class="px-4 py-2 text-left rounded-tr-lg">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr
-                v-for="(cls, index) in paginatedData"
-                :key="cls.class_id"
+                v-for="(sy, index) in paginatedData"
+                :key="sy.school_year_id"
                 class="bg-white hover:bg-green-50 transition border rounded-md shadow-sm"
               >
                 <td class="px-4 py-2">{{ startIndex + index }}</td>
-                <td class="px-4 py-2">{{ cls.schoolYear?.school_year_name }}</td>
-                <td class="px-4 py-2">{{ cls.program?.program_name }}</td>
-                <td class="px-4 py-2">{{ cls.set_name }}</td>
-                <td class="px-4 py-2 text-center">{{ cls.class_size }}</td>
+                <td class="px-4 py-2">{{ sy.school_year_name }}</td>
+                <td class="px-4 py-2 text-center">{{ sy.start_year }}</td>
+                <td class="px-4 py-2 text-center">{{ sy.end_year }}</td>
+                <td class="px-4 py-2 text-center">
+                  <span
+                    :class="
+                      sy.is_active
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-gray-100 text-gray-800'
+                    "
+                    class="px-2 py-1 rounded-full text-xs font-semibold"
+                  >
+                    {{ sy.is_active ? "Active" : "Inactive" }}
+                  </span>
+                </td>
                 <td class="px-4 py-2">
                   <div class="flex gap-2">
                     <button
                       class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
-                      @click="toggleEdit(cls)"
+                      @click="toggleEdit(sy)"
                     >
                       <icon name="edit" /> Edit
                     </button>
                     <button
                       class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                      @click="toggleDelete(cls)"
+                      @click="toggleDelete(sy)"
                     >
                       <icon name="delete" /> Delete
                     </button>
@@ -224,12 +199,16 @@
   </div>
 
   <!-- Add / Edit Modals -->
-  <addClass v-if="isAddClass" @close="closeView" @refresh="loadClasses" />
-  <addClass
-    v-if="showEditModal && selectedClass"
-    :classData="selectedClass"
+  <addSchoolYear
+    v-if="isAddSchoolYear"
+    @close="closeView"
+    @refresh="loadSchoolYears"
+  />
+  <addSchoolYear
+    v-if="showEditModal && selectedSchoolYear"
+    :schoolYearData="selectedSchoolYear"
     @close="closeModal"
-    @refresh="loadClasses"
+    @refresh="loadSchoolYears"
   />
 
   <!-- Delete Confirmation -->
@@ -271,49 +250,37 @@
 <script>
 import icon from "@/assets/icon.vue";
 import { toast } from "vue3-toastify";
-import addClass from "../modals/add-class.vue";
+import addSchoolYear from "../modals/add-school-year.vue";
 import axios from "axios";
 
 export default {
-  name: "TableClasses",
-  components: { icon, addClass },
+  name: "TableSchoolYear",
+  components: { icon, addSchoolYear },
   data() {
     return {
       currentPage: 1,
       itemsPerPage: 10,
       searchQuery: "",
-      selectedProgram: "",
-      isAddClass: false,
+      isAddSchoolYear: false,
       isTable: true,
       showDeleteModal: false,
       recordToDelete: null,
-      selectedClass: null,
+      selectedSchoolYear: null,
       showEditModal: false,
-      classes: [],
+      schoolYears: [],
     };
   },
   computed: {
-    uniquePrograms() {
-      const names = this.classes.map((c) => c.program?.program_name);
-      return [...new Set(names.filter(Boolean))];
-    },
-
     filteredData() {
-      let result = this.classes || [];
-
-      if (this.selectedProgram) {
-        result = result.filter(
-          (c) => c.program?.program_name === this.selectedProgram
-        );
-      }
+      let result = this.schoolYears || [];
 
       if (this.searchQuery) {
         const query = this.searchQuery.toLowerCase();
         result = result.filter(
-          (c) =>
-            c.set_name?.toLowerCase().includes(query) ||
-            c.schoolYear?.school_year_name?.toLowerCase().includes(query) ||
-            c.program?.program_name?.toLowerCase().includes(query)
+          (sy) =>
+            sy.school_year_name?.toLowerCase().includes(query) ||
+            String(sy.start_year).includes(query) ||
+            String(sy.end_year).includes(query)
         );
       }
 
@@ -346,22 +313,24 @@ export default {
     },
   },
   methods: {
-    async loadClasses() {
+    async loadSchoolYears() {
       try {
-        const response = await axios.get("http://localhost:8000/class/get-classes");
-        this.classes = response.data;
+        const response = await axios.get(
+          "http://localhost:8000/school-year/get-school-years"
+        );
+        this.schoolYears = response.data;
       } catch (error) {
-        console.error("Failed to load classes:", error);
-        toast.error("Failed to load classes");
+        console.error("Failed to load school years:", error);
+        toast.error("Failed to load school years");
       }
     },
 
     toggleAdd() {
-      this.isAddClass = true;
+      this.isAddSchoolYear = true;
       this.isTable = true;
     },
     toggleEdit(item) {
-      this.selectedClass = item;
+      this.selectedSchoolYear = item;
       this.showEditModal = true;
     },
     toggleDelete(item) {
@@ -369,18 +338,21 @@ export default {
       this.showDeleteModal = true;
     },
     confirmDelete() {
-      if (!this.recordToDelete || isNaN(this.recordToDelete.class_id)) {
-        toast.error("Invalid class ID.");
+      if (
+        !this.recordToDelete ||
+        isNaN(this.recordToDelete.school_year_id)
+      ) {
+        toast.error("Invalid school year ID.");
         return;
       }
       axios
         .delete(
-          `http://localhost:8000/class/delete-id/${this.recordToDelete.class_id}`
+          `http://localhost:8000/school-year/delete-id/${this.recordToDelete.school_year_id}`
         )
         .then(() => {
           this.showDeleteModal = false;
           this.recordToDelete = null;
-          this.loadClasses();
+          this.loadSchoolYears();
           toast.success("Record deleted successfully");
         })
         .catch((err) => {
@@ -392,15 +364,16 @@ export default {
       this.currentPage = Math.max(1, Math.min(page, this.totalPages));
     },
     closeView() {
-      this.isAddClass = false;
+      this.isAddSchoolYear = false;
     },
     closeModal() {
       this.showEditModal = false;
-      this.selectedClass = null;
+      this.selectedSchoolYear = null;
     },
   },
   async mounted() {
-    await this.loadClasses();
+    await this.loadSchoolYears();
   },
 };
 </script>
+

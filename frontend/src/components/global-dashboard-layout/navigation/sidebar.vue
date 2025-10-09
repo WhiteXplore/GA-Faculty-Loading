@@ -181,9 +181,12 @@ export default {
                 children: [
                   // { name: "Instructors", route: "/instructors" },
                   { name: "Institutes", route: "/institutes" },
+                  { name: "Programs", route: "/programs" },
                   { name: "Curriculum Offering", route: "/curriculums" },
                   { name: "Courses", route: "/courses" },
+                  { name: "Specializations", route: "/specializations" },
                   { name: "Rooms", route: "/rooms" },
+                  { name: "School Years", route: "/school-years" },
                 ],
               },
               { name: "Faculty List", icon: "users", route: "/instructors" },
@@ -191,6 +194,11 @@ export default {
                 name: "Class List",
                 icon: "folder",
                 route: "/admin-assign-classes",
+              },
+              {
+                name: "Classes",
+                icon: "folder",
+                route: "/classes",
               },
             ],
           },
@@ -251,6 +259,21 @@ export default {
                 name: "Courses",
                 icon: "setting",
                 route: "/program-courses",
+              },
+              {
+                name: "Specializations",
+                icon: "setting",
+                route: "/program-specializations",
+              },
+              {
+                name: "Programs",
+                icon: "setting",
+                route: "/program-programs",
+              },
+              {
+                name: "Add Year/Section",
+                icon: "add-students",
+                route: "/add-year-section",
               },
               {
                 name: "Assign Classes",
