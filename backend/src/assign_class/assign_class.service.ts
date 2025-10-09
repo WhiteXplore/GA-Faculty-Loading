@@ -23,7 +23,9 @@ export class AssignClassService {
         program: {
           institute: true, // <-- nested relation
         },
-        course: true,
+        course: {
+          curriculum: true,
+        },
       },
     });
   }
