@@ -161,6 +161,12 @@ const routes = [
         children: [],
       },
       {
+        path: "/program-chairperson-faculty-list",
+        name: "program-chairperson-faculty-list",
+        component: () => import("@/components/admin/records/instructor.vue"),
+        meta: { requiresAuth: true, role: "Program Chairperson" },
+      },
+      {
         path: "/program-chair-faculty-loads",
         name: "program-chair-faculty-loads",
         component: () => import("@/components/admin/records/faculty-loads.vue"),

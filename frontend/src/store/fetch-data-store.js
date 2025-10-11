@@ -24,7 +24,8 @@ export const useFetchDataStore = defineStore("fetchData", {
     rawusers: [],
     assignClass: [],
     faculty: [],
-    year: null, // will hold active year only
+    year: null,
+    sem: null, // ✅ Added for active semester
     loading: false,
     error: null,
   }),
@@ -266,17 +267,15 @@ export const useFetchDataStore = defineStore("fetchData", {
       }
     },
 
-    // ✅ Active year fetcher
+    // ✅ Active Year Fetcher
     async fetchActiveYear() {
       try {
         const res = await axios.get("http://localhost:8000/active-year/active");
 
-        // If response is array → filter for isActive
         if (Array.isArray(res.data)) {
           const active = res.data.find((item) => item.isActive === true);
           this.year = active ? active.year : null;
         } else if (res.data && res.data.isActive) {
-          // If response is a single object
           this.year = res.data.year;
         } else {
           this.year = null;
@@ -291,9 +290,44 @@ export const useFetchDataStore = defineStore("fetchData", {
         await axios.post("http://localhost:8000/active-year", {
           year: newYear,
         });
-        this.year = newYear; // ✅ instantly update local state
+        this.year = newYear;
       } catch (err) {
         console.error("Failed to update active year:", err);
+      }
+    },
+
+    // ✅ Active Semester Fetcher (Fixed)
+    async fetchActiveSem() {
+      try {
+        const res = await axios.get(
+          "http://localhost:8000/active-semester/active"
+        );
+
+        if (Array.isArray(res.data)) {
+          // Handle array response (if API ever returns multiple)
+          const active = res.data.find((item) => item.is_active === true);
+          this.sem = active ? active.semester : null;
+        } else if (res.data && res.data.is_active) {
+          // Handle object response (your current case)
+          this.sem = res.data.semester;
+        } else {
+          this.sem = null;
+        }
+
+        console.log("✅ Active semester fetched:", this.sem);
+      } catch (err) {
+        console.error("❌ Failed to fetch active semester:", err);
+      }
+    },
+
+    async updateSem(newSem) {
+      try {
+        await axios.post("http://localhost:8000/active-semester", {
+          semester: newSem,
+        });
+        this.sem = newSem; // ✅ instantly update local state
+      } catch (err) {
+        console.error("Failed to update active semester:", err);
       }
     },
   },

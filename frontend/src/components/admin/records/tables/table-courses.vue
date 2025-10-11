@@ -148,7 +148,7 @@
                 <th class="px-4 py-2 text-center">Lecture</th>
                 <th class="px-4 py-2 text-center">Lab</th>
                 <th class="px-4 py-2 text-center">Units</th>
-                <th class="px-4 py-2 text-center">Pre-req</th>
+                <th class="px-4 py-2 text-center">Pre-requisite</th>
                 <th class="px-4 py-2 text-left rounded-tr-lg">Actions</th>
               </tr>
             </thead>
@@ -297,6 +297,7 @@ import axios from "axios";
 export default {
   name: "TableCourses",
   components: { icon, addCourses },
+
   data() {
     return {
       currentPage: 1,
@@ -312,11 +313,13 @@ export default {
       selectedCourse: null,
       showEditModal: false,
       activeYear: null,
-      user: null, // 👈 add local user here
+      activeSem: null,
+      user: null,
     };
   },
+
   computed: {
-    ...mapState(useFetchDataStore, ["courses", "year"]),
+    ...mapState(useFetchDataStore, ["courses", "year", "sem"]),
 
     uniqueCurriculums() {
       const names = this.filteredCourses.map(
@@ -327,9 +330,9 @@ export default {
 
     filteredCourses() {
       let result = this.courses || [];
+      const currentUser = this.user;
 
-      const currentUser = this.user; // ✅ now use local user
-
+      // Filter by Program Chairperson's institute & program
       if (currentUser?.role === "Program Chairperson") {
         result = result.filter(
           (c) =>
@@ -339,6 +342,7 @@ export default {
         );
       }
 
+      // Filter by Active Year
       if (this.activeYear) {
         result = result.filter(
           (c) =>
@@ -347,12 +351,25 @@ export default {
         );
       }
 
+      // Filter by Active Semester
+      if (this.activeSem) {
+        const semValue =
+          typeof this.activeSem === "object"
+            ? this.activeSem.semester
+            : this.activeSem;
+        result = result.filter(
+          (c) => Number(c.course_semester) === Number(semValue)
+        );
+      }
+
+      // Filter by selected curriculum
       if (this.selectedCurriculum) {
         result = result.filter(
           (c) => c.curriculum?.curriculum_name === this.selectedCurriculum
         );
       }
 
+      // Search filter
       if (this.searchQuery) {
         const query = this.searchQuery.toLowerCase();
         result = result.filter(
@@ -378,41 +395,53 @@ export default {
     totalPages() {
       return Math.ceil(this.filteredData.length / this.itemsPerPage) || 1;
     },
+
     pageNumbers() {
       return Array.from({ length: this.totalPages }, (_, i) => i + 1);
     },
+
     startIndex() {
       return this.filteredData.length === 0
         ? 0
         : (this.currentPage - 1) * this.itemsPerPage + 1;
     },
+
     endIndex() {
       const end = this.currentPage * this.itemsPerPage;
       return Math.min(end, this.filteredData.length);
     },
+
     tableHeightClass() {
       const count = this.paginatedData.length;
       return count <= 10 ? "h-auto" : "h-[65vh]";
     },
   },
+
   methods: {
     async loadCourses() {
       const store = useFetchDataStore();
       await store.fetchCourses();
     },
+
     async loadActiveYear() {
       const store = useFetchDataStore();
       await store.fetchActiveYear();
       this.activeYear = store.year;
     },
+
+    async loadActiveSem() {
+      const store = useFetchDataStore();
+      await store.fetchActiveSem();
+      this.activeSem = store.sem;
+    },
+
     async fetchUser() {
       try {
         const response = await axios.get("http://localhost:8000/auth/me", {
           withCredentials: true,
         });
         if (response.data) {
-          this.user = response.data; // ✅ save into local state
-          console.log("Authenticated User:", this.user);
+          this.user = response.data;
         } else {
           this.$router.push("/");
         }
@@ -426,14 +455,17 @@ export default {
       this.isAddCourses = true;
       this.isTable = true;
     },
+
     toggleEdit(item) {
       this.selectedCourse = item;
       this.showEditModal = true;
     },
+
     toggleDelete(item) {
       this.recordToDelete = item;
       this.showDeleteModal = true;
     },
+
     confirmDelete() {
       if (!this.recordToDelete || isNaN(this.recordToDelete.course_id)) {
         toast.error("Invalid course ID.");
@@ -448,32 +480,70 @@ export default {
           this.recordToDelete = null;
           this.loadCourses();
           toast.success("Record deleted successfully");
-        });
+        })
+        .catch(() => toast.error("Failed to delete record"));
     },
+
     changePage(page) {
       this.currentPage = Math.max(1, Math.min(page, this.totalPages));
     },
+
     closeView() {
       this.isAddCourses = false;
       this.isUploadData = false;
     },
+
     closeModal() {
       this.showEditModal = false;
       this.selectedCourse = null;
     },
   },
+
   watch: {
-    year(newVal) {
-      if (newVal) {
-        this.activeYear = newVal;
-        this.loadCourses();
-      }
+    year: {
+      async handler(newVal) {
+        if (newVal) {
+          this.activeYear = newVal;
+          await this.loadCourses();
+          this.currentPage = 1;
+        }
+      },
+      immediate: true,
+    },
+
+    sem: {
+      async handler(newVal, oldVal) {
+        if (newVal !== oldVal && newVal !== null && newVal !== undefined) {
+          console.log("🔁 Active semester changed:", newVal);
+          this.activeSem = newVal;
+
+          // Reload courses immediately after semester changes
+          await this.$nextTick();
+          await this.loadCourses();
+          this.currentPage = 1;
+
+          console.log("✅ Courses reloaded for semester:", newVal);
+        }
+      },
+      immediate: true,
     },
   },
+
   async mounted() {
     await this.fetchUser();
-    await this.loadActiveYear(); // fetch year first
-    await this.loadCourses(); // then fetch courses
+    await this.loadActiveYear();
+    await this.loadActiveSem();
+    await this.loadCourses();
+
+    // ✅ Reactively listen for semester changes at the store level
+    const store = useFetchDataStore();
+    store.$subscribe((mutation, state) => {
+      if (mutation.events.key === "sem") {
+        console.log("📢 Store semester changed:", state.sem);
+        this.activeSem = state.sem;
+        this.loadCourses();
+      }
+    });
   },
 };
 </script>

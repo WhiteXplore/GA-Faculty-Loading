@@ -253,6 +253,12 @@ export default {
                 route: "/program-courses",
               },
               {
+                name: "Faculty List",
+                icon: "users",
+
+                route: "/program-chairperson-faculty-list",
+              },
+              {
                 name: "Assign Classes",
                 icon: "reports",
                 route: "/program-chairperson-assign-classes",

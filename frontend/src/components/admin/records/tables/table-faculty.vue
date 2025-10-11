@@ -3,7 +3,14 @@
     <!-- Header -->
     <div class="text-sm flex justify-between">
       <div class="text-[13px] text-text mt-4 font-regular">
-        Pages / Faculty List
+        Pages /
+        <span class="font-semibold text-green-900">
+          {{
+            user && user.role === "Program Chairperson"
+              ? "Faculty Under My Program"
+              : "Faculty List"
+          }}
+        </span>
       </div>
     </div>
 
@@ -89,7 +96,7 @@
                 <th class="px-4 py-3 text-left font-normal">Faculty Name</th>
                 <th class="px-4 py-3 text-left font-normal">Institute</th>
                 <th class="px-4 py-3 text-left font-normal">Program</th>
-                <th class="px-4 py-3 text-left font-normal">Role</th>
+                <th class="px-4 py-3 text-center font-normal">Role</th>
                 <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
                   Actions
                 </th>
@@ -114,7 +121,6 @@
                 <td class="px-4 py-3 text-center">{{ user.role }}</td>
                 <td class="px-4 py-3">
                   <div class="flex gap-2">
-                    <!-- View button -->
                     <button
                       class="px-3 py-1 h-8 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-lg flex items-center gap-1"
                       @click="toggleView(user)"
@@ -209,8 +215,7 @@
 
         <!-- Content -->
         <div class="space-y-4" v-if="selectedFaculty">
-          <!-- Faculty Info -->
-          <div class="grid gap-2 text-sm">
+          <div class="grid gap-2 text-xs">
             <p class="flex space-x-6">
               <span class="font-semibold text-gray-700">Name:</span>
               <span class="text-gray-900">
@@ -231,7 +236,6 @@
             </p>
           </div>
 
-          <!-- Expertise Section -->
           <div class="pt-3 border-t">
             <h3 class="font-semibold text-gray-800 mb-2">Expertise</h3>
             <ul
@@ -256,7 +260,6 @@
             </ul>
           </div>
 
-          <!-- Other Expertise Section -->
           <div class="pt-3 border-t">
             <h3 class="font-semibold text-gray-800 mb-2">Other Expertise</h3>
             <ul
@@ -282,7 +285,6 @@
           </div>
         </div>
 
-        <!-- Footer -->
         <div class="flex justify-end mt-6">
           <button
             @click="showViewModal = false"
@@ -298,7 +300,7 @@
 
 <script>
 import icon from "@/assets/icon.vue";
-import { toast } from "vue3-toastify";
+// import { toast } from "vue3-toastify";
 import { useFetchDataStore } from "../../../../store/fetch-data-store";
 import { mapState } from "pinia";
 import axios from "axios";
@@ -317,28 +319,50 @@ export default {
       selectedFaculty: null,
       showEditModal: false,
       showViewModal: false,
+      user: null, // ✅ added for current logged-in user
     };
   },
   computed: {
     ...mapState(useFetchDataStore, ["rawusers"]),
+
     filteredData() {
       const query = this.searchQuery.toLowerCase();
+      const currentUser = this.user;
 
-      // Filter only Program Chairperson and Faculty
-      return this.rawusers
-        .filter((u) => u.role === "Program Chairperson" || u.role === "Faculty")
-        .filter((u) =>
-          [
-            `${u.first_name} ${u.last_name}`,
-            u.institute?.institute_name || "",
-            u.program?.program_name || "",
-            u.role || "",
-          ]
-            .join(" ")
-            .toLowerCase()
-            .includes(query)
+      if (!this.rawusers || !currentUser) return [];
+
+      let list = [];
+
+      // Admin → All faculty and PC
+      if (currentUser.role === "Admin") {
+        list = this.rawusers.filter(
+          (u) => u.role === "Program Chairperson" || u.role === "Faculty"
         );
+      }
+      // Program Chairperson → Faculty only in same institute + program
+      else if (currentUser.role === "Program Chairperson") {
+        list = this.rawusers.filter(
+          (u) =>
+            u.role === "Faculty" &&
+            u.institute?.institute_id === currentUser.institute_id &&
+            u.program?.program_id === currentUser.program_id
+        );
+      }
+
+      // Search filter
+      return list.filter((u) =>
+        [
+          `${u.first_name} ${u.last_name}`,
+          u.institute?.institute_name || "",
+          u.program?.program_name || "",
+          u.role || "",
+        ]
+          .join(" ")
+          .toLowerCase()
+          .includes(query)
+      );
     },
+
     totalPages() {
       return Math.ceil(this.filteredData.length / this.itemsPerPage) || 1;
     },
@@ -362,47 +386,39 @@ export default {
       return this.itemsPerPage > 10 ? "max-h-[500px]" : "max-h-[400px]";
     },
   },
+
   methods: {
     async loadUsers() {
       const store = useFetchDataStore();
       await store.fetchRawUsers();
     },
-    toggleEdit(user) {
-      this.selectedFaculty = user;
-      this.showEditModal = true;
-    },
-    toggleDelete(user) {
-      this.recordToDelete = user;
-      this.showDeleteModal = true;
-    },
     toggleView(user) {
       this.selectedFaculty = user;
       this.showViewModal = true;
     },
-    async confirmDelete() {
-      if (!this.recordToDelete || !Number.isInteger(this.recordToDelete.id)) {
-        toast.error("Invalid user ID.");
-        return;
-      }
-      const userId = this.recordToDelete.id;
-      try {
-        await axios.delete(`http://localhost:8000/users/delete/${userId}`);
-        this.recordToDelete = null;
-        this.showDeleteModal = false;
-        new Audio(require("@/assets/delete.mp3")).play();
-        await this.loadUsers();
-        toast.success("Faculty deleted successfully");
-      } catch (error) {
-        console.error("Delete failed:", error);
-        toast.error("Failed to delete faculty.");
-      }
-    },
     changePage(page) {
       this.currentPage = Math.max(1, Math.min(page, this.totalPages));
     },
+    async fetchUser() {
+      try {
+        const response = await axios.get("http://localhost:8000/auth/me", {
+          withCredentials: true,
+        });
+        if (response.data) {
+          this.user = response.data;
+        } else {
+          this.$router.push("/");
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+        this.$router.push("/");
+      }
+    },
   },
-  mounted() {
-    this.loadUsers();
+
+  async mounted() {
+    await this.fetchUser();
+    await this.loadUsers();
   },
 };
 </script>

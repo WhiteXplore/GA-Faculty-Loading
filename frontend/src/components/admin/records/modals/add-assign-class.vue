@@ -95,7 +95,7 @@
                   class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
                   @mousedown="selectProgram(program)"
                 >
-                  {{ program.program_name }}
+                  {{ program.program_name }} - {{ program.program_code }}
                 </div>
               </div>
             </div>
@@ -285,6 +285,8 @@ export default {
         program_id: "",
         course_id: "",
         set: "",
+        year: "", // curriculum year
+        semester: "", // course semester
       },
       searchProgramQuery: "",
       showProgramDropdown: false,
@@ -423,8 +425,11 @@ export default {
       this.showCourseDropdown = false;
       this.selectedSemester = course.course_semester;
       this.selectedLevel = course.course_level;
-    },
 
+      // Auto-populate year and semester
+      this.form.year = course.curriculum?.curriculum_effective;
+      this.form.semester = course.course_semester;
+    },
     async fetchUser() {
       try {
         const response = await axios.get("http://localhost:8000/auth/me", {

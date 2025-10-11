@@ -12,10 +12,8 @@
           class="w-full p-5 py-3 bg-defaultGreen text-white rounded-t-[16px] flex justify-between items-center border-b shadow"
         >
           <div class="flex gap-1 items-center">
-            <icon :name="'add-students'" />
-            <h1 class="font-bold tracking-wide text-lg">
-              {{ isEditMode ? "Edit Expertise" : "Add Expertise" }}
-            </h1>
+            <icon :name="'edit'" />
+            <h1 class="font-bold tracking-wide text-lg">Edit Expertise</h1>
           </div>
           <icon
             :name="'circle-close3'"
@@ -25,166 +23,209 @@
         </div>
 
         <!-- Form Content -->
-        <div class="p-5 w-[30vw] space-y-6">
-          <!-- Expertise -->
-          <div class="relative space-y-2">
-            <label class="font-bold">Expertise:</label>
-
-            <!-- Searchable input -->
-            <input
-              v-model="searchQuery"
-              @focus="dropdownOpen = true"
-              type="text"
-              placeholder="Search courses..."
-              class="w-full border px-3 py-2.5 border-gray-600 rounded-md text-sm text-gray-800 focus:ring-2 focus:ring-defaultGreen outline-none"
-            />
-
-            <!-- Dropdown -->
-            <ul
-              v-if="dropdownOpen && filteredCourses.length"
-              @mouseleave="dropdownOpen = false"
-              class="animate-slideUp absolute z-50 w-full bg-white border border-gray-300 rounded-md mt-1 max-h-40 overflow-y-auto shadow-md"
+        <div class="p-5 w-[32vw] space-y-6">
+          <!-- Semester Tabs -->
+          <div class="flex justify-center gap-2">
+            <button
+              v-for="sem in [1, 2, 3]"
+              :key="sem"
+              type="button"
+              @click="selectedSemester = sem"
+              :class="[
+                'px-4 py-2 rounded-lg font-semibold border transition-all',
+                selectedSemester === sem
+                  ? 'bg-defaultGreen text-white border-defaultGreen'
+                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-100',
+              ]"
             >
-              <li
-                v-for="course in filteredCourses"
-                :key="course.course_id"
-                :class="[
-                  'px-3 py-2 text-sm flex justify-between items-center cursor-pointer transition',
-                  form.expertise.some((c) => c.course_id === course.course_id)
-                    ? 'text-gray-400 cursor-not-allowed'
-                    : 'text-gray-800 hover:bg-green-100',
-                ]"
-                @click="
-                  !form.expertise.some(
-                    (c) => c.course_id === course.course_id
-                  ) && addCourse(course)
-                "
-              >
-                <span>
-                  {{ course.course_code }} - {{ course.course_description }}
-                </span>
-                <span
-                  v-if="
-                    form.expertise.some((c) => c.course_id === course.course_id)
-                  "
-                  class="text-xs text-red-500"
-                >
-                  (Already selected)
-                </span>
-              </li>
-            </ul>
-
-            <!-- No results -->
-            <div
-              v-if="dropdownOpen && !filteredCourses.length && searchQuery"
-              class="absolute z-50 w-full bg-white border border-gray-300 rounded-md mt-1 px-3 py-2 text-gray-500 text-sm"
-            >
-              No results found
-            </div>
-
-            <!-- Selected list -->
-            <div
-              v-if="form.expertise.length"
-              class="mt-3 border border-gray-200 rounded-md divide-y shadow-sm"
-            >
-              <div
-                v-for="(item, index) in form.expertise"
-                :key="index"
-                class="flex justify-between items-center px-3 py-3 bg-green-50 hover:bg-gray-100 transition cursor-pointer"
-              >
-                <span class="text-gray-700 text-sm font-medium">
-                  {{ item.course_code }} - {{ item.course_description }}
-                </span>
-                <button
-                  type="button"
-                  @click="removeCourse(index)"
-                  class="text-red-500 hover:text-red-700 hover:scale-125 duration-200 leading-none"
-                >
-                  <icon :name="'delete'" />
-                </button>
-              </div>
-            </div>
+              {{ getSemesterName(sem) }}
+            </button>
           </div>
 
-          <!-- Other Expertise -->
-          <div class="relative space-y-2">
-            <label class="font-bold">Other Expertise:</label>
-
-            <!-- Searchable input -->
-            <input
-              v-model="otherSearchQuery"
-              @focus="otherDropdownOpen = true"
-              type="text"
-              placeholder="Search other courses..."
-              class="w-full border px-3 py-2.5 border-gray-600 rounded-md text-sm text-gray-800 focus:ring-2 focus:ring-defaultGreen outline-none"
-            />
-
-            <!-- Dropdown -->
-            <ul
-              v-if="otherDropdownOpen && filteredOtherCourses.length"
-              @mouseleave="otherDropdownOpen = false"
-              class="animate-slideUp absolute z-50 w-full bg-white border border-gray-300 rounded-md mt-1 max-h-40 overflow-y-auto shadow-md"
-            >
-              <li
-                v-for="course in filteredOtherCourses"
-                :key="course.course_id"
-                :class="[
-                  'px-3 py-2 text-sm flex justify-between items-center transition',
-                  form.expertise.some((c) => c.course_id === course.course_id)
-                    ? 'text-gray-400 cursor-not-allowed'
-                    : 'text-gray-800 hover:bg-green-100 cursor-pointer',
-                ]"
-                @click="
-                  !form.expertise.some(
-                    (c) => c.course_id === course.course_id
-                  ) && addOtherCourse(course)
-                "
-              >
-                <span>
-                  {{ course.course_code }} - {{ course.course_description }}
-                </span>
-                <span
-                  v-if="
-                    form.expertise.some((c) => c.course_id === course.course_id)
-                  "
-                  class="text-xs text-red-500"
-                >
-                  (Already in Expertise)
-                </span>
-              </li>
-            </ul>
-
-            <!-- Selected list -->
+          <!-- Semester View -->
+          <transition name="fade" mode="out-in">
             <div
-              v-if="form.other_expertise.length"
-              class="mt-3 border border-gray-200 rounded-md divide-y shadow-sm"
+              v-if="selectedSemester"
+              :key="selectedSemester"
+              class="space-y-5"
             >
-              <div
-                v-for="(item, index) in form.other_expertise"
-                :key="index"
-                class="flex justify-between items-center px-3 py-3 bg-green-50 hover:bg-gray-100 transition cursor-pointer"
-              >
-                <span class="text-gray-700 text-sm font-medium">
-                  {{ item.course_code }} - {{ item.course_description }}
-                </span>
-                <button
-                  type="button"
-                  @click="removeOtherCourse(index)"
-                  class="text-red-500 hover:text-red-700 hover:scale-125 duration-200 leading-none"
+              <!-- Expertise -->
+              <div class="relative space-y-2">
+                <label class="font-bold"
+                  >Expertise ({{ getSemesterName(selectedSemester) }}):</label
                 >
-                  <icon :name="'delete'" />
-                </button>
+
+                <!-- Searchable input -->
+                <input
+                  v-model="searchQuery"
+                  @focus="dropdownOpen = true"
+                  type="text"
+                  placeholder="Search courses..."
+                  class="w-full border px-3 py-2.5 border-gray-600 rounded-md text-sm text-gray-800 focus:ring-2 focus:ring-defaultGreen outline-none"
+                />
+
+                <!-- Dropdown -->
+                <ul
+                  v-if="dropdownOpen && filteredCourses.length"
+                  @mouseleave="dropdownOpen = false"
+                  class="animate-slideUp absolute z-50 w-full bg-white border border-gray-300 rounded-md mt-1 max-h-40 overflow-y-auto shadow-md"
+                >
+                  <li
+                    v-for="course in filteredCourses"
+                    :key="course.course_id"
+                    :class="[
+                      'px-3 py-2 text-sm flex justify-between items-center cursor-pointer transition',
+                      currentSemesterData.expertise.some(
+                        (c) => c.course_id === course.course_id
+                      )
+                        ? 'text-gray-400 cursor-not-allowed'
+                        : 'text-gray-800 hover:bg-green-100',
+                    ]"
+                    @click="
+                      !currentSemesterData.expertise.some(
+                        (c) => c.course_id === course.course_id
+                      ) && addCourse(course)
+                    "
+                  >
+                    <span
+                      >{{ course.course_code }} -
+                      {{ course.course_description }}</span
+                    >
+                    <span
+                      v-if="
+                        currentSemesterData.expertise.some(
+                          (c) => c.course_id === course.course_id
+                        )
+                      "
+                      class="text-xs text-red-500"
+                    >
+                      (Already selected)
+                    </span>
+                  </li>
+                </ul>
+
+                <!-- No results -->
+                <div
+                  v-if="dropdownOpen && !filteredCourses.length && searchQuery"
+                  class="absolute z-50 w-full bg-white border border-gray-300 rounded-md mt-1 px-3 py-2 text-gray-500 text-sm"
+                >
+                  No results found
+                </div>
+
+                <!-- Selected list -->
+                <div
+                  v-if="currentSemesterData.expertise.length"
+                  class="mt-3 border border-gray-200 rounded-md divide-y shadow-sm"
+                >
+                  <div
+                    v-for="(item, index) in currentSemesterData.expertise"
+                    :key="index"
+                    class="flex justify-between items-center px-3 py-3 bg-green-50 hover:bg-gray-100 transition cursor-pointer"
+                  >
+                    <span class="text-gray-700 text-sm font-medium">
+                      {{ item.course_code }} - {{ item.course_description }}
+                    </span>
+                    <button
+                      type="button"
+                      @click="removeCourse(index)"
+                      class="text-red-500 hover:text-red-700 hover:scale-125 duration-200 leading-none"
+                    >
+                      <icon :name="'delete'" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Other Expertise -->
+              <div class="relative space-y-2">
+                <label class="font-bold"
+                  >Other Expertise ({{
+                    getSemesterName(selectedSemester)
+                  }}):</label
+                >
+
+                <!-- Searchable input -->
+                <input
+                  v-model="otherSearchQuery"
+                  @focus="otherDropdownOpen = true"
+                  type="text"
+                  placeholder="Search other courses..."
+                  class="w-full border px-3 py-2.5 border-gray-600 rounded-md text-sm text-gray-800 focus:ring-2 focus:ring-defaultGreen outline-none"
+                />
+
+                <!-- Dropdown -->
+                <ul
+                  v-if="otherDropdownOpen && filteredOtherCourses.length"
+                  @mouseleave="otherDropdownOpen = false"
+                  class="animate-slideUp absolute z-50 w-full bg-white border border-gray-300 rounded-md mt-1 max-h-40 overflow-y-auto shadow-md"
+                >
+                  <li
+                    v-for="course in filteredOtherCourses"
+                    :key="course.course_id"
+                    :class="[
+                      'px-3 py-2 text-sm flex justify-between items-center transition',
+                      currentSemesterData.other_expertise.some(
+                        (c) => c.course_id === course.course_id
+                      )
+                        ? 'text-gray-400 cursor-not-allowed'
+                        : 'text-gray-800 hover:bg-green-100 cursor-pointer',
+                    ]"
+                    @click="
+                      !currentSemesterData.other_expertise.some(
+                        (c) => c.course_id === course.course_id
+                      ) && addOtherCourse(course)
+                    "
+                  >
+                    <span
+                      >{{ course.course_code }} -
+                      {{ course.course_description }}</span
+                    >
+                    <span
+                      v-if="
+                        currentSemesterData.other_expertise.some(
+                          (c) => c.course_id === course.course_id
+                        )
+                      "
+                      class="text-xs text-red-500"
+                    >
+                      (Already in Expertise)
+                    </span>
+                  </li>
+                </ul>
+
+                <!-- Selected list -->
+                <div
+                  v-if="currentSemesterData.other_expertise.length"
+                  class="mt-3 border border-gray-200 rounded-md divide-y shadow-sm"
+                >
+                  <div
+                    v-for="(item, index) in currentSemesterData.other_expertise"
+                    :key="index"
+                    class="flex justify-between items-center px-3 py-3 bg-green-50 hover:bg-gray-100 transition cursor-pointer"
+                  >
+                    <span class="text-gray-700 text-sm font-medium">
+                      {{ item.course_code }} - {{ item.course_description }}
+                    </span>
+                    <button
+                      type="button"
+                      @click="removeOtherCourse(index)"
+                      class="text-red-500 hover:text-red-700 hover:scale-125 duration-200 leading-none"
+                    >
+                      <icon :name="'delete'" />
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          </transition>
 
-          <!-- Submit -->
+          <!-- Save -->
           <div class="flex justify-end pt-4">
             <button
-              class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md transition tracking-woder"
+              class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md transition tracking-wider"
               type="submit"
             >
-              {{ isEditMode ? "Save Changes" : "Save" }}
+              Save Changes
             </button>
           </div>
         </div>
@@ -201,7 +242,7 @@ import { useFetchDataStore } from "../../../../store/fetch-data-store";
 import { mapState } from "pinia";
 
 export default {
-  name: "AddExpertiseModal",
+  name: "EditExpertiseModal",
   components: { icon },
   props: {
     userData: { type: Object, required: true },
@@ -209,9 +250,13 @@ export default {
   data() {
     return {
       form: {
-        expertise: [],
-        other_expertise: [],
+        semesters: {
+          1: { expertise: [], other_expertise: [] },
+          2: { expertise: [], other_expertise: [] },
+          3: { expertise: [], other_expertise: [] },
+        },
       },
+      selectedSemester: 1,
       searchQuery: "",
       dropdownOpen: false,
       otherSearchQuery: "",
@@ -221,16 +266,14 @@ export default {
   },
   computed: {
     ...mapState(useFetchDataStore, ["courses"]),
-    isEditMode() {
-      return (
-        this.userData?.expertise?.length > 0 ||
-        this.userData?.other_expertise?.length > 0
-      );
+    currentSemesterData() {
+      return this.form.semesters[this.selectedSemester];
     },
     filteredCourses() {
       if (!this.courses?.length) return [];
       return this.courses.filter(
         (c) =>
+          c.course_semester === this.selectedSemester &&
           c.curriculum?.program?.institute_id ===
             this.userData?.institute?.institute_id &&
           c.curriculum?.program_id === this.userData?.program?.program_id &&
@@ -246,6 +289,7 @@ export default {
       if (!this.courses?.length) return [];
       return this.courses.filter(
         (c) =>
+          c.course_semester === this.selectedSemester &&
           c.curriculum?.program?.institute_id ===
             this.userData?.institute?.institute_id &&
           (c.course_code
@@ -258,64 +302,47 @@ export default {
     },
   },
   methods: {
-    initializeForm() {
-      if (this.userData?.expertise?.length) {
-        this.form.expertise = this.userData.expertise.map((e) => ({
-          course_id: e.course.course_id,
-          course_code: e.course.course_code,
-          course_description: e.course.course_description,
-          course_credit: e.course.course_credit,
-          course_lec: e.course.course_lec,
-          course_lab: e.course.course_lab,
-        }));
-      }
-      if (this.userData?.other_expertise?.length) {
-        this.form.other_expertise = this.userData.other_expertise.map((e) => ({
-          course_id: e.course.course_id,
-          course_code: e.course.course_code,
-          course_description: e.course.course_description,
-          course_credit: e.course.course_credit,
-          course_lec: e.course.course_lec,
-          course_lab: e.course.course_lab,
-        }));
-      }
+    getSemesterName(sem) {
+      if (sem === 1) return "1st Semester";
+      if (sem === 2) return "2nd Semester";
+      if (sem === 3) return "Summer";
+      return "N/A";
     },
     addCourse(course) {
-      if (!this.form.expertise.some((c) => c.course_id === course.course_id)) {
-        this.form.expertise.push({ ...course });
-      }
+      this.currentSemesterData.expertise.push(course);
       this.searchQuery = "";
       this.dropdownOpen = false;
     },
-    removeCourse(index) {
-      this.form.expertise.splice(index, 1);
-    },
     addOtherCourse(course) {
-      if (
-        !this.form.other_expertise.some((c) => c.course_id === course.course_id)
-      ) {
-        this.form.other_expertise.push({ ...course });
-      }
+      this.currentSemesterData.other_expertise.push(course);
       this.otherSearchQuery = "";
       this.otherDropdownOpen = false;
     },
+    removeCourse(index) {
+      this.currentSemesterData.expertise.splice(index, 1);
+    },
     removeOtherCourse(index) {
-      this.form.other_expertise.splice(index, 1);
+      this.currentSemesterData.other_expertise.splice(index, 1);
     },
     async submitExpertise() {
       try {
-        const payload = {
-          expertise: this.form.expertise.map((c) => c.course_id),
-          other_expertise: this.form.other_expertise.map((c) => c.course_id),
-        };
+        const allExpertise = Object.values(this.form.semesters)
+          .flatMap((s) => s.expertise)
+          .map((c) => c.course_id);
+        const allOther = Object.values(this.form.semesters)
+          .flatMap((s) => s.other_expertise)
+          .map((c) => c.course_id);
+
+        const payload = { expertise: allExpertise, other_expertise: allOther };
+
         await axios.patch(
           `http://localhost:8000/auth/update/${this.userData.id}`,
           payload,
           { withCredentials: true }
         );
+
         toast.success("Expertise updated successfully!");
         this.$emit("updated");
-
         this.$emit("close");
       } catch (error) {
         toast.error(
@@ -331,18 +358,65 @@ export default {
         this.isLoadingCourses = false;
       }
     },
-  },
-  watch: {
-    userData: {
-      immediate: true,
-      handler() {
-        this.initializeForm();
-      },
+
+    // ✅ FIXED METHOD
+    loadExistingExpertise() {
+      if (!this.courses.length) return;
+
+      const mapCourse = (id) =>
+        this.courses.find((c) => c.course_id === id) || null;
+
+      // ✅ Load regular expertise
+      this.userData.expertise?.forEach((ex) => {
+        const courseData = ex.course || ex; // handle nested 'course'
+        const matched = mapCourse(courseData.course_id);
+
+        const courseObj = matched
+          ? matched
+          : {
+              course_id: courseData.course_id,
+              course_code: courseData.course_code,
+              course_description: courseData.course_description,
+              course_semester: courseData.course_semester || 1,
+            };
+
+        const sem = courseObj.course_semester || 1;
+        this.form.semesters[sem].expertise.push(courseObj);
+      });
+
+      // ✅ Load "other expertise"
+      this.userData.other_expertise?.forEach((ex) => {
+        const courseData = ex.course || ex;
+        const matched = mapCourse(courseData.course_id);
+
+        const courseObj = matched
+          ? matched
+          : {
+              course_id: courseData.course_id,
+              course_code: courseData.course_code,
+              course_description: courseData.course_description,
+              course_semester: courseData.course_semester || 1,
+            };
+
+        const sem = courseObj.course_semester || 1;
+        this.form.semesters[sem].other_expertise.push(courseObj);
+      });
     },
   },
   async mounted() {
     await this.ensureCoursesLoaded();
-    this.initializeForm();
+    this.loadExistingExpertise();
   },
 };
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

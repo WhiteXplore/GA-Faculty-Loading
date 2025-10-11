@@ -14,6 +14,8 @@ import { CalendarModule } from './calendar/calendar.module';
 import { AssignClassModule } from './assign_class/assign_class.module';
 import { GeneratedScheduledModule } from './generated_scheduled/generated_scheduled.module';
 import { ActiveYearModule } from './active_year/active_year.module';
+import { ActiveSemModule } from './active_sem/active_sem.module';
+import { SelectedYearSemModule } from './selected-year-sem/selected-year-sem.module';
 
 @Module({
   imports: [
@@ -47,6 +49,8 @@ import { ActiveYearModule } from './active_year/active_year.module';
     AssignClassModule,
     GeneratedScheduledModule,
     ActiveYearModule,
+    ActiveSemModule,
+    SelectedYearSemModule,
   ],
 })
 export class AppModule {}

@@ -8,9 +8,9 @@
         </div>
 
         <div class="flex gap-3">
-          <!-- Auto Generation -->
+          <!-- Auto Generation Button -->
           <div
-            @click="fetchSchedule"
+            @click="openYearSemModal"
             class="group flex items-center gap-2 px-4 py-2 border border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl shadow-sm cursor-pointer transition"
           >
             <div
@@ -22,6 +22,131 @@
               />
             </div>
             <span class="font-medium text-sm">Auto Generation</span>
+          </div>
+
+          <!-- ✅ Year & Semester Modal -->
+          <div
+            v-if="showYearSemModal"
+            class="fixed inset-0 flex items-center justify-center bg-black/40 z-50"
+          >
+            <div
+              class="bg-white w-full max-w-md rounded-2xl shadow-lg p-6 relative"
+            >
+              <button
+                @click="closeYearSemModal"
+                class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+              >
+                ✖
+              </button>
+
+              <h2 class="text-lg font-semibold text-green-700 mb-4">
+                📘 Select Academic Year and Semester
+              </h2>
+
+              <div class="space-y-4">
+                <!-- Year -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1"
+                    >Academic Year</label
+                  >
+                  <select
+                    v-model="selectedYear"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                  >
+                    <option disabled value="">-- Select Year --</option>
+                    <option
+                      v-for="year in yearOptions"
+                      :key="year"
+                      :value="year"
+                    >
+                      {{ year }}
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Semester -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1"
+                    >Semester</label
+                  >
+                  <select
+                    v-model="selectedSem"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                  >
+                    <option disabled value="">-- Select Semester --</option>
+                    <option value="1">1st Semester</option>
+                    <option value="2">2nd Semester</option>
+                    <option value="3">Summer</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mt-6 flex justify-end gap-2">
+                <button
+                  @click="closeYearSemModal"
+                  class="px-4 py-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  @click="confirmYearSem"
+                  :disabled="!selectedYear || !selectedSem"
+                  class="px-4 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ✅ Confirm Generation Modal -->
+          <div
+            v-if="showGenerateConfirm"
+            class="fixed inset-0 flex items-center justify-center bg-black/40 z-50"
+          >
+            <div
+              class="bg-white w-full max-w-sm rounded-2xl shadow-lg p-6 relative"
+            >
+              <button
+                @click="closeGenerateConfirm"
+                class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+              >
+                ✖
+              </button>
+
+              <h2 class="text-lg font-semibold text-green-700 mb-3">
+                ⚙ Confirm Auto Generation
+              </h2>
+              <p class="text-gray-600 mb-6 text-sm">
+                Are you sure you want to generate a schedule for
+                <strong>{{ selectedYear }}</strong> -
+                <strong>
+                  {{
+                    selectedSem == 1
+                      ? "1st Semester"
+                      : selectedSem == 2
+                      ? "2nd Semester"
+                      : "Summer"
+                  }}
+                </strong>
+                ?
+              </p>
+
+              <div class="flex justify-end gap-2">
+                <button
+                  @click="closeGenerateConfirm"
+                  class="px-4 py-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  @click="generateSchedule"
+                  class="px-4 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700 transition"
+                >
+                  Generate
+                </button>
+              </div>
+            </div>
           </div>
 
           <!-- Save this schedule -->
@@ -51,7 +176,6 @@
       <div
         class="space-y-5 flex flex-col items-center justify-center p-5 bg-white rounded-3xl shadow-lg"
       >
-        <!-- Animated dots instead of image -->
         <div class="flex space-x-2">
           <span class="w-3 h-3 bg-green-500 rounded-full bounce-delay-0"></span>
           <span
@@ -61,15 +185,6 @@
             class="w-3 h-3 bg-green-500 rounded-full bounce-delay-400"
           ></span>
         </div>
-
-        <!-- Progress bar -->
-        <!-- <div class="w-64 bg-gray-200 rounded-full h-3 overflow-hidden">
-          <div
-            class="bg-green-500 h-3 rounded-full transition-all duration-300"
-            :style="{ width: progress + '%' }"
-          ></div>
-        </div> -->
-
         <div class="text-gray-700 font-medium">
           Generating Schedule... {{ Math.floor(progress) }}%
         </div>
@@ -124,34 +239,48 @@
                 >
                   {{ slot.start }} - {{ slot.end }}
                 </td>
+
+                <!-- Per-day cells -->
                 <td
                   v-for="day in days"
                   :key="day"
-                  class="px-4 py-3 border border-gray-200 text-center align-top"
+                  class="relative px-4 py-3 border border-gray-200 text-center align-top"
                 >
-                  <div
+                  <!-- Loop over items that start in this slot -->
+                  <template
                     v-for="item in getScheduleForCell(slot, day, instructor)"
                     :key="item.course_name + item.start_hour + item.room_name"
-                    class="mb-2 p-2 bg-green-50 border border-green-200 rounded-lg text-xs text-gray-800 shadow-sm"
                   >
-                    <p class="font-semibold text-green-700">
-                      {{ item.course_name }} ({{ item.type }})
-                    </p>
-                    <p class="text-gray-600">Room: {{ item.room_name }}</p>
-                    <!-- <p class="text-gray-600">
-                      Faculty: {{ item.faculty_name }}
-                    </p> -->
-                    <p class="text-gray-600">Set: {{ item.set }}</p>
-
-                    <!-- Conflict Button -->
-                    <button
-                      v-if="item.conflict"
-                      @click="openConflictModal(item)"
-                      class="mt-2 px-2 py-1 text-xs rounded bg-red-100 text-red-600 hover:bg-red-200 transition"
+                    <div
+                      v-if="isStartingSlot(item, slot)"
+                      :rowspan="getRowSpan(item)"
+                      :class="[
+                        'absolute left-1 right-1 border rounded-lg text-xs text-gray-800 shadow-sm overflow-hidden',
+                        getTypeColor(item.type),
+                      ]"
+                      :style="{
+                        top: '2px',
+                        height: getBlockHeight(item) + 'px',
+                      }"
                     >
-                      ⚠ View Conflict
-                    </button>
-                  </div>
+                      <div class="p-2">
+                        <p class="font-semibold">
+                          {{ item.course_name }} ({{ item.type }})
+                        </p>
+                        <p class="text-gray-600">Room: {{ item.room_name }}</p>
+                        <p class="text-gray-600">Set: {{ item.set }}</p>
+
+                        <!-- Conflict Button -->
+                        <button
+                          v-if="item.conflict"
+                          @click="openConflictModal(item)"
+                          class="mt-2 px-2 py-1 text-xs rounded bg-red-100 text-red-600 hover:bg-red-200 transition"
+                        >
+                          ⚠ View Conflict
+                        </button>
+                      </div>
+                    </div>
+                  </template>
                 </td>
               </tr>
             </tbody>
@@ -166,7 +295,6 @@
       class="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
     >
       <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl p-6 relative">
-        <!-- Close Button -->
         <button
           @click="closeConflictModal"
           class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
@@ -212,12 +340,15 @@
 <script>
 import axios from "axios";
 import icon from "@/assets/icon.vue";
+
 export default {
   name: "FacultySchedule",
   components: {
     icon,
   },
   data() {
+    const currentYear = new Date().getFullYear();
+
     return {
       user: {},
       schedule: [],
@@ -237,15 +368,99 @@ export default {
         { start: "3:00 PM", end: "4:00 PM" },
         { start: "4:00 PM", end: "5:00 PM" },
       ],
+
       progress: 0,
       progressInterval: null,
 
       // Conflict modal state
       showConflictModal: false,
       selectedConflict: {},
+
+      // ✅ Year & Semester modal states
+      showYearSemModal: false,
+      showGenerateConfirm: false,
+      selectedYear: "",
+      selectedSem: "",
+
+      yearOptions: [
+        currentYear - 3,
+        currentYear - 2,
+        currentYear - 1,
+        currentYear,
+        currentYear + 1,
+        currentYear + 2,
+        currentYear + 3,
+      ],
     };
   },
+
+  computed: {
+    filteredSchedules() {
+      const result = {};
+      for (const instructor in this.groupedSchedule) {
+        for (const day of this.days) {
+          for (const slot of this.timeSlots) {
+            const instructorSlots = this.groupedSchedule[instructor] || [];
+            const slotStart = this.timeToMinutes(slot.start);
+            const slotEnd = this.timeToMinutes(slot.end);
+
+            const filtered = instructorSlots.filter((item) => {
+              if (!item.day || !item.start_hour || !item.end_hour) return false;
+              const itemDay = item.day.slice(0, 3);
+              const itemStart = this.convertToMinutes(item.start_hour);
+              const itemEnd = this.convertToMinutes(item.end_hour);
+              return (
+                slotStart < itemEnd && itemStart < slotEnd && itemDay === day
+              );
+            });
+
+            result[`${instructor}-${day}-${slot.start}`] = filtered;
+          }
+        }
+      }
+      return result;
+    },
+  },
+
   methods: {
+    // 🧩 Layout helpers
+    getRowSpan(item) {
+      const start = this.convertToMinutes(item.start_hour);
+      const end = this.convertToMinutes(item.end_hour);
+      const duration = end - start;
+      const slotDuration = 60; // 1 hour per slot
+      return Math.ceil(duration / slotDuration);
+    },
+
+    isStartingSlot(item, slot) {
+      const slotStart = this.timeToMinutes(slot.start);
+      const itemStart = this.convertToMinutes(item.start_hour);
+      return itemStart >= slotStart && itemStart < slotStart + 60;
+    },
+
+    getTypeColor(type) {
+      switch (type) {
+        case "Lecture":
+          return "bg-green-100 border-green-400";
+        case "Laboratory":
+          return "bg-blue-100 border-blue-400";
+        case "Seminar":
+          return "bg-yellow-100 border-yellow-400";
+        case "Research":
+          return "bg-purple-100 border-purple-400";
+        default:
+          return "bg-gray-100 border-gray-300";
+      }
+    },
+
+    getBlockHeight(item) {
+      const slotHeight = 40; // px per hour
+      const start = this.convertToMinutes(item.start_hour);
+      const end = this.convertToMinutes(item.end_hour);
+      const duration = end - start;
+      return (duration / 60) * slotHeight;
+    },
+
     deduplicateSchedules(schedules) {
       const seen = new Set();
       return schedules.filter((s) => {
@@ -256,7 +471,46 @@ export default {
       });
     },
 
-    async fetchSchedule() {
+    // ✅ Modal controls
+    openYearSemModal() {
+      this.showYearSemModal = true;
+    },
+    closeYearSemModal() {
+      this.showYearSemModal = false;
+      this.selectedYear = "";
+      this.selectedSem = "";
+    },
+    async confirmYearSem() {
+      try {
+        const payload = {
+          year: String(this.selectedYear),
+          semester: Number(this.selectedSem), // ✅ ensure integer
+        };
+
+        await axios.post("http://localhost:8000/selected-year-sem", payload);
+
+        this.showYearSemModal = false;
+        this.showGenerateConfirm = true;
+
+        console.log("Year and Semester saved successfully:", payload);
+      } catch (error) {
+        console.error("Error saving year/semester:", error);
+        this.$toast?.error?.(
+          "Failed to save year and semester. Please try again."
+        );
+      }
+    },
+    closeGenerateConfirm() {
+      this.showGenerateConfirm = false;
+    },
+
+    async generateSchedule() {
+      this.showGenerateConfirm = false;
+      await this.fetchSchedule(this.selectedYear, this.selectedSem);
+    },
+
+    // ✅ Main data fetch with year + semester
+    async fetchSchedule(year, sem) {
       this.loading = true;
       this.error = null;
       this.progress = 0;
@@ -269,7 +523,7 @@ export default {
 
       try {
         const response = await axios.get(
-          "http://localhost:8000/generated-scheduled/load"
+          `http://localhost:8000/generated-scheduled/load?year=${year}&semester=${sem}`
         );
 
         if (response.data.success && response.data.data) {
@@ -277,18 +531,13 @@ export default {
             (set) => set.best_schedule || []
           );
 
-          // ✅ Deduplicate schedules before saving
-          const dedupedSchedules = this.deduplicateSchedules(allSchedules);
-
-          // ✅ Filter schedules by same institute as logged-in user
-          const filteredSchedules = dedupedSchedules.filter(
+          const deduped = this.deduplicateSchedules(allSchedules);
+          const filtered = deduped.filter(
             (s) => s.institute_id === this.user.institute_id
           );
 
-          // detect conflicts only on filtered schedules
-          const conflicts = this.detectConflicts(filteredSchedules);
-
-          this.schedule = filteredSchedules;
+          const conflicts = this.detectConflicts(filtered);
+          this.schedule = filtered;
           this.groupedSchedule = this.groupByInstructor(this.schedule);
 
           if (conflicts.length > 0) {
@@ -311,6 +560,7 @@ export default {
       }
     },
 
+    // 🧠 Schedule utilities
     groupByInstructor(schedule) {
       return schedule.reduce((acc, item) => {
         const instructor = item.faculty_name || "Unknown";
@@ -330,7 +580,6 @@ export default {
         const itemDay = item.day.slice(0, 3);
         const itemStart = this.convertToMinutes(item.start_hour);
         const itemEnd = this.convertToMinutes(item.end_hour);
-
         return slotStart < itemEnd && itemStart < slotEnd && itemDay === day;
       });
     },
@@ -364,10 +613,10 @@ export default {
           }
         }
       }
-
       return conflicts;
     },
 
+    // 🕒 Time conversion helpers
     timeToMinutes(timeStr) {
       let [time, ampm] = timeStr.split(" ");
       let [h, m] = time.split(":").map(Number);
@@ -380,7 +629,7 @@ export default {
       return Math.floor(hour) * 60 + Math.round((hour % 1) * 60);
     },
 
-    // Conflict modal controls
+    // ⚠ Conflict modal controls
     openConflictModal(item) {
       this.selectedConflict = item;
       this.showConflictModal = true;
@@ -390,6 +639,7 @@ export default {
       this.selectedConflict = {};
     },
 
+    // 👤 Fetch authenticated user
     async fetchUser() {
       try {
         const response = await axios.get("http://localhost:8000/auth/me", {
@@ -407,8 +657,9 @@ export default {
       }
     },
   },
+
   async mounted() {
-    await this.fetchUser(); // ✅ get user first
+    await this.fetchUser();
   },
 };
 </script>
