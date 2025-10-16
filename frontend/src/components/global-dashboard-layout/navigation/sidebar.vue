@@ -46,7 +46,7 @@
       <div v-if="isExpanded" class="w-full h-0.5 bg-[#fbfbfb] mt-4"></div>
 
       <!-- Dynamic Menu -->
-      <div class="flex flex-col mt-6 gap-2 tracking-wide text-[12px] w-full">
+      <div class="flex flex-col mt-6 gap-2 tracking-wide text-[12px] w-full overflow-y-auto max-h-[calc(100vh-200px)] pr-2 scrollbar-thin">
         <template v-for="section in roleMenuSections" :key="section.title">
           <div v-if="isExpanded" class="text-md text-white mt-1 text-left">
             {{ section.title }}
@@ -101,7 +101,10 @@
               </div>
 
               <transition name="slide">
-                <div v-show="isDropdownOpen === item.name && isExpanded">
+                <div 
+                  v-show="isDropdownOpen === item.name && isExpanded"
+                  class="max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100"
+                >
                   <router-link
                     v-for="(sub, index) in item.children"
                     :key="sub.name"
@@ -132,10 +135,10 @@
         'ml-16': !isExpanded,
         'ml-64': isExpanded,
       }"
-      class="flex-grow transition-all pt-2 min-h-screen rounded-t-xl overflow-hidden z-50"
+      class="flex-grow transition-all pt-2 min-h-screen rounded-t-xl overflow-y-auto z-50"
     >
       <slot>
-        <div class="bg-white w-auto h-full shadow mr-2 rounded-t-xl">
+        <div class="bg-white w-auto min-h-screen shadow mr-2 rounded-t-xl">
           <adminTopbar />
           <div class="p-2">
             <router-view></router-view>
@@ -183,7 +186,10 @@ export default {
                   { name: "Institutes", route: "/institutes" },
                   { name: "Curriculum", route: "/curriculums" },
                   { name: "Courses", route: "/courses" },
+                  { name: "Specializations", route: "/specializations" },
                   { name: "Rooms", route: "/rooms" },
+                  { name: "School Years", route: "/school-years" },
+                  { name: "System Overview", route: "/system-overview" },
                 ],
               },
               { name: "Faculty List", icon: "users", route: "/instructors" },
@@ -191,6 +197,11 @@ export default {
                 name: "Class List",
                 icon: "folder",
                 route: "/admin-assign-classes",
+              },
+              {
+                name: "Classes",
+                icon: "folder",
+                route: "/classes",
               },
             ],
           },
@@ -251,6 +262,21 @@ export default {
                 name: "Courses",
                 icon: "setting",
                 route: "/program-courses",
+              },
+              {
+                name: "Specializations",
+                icon: "setting",
+                route: "/program-specializations",
+              },
+              {
+                name: "Programs",
+                icon: "setting",
+                route: "/program-programs",
+              },
+              {
+                name: "Add Year/Section",
+                icon: "add-students",
+                route: "/add-year-section",
               },
               {
                 name: "Assign Classes",
@@ -399,5 +425,30 @@ export default {
 .slide-leave-from {
   transform: translateY(0);
   opacity: 1;
+}
+
+/* Custom scrollbar for dropdown menus */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* For Firefox */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
 }
 </style>

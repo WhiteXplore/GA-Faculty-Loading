@@ -2,7 +2,7 @@
   <div v-if="isTable">
     <!-- Header -->
     <div class="text-sm flex justify-between">
-      <div class="text-[13px] text-text mt-4">Pages / Classes</div>
+      <div class="text-[13px] text-text mt-4">Pages / Programs</div>
 
       <div
         @click="toggleAdd"
@@ -16,7 +16,7 @@
             class="w-4 h-4 text-green-600 transition-colors duration-300 group-hover:text-green-600"
           />
         </div>
-        <span class="font-medium text-sm">Add Class</span>
+        <span class="font-medium text-sm">Add Program</span>
       </div>
     </div>
 
@@ -62,20 +62,20 @@
 
         <!-- Filters -->
         <div class="flex items-center gap-3 flex-wrap">
-          <!-- Program Filter -->
+          <!-- Institute Filter -->
           <div class="relative">
             <select
-              v-model="selectedProgram"
+              v-model="selectedInstitute"
               class="appearance-none rounded-full border border-green-600 bg-white px-4 py-2 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
-              <option value="">All Programs</option>
+              <option value="">All Institutes</option>
               <option
-                v-for="(prog, idx) in uniquePrograms"
+                v-for="(inst, idx) in uniqueInstitutes"
                 :key="idx"
-                :value="prog"
+                :value="inst"
               >
-                {{ prog }}
+                {{ inst }}
               </option>
             </select>
             <!-- Custom arrow -->
@@ -140,35 +140,40 @@
             >
               <tr>
                 <th class="px-4 py-3 text-left rounded-tl-lg">#</th>
-                <th class="px-4 py-2 text-left">School Year</th>
-                <th class="px-4 py-2 text-left">Program</th>
-                <th class="px-4 py-2 text-left">Set Name</th>
-                <th class="px-4 py-2 text-center">Class Size</th>
+                <th class="px-4 py-2 text-left">Institute</th>
+                <th class="px-4 py-2 text-left">Program Code</th>
+                <th class="px-4 py-2 text-left">Program Name</th>
                 <th class="px-4 py-2 text-left rounded-tr-lg">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr
-                v-for="(cls, index) in paginatedData"
-                :key="cls.class_id"
+                v-for="(prog, index) in paginatedData"
+                :key="prog.program_id"
                 class="bg-white hover:bg-green-50 transition border rounded-md shadow-sm"
               >
                 <td class="px-4 py-2">{{ startIndex + index }}</td>
-                <td class="px-4 py-2">{{ cls.schoolYear?.school_year_name }}</td>
-                <td class="px-4 py-2">{{ cls.program?.program_name }}</td>
-                <td class="px-4 py-2">{{ cls.set_name }}</td>
-                <td class="px-4 py-2 text-center">{{ cls.class_size }}</td>
+                <td class="px-4 py-2">{{ prog.institute?.institute_name || 'N/A' }}</td>
+                <td class="px-4 py-2">{{ prog.program_code }}</td>
+                <td class="px-4 py-2">{{ prog.program_name }}</td>
                 <td class="px-4 py-2">
                   <div class="flex gap-2">
                     <button
+                      class="px-3 py-1 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-lg flex items-center gap-1"
+                      @click="toggleAddYearSection(prog)"
+                      title="Add Year/Section"
+                    >
+                      <icon name="add-students" /> Add Year/Section
+                    </button>
+                    <button
                       class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
-                      @click="toggleEdit(cls)"
+                      @click="toggleEdit(prog)"
                     >
                       <icon name="edit" /> Edit
                     </button>
                     <button
                       class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                      @click="toggleDelete(cls)"
+                      @click="toggleDelete(prog)"
                     >
                       <icon name="delete" /> Delete
                     </button>
@@ -176,7 +181,7 @@
                 </td>
               </tr>
               <tr v-if="paginatedData.length === 0">
-                <td colspan="6" class="text-center py-8 text-gray-400">
+                <td colspan="5" class="text-center py-8 text-gray-400">
                   No records found
                 </td>
               </tr>
@@ -224,12 +229,18 @@
   </div>
 
   <!-- Add / Edit Modals -->
-  <addClass v-if="isAddClass" @close="closeView" @refresh="loadClasses" />
-  <addClass
-    v-if="showEditModal && selectedClass"
-    :classData="selectedClass"
+  <addProgram v-if="isAddProgram" @close="closeView" @refresh="loadPrograms" />
+  <addProgram
+    v-if="showEditModal && selectedProgram"
+    :programData="selectedProgram"
     @close="closeModal"
-    @refresh="loadClasses"
+    @refresh="loadPrograms"
+  />
+  <addYearSection
+    v-if="showYearSectionModal && selectedProgram"
+    :programData="selectedProgram"
+    @close="closeYearSectionModal"
+    @refresh="loadPrograms"
   />
 
   <!-- Delete Confirmation -->
@@ -271,49 +282,66 @@
 <script>
 import icon from "@/assets/icon.vue";
 import { toast } from "vue3-toastify";
-import addClass from "../modals/add-class.vue";
+import addProgram from "../modals/add-program.vue";
+import addYearSection from "../modals/add-year-section.vue";
+import { useFetchDataStore } from "../../../../store/fetch-data-store";
+import { mapState } from "pinia";
 import axios from "axios";
 
 export default {
-  name: "TableClasses",
-  components: { icon, addClass },
+  name: "TablePrograms",
+  components: { icon, addProgram, addYearSection },
   data() {
     return {
       currentPage: 1,
       itemsPerPage: 10,
       searchQuery: "",
-      selectedProgram: "",
-      isAddClass: false,
+      selectedInstitute: "",
+      isAddProgram: false,
       isTable: true,
       showDeleteModal: false,
       recordToDelete: null,
-      selectedClass: null,
+      selectedProgram: null,
       showEditModal: false,
-      classes: [],
+      showYearSectionModal: false,
+      user: null,
     };
   },
   computed: {
-    uniquePrograms() {
-      const names = this.classes.map((c) => c.program?.program_name);
+    ...mapState(useFetchDataStore, ["programs"]),
+
+    uniqueInstitutes() {
+      const names = this.programs.map((p) => p.institute?.institute_name);
       return [...new Set(names.filter(Boolean))];
     },
 
     filteredData() {
-      let result = this.classes || [];
+      let result = this.programs || [];
 
-      if (this.selectedProgram) {
+      const currentUser = this.user;
+
+      if (currentUser?.role === "Program Chairperson") {
         result = result.filter(
-          (c) => c.program?.program_name === this.selectedProgram
+          (p) =>
+            String(p.institute?.institute_id) ===
+              String(currentUser.institute_id) &&
+            String(p.program_id) === String(currentUser.program_id)
+        );
+      }
+
+      if (this.selectedInstitute) {
+        result = result.filter(
+          (p) => p.institute?.institute_name === this.selectedInstitute
         );
       }
 
       if (this.searchQuery) {
         const query = this.searchQuery.toLowerCase();
         result = result.filter(
-          (c) =>
-            c.set_name?.toLowerCase().includes(query) ||
-            c.schoolYear?.school_year_name?.toLowerCase().includes(query) ||
-            c.program?.program_name?.toLowerCase().includes(query)
+          (p) =>
+            p.program_name?.toLowerCase().includes(query) ||
+            p.program_code?.toLowerCase().includes(query) ||
+            p.institute?.institute_name?.toLowerCase().includes(query)
         );
       }
 
@@ -346,41 +374,55 @@ export default {
     },
   },
   methods: {
-    async loadClasses() {
+    async loadPrograms() {
+      const store = useFetchDataStore();
+      await store.fetchPrograms();
+    },
+    async fetchUser() {
       try {
-        const response = await axios.get("http://localhost:8000/class/get-classes");
-        this.classes = response.data;
+        const response = await axios.get("http://localhost:8000/auth/me", {
+          withCredentials: true,
+        });
+        if (response.data) {
+          this.user = response.data;
+        } else {
+          this.$router.push("/");
+        }
       } catch (error) {
-        console.error("Failed to load classes:", error);
-        toast.error("Failed to load classes");
+        console.error("Failed to fetch user:", error);
+        this.$router.push("/");
       }
     },
 
     toggleAdd() {
-      this.isAddClass = true;
+      this.isAddProgram = true;
       this.isTable = true;
     },
     toggleEdit(item) {
-      this.selectedClass = item;
+      this.selectedProgram = item;
       this.showEditModal = true;
+    },
+    toggleAddYearSection(item) {
+      this.selectedProgram = item;
+      this.showYearSectionModal = true;
     },
     toggleDelete(item) {
       this.recordToDelete = item;
       this.showDeleteModal = true;
     },
     confirmDelete() {
-      if (!this.recordToDelete || isNaN(this.recordToDelete.class_id)) {
-        toast.error("Invalid class ID.");
+      if (!this.recordToDelete || isNaN(this.recordToDelete.program_id)) {
+        toast.error("Invalid program ID.");
         return;
       }
       axios
         .delete(
-          `http://localhost:8000/class/delete-id/${this.recordToDelete.class_id}`
+          `http://localhost:8000/programs/delete-id/${this.recordToDelete.program_id}`
         )
         .then(() => {
           this.showDeleteModal = false;
           this.recordToDelete = null;
-          this.loadClasses();
+          this.loadPrograms();
           toast.success("Record deleted successfully");
         })
         .catch((err) => {
@@ -392,15 +434,21 @@ export default {
       this.currentPage = Math.max(1, Math.min(page, this.totalPages));
     },
     closeView() {
-      this.isAddClass = false;
+      this.isAddProgram = false;
     },
     closeModal() {
       this.showEditModal = false;
-      this.selectedClass = null;
+      this.selectedProgram = null;
+    },
+    closeYearSectionModal() {
+      this.showYearSectionModal = false;
+      this.selectedProgram = null;
     },
   },
   async mounted() {
-    await this.loadClasses();
+    await this.fetchUser();
+    await this.loadPrograms();
   },
 };
 </script>
+

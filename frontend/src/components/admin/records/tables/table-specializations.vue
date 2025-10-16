@@ -2,7 +2,7 @@
   <div v-if="isTable">
     <!-- Header -->
     <div class="text-sm flex justify-between">
-      <div class="text-[13px] text-text mt-4">Pages / Classes</div>
+      <div class="text-[13px] text-text mt-4">Pages / Specializations</div>
 
       <div
         @click="toggleAdd"
@@ -16,7 +16,7 @@
             class="w-4 h-4 text-green-600 transition-colors duration-300 group-hover:text-green-600"
           />
         </div>
-        <span class="font-medium text-sm">Add Class</span>
+        <span class="font-medium text-sm">Add Specialization</span>
       </div>
     </div>
 
@@ -140,35 +140,31 @@
             >
               <tr>
                 <th class="px-4 py-3 text-left rounded-tl-lg">#</th>
-                <th class="px-4 py-2 text-left">School Year</th>
                 <th class="px-4 py-2 text-left">Program</th>
-                <th class="px-4 py-2 text-left">Set Name</th>
-                <th class="px-4 py-2 text-center">Class Size</th>
+                <th class="px-4 py-2 text-left">Specialization Name</th>
                 <th class="px-4 py-2 text-left rounded-tr-lg">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr
-                v-for="(cls, index) in paginatedData"
-                :key="cls.class_id"
+                v-for="(spec, index) in paginatedData"
+                :key="spec.specialization_id"
                 class="bg-white hover:bg-green-50 transition border rounded-md shadow-sm"
               >
                 <td class="px-4 py-2">{{ startIndex + index }}</td>
-                <td class="px-4 py-2">{{ cls.schoolYear?.school_year_name }}</td>
-                <td class="px-4 py-2">{{ cls.program?.program_name }}</td>
-                <td class="px-4 py-2">{{ cls.set_name }}</td>
-                <td class="px-4 py-2 text-center">{{ cls.class_size }}</td>
+                <td class="px-4 py-2">{{ spec.program?.program_name }}</td>
+                <td class="px-4 py-2">{{ spec.specialization_name }}</td>
                 <td class="px-4 py-2">
                   <div class="flex gap-2">
                     <button
                       class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
-                      @click="toggleEdit(cls)"
+                      @click="toggleEdit(spec)"
                     >
                       <icon name="edit" /> Edit
                     </button>
                     <button
                       class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                      @click="toggleDelete(cls)"
+                      @click="toggleDelete(spec)"
                     >
                       <icon name="delete" /> Delete
                     </button>
@@ -176,7 +172,7 @@
                 </td>
               </tr>
               <tr v-if="paginatedData.length === 0">
-                <td colspan="6" class="text-center py-8 text-gray-400">
+                <td colspan="4" class="text-center py-8 text-gray-400">
                   No records found
                 </td>
               </tr>
@@ -224,12 +220,16 @@
   </div>
 
   <!-- Add / Edit Modals -->
-  <addClass v-if="isAddClass" @close="closeView" @refresh="loadClasses" />
-  <addClass
-    v-if="showEditModal && selectedClass"
-    :classData="selectedClass"
+  <addSpecialization
+    v-if="isAddSpecialization"
+    @close="closeView"
+    @refresh="loadSpecializations"
+  />
+  <addSpecialization
+    v-if="showEditModal && selectedSpecialization"
+    :specializationData="selectedSpecialization"
     @close="closeModal"
-    @refresh="loadClasses"
+    @refresh="loadSpecializations"
   />
 
   <!-- Delete Confirmation -->
@@ -271,49 +271,66 @@
 <script>
 import icon from "@/assets/icon.vue";
 import { toast } from "vue3-toastify";
-import addClass from "../modals/add-class.vue";
+import addSpecialization from "../modals/add-specialization.vue";
 import axios from "axios";
 
 export default {
-  name: "TableClasses",
-  components: { icon, addClass },
+  name: "TableSpecializations",
+  components: { icon, addSpecialization },
   data() {
     return {
       currentPage: 1,
       itemsPerPage: 10,
       searchQuery: "",
       selectedProgram: "",
-      isAddClass: false,
+      isAddSpecialization: false,
       isTable: true,
       showDeleteModal: false,
       recordToDelete: null,
-      selectedClass: null,
+      selectedSpecialization: null,
       showEditModal: false,
-      classes: [],
+      specializations: [],
+      user: null,
     };
   },
   computed: {
     uniquePrograms() {
-      const names = this.classes.map((c) => c.program?.program_name);
+      const names = this.filteredSpecializations.map((s) => s.program?.program_name);
       return [...new Set(names.filter(Boolean))];
     },
 
+    filteredSpecializations() {
+      let result = this.specializations || [];
+
+      const currentUser = this.user;
+
+      if (currentUser?.role === "Program Chairperson") {
+        result = result.filter(
+          (s) =>
+            String(s.program?.institute?.institute_id) ===
+              String(currentUser.institute_id) &&
+            String(s.program_id) === String(currentUser.program_id)
+        );
+      }
+
+      return result;
+    },
+
     filteredData() {
-      let result = this.classes || [];
+      let result = this.filteredSpecializations;
 
       if (this.selectedProgram) {
         result = result.filter(
-          (c) => c.program?.program_name === this.selectedProgram
+          (s) => s.program?.program_name === this.selectedProgram
         );
       }
 
       if (this.searchQuery) {
         const query = this.searchQuery.toLowerCase();
         result = result.filter(
-          (c) =>
-            c.set_name?.toLowerCase().includes(query) ||
-            c.schoolYear?.school_year_name?.toLowerCase().includes(query) ||
-            c.program?.program_name?.toLowerCase().includes(query)
+          (s) =>
+            s.specialization_name?.toLowerCase().includes(query) ||
+            s.program?.program_name?.toLowerCase().includes(query)
         );
       }
 
@@ -346,22 +363,39 @@ export default {
     },
   },
   methods: {
-    async loadClasses() {
+    async loadSpecializations() {
       try {
-        const response = await axios.get("http://localhost:8000/class/get-classes");
-        this.classes = response.data;
+        const response = await axios.get(
+          "http://localhost:8000/specialization/get-specializations"
+        );
+        this.specializations = response.data;
       } catch (error) {
-        console.error("Failed to load classes:", error);
-        toast.error("Failed to load classes");
+        console.error("Failed to load specializations:", error);
+        toast.error("Failed to load specializations");
+      }
+    },
+    async fetchUser() {
+      try {
+        const response = await axios.get("http://localhost:8000/auth/me", {
+          withCredentials: true,
+        });
+        if (response.data) {
+          this.user = response.data;
+        } else {
+          this.$router.push("/");
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+        this.$router.push("/");
       }
     },
 
     toggleAdd() {
-      this.isAddClass = true;
+      this.isAddSpecialization = true;
       this.isTable = true;
     },
     toggleEdit(item) {
-      this.selectedClass = item;
+      this.selectedSpecialization = item;
       this.showEditModal = true;
     },
     toggleDelete(item) {
@@ -369,18 +403,18 @@ export default {
       this.showDeleteModal = true;
     },
     confirmDelete() {
-      if (!this.recordToDelete || isNaN(this.recordToDelete.class_id)) {
-        toast.error("Invalid class ID.");
+      if (!this.recordToDelete || isNaN(this.recordToDelete.specialization_id)) {
+        toast.error("Invalid specialization ID.");
         return;
       }
       axios
         .delete(
-          `http://localhost:8000/class/delete-id/${this.recordToDelete.class_id}`
+          `http://localhost:8000/specialization/delete-id/${this.recordToDelete.specialization_id}`
         )
         .then(() => {
           this.showDeleteModal = false;
           this.recordToDelete = null;
-          this.loadClasses();
+          this.loadSpecializations();
           toast.success("Record deleted successfully");
         })
         .catch((err) => {
@@ -392,15 +426,17 @@ export default {
       this.currentPage = Math.max(1, Math.min(page, this.totalPages));
     },
     closeView() {
-      this.isAddClass = false;
+      this.isAddSpecialization = false;
     },
     closeModal() {
       this.showEditModal = false;
-      this.selectedClass = null;
+      this.selectedSpecialization = null;
     },
   },
   async mounted() {
-    await this.loadClasses();
+    await this.fetchUser();
+    await this.loadSpecializations();
   },
 };
 </script>
+
