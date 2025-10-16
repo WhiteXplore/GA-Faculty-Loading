@@ -66,52 +66,64 @@
             </div>
           </div>
 
-          <!-- Year/Section Configuration Table -->
+          <!-- Year/Section Configuration -->
           <div class="mt-4">
             <h3 class="font-bold mb-3">Configure Sections per Year Level:</h3>
-            <div class="overflow-x-auto border rounded-lg">
-              <table class="min-w-full text-sm">
-                <thead class="bg-defaultGreen text-white">
-                  <tr>
-                    <th class="px-4 py-3 text-left">Year Level</th>
-                    <th class="px-4 py-3 text-center">Number of Sections</th>
-                    <th class="px-4 py-3 text-center">Class Size per Section</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="year in yearLevels"
-                    :key="year.value"
-                    class="border-b hover:bg-gray-50"
+            
+            <div class="space-y-4">
+              <div
+                v-for="year in yearLevels"
+                :key="year.value"
+                class="border rounded-lg p-4 bg-white"
+              >
+                <!-- Year Level Header -->
+                <div class="flex items-center gap-4 mb-3">
+                  <label class="font-semibold text-gray-800 min-w-[100px]">
+                    {{ year.label }}:
+                  </label>
+                  <div class="flex items-center gap-2">
+                    <label class="text-sm text-gray-600">Number of Sections:</label>
+                    <input
+                      v-model.number="year.numSections"
+                      type="number"
+                      min="0"
+                      max="10"
+                      class="w-20 border border-gray-300 rounded-md px-3 py-2 text-center"
+                      placeholder="0"
+                      @input="updateSections(year)"
+                    />
+                  </div>
+                </div>
+
+                <!-- Individual Section Inputs -->
+                <div
+                  v-if="year.numSections > 0"
+                  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-3 pl-4 border-l-4 border-green-200"
+                >
+                  <div
+                    v-for="(section, index) in year.sections"
+                    :key="index"
+                    class="flex items-center gap-2 bg-gray-50 p-3 rounded-md"
                   >
-                    <td class="px-4 py-3 font-semibold">{{ year.label }}</td>
-                    <td class="px-4 py-3">
-                      <input
-                        v-model.number="year.numSections"
-                        type="number"
-                        min="0"
-                        max="10"
-                        class="w-24 border border-gray-300 rounded-md px-3 py-2 text-center"
-                        placeholder="0"
-                      />
-                    </td>
-                    <td class="px-4 py-3">
-                      <input
-                        v-model.number="year.classSize"
-                        type="number"
-                        min="1"
-                        max="100"
-                        class="w-24 border border-gray-300 rounded-md px-3 py-2 text-center"
-                        placeholder="30"
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                    <label class="font-semibold text-sm min-w-[80px]">
+                      Section {{ getSectionLetter(index) }}:
+                    </label>
+                    <input
+                      v-model.number="section.classSize"
+                      type="number"
+                      min="1"
+                      max="100"
+                      class="flex-1 border border-gray-300 rounded-md px-3 py-2 text-center"
+                      placeholder="30"
+                    />
+                    <span class="text-xs text-gray-500">students</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p class="text-xs text-gray-500 mt-2">
-              Enter the number of sections for each year level. Sections will be
-              named as A, B, C, etc.
+
+            <p class="text-xs text-gray-500 mt-3 bg-blue-50 p-2 rounded">
+              <strong>Note:</strong> Enter the number of sections for each year level, then specify the class size for each section individually.
             </p>
           </div>
 
@@ -121,11 +133,20 @@
             <p class="text-sm">
               Total sections to be created: <span class="font-bold">{{ totalSections }}</span>
             </p>
-            <div class="mt-2 text-xs text-gray-600">
+            <div class="mt-2 text-xs text-gray-700 space-y-1">
               <div v-for="year in yearLevels" :key="year.value">
-                <span v-if="year.numSections > 0">
-                  {{ year.label }}: {{ getSectionNames(year.numSections) }}
-                </span>
+                <div v-if="year.numSections > 0 && year.sections.length > 0">
+                  <span class="font-semibold">{{ year.label }}:</span>
+                  <div class="ml-4 mt-1">
+                    <span
+                      v-for="(section, index) in year.sections"
+                      :key="index"
+                      class="inline-block mr-3"
+                    >
+                      Section {{ getSectionLetter(index) }} ({{ section.classSize }} students)
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -171,10 +192,10 @@ export default {
       showSchoolYearDropdown: false,
       schoolYears: [],
       yearLevels: [
-        { value: 1, label: "1st Year", numSections: 0, classSize: 30 },
-        { value: 2, label: "2nd Year", numSections: 0, classSize: 30 },
-        { value: 3, label: "3rd Year", numSections: 0, classSize: 30 },
-        { value: 4, label: "4th Year", numSections: 0, classSize: 30 },
+        { value: 1, label: "1st Year", numSections: 0, sections: [] },
+        { value: 2, label: "2nd Year", numSections: 0, sections: [] },
+        { value: 3, label: "3rd Year", numSections: 0, sections: [] },
+        { value: 4, label: "4th Year", numSections: 0, sections: [] },
       ],
     };
   },
@@ -206,6 +227,10 @@ export default {
       this.searchSchoolYearQuery = sy.school_year_name;
       this.showSchoolYearDropdown = false;
     },
+    getSectionLetter(index) {
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      return letters[index] || "?";
+    },
     getSectionNames(numSections) {
       const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
       const names = [];
@@ -213,6 +238,20 @@ export default {
         names.push(letters[i]);
       }
       return names.join(", ");
+    },
+    updateSections(year) {
+      const currentNum = year.sections.length;
+      const newNum = year.numSections || 0;
+
+      if (newNum > currentNum) {
+        // Add new sections
+        for (let i = currentNum; i < newNum; i++) {
+          year.sections.push({ classSize: 30 });
+        }
+      } else if (newNum < currentNum) {
+        // Remove excess sections
+        year.sections.splice(newNum);
+      }
     },
     async submitData() {
       try {
@@ -231,16 +270,16 @@ export default {
 
         // Generate class records for each year level
         this.yearLevels.forEach((year) => {
-          if (year.numSections > 0) {
-            for (let i = 0; i < year.numSections; i++) {
-              const sectionLetter = letters[i];
+          if (year.numSections > 0 && year.sections.length > 0) {
+            year.sections.forEach((section, index) => {
+              const sectionLetter = letters[index];
               classesToCreate.push({
                 school_year_id: this.selectedSchoolYearId,
                 program_id: this.programData.program_id,
                 set_name: `${year.label} - ${sectionLetter}`,
-                class_size: year.classSize || 30,
+                class_size: section.classSize || 30,
               });
-            }
+            });
           }
         });
 

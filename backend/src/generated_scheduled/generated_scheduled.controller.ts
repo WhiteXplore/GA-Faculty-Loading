@@ -30,7 +30,7 @@ export class GeneratedScheduledController {
     return new Promise((resolve, reject) => {
       // Resolve path and replace backslashes with forward slashes
       const scriptPath = path
-        .resolve(__dirname, '../../../python/faculty_ga.py')
+        .resolve(__dirname, '../../../python/faculty_ga_jhomel.py')
         .replace(/\\/g, '/');
       console.log('Running Python script:', scriptPath);
 

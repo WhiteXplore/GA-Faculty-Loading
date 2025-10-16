@@ -17,6 +17,7 @@ import { ActiveYearModule } from './active_year/active_year.module';
 import { SchoolYearModule } from './school_year/school_year.module';
 import { ClassModule } from './class/class.module';
 import { SpecializationModule } from './specialization/specialization.module';
+import { ProgramYearCoursesModule } from './program_year_courses/program_year_courses.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { SpecializationModule } from './specialization/specialization.module';
     SchoolYearModule,
     ClassModule,
     SpecializationModule,
+    ProgramYearCoursesModule,
   ],
 })
 export class AppModule {}

@@ -107,6 +107,7 @@
                 <th class="px-4 py-2 text-left">School Year</th>
                 <th class="px-4 py-2 text-center">Start Year</th>
                 <th class="px-4 py-2 text-center">End Year</th>
+                <th class="px-4 py-2 text-center">Semester</th>
                 <th class="px-4 py-2 text-center">Status</th>
                 <th class="px-4 py-2 text-left rounded-tr-lg">Actions</th>
               </tr>
@@ -121,6 +122,7 @@
                 <td class="px-4 py-2">{{ sy.school_year_name }}</td>
                 <td class="px-4 py-2 text-center">{{ sy.start_year }}</td>
                 <td class="px-4 py-2 text-center">{{ sy.end_year }}</td>
+                <td class="px-4 py-2 text-center">{{ getSemesterLabel(sy.semester) }}</td>
                 <td class="px-4 py-2 text-center">
                   <span
                     :class="
@@ -151,7 +153,7 @@
                 </td>
               </tr>
               <tr v-if="paginatedData.length === 0">
-                <td colspan="6" class="text-center py-8 text-gray-400">
+                <td colspan="7" class="text-center py-8 text-gray-400">
                   No records found
                 </td>
               </tr>
@@ -369,6 +371,11 @@ export default {
     closeModal() {
       this.showEditModal = false;
       this.selectedSchoolYear = null;
+    },
+    getSemesterLabel(semester) {
+      if (semester === 1) return "1st Semester";
+      if (semester === 2) return "2nd Semester";
+      return "N/A";
     },
   },
   async mounted() {

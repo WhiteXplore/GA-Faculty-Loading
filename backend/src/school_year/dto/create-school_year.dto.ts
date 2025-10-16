@@ -10,6 +10,9 @@ export class CreateSchoolYearDto {
   @IsInt()
   end_year: number;
 
+  @IsInt()
+  semester: number;
+
   @IsBoolean()
   @IsOptional()
   is_active?: boolean;

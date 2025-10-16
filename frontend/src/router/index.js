@@ -89,6 +89,13 @@ const routes = [
         children: [],
       },
       {
+        path: "/system-overview",
+        name: "system-overview",
+        component: () => import("@/components/admin/records/system-overview.vue"),
+        meta: { requiresAuth: true, role: "Admin" },
+        children: [],
+      },
+      {
         path: "/specializations",
         name: "specializations",
         component: () => import("@/components/admin/records/specializations.vue"),

@@ -2,14 +2,29 @@
 """
 No Schedule Conflict - Fixed Schedule with Faculty Load Limit
 Faculty capped at 18 units (lecture hours count as hours, lab as 1/3 per hour).
-Lectures are placed as one straight block on a single day.
-Labs remain in 1-hour slots.
-Requirements: sqlalchemy, pymysql
 
-CHANGES: scheduling now *prioritizes faculty_expertise* strictly:
+MEETING SCHEDULE:
+ - Each course meets TWICE per week maximum:
+   1. Once for ALL lecture hours (one contiguous block)
+   2. Once for ALL laboratory hours (one contiguous block)
+ - Example: 3-hour lecture + 3-hour lab = 2 meetings per week
+
+DYNAMIC HOUR ALLOCATION:
+ - Lecture hours: course_lecture field (1 unit = 1 hour)
+ - Laboratory hours: course_laboratory field (1 unit = 3 hours)
+ - Example: course_lecture=3, course_laboratory=1 → 3-hour lecture block + 3-hour lab block
+ 
+FACULTY EXPERTISE SYSTEM:
  - All assignments (lecture or lab) only consider faculty listed in faculty_expertise for that course.
  - When multiple eligible faculty exist, the algorithm picks the one with the LOWEST projected load (ties broken randomly).
  - No fallback to non-expert faculty.
+ 
+LOAD CALCULATION:
+ - Lecture: Each hour counts as 1 unit toward faculty load
+ - Laboratory: Each hour counts as 1/3 unit toward faculty load
+ - Maximum faculty load: 18 units
+ 
+Requirements: sqlalchemy, pymysql
 """
 
 import random
@@ -55,6 +70,7 @@ faculty_expertise_table = Table(
 courses_table = Table("course_view", metadata, autoload_with=engine)
 assigned_set_courses_table = Table(
     "assigned_set_courses", metadata, autoload_with=engine)
+rooms_table = Table("rooms", metadata, autoload_with=engine)
 
 
 def fetch_table_data(table):
@@ -71,24 +87,7 @@ faculty = fetch_table_data(faculty_table)
 faculty_expertise = fetch_table_data(faculty_expertise_table)
 courses = fetch_table_data(courses_table)
 assigned_set_courses = fetch_table_data(assigned_set_courses_table)
-
-# =========================
-# ROOMS (local/static for now)
-# =========================
-rooms = [
-    {"room_id": 1, "room_name": "IC Room 101",
-        "room_category": "Lecture", "institute_id": 1},
-    {"room_id": 2, "room_name": "IC Lab 101",
-        "room_category": "Laboratory", "institute_id": 1},
-    {"room_id": 3, "room_name": "IC Room 102",
-        "room_category": "Lecture", "institute_id": 1},
-    {"room_id": 4, "room_name": "IC Lab 103",
-        "room_category": "Laboratory", "institute_id": 1},
-    {"room_id": 5, "room_name": "IC Room 104",
-        "room_category": "Lecture", "institute_id": 1},
-    {"room_id": 6, "room_name": "ITED BACCOM LECTURE 101",
-     "room_category": "Lecture", "institute_id": 3},
-]
+rooms = fetch_table_data(rooms_table)
 
 # =========================
 # HELPER FUNCTIONS
@@ -205,7 +204,7 @@ def pick_conflict_free_faculty(schedule, day, start_hour, end_hour, eligible_fac
 
 def pick_conflict_free_room(schedule, day, start_hour, end_hour, course_type, program_id, other_schedule=None):
     """
-    Prefer rooms with same institute as program; fallback to any room of correct category.
+    Prefer rooms with same institute as program; fallback to any room of correct type.
     """
     program_institute_id = None
     if program_id is not None:
@@ -214,7 +213,7 @@ def pick_conflict_free_room(schedule, day, start_hour, end_hour, course_type, pr
 
     primary_rooms = [
         r for r in rooms
-        if r.get("room_category") == course_type
+        if r.get("room_type") == course_type
         and r.get("institute_id") == program_institute_id
         and check_availability(schedule, day, start_hour, end_hour, None, r["room_id"], other_schedule)
     ]
@@ -223,7 +222,7 @@ def pick_conflict_free_room(schedule, day, start_hour, end_hour, course_type, pr
 
     fallback_rooms = [
         r for r in rooms
-        if r.get("room_category") == course_type
+        if r.get("room_type") == course_type
         and check_availability(schedule, day, start_hour, end_hour, None, r["room_id"], other_schedule)
     ]
     return random.choice(fallback_rooms)["room_id"] if fallback_rooms else None
@@ -291,7 +290,7 @@ def place_lecture_block(schedule, existing_schedule, faculty_load, set_name, cou
 
 def place_single_hour(schedule, existing_schedule, faculty_load, set_name, course, slot_type, assigned_faculty_id=None):
     """
-    Place a single 1-hour block. Used for lab hours (and lecture fallback if needed).
+    Place a single 1-hour block. Used as fallback if contiguous blocks cannot be placed.
     Updates schedule and faculty_load on success.
     """
     eligible_faculty = faculty_ids_for_course(course.get("course_id"))
@@ -339,6 +338,65 @@ def place_single_hour(schedule, existing_schedule, faculty_load, set_name, cours
     return False
 
 
+def place_laboratory_block(schedule, existing_schedule, faculty_load, set_name, course, lab_hours, assigned_faculty_id=None):
+    """
+    Try to place lab_hours consecutively on a single day.
+    Updates schedule list and faculty_load dict in-place when successful.
+    Lab hours count as 1/3 unit per hour for faculty load.
+    """
+    if lab_hours <= 0:
+        return True
+    eligible_faculty = faculty_ids_for_course(course.get("course_id"))
+    # if assigned_faculty_id is provided we must still ensure they are in expertise list
+    if assigned_faculty_id:
+        if assigned_faculty_id not in eligible_faculty:
+            # assigned faculty isn't an expert -> do not use them
+            assigned_faculty_id = None
+        else:
+            eligible_faculty = [assigned_faculty_id]
+
+    if not eligible_faculty:
+        return False
+
+    attempts = 0
+    while attempts < MAX_ATTEMPTS_PER_HOUR:
+        attempts += 1
+        day = random.choice(DAYS)
+        start_hour = random.choice(TIME_SLOTS)
+        end_hour = start_hour + lab_hours
+
+        # ensure the block uses contiguous TIME_SLOTS (no lunch gap inside block)
+        block_hours = list(range(start_hour, end_hour))
+        if not all(h in TIME_SLOTS for h in block_hours):
+            continue
+
+        # check availability & load
+        faculty_id = pick_conflict_free_faculty(
+            schedule, day, start_hour, end_hour, eligible_faculty, existing_schedule, faculty_load, "Laboratory")
+        room_id = pick_conflict_free_room(
+            schedule, day, start_hour, end_hour, "Laboratory", course.get("program_id"), existing_schedule)
+
+        if faculty_id and room_id:
+            schedule.append({
+                "course_id": course.get("course_id"),
+                "course_name": course.get("course_code", course.get("course_name", "Unknown")),
+                "type": "Laboratory",
+                "day": day,
+                "start_hour": start_hour,
+                "end_hour": end_hour,
+                "faculty_id": faculty_id,
+                "room_id": room_id,
+                "set": set_name,
+                "program_id": course.get("program_id"),
+            })
+            # update faculty_load: lab hours count as 1/3 unit per hour
+            lab_units = lab_hours / 3
+            faculty_load[faculty_id] = faculty_load.get(
+                faculty_id, 0) + lab_units
+            return True
+    return False
+
+
 # =========================
 # INDIVIDUAL CREATION
 # =========================
@@ -358,6 +416,7 @@ def create_individual(set_name, existing_schedule=None):
     courses_to_schedule = get_courses_for_set(set_name)
 
     for course in courses_to_schedule:
+        # Get lecture and lab values from course_view fields
         lec_hours = int(course.get("course_lecture", 0))
         # labs stored as units: multiply by 3 to get hours (1 lab unit = 3 hours)
         lab_hours = int(course.get("course_laboratory", 0)) * 3
@@ -385,14 +444,12 @@ def create_individual(set_name, existing_schedule=None):
                     if not ok:
                         break
 
-        # Place lab_hours as 1-hour chunks
-        remaining = lab_hours
-        while remaining > 0:
-            ok = place_single_hour(schedule, existing_schedule, faculty_load,
-                                   set_name, course, "Laboratory", assigned_faculty_id)
-            if not ok:
-                break
-            remaining -= 1
+        # Place laboratory as one contiguous block
+        if lab_hours > 0:
+            placed = place_laboratory_block(
+                schedule, existing_schedule, faculty_load, set_name, course, lab_hours, assigned_faculty_id)
+            # if we couldn't place the contiguous laboratory block, skip it (no fallback to maintain twice-per-week meeting)
+            # You could add fallback to single hours if needed, but this maintains the strict "meet twice" requirement
 
     # sort for determinism
     schedule.sort(key=lambda x: (DAYS.index(

@@ -20,6 +20,9 @@ export class SchoolYear {
   @Column({ type: 'int' })
   end_year: number;
 
+  @Column({ type: 'int' })
+  semester: number;
+
   @Column({ type: 'boolean', default: false })
   is_active: boolean;
 

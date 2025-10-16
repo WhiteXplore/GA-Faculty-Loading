@@ -22,21 +22,22 @@
 
     <!-- Right Section -->
     <div class="flex items-center gap-3">
-      <!-- Year Selector -->
-      <div class="relative w-26">
+      <!-- School Year Selector -->
+      <div class="relative w-48">
         <select
-          id="year"
-          v-model="selectedYear"
-          @change="updateYear"
+          id="schoolYear"
+          v-model="selectedSchoolYearId"
+          @change="updateSchoolYear"
           class="w-full appearance-none rounded-full border border-green-600 bg-white px-4 py-1.5 pr-10 text-green-900 text-sm font-semibold shadow-md cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:outline-none hover:shadow-lg"
         >
+          <option value="" disabled>Select School Year</option>
           <option
-            v-for="year in years"
-            :key="year"
-            :value="year"
+            v-for="sy in schoolYears"
+            :key="sy.school_year_id"
+            :value="sy.school_year_id"
             class="text-sm"
           >
-            {{ year }}
+            {{ sy.school_year_name }} - {{ getSemesterLabel(sy.semester) }}
           </option>
         </select>
 
@@ -103,12 +104,11 @@ export default {
   name: "TopBarPage",
   components: { Profile },
   data() {
-    const currentYear = new Date().getFullYear();
     return {
       isOpenProfile: false,
       user: {},
-      selectedYear: currentYear,
-      years: Array.from({ length: 10 }, (_, i) => currentYear - i),
+      selectedSchoolYearId: "",
+      schoolYears: [],
       currentTime: new Date(),
     };
   },
@@ -132,7 +132,8 @@ export default {
   },
   mounted() {
     this.fetchUser();
-    this.fetchActiveYear();
+    this.fetchSchoolYears();
+    this.fetchActiveSchoolYear();
 
     this.timer = setInterval(() => {
       this.currentTime = new Date();
@@ -179,36 +180,80 @@ export default {
       }
     },
 
-    async fetchActiveYear() {
+    async fetchSchoolYears() {
       try {
-        const res = await axios.get("http://localhost:8000/active-year/active");
-        if (res.data) {
-          this.selectedYear = res.data.year;
-
-          // 👇 sync to store so TableCourses reacts
-          const store = useFetchDataStore();
-          store.year = res.data.year;
-        }
+        const response = await axios.get(
+          "http://localhost:8000/school-year/get-school-years"
+        );
+        this.schoolYears = response.data;
       } catch (error) {
-        console.error("Failed to fetch active year:", error);
+        console.error("Failed to fetch school years:", error);
       }
     },
 
-    async updateYear() {
+    async fetchActiveSchoolYear() {
       try {
-        const res = await axios.post("http://localhost:8000/active-year", {
-          year: this.selectedYear,
-        });
-        if (res.data?.year) {
-          this.selectedYear = res.data.year;
+        const res = await axios.get("http://localhost:8000/active-year/active");
+        if (res.data) {
+          // Find the school year that matches the active year
+          const activeSchoolYear = this.schoolYears.find(
+            (sy) => sy.is_active === true
+          );
+          if (activeSchoolYear) {
+            this.selectedSchoolYearId = activeSchoolYear.school_year_id;
+          }
 
-          // 👇 sync to store so TableCourses refreshes
+          // 👇 sync to store so other components react
           const store = useFetchDataStore();
           store.year = res.data.year;
         }
       } catch (error) {
-        console.error("Failed to update active year:", error);
+        console.error("Failed to fetch active school year:", error);
       }
+    },
+
+    async updateSchoolYear() {
+      try {
+        const selectedSY = this.schoolYears.find(
+          (sy) => sy.school_year_id === this.selectedSchoolYearId
+        );
+        
+        if (selectedSY) {
+          // Update the active school year in database
+          await axios.patch(
+            `http://localhost:8000/school-year/update-school-year/${selectedSY.school_year_id}`,
+            { is_active: true }
+          );
+
+          // Deactivate other school years
+          const otherSchoolYears = this.schoolYears.filter(
+            (sy) => sy.school_year_id !== this.selectedSchoolYearId
+          );
+          for (const sy of otherSchoolYears) {
+            if (sy.is_active) {
+              await axios.patch(
+                `http://localhost:8000/school-year/update-school-year/${sy.school_year_id}`,
+                { is_active: false }
+              );
+            }
+          }
+
+          // Sync to store
+          const store = useFetchDataStore();
+          store.year = selectedSY.start_year;
+
+          // Refresh school years list
+          await this.fetchSchoolYears();
+        }
+      } catch (error) {
+        console.error("Failed to update school year:", error);
+      }
+    },
+
+    getSemesterLabel(semester) {
+      if (semester === 1) return "1st Sem";
+      if (semester === 2) return "2nd Sem";
+      return "";
     },
   },
 };

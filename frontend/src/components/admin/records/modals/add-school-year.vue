@@ -70,6 +70,20 @@
             </div>
           </div>
 
+          <!-- Semester -->
+          <div class="w-full space-y-2">
+            <label class="font-bold">Semester:</label>
+            <select
+              v-model.number="form.semester"
+              required
+              class="w-full border px-3 py-3 border-gray-600 rounded-md text-md text-gray-800"
+            >
+              <option value="">Select Semester</option>
+              <option value="1">1st Semester</option>
+              <option value="2">2nd Semester</option>
+            </select>
+          </div>
+
           <!-- Active Status -->
           <div class="w-full space-y-2">
             <label class="font-bold flex items-center gap-2">
@@ -121,6 +135,7 @@ export default {
         school_year_name: "",
         start_year: new Date().getFullYear(),
         end_year: new Date().getFullYear() + 1,
+        semester: "",
         is_active: false,
       },
     };
@@ -184,6 +199,7 @@ export default {
         school_year_name: this.schoolYearData.school_year_name,
         start_year: this.schoolYearData.start_year,
         end_year: this.schoolYearData.end_year,
+        semester: this.schoolYearData.semester,
         is_active: this.schoolYearData.is_active,
       };
     }
