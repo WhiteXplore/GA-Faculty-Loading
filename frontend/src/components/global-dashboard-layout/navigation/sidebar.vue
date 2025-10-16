@@ -184,8 +184,7 @@ export default {
                 children: [
                   // { name: "Instructors", route: "/instructors" },
                   { name: "Institutes", route: "/institutes" },
-                  { name: "Programs", route: "/programs" },
-                  { name: "Curriculum Offering", route: "/curriculums" },
+                  { name: "Curriculum", route: "/curriculums" },
                   { name: "Courses", route: "/courses" },
                   { name: "Specializations", route: "/specializations" },
                   { name: "Rooms", route: "/rooms" },
@@ -210,7 +209,7 @@ export default {
             title: "Generation",
             items: [
               {
-                icon: "folder",
+                icon: "arrow-path",
                 name: "Faculty Loading",
                 route: "/faculty-loads",
               },

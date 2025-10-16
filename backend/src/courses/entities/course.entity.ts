@@ -36,9 +36,6 @@ export class Course {
   @Column({ type: 'int' })
   course_lab: number;
 
-  @Column({ type: 'int' })
-  course_credit: number;
-
   @Column({ type: 'varchar', length: 255, nullable: true })
   course_requisite: string;
 
@@ -49,7 +46,7 @@ export class Course {
   update_at: Date;
 
   @ManyToOne(() => Curriculum, (curriculum) => curriculum.courses, {
-    onDelete: 'CASCADE',
+    onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'curriculum_id' })
   curriculum: Curriculum;

@@ -148,7 +148,7 @@
                 <th class="px-4 py-2 text-center">Lecture</th>
                 <th class="px-4 py-2 text-center">Lab</th>
                 <th class="px-4 py-2 text-center">Units</th>
-                <th class="px-4 py-2 text-left">Pre-req</th>
+                <th class="px-4 py-2 text-center">Pre-req</th>
                 <th class="px-4 py-2 text-left rounded-tr-lg">Actions</th>
               </tr>
             </thead>
@@ -169,7 +169,9 @@
                 <td class="px-4 py-2 text-center">
                   {{ c.course_lec + c.course_lab }}
                 </td>
-                <td class="px-4 py-2">{{ c.course_requisite }}</td>
+                <td class="px-4 py-2 text-center">
+                  {{ c.course_requisite || "-" }}
+                </td>
                 <td class="px-4 py-2">
                   <div class="flex gap-2">
                     <button
@@ -245,37 +247,41 @@
   />
 
   <!-- Delete Confirmation -->
-  <div
-    v-if="showDeleteModal"
-    class="fixed inset-0 bg-gray-800 bg-opacity-40 flex justify-center items-center z-50"
-  ></div>
-  <div
-    v-if="showDeleteModal"
-    class="rounded-xl shadow-lg w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
-  >
+  <div v-if="showDeleteModal" class="fixed inset-0 z-50">
+    <div class="absolute inset-0 bg-gray-800 bg-opacity-40"></div>
     <div
-      class="rounded-full w-16 h-16 flex justify-center items-center bg-red-300 animate-pulse"
+      class="rounded-xl border w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
     >
-      <icon name="question" class="w-8 h-8 text-white" />
-    </div>
-    <h1 class="text-[16px] font-semibold mt-4">Delete Confirmation</h1>
-    <p class="mt-2 text-[13px] text-center px-8">
-      Are you sure you want to delete this record? This action cannot be undone.
-    </p>
-    <div class="w-full h-[1px] bg-gray-200 mt-4"></div>
-    <div class="flex gap-2 mt-4">
-      <button
-        class="bg-red-400 px-3 py-2 text-white rounded-md hover:bg-white hover:border hover:border-red-800 hover:text-red-800"
-        @click="showDeleteModal = false"
+      <div
+        class="rounded-full w-16 h-16 md:w-20 md:h-20 flex justify-center items-center bg-red-300 animate-pulse"
       >
-        No, Cancel
-      </button>
-      <button
-        class="bg-green-400 px-3 py-2 text-white rounded-md hover:bg-white hover:border hover:border-green-800 hover:text-green-800"
-        @click="confirmDelete"
-      >
-        Yes, Delete
-      </button>
+        <icon
+          name="question"
+          class="w-8 h-8 md:w-10 md:h-10 text-white flex justify-center items-center"
+        />
+      </div>
+      <h1 class="text-[14px] md:text-[16px] font-semibold mt-4">
+        Delete Confirmation
+      </h1>
+      <p class="mt-2 text-[12px] md:text-[13px] text-center px-8">
+        Are you sure you want to delete this record? This action cannot be
+        undone.
+      </p>
+      <div class="w-full h-[1px] rounded-md bg-gray-200 mt-4"></div>
+      <div class="tracking-wide flex gap-2 mt-4">
+        <button
+          class="bg-red-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md"
+          @click="showDeleteModal = false"
+        >
+          No, Cancel
+        </button>
+        <button
+          class="bg-green-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
+          @click="confirmDelete"
+        >
+          Yes, Delete
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -442,10 +448,6 @@ export default {
           this.recordToDelete = null;
           this.loadCourses();
           toast.success("Record deleted successfully");
-        })
-        .catch((err) => {
-          console.error("Delete failed:", err);
-          toast.error("Failed to delete record.");
         });
     },
     changePage(page) {
@@ -469,9 +471,9 @@ export default {
     },
   },
   async mounted() {
-    await this.fetchUser(); // ✅ make sure to fetch user first
-    await this.loadCourses();
-    await this.loadActiveYear();
+    await this.fetchUser();
+    await this.loadActiveYear(); // fetch year first
+    await this.loadCourses(); // then fetch courses
   },
 };
 </script>

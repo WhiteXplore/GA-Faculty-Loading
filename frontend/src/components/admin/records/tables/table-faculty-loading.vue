@@ -1,23 +1,24 @@
 <template>
   <div>
     <!-- Table / Auto Generation Button -->
-    <div v-if="isTable" class="mb-4">
-      <div class="text-sm flex justify-between">
-        <div class="text-[13px] text-text mt-4 font-regular">
+    <div v-if="isTable" class="mb-6">
+      <div class="flex justify-between items-center">
+        <div class="text-sm text-gray-600 mt-4 font-medium">
           Pages / Faculty Loads
         </div>
-        <div class="flex gap-2">
+
+        <div class="flex gap-3">
           <!-- Auto Generation -->
           <div
             @click="fetchSchedule"
-            class="group flex items-center gap-2 px-4 py-2 border text-green-600 border-green-600 hover:bg-green-600 hover:text-white rounded-xl hover:shadow-lg cursor-pointer transition duration-200"
+            class="group flex items-center gap-2 px-4 py-2 border border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl shadow-sm cursor-pointer transition"
           >
             <div
-              class="p-1 bg-green-100 rounded-full flex items-center justify-center transition duration-200 group-hover:bg-white"
+              class="p-1 bg-green-100 rounded-full flex items-center justify-center group-hover:bg-white transition"
             >
               <icon
                 :name="'arrow-path'"
-                class="w-4 h-4 text-green-600 transition duration-200 group-hover:text-green-600"
+                class="w-4 h-4 text-green-600 group-hover:text-green-600"
               />
             </div>
             <span class="font-medium text-sm">Auto Generation</span>
@@ -26,14 +27,14 @@
           <!-- Save this schedule -->
           <div
             @click="saveScheduled"
-            class="group flex items-center gap-2 px-4 py-2 border text-green-600 border-green-600 hover:bg-green-600 hover:text-white rounded-xl hover:shadow-lg cursor-pointer transition duration-200"
+            class="group flex items-center gap-2 px-4 py-2 border border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl shadow-sm cursor-pointer transition"
           >
             <div
-              class="p-1 bg-green-100 rounded-full flex items-center justify-center transition duration-200 group-hover:bg-white"
+              class="p-1 bg-green-100 rounded-full flex items-center justify-center group-hover:bg-white transition"
             >
               <icon
                 :name="'circle-check'"
-                class="w-4 h-4 text-green-600 transition duration-200 group-hover:text-green-600"
+                class="w-4 h-4 text-green-600 group-hover:text-green-600"
               />
             </div>
             <span class="font-medium text-sm">Save this schedule</span>
@@ -43,80 +44,128 @@
     </div>
 
     <!-- Loading -->
-    <div v-if="loading" class="loading-overlay">
+    <div
+      v-if="loading"
+      class="fixed inset-0 flex items-center justify-center bg-black/40 z-50"
+    >
       <div
-        class="loading-content flex flex-col items-center justify-center space-y-4"
+        class="space-y-5 flex flex-col items-center justify-center p-5 bg-white rounded-3xl shadow-lg"
       >
-        <img src="@/assets/img/loading.gif" alt="Loading" class="w-28" />
-
-        <div class="progress-bar w-full bg-gray-200 rounded-full h-3">
-          <div
-            class="progress-fill bg-defaultGreen h-3 rounded-full"
-            :style="{ width: progress + '%' }"
-          ></div>
+        <!-- Animated dots instead of image -->
+        <div class="flex space-x-2">
+          <span class="w-3 h-3 bg-green-500 rounded-full bounce-delay-0"></span>
+          <span
+            class="w-3 h-3 bg-green-500 rounded-full bounce-delay-200"
+          ></span>
+          <span
+            class="w-3 h-3 bg-green-500 rounded-full bounce-delay-400"
+          ></span>
         </div>
 
-        <div class="loading-text text-gray-700 font-medium">
+        <!-- Progress bar -->
+        <!-- <div class="w-64 bg-gray-200 rounded-full h-3 overflow-hidden">
+          <div
+            class="bg-green-500 h-3 rounded-full transition-all duration-300"
+            :style="{ width: progress + '%' }"
+          ></div>
+        </div> -->
+
+        <div class="text-gray-700 font-medium">
           Generating Schedule... {{ Math.floor(progress) }}%
         </div>
       </div>
     </div>
 
     <!-- Error -->
-    <div v-else-if="error" class="error">{{ error }}</div>
+    <div v-else-if="error" class="text-center text-red-600 font-medium py-6">
+      {{ error }}
+    </div>
 
     <!-- Schedule -->
-    <div v-else class="grid-wrapper">
+    <div
+      v-else
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[80vh]"
+    >
       <div
         v-for="(slots, instructor) in groupedSchedule"
         :key="instructor"
-        class="schedule-wrapper"
+        class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-200 flex flex-col"
       >
-        <div class="instructor-header">{{ instructor }}</div>
+        <!-- Instructor Header -->
+        <div
+          class="bg-defaultGreen text-white text-center py-3 font-semibold text-lg"
+        >
+          {{ instructor }}
+        </div>
 
-        <table class="schedule-table">
-          <thead>
-            <tr>
-              <th class="time-col">TIME</th>
-              <th v-for="day in days" :key="day">{{ day }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="slot in timeSlots" :key="slot.start + slot.end">
-              <td>{{ slot.start }} - {{ slot.end }}</td>
-              <td v-for="day in days" :key="day">
-                <div
-                  v-for="item in getScheduleForCell(slot, day, instructor)"
-                  :key="item.course_name + item.start_hour + item.room_name"
-                  class="cell-item"
+        <!-- Scrollable Table -->
+        <div class="overflow-x-auto overflow-y-auto flex-1">
+          <table class="w-full text-sm text-left border-collapse">
+            <thead class="sticky top-0 bg-gray-100 z-10">
+              <tr class="text-gray-700 text-sm">
+                <th class="px-4 py-2 border border-gray-200">Time</th>
+                <th
+                  v-for="day in days"
+                  :key="day"
+                  class="px-4 py-2 border border-gray-200 text-center"
                 >
-                  <strong>{{ item.course_name }} ({{ item.type }})</strong
-                  ><br />
-                  Room: {{ item.room_name }}<br />
-                  Faculty: {{ item.faculty_name }} Set: {{ item.set }}
-
-                  <!-- Conflict Button -->
-                  <button
-                    v-if="item.conflict"
-                    @click="openConflictModal(item)"
-                    class="mt-1 px-2 py-1 text-xs rounded bg-red-100 text-red-600 hover:bg-red-200"
+                  {{ day }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="slot in timeSlots"
+                :key="slot.start + slot.end"
+                class="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition"
+              >
+                <td
+                  class="px-4 py-3 border border-gray-200 font-medium text-gray-700"
+                >
+                  {{ slot.start }} - {{ slot.end }}
+                </td>
+                <td
+                  v-for="day in days"
+                  :key="day"
+                  class="px-4 py-3 border border-gray-200 text-center align-top"
+                >
+                  <div
+                    v-for="item in getScheduleForCell(slot, day, instructor)"
+                    :key="item.course_name + item.start_hour + item.room_name"
+                    class="mb-2 p-2 bg-green-50 border border-green-200 rounded-lg text-xs text-gray-800 shadow-sm"
                   >
-                    ⚠ View Conflict
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                    <p class="font-semibold text-green-700">
+                      {{ item.course_name }} ({{ item.type }})
+                    </p>
+                    <p class="text-gray-600">Room: {{ item.room_name }}</p>
+                    <!-- <p class="text-gray-600">
+                      Faculty: {{ item.faculty_name }}
+                    </p> -->
+                    <p class="text-gray-600">Set: {{ item.set }}</p>
+
+                    <!-- Conflict Button -->
+                    <button
+                      v-if="item.conflict"
+                      @click="openConflictModal(item)"
+                      class="mt-2 px-2 py-1 text-xs rounded bg-red-100 text-red-600 hover:bg-red-200 transition"
+                    >
+                      ⚠ View Conflict
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
     <!-- Conflict Modal -->
     <div
       v-if="showConflictModal"
-      class="fixed inset-0 flex items-center justify-center bg-black/50 z-50 animate-slideUp"
+      class="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
     >
-      <div class="bg-white w-full max-w-lg rounded-2xl shadow-lg p-6 relative">
+      <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl p-6 relative">
         <!-- Close Button -->
         <button
           @click="closeConflictModal"
@@ -129,20 +178,21 @@
           ⚠ Schedule Conflict Detected
         </h2>
 
-        <div class="space-y-3">
+        <div class="space-y-3 max-h-80 overflow-y-auto pr-2">
           <div
             v-for="conflict in selectedConflict.conflicts"
             :key="conflict.course_name + conflict.room_name"
             class="p-3 bg-red-50 border border-red-200 rounded-lg text-sm"
           >
-            <p>
-              <span class="font-semibold">{{ conflict.course_name }}</span>
-              ({{ conflict.type }})
+            <p class="font-semibold text-red-700">
+              {{ conflict.course_name }} ({{ conflict.type }})
             </p>
-            <p>🕒 {{ conflict.start_hour }} - {{ conflict.end_hour }}</p>
-            <p>📍 Room: {{ conflict.room_name }}</p>
-            <p>👨‍🏫 Faculty: {{ conflict.faculty_name }}</p>
-            <p>📌 Set: {{ conflict.set }}</p>
+            <p class="text-gray-600">
+              🕒 {{ conflict.start_hour }} - {{ conflict.end_hour }}
+            </p>
+            <p class="text-gray-600">📍 Room: {{ conflict.room_name }}</p>
+            <p class="text-gray-600">👨‍🏫 Faculty: {{ conflict.faculty_name }}</p>
+            <p class="text-gray-600">📌 Set: {{ conflict.set }}</p>
           </div>
         </div>
 
@@ -457,5 +507,26 @@ export default {
   margin-top: 8px;
   font-size: 0.95rem;
   color: #374151;
+}
+@keyframes bounce-custom {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+.bounce-delay-0 {
+  animation: bounce-custom 1s infinite;
+}
+.bounce-delay-200 {
+  animation: bounce-custom 1s infinite;
+  animation-delay: 0.5s;
+}
+.bounce-delay-400 {
+  animation: bounce-custom 1s infinite;
+  animation-delay: 0.4s;
 }
 </style>

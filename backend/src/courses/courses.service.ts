@@ -50,9 +50,10 @@ export class CoursesService {
     return await this.courseRepository.save(course);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<{ message: string }> {
     const course = await this.findOne(id);
     await this.courseRepository.remove(course);
+    return { message: `Course with ID ${id} deleted successfully` };
   }
 
   async findReportCurriculum(): Promise<any[]> {

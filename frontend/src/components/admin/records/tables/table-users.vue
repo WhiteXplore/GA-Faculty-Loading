@@ -104,9 +104,10 @@
                   ID
                 </th>
                 <th class="px-4 py-3 text-left font-normal">Name</th>
-                <th class="px-4 py-3 text-left font-normal">Position</th>
+
                 <th class="px-4 py-3 text-left font-normal">Institute</th>
                 <th class="px-4 py-3 text-left font-normal">Program</th>
+                <th class="px-4 py-3 text-left font-normal">Position</th>
                 <th class="px-4 py-3 text-left font-normal">Email</th>
                 <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
                   Actions
@@ -123,13 +124,14 @@
                 <td class="px-4 py-3 text-left">
                   {{ user.first_name }} {{ user.last_name }}
                 </td>
-                <td class="px-4 py-3 text-left">{{ user.role }}</td>
+
                 <td class="px-4 py-3 text-left">
                   {{ getInstituteName(user.institute_id) }}
                 </td>
                 <td class="px-4 py-3 text-left">
                   {{ getProgramName(user.program_id) }}
                 </td>
+                <td class="px-4 py-3 text-left">{{ user.role }}</td>
                 <td class="px-4 py-3 text-left">{{ user.email }}</td>
                 <td class="px-4 py-3 text-left">
                   <div class="flex gap-2">

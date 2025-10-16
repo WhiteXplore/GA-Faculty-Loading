@@ -93,6 +93,26 @@ rooms = [
 # =========================
 # HELPER FUNCTIONS
 # =========================
+faculty_completed_sets = {f["faculty_id"]: {} for f in faculty}
+
+FACULTY_MAX_COURSES_PER_SET = 2  # max courses a faculty can take per set
+faculty_set_course_count = {f["faculty_id"]: {}
+                            for f in faculty}  # {faculty_id: {set_name: count}}
+
+
+def can_assign_faculty_to_course(faculty_id, set_name):
+    """Return True if faculty can take a course in this set (all previous sets completed AND per-set course limit)."""
+    completed_sets = faculty_completed_sets.get(faculty_id, {})
+    for prev_set, completed in completed_sets.items():
+        if not completed:
+            return False
+
+    # check per-set course limit
+    set_counts = faculty_set_course_count.get(faculty_id, {})
+    if set_counts.get(set_name, 0) >= FACULTY_MAX_COURSES_PER_SET:
+        return False
+
+    return True
 
 
 def faculty_load_summary(schedule):
@@ -161,16 +181,7 @@ def faculty_ids_for_course(course_id):
     return [ue["faculty_id"] for ue in faculty_expertise if ue.get("course_id") == course_id]
 
 
-def pick_conflict_free_faculty(schedule, day, start_hour, end_hour, eligible_faculty_ids, other_schedule=None, faculty_load=None, block_type="Lecture"):
-    """
-    From eligible_faculty_ids (which come from faculty_expertise), pick one that:
-      - Is free for the entire block (schedule + other_schedule)
-      - Projected load (with this block) <= FACULTY_MAX_UNITS
-    Selection strategy:
-      - Compute projected loads and choose faculty with the lowest projected load.
-      - Tie-breaker: random.choice among lowest-load faculty.
-    Returns faculty_id or None.
-    """
+def pick_conflict_free_faculty(schedule, day, start_hour, end_hour, eligible_faculty_ids, other_schedule=None, faculty_load=None, block_type="Lecture", set_name=None):
     if not eligible_faculty_ids:
         return None
     if faculty_load is None:
@@ -178,16 +189,13 @@ def pick_conflict_free_faculty(schedule, day, start_hour, end_hour, eligible_fac
             (schedule or []) + (other_schedule or []))
 
     free_candidates = []
-    # block contribution for load (lecture: hours, lab: 1/3 per 1-hour block)
-    block_contrib = None
-    if block_type == "Lecture":
-        block_contrib = end_hour - start_hour
-    else:
-        # for Laboratory each 1-hour slot counts as 1/3
-        block_contrib = 1/3
+    block_contrib = (end_hour - start_hour) if block_type == "Lecture" else 1/3
 
     for fid in eligible_faculty_ids:
-        # strictly only consider faculty listed as eligible (from faculty_expertise)
+        # check previous sets completed
+        if set_name and not can_assign_faculty_to_course(fid, set_name):
+            continue
+        # check availability
         if not check_availability(schedule, day, start_hour, end_hour, fid, None, other_schedule):
             continue
         projected = faculty_load.get(fid, 0) + block_contrib
@@ -197,7 +205,6 @@ def pick_conflict_free_faculty(schedule, day, start_hour, end_hour, eligible_fac
     if not free_candidates:
         return None
 
-    # pick faculty with minimum projected load; if multiple, random among them
     min_load = min(p for (_, p) in free_candidates)
     lowest = [fid for (fid, p) in free_candidates if p == min_load]
     return random.choice(lowest)
@@ -289,6 +296,78 @@ def place_lecture_block(schedule, existing_schedule, faculty_load, set_name, cou
     return False
 
 
+def place_lab_block(schedule, existing_schedule, faculty_load, set_name, course, lab_units, assigned_faculty_id=None):
+    """
+    Place lab hours as contiguous 3-hour blocks if possible.
+    Each lab unit = 3 hours.
+    lab_units = number of lab units * 3 (already converted to hours)
+    """
+    if lab_units <= 0:
+        return True
+
+    eligible_faculty = faculty_ids_for_course(course.get("course_id"))
+    if assigned_faculty_id:
+        if assigned_faculty_id not in eligible_faculty:
+            assigned_faculty_id = None
+        else:
+            eligible_faculty = [assigned_faculty_id]
+
+    if not eligible_faculty:
+        return False
+
+    remaining = lab_units
+    while remaining > 0:
+        block_hours = min(3, remaining)  # try to place up to 3-hour block
+        placed = False
+        attempts = 0
+        while attempts < MAX_ATTEMPTS_PER_HOUR:
+            attempts += 1
+            day = random.choice(DAYS)
+            start_hour = random.choice(TIME_SLOTS)
+            end_hour = start_hour + block_hours
+
+            # Ensure block fits contiguous TIME_SLOTS
+            if not all(h in TIME_SLOTS for h in range(start_hour, end_hour)):
+                continue
+
+            faculty_id = pick_conflict_free_faculty(
+                schedule, day, start_hour, end_hour, eligible_faculty, existing_schedule, faculty_load, "Laboratory"
+            )
+            room_id = pick_conflict_free_room(
+                schedule, day, start_hour, end_hour, "Laboratory", course.get(
+                    "program_id"), existing_schedule
+            )
+
+            if faculty_id and room_id:
+                schedule.append({
+                    "course_id": course.get("course_id"),
+                    "course_name": course.get("course_code", course.get("course_name", "Unknown")),
+                    "type": "Laboratory",
+                    "day": day,
+                    "start_hour": start_hour,
+                    "end_hour": end_hour,
+                    "faculty_id": faculty_id,
+                    "room_id": room_id,
+                    "set": set_name,
+                    "program_id": course.get("program_id"),
+                })
+                # update faculty load
+                faculty_load[faculty_id] = faculty_load.get(
+                    faculty_id, 0) + (block_hours / 3)
+                remaining -= block_hours
+                placed = True
+                break
+        if not placed:
+            # fallback to single-hour placement
+            ok = place_single_hour(schedule, existing_schedule, faculty_load,
+                                   set_name, course, "Laboratory", assigned_faculty_id)
+            if not ok:
+                break
+            remaining -= 1
+
+    return True
+
+
 def place_single_hour(schedule, existing_schedule, faculty_load, set_name, course, slot_type, assigned_faculty_id=None):
     """
     Place a single 1-hour block. Used for lab hours (and lecture fallback if needed).
@@ -340,16 +419,19 @@ def place_single_hour(schedule, existing_schedule, faculty_load, set_name, cours
 
 
 # =========================
-# INDIVIDUAL CREATION
+# After placing all course units, mark set as completed
 # =========================
-def create_individual(set_name, existing_schedule=None):
-    """
-    Create a schedule individual for GA for one 'set'.
-    Returns a list of blocks.
+def mark_set_completed(faculty_id, set_name):
+    if faculty_id not in faculty_completed_sets:
+        faculty_completed_sets[faculty_id] = {}
+    faculty_completed_sets[faculty_id][set_name] = True
 
-    Important: assigned faculty for each course is chosen from faculty_expertise
-    and selected by lowest current load to prioritize expertise.
-    """
+# =========================
+# Inside create_individual: update after scheduling each course
+# =========================
+
+
+def create_individual(set_name, existing_schedule=None, faculty_completed_sets=None):
     if existing_schedule is None:
         existing_schedule = []
 
@@ -359,50 +441,71 @@ def create_individual(set_name, existing_schedule=None):
 
     for course in courses_to_schedule:
         lec_hours = int(course.get("course_lecture", 0))
-        # labs stored as units: multiply by 3 to get hours (1 lab unit = 3 hours)
-        lab_hours = int(course.get("course_laboratory", 0)) * 3
+        lab_units = int(course.get("course_laboratory", 0))
+        lab_hours = lab_units * 3  # convert to hours
+
         eligible_faculty = faculty_ids_for_course(course.get("course_id"))
         if not eligible_faculty:
-            # skip courses with no eligible faculty
-            continue
+            continue  # skip if no expert faculty
 
-        # SELECT assigned_faculty_id by lowest current load among eligible experts
-        # (tie-break random)
-        loads = [(fid, faculty_load.get(fid, 0)) for fid in eligible_faculty]
+        # pick assigned faculty from lowest load AND within per-set course limit
+        loads = [(fid, faculty_load.get(fid, 0)) for fid in eligible_faculty
+                 if can_assign_faculty_to_course(fid, set_name)]
+        if not loads:
+            continue  # skip if no faculty eligible due to incomplete previous sets or per-set limit
+
         min_load = min(l for (_, l) in loads)
         ties = [fid for (fid, l) in loads if l == min_load]
         assigned_faculty_id = random.choice(ties)
 
-        # Place lecture as one contiguous block if possible
+        # ------------------------
+        # Place lecture block
+        # ------------------------
         if lec_hours > 0:
             placed = place_lecture_block(
-                schedule, existing_schedule, faculty_load, set_name, course, lec_hours, assigned_faculty_id)
-            # if we couldn't place the contiguous lecture block, attempt to place lec_hours as single hours (fallback)
+                schedule, existing_schedule, faculty_load, set_name, course, lec_hours, assigned_faculty_id
+            )
             if not placed:
+                # fallback: place as single-hour blocks
                 for _ in range(lec_hours):
                     ok = place_single_hour(
-                        schedule, existing_schedule, faculty_load, set_name, course, "Lecture", assigned_faculty_id)
+                        schedule, existing_schedule, faculty_load, set_name, course, "Lecture", assigned_faculty_id
+                    )
                     if not ok:
                         break
 
-        # Place lab_hours as 1-hour chunks
-        remaining = lab_hours
-        while remaining > 0:
-            ok = place_single_hour(schedule, existing_schedule, faculty_load,
-                                   set_name, course, "Laboratory", assigned_faculty_id)
-            if not ok:
-                break
-            remaining -= 1
+        # ------------------------
+        # Place lab block
+        # ------------------------
+        if lab_hours > 0:
+            place_lab_block(
+                schedule, existing_schedule, faculty_load, set_name, course, lab_hours, assigned_faculty_id
+            )
 
-    # sort for determinism
+        # ------------------------
+        # Mark set as completed
+        # ------------------------
+        if faculty_completed_sets is not None:
+            mark_set_completed(assigned_faculty_id, set_name)
+
+        # ------------------------
+        # Increment per-set course count
+        # ------------------------
+        if assigned_faculty_id not in faculty_set_course_count:
+            faculty_set_course_count[assigned_faculty_id] = {}
+        faculty_set_course_count[assigned_faculty_id][set_name] = faculty_set_course_count[assigned_faculty_id].get(
+            set_name, 0) + 1
+
+    # sort schedule by day, start hour, course
     schedule.sort(key=lambda x: (DAYS.index(
         x["day"]), x["start_hour"], x["course_id"]))
     return schedule
 
-
 # =========================
 # FITNESS / GA OPERATIONS
 # =========================
+
+
 def fitness(schedule, existing_schedule=None):
     """
     Fitness with strong penalty for conflicts and overloads.
@@ -510,11 +613,8 @@ def crossover(parent1, parent2):
     return unique
 
 
-def genetic_algorithm(set_name, existing_schedule=None):
-    """
-    Run GA to produce best individual for given set_name considering existing_schedule.
-    """
-    population = [create_individual(set_name, existing_schedule)
+def genetic_algorithm(set_name, existing_schedule=None, faculty_completed_sets=None):
+    population = [create_individual(set_name, existing_schedule, faculty_completed_sets)
                   for _ in range(POPULATION_SIZE)]
     for _ in range(GENERATIONS):
         population = sorted(population, key=lambda ind: fitness(
@@ -530,10 +630,11 @@ def genetic_algorithm(set_name, existing_schedule=None):
         population = next_gen
     return sorted(population, key=lambda ind: fitness(ind, existing_schedule), reverse=True)[0]
 
-
 # =========================
 # OUTPUT / UTIL
 # =========================
+
+
 def schedule_to_object(schedule, faculty_list, room_list):
     def resolve_faculty_name(f):
         if isinstance(f, dict):
@@ -588,17 +689,24 @@ if __name__ == "__main__":
     random.seed()
     all_sets = sorted(set(a.get("set") for a in assigned_set_courses))
     all_schedules = {}
-    accumulated_blocks = []  # blocks already placed (between sets)
 
+    # ← Add these here, before looping over sets
+    faculty_completed_sets = {f["faculty_id"]: {} for f in faculty}
+    accumulated_blocks = []
+
+    # Main loop over sets
     for s in all_sets:
         print(
             f"Generating schedule for set: {s} (considering {len(accumulated_blocks)} accumulated blocks)")
         best_schedule = genetic_algorithm(
-            set_name=s, existing_schedule=accumulated_blocks)
+            set_name=s,
+            existing_schedule=accumulated_blocks,
+            faculty_completed_sets=faculty_completed_sets
+        )
         obj = schedule_to_object(best_schedule, faculty, rooms)
         all_schedules[s] = obj
 
-        # add placed blocks to accumulated_blocks so next sets avoid conflicts
+        # add placed blocks to accumulated_blocks for next sets
         for blk in best_schedule:
             accumulated_blocks.append({
                 "course_id": blk.get("course_id"),
@@ -613,5 +721,9 @@ if __name__ == "__main__":
                 "program_id": blk.get("program_id"),
             })
 
-    # print nicely
+        # mark all faculty in this set as completed
+        for blk in best_schedule:
+            mark_set_completed(blk["faculty_id"], s)
+
+    # print final schedules
     print(json.dumps(all_schedules, indent=2))
