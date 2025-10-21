@@ -1,317 +1,523 @@
 <template>
-  <div v-if="isTable" class=" ">
-    <div class="text-sm flex justify-between">
-      <div class="text-[13px] text-text mt-4 font-regular">Pages / Classes</div>
-
-      <div
-        @click="toggleAdd"
-        class="cursor-pointer flex gap-2 items-center tracking-wider bg-defaultGreen text-white hover:text-green-700 p-3 py-2 rounded-md hover:bg-green-300 hover:shadow-lg"
+  <div class="space-y-6 text-[13px]">
+    <!-- HEADER -->
+    <div class="text-sm flex justify-between" v-if="user">
+      <div class="text-[13px] text-text mt-4">Pages / Year & Section</div>
+      <button
+        v-if="user.role !== 'Admin'"
+        @click="openYearSectionModal"
+        class="flex items-center gap-2 px-4 py-2 text-green-600 bg-white border border-green-500 rounded-xl shadow-sm hover:bg-green-600 hover:text-white transition-all duration-300"
       >
-        <icon :name="'add-account'"></icon>
-        <button>Add Class</button>
-      </div>
+        <div
+          class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full"
+        >
+          <icon name="circle-add" class="w-4 h-4" />
+        </div>
+        <span class="font-medium">Add Year/Section</span>
+      </button>
     </div>
 
-    <div class="text-[14px] bg-white rounded-xl">
-      <div class="mt-4 overflow-x-auto border p-2 rounded-xl">
-        <!-- Top controls -->
-        <div class="text-gray-700 flex justify-between items-start mt-1">
-          <!-- Items Per Page -->
-          <div class="flex items-center">
-            <select
-              v-model="itemsPerPage"
-              class="px-1 py-1 border rounded-md"
-              @change="changePage(1)"
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-            </select>
-            <span class="ml-2">Per page</span>
-          </div>
+    <!-- MAIN CONTENT -->
+    <div v-if="user" class="space-y-6">
+      <!-- Program Info (Program Chairperson only) -->
+      <div
+        v-if="user.role === 'Program Chairperson' && userProgram"
+        class="bg-white border border-green-100 p-5 rounded-2xl"
+      >
+        <h2 class="text-lg font-bold text-gray-800">
+          {{ userProgram.program_name }}
+        </h2>
+        <p class="text-sm text-gray-600" v-if="userProgram.institute">
+          Institute: {{ userProgram.institute.institute_name }}
+        </p>
+      </div>
 
-          <!-- Search -->
-          <div class="flex items-center">
-            <input
-              v-model="searchQuery"
-              type="text"
-              class="px-3 w-[300px] py-3 border rounded-md"
-              placeholder="Search..."
-              @input="changePage(1)"
-            />
+      <!-- SECTIONS TABLE -->
+      <div
+        v-if="filteredAndSearchedClasses.length > 0"
+        class="mt-4 overflow-x-auto border p-3 rounded-xl bg-white"
+      >
+        <div v-if="user">
+          <div
+            class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
+            v-if="user.role === 'Admin'"
+          >
+            <!-- Items per page -->
+            <div class="flex items-center gap-2">
+              <div class="relative">
+                <select
+                  v-model="itemsPerPage"
+                  class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+                  @change="changePage(1)"
+                >
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                </select>
+                <!-- Custom arrow -->
+                <div
+                  class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <span class="text-sm font-medium">Per page</span>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex items-center gap-3 flex-wrap">
+              <!-- Curriculum Filter -->
+              <div class="relative">
+                <select
+                  v-model="selectedProgramId"
+                  class="appearance-none rounded-full border border-green-600 bg-white px-4 py-2 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+                  @change="changePage(1)"
+                >
+                  <option value="">All Programs</option>
+                  <template
+                    v-for="(programs, institute) in programsByInstitute"
+                    :key="institute"
+                  >
+                    <optgroup :label="institute">
+                      <option
+                        v-for="prog in programs"
+                        :key="prog.program_id"
+                        :value="prog.program_id"
+                      >
+                        {{ prog.program_name }}
+                      </option>
+                    </optgroup>
+                  </template>
+                </select>
+                <div
+                  class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Search -->
+              <div class="relative">
+                <input
+                  v-model="searchQuery"
+                  type="text"
+                  placeholder="Search..."
+                  class="rounded-full border border-green-600 bg-white px-4 py-2 pl-10 text-sm shadow-sm w-full sm:w-[280px] transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+                  @input="changePage(1)"
+                />
+                <!-- Search icon -->
+                <div
+                  class="absolute inset-y-0 left-3 flex items-center text-green-700 pointer-events-none"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                  </svg>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
         <!-- Table -->
-        <div class="w-full mt-3 rounded-t-lg overflow-x-auto">
-          <div
-            class="overflow-y-auto transition-all duration-300"
-            :class="tableHeightClass"
+        <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+          <table
+            class="min-w-full text-sm text-gray-700 border-collapse table-auto"
           >
-            <table
-              class="min-w-full table-fixed border-collapse text-text text-[13px]"
+            <thead
+              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
-              <thead
-                class="bg-Green text-gray-700 tracking-wider font-regular sticky top-0 z-10"
-              >
-                <tr>
-                  <th class="w-[50px] px-5 py-3 text-center border-b">ID</th>
-                  <th class="px-2 py-3 text-left border-b">Room</th>
-                  <th class="px-2 py-3 text-left border-b">Course</th>
-                  <th class="px-2 py-3 text-left border-b">Program Major</th>
-                  <th class="px-2 py-3 text-left border-b">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="(programs_data, index) in paginatedData"
-                  :key="programs_data.programs_id"
-                  :class="{ 'bg-green-50 border-b': (index + 1) % 2 === 0 }"
-                >
-                  <td class="px-2 py-1 border-b">{{ startIndex + index }}</td>
-                  <td class="px-2 py-1 border-b text-left">
-                    {{ programs_data.program_name }}
-                  </td>
-                  <td class="px-2 py-1 border-b text-left">
-                    {{ programs_data.program_code }}
-                  </td>
-                  <td class="px-2 py-1 border-b text-left">
-                    {{ programs_data.program_major }}
-                  </td>
-                  <td class="px-2 py-2 border-b">
-                    <div class="flex gap-1">
-                      <button
-                        class="p-2 py-1 h-8 border-2 border-green-200 hover:bg-green-300 text-green-700 rounded-lg flex gap-1"
-                        @click="toggleEdit(programs_data)"
-                      >
-                        <icon name="edit" /> Edit
-                      </button>
+              <tr>
+                <th class="px-4 py-3 text-left w-[5%] rounded-tl-lg">#</th>
 
-                      <button
-                        class="p-2 py-1 h-8 border-2 border-red-200 hover:bg-red-300 text-red-700 rounded-lg flex gap-1"
-                        @click="toggleDelete(programs_data)"
-                      >
-                        <icon name="delete" /> Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr v-if="paginatedData.length === 0">
-                  <td colspan="10" class="text-center py-8 text-gray-500">
-                    No records found
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                <th class="px-4 py-3 text-left w-[15%]">Program</th>
+                <th class="px-4 py-3 text-left w-[15%]">Section Name</th>
+                <th class="px-4 py-3 text-center w-[18%]">Class Size</th>
+                <th class="px-4 py-3 text-center w-[18%]">School Year</th>
+
+                <th class="px-4 py-3 text-center w-[10%]">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(cls, index) in paginatedClasses"
+                :key="cls.class_id"
+                class="hover:bg-green-50 transition-all border-t"
+              >
+                <td class="px-4 py-3 text-left">{{ startIndex + index }}</td>
+
+                <td class="px-4 py-3 text-left">
+                  {{ cls.program?.program_code }}
+                </td>
+                <td class="px-4 py-3 font-medium text-left">
+                  {{ cls.set_name }}
+                </td>
+                <td class="px-4 py-3 text-center">{{ cls.class_size }}</td>
+                <td class="px-4 py-3 text-center">
+                  {{ cls.schoolYear?.school_year_name }}
+                </td>
+
+                <td class="px-4 py-3 flex justify-center gap-2">
+                  <!-- Delete Button -->
+                  <button
+                    @click="promptDelete(cls.class_id)"
+                    class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                  >
+                    <icon name="delete" /> Delete
+                  </button>
+                </td>
+              </tr>
+
+              <tr v-if="paginatedClasses.length === 0">
+                <td
+                  :colspan="user.role === 'Admin' ? 6 : 5"
+                  class="text-center py-6 text-gray-400"
+                >
+                  No matching sections found
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         <!-- Pagination -->
-        <div class="flex justify-between items-center mt-4">
-          <div class="text-gray-700">
-            <span>
-              Showing {{ startIndex }} to {{ endIndex }} of
-              {{ filteredData.length }} entries
-            </span>
+        <div class="flex justify-between items-center mt-4 text-gray-700">
+          <div>
+            Showing {{ startIndex }} to {{ endIndex }} of
+            {{ filteredAndSearchedClasses.length }} entries
           </div>
           <div class="flex items-center">
             <button
               @click="changePage(currentPage - 1)"
               :disabled="currentPage === 1"
-              class="px-3 py-1 bg-gray-300 text-gray-700 rounded-l-md hover:bg-gray-400"
+              class="px-3 py-1 bg-gray-300 text-gray-700 rounded-l-md hover:bg-gray-400 disabled:opacity-50"
             >
               &lt;
             </button>
-            <span v-for="page in pageNumbers" :key="'page-' + page">
-              <button
-                @click="changePage(page)"
-                :class="{
-                  ' bg-defaultGreen text-white': currentPage === page,
-                  'bg-gray-200 text-gray-700': currentPage !== page,
-                }"
-                class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
-              >
-                {{ page }}
-              </button>
-            </span>
+            <button
+              v-for="page in pageNumbers"
+              :key="'page-' + page"
+              @click="changePage(page)"
+              :class="{
+                'bg-defaultGreen text-white': currentPage === page,
+                'bg-gray-200 text-gray-700': currentPage !== page,
+              }"
+              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+            >
+              {{ page }}
+            </button>
             <button
               @click="changePage(currentPage + 1)"
               :disabled="currentPage === totalPages"
-              class="px-3 py-1 bg-gray-300 text-gray-700 rounded-r-md hover:bg-gray-400"
+              class="px-3 py-1 bg-gray-300 text-gray-700 rounded-r-md hover:bg-gray-400 disabled:opacity-50"
             >
               &gt;
             </button>
           </div>
         </div>
       </div>
+
+      <!-- Empty State -->
+      <div v-else class="bg-white border p-8 rounded-xl text-center">
+        <p class="text-gray-600">
+          No sections created for {{ activeSchoolYearName }} yet.
+        </p>
+      </div>
+    </div>
+
+    <!-- LOADING OR EMPTY STATES -->
+    <div v-else-if="loading" class="bg-white border p-8 rounded-xl text-center">
+      <p class="text-gray-500 animate-pulse">Loading program information...</p>
+    </div>
+
+    <div v-else class="bg-white border p-8 rounded-xl text-center">
+      <p class="text-gray-600 font-medium">
+        No program found for your account.
+      </p>
+      <p class="text-sm text-gray-400 mt-1">
+        Please contact the administrator.
+      </p>
     </div>
   </div>
-  <addProgram v-if="isAdd" @close="closeView" @refresh="loadPrograms" />
-  <!-- Delete Confirmation Modal -->
-  <div
-    v-if="showDeleteModal"
-    class="fixed inset-0 bg-gray-800 bg-opacity-40 flex justify-center items-center z-50 w-min-screen"
-  ></div>
-  <div
-    v-if="showDeleteModal"
-    class="rounded-xl shadow-lg w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
-  >
+
+  <!-- MODAL -->
+  <addYearSection
+    v-if="showYearSectionModal && userProgram"
+    :programData="userProgram"
+    @close="closeYearSectionModal"
+    @refresh="loadUserProgram"
+  />
+  <div v-if="showDeleteModal" class="fixed inset-0 z-50">
+    <div class="absolute inset-0 bg-gray-800 bg-opacity-40"></div>
     <div
-      class="rounded-full w-16 h-16 md:w-20 md:h-20 flex justify-center items-center bg-red-300 animate-pulse"
+      class="rounded-xl border w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
     >
-      <icon
-        name="question"
-        class="w-8 h-8 md:w-10 md:h-10 text-white flex justify-center items-center"
-      />
-    </div>
-
-    <h1 class="text-[14px] md:text-[16px] font-semibold mt-4">
-      Delete Confirmation
-    </h1>
-    <p class="mt-2 text-[12px] md:text-[13px] text-center px-8">
-      Are you sure you want to delete this record? This action cannot be undone.
-    </p>
-
-    <div class="w-full h-[1px] rounded-md bg-gray-200 mt-4"></div>
-
-    <div class="tracking-wide flex gap-2 mt-4">
-      <button
-        class="bg-red-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md"
-        @click="showDeleteModal = false"
+      <div
+        class="rounded-full w-16 h-16 md:w-20 md:h-20 flex justify-center items-center bg-red-300 animate-pulse"
       >
-        No, Cancel
-      </button>
-      <button
-        class="bg-green-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
-        @click="confirmDelete"
-      >
-        Yes, Delete
-      </button>
+        <icon
+          name="question"
+          class="w-8 h-8 md:w-10 md:h-10 text-white flex justify-center items-center"
+        />
+      </div>
+      <h1 class="text-[14px] md:text-[16px] font-semibold mt-4">
+        Delete Confirmation
+      </h1>
+      <p class="mt-2 text-[12px] md:text-[13px] text-center px-8">
+        Are you sure you want to delete this record? This action cannot be
+        undone.
+      </p>
+      <div class="w-full h-[1px] rounded-md bg-gray-200 mt-4"></div>
+      <div class="tracking-wide flex gap-2 mt-4">
+        <button
+          class="bg-red-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md"
+          @click="showDeleteModal = false"
+        >
+          No, Cancel
+        </button>
+        <button
+          class="bg-green-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
+          @click="confirmDelete"
+        >
+          Yes, Delete
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import icon from "@/assets/icon.vue";
-import addProgram from "../modals/add-programs.vue";
 import { toast } from "vue3-toastify";
-import { useFetchDataStore } from "../../../../store/fetch-data-store";
-import { mapState } from "pinia";
+import addYearSection from "@/components/admin/records/modals/add-year-section.vue";
 import axios from "axios";
+import { mapState } from "pinia";
+import { useFetchDataStore } from "@/store/fetch-data-store";
+
 export default {
-  name: "TablePrograms",
-  components: {
-    icon,
-    addProgram,
-  },
+  name: "YearSectionManagement",
+  components: { icon, addYearSection },
   data() {
     return {
+      showYearSectionModal: false,
+      userProgram: null,
+      user: null,
+      programs: [],
+      selectedProgramId: "",
+      loading: true,
+      classes: [],
+      schoolYears: [],
+      activeSchoolYearId: null,
+      showDeleteModal: false,
+      deleteTargetId: null, // ✅ store classId to delete
+      searchQuery: "",
       currentPage: 1,
       itemsPerPage: 10,
-      searchQuery: "",
-      isAdd: false,
-      isEdit: false,
-      isTable: true,
-      isUploadData: false,
-      showDeleteModal: false,
-      recordToDelete: null,
     };
   },
   computed: {
-    ...mapState(useFetchDataStore, ["programs"]),
+    ...mapState(useFetchDataStore, ["year"]),
+    uniqueInstitutes() {
+      // Get all institute names from the classes
+      const institutes = this.classes.map(
+        (cls) => cls.program?.institute?.institute_name
+      );
+      // Remove duplicates
+      return [...new Set(institutes)];
+    },
 
-    filteredData() {
-      const query = this.searchQuery.toLowerCase();
-      return this.programs.filter((item) =>
-        `${item.first_name} ${item.middle_name} ${item.last_name}`
-          .toLowerCase()
-          .includes(query)
+    programsByInstitute() {
+      const grouped = {};
+      this.classes.forEach((cls) => {
+        const instituteName = cls.program?.institute?.institute_name;
+        if (!grouped[instituteName]) grouped[instituteName] = [];
+        grouped[instituteName].push(cls.program);
+      });
+      // Remove duplicate programs per institute
+      for (const institute in grouped) {
+        grouped[institute] = grouped[institute].filter(
+          (v, i, a) => a.findIndex((p) => p.program_id === v.program_id) === i
+        );
+      }
+      return grouped;
+    },
+    activeSchoolYearName() {
+      const sy = this.schoolYears.find((s) => s.is_active);
+      return sy ? sy.school_year_name : "Current School Year";
+    },
+
+    // ✅ Filter logic updated for Admin/Program Chairperson roles
+    filteredClasses() {
+      if (!this.activeSchoolYearId) return [];
+
+      // Admin → filter by selectedProgramId if set
+      if (this.user?.role === "Admin") {
+        return this.classes.filter((cls) => {
+          const matchProgram =
+            !this.selectedProgramId ||
+            String(cls.program_id) === String(this.selectedProgramId);
+          const matchSY =
+            String(cls.school_year_id) === String(this.activeSchoolYearId);
+          return matchProgram && matchSY;
+        });
+      }
+
+      // Program Chairperson → filter by their own program
+      if (this.userProgram) {
+        return this.classes.filter(
+          (cls) =>
+            String(cls.program_id) === String(this.userProgram.program_id) &&
+            String(cls.school_year_id) === String(this.activeSchoolYearId)
+        );
+      }
+
+      return [];
+    },
+
+    filteredAndSearchedClasses() {
+      return this.filteredClasses.filter((cls) =>
+        cls.set_name.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     },
+
     totalPages() {
-      return Math.ceil(this.filteredData.length / this.itemsPerPage) || 1;
-    },
-    paginatedData() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      return this.filteredData.slice(start, start + this.itemsPerPage);
+      return Math.ceil(
+        this.filteredAndSearchedClasses.length / this.itemsPerPage
+      );
     },
     startIndex() {
-      return this.filteredData.length === 0
-        ? 0
-        : (this.currentPage - 1) * this.itemsPerPage + 1;
+      return (this.currentPage - 1) * this.itemsPerPage + 1;
     },
     endIndex() {
-      const end = this.currentPage * this.itemsPerPage;
-      return end > this.filteredData.length ? this.filteredData.length : end;
+      return Math.min(
+        this.startIndex + this.itemsPerPage - 1,
+        this.filteredAndSearchedClasses.length
+      );
+    },
+    paginatedClasses() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      return this.filteredAndSearchedClasses.slice(
+        start,
+        start + this.itemsPerPage
+      );
     },
     pageNumbers() {
       return Array.from({ length: this.totalPages }, (_, i) => i + 1);
     },
   },
   methods: {
-    async loadPrograms() {
-      const store = useFetchDataStore();
-      await store.fetchPrograms();
-    },
-    toggleUploadData() {
-      this.isUploadData = true;
-      this.isTable = true;
-    },
-    toggleAdd() {
-      this.isAdd = true;
-      this.isTable = true;
-    },
-
-    toggleEdit() {
-      this.isEdit = true;
-      this.isTable = false;
-    },
-    toggleDelete(item) {
-      this.recordToDelete = item;
+    // Called when Delete button is clicked
+    promptDelete(classId) {
+      this.deleteTargetId = classId;
       this.showDeleteModal = true;
     },
-    confirmDelete() {
-      if (!this.recordToDelete || isNaN(this.recordToDelete.program_id)) {
-        toast.error("Invalid program ID.");
-        return;
+
+    // Called from the modal "Yes, Delete" button
+    async confirmDelete() {
+      if (!this.deleteTargetId) return;
+
+      try {
+        await axios.delete(
+          `http://localhost:8000/class/delete-id/${this.deleteTargetId}`,
+          { withCredentials: true }
+        );
+
+        // Refresh class list
+        await this.loadClasses();
+        toast.success("Record deleted successfully");
+        // Close modal
+        this.showDeleteModal = false;
+        this.deleteTargetId = null;
+      } catch (error) {
+        console.error("Error deleting class:", error);
+        alert("Failed to delete class. Please try again.");
       }
-
-      const programId = this.recordToDelete.program_id;
-
-      axios
-        .delete(`http://localhost:8000/programs/delete-id/${programId}`)
-        .then(() => {
-          this.recordToDelete = null;
-          this.showDeleteModal = false;
-          // Play sound after successful delete
-          const audio = new Audio(require("@/assets/delete.mp3"));
-          audio.play();
-
-          this.loadPrograms();
-          toast.success("Record deleted successfully");
-        })
-        .catch((error) => {
-          console.error("Delete failed:", error);
-          toast.error("Failed to delete record.");
-        });
+    },
+    async fetchUser() {
+      const { data } = await axios.get("http://localhost:8000/auth/me", {
+        withCredentials: true,
+      });
+      this.user = data;
+    },
+    async loadPrograms() {
+      const { data } = await axios.get(
+        "http://localhost:8000/programs/get-programs"
+      );
+      this.programs = data;
+    },
+    async loadUserProgram() {
+      if (this.user?.role === "Program Chairperson") {
+        const { data } = await axios.get(
+          "http://localhost:8000/programs/get-programs"
+        );
+        this.userProgram = data.find(
+          (p) => String(p.program_id) === String(this.user.program_id)
+        );
+      }
+    },
+    async loadClasses() {
+      const { data } = await axios.get(
+        "http://localhost:8000/class/get-classes"
+      );
+      this.classes = data;
+    },
+    async loadSchoolYears() {
+      const { data } = await axios.get(
+        "http://localhost:8000/school-year/get-school-years"
+      );
+      this.schoolYears = data;
+      const active = data.find((s) => s.is_active);
+      if (active) this.activeSchoolYearId = active.school_year_id;
     },
     changePage(page) {
-      this.currentPage = Math.max(1, Math.min(page, this.totalPages));
+      if (page >= 1 && page <= this.totalPages) {
+        this.currentPage = page;
+      }
     },
-    closeView() {
-      this.isAdd = false;
-      this.isUploadData = false;
+    openYearSectionModal() {
+      this.showYearSectionModal = true;
     },
-    handleBackToTable() {
-      this.isEdit = false;
-      this.isAdd = false;
-      this.isUploadData = false;
-      this.isTable = true;
+    closeYearSectionModal() {
+      this.showYearSectionModal = false;
+      this.loadClasses();
     },
   },
-  mounted() {
-    this.loadPrograms();
+  async mounted() {
+    await this.fetchUser();
+    await this.loadSchoolYears();
+    await this.loadClasses();
+    await this.loadPrograms(); // ✅ fetch all programs
+    await this.loadUserProgram();
   },
 };
 </script>

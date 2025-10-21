@@ -8,9 +8,25 @@
         </div>
 
         <div class="flex gap-3">
+          <!-- View Faculty Button -->
+          <div
+            @click="showFacultyTable = !showFacultyTable"
+            class="group flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white rounded-xl shadow-sm cursor-pointer transition"
+          >
+            <div
+              class="p-1 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-white transition"
+            >
+              <icon
+                :name="'user-group'"
+                class="w-4 h-4 text-blue-600 group-hover:text-blue-600"
+              />
+            </div>
+            <span class="font-medium text-sm">View Faculty</span>
+          </div>
+
           <!-- Auto Generation Button -->
           <div
-            @click="openYearSemModal"
+            @click="generateSchedule"
             class="group flex items-center gap-2 px-4 py-2 border border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl shadow-sm cursor-pointer transition"
           >
             <div
@@ -22,131 +38,6 @@
               />
             </div>
             <span class="font-medium text-sm">Auto Generation</span>
-          </div>
-
-          <!-- ✅ Year & Semester Modal -->
-          <div
-            v-if="showYearSemModal"
-            class="fixed inset-0 flex items-center justify-center bg-black/40 z-50"
-          >
-            <div
-              class="bg-white w-full max-w-md rounded-2xl shadow-lg p-6 relative"
-            >
-              <button
-                @click="closeYearSemModal"
-                class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
-              >
-                ✖
-              </button>
-
-              <h2 class="text-lg font-semibold text-green-700 mb-4">
-                📘 Select Academic Year and Semester
-              </h2>
-
-              <div class="space-y-4">
-                <!-- Year -->
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1"
-                    >Academic Year</label
-                  >
-                  <select
-                    v-model="selectedYear"
-                    class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                  >
-                    <option disabled value="">-- Select Year --</option>
-                    <option
-                      v-for="year in yearOptions"
-                      :key="year"
-                      :value="year"
-                    >
-                      {{ year }}
-                    </option>
-                  </select>
-                </div>
-
-                <!-- Semester -->
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1"
-                    >Semester</label
-                  >
-                  <select
-                    v-model="selectedSem"
-                    class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                  >
-                    <option disabled value="">-- Select Semester --</option>
-                    <option value="1">1st Semester</option>
-                    <option value="2">2nd Semester</option>
-                    <option value="3">Summer</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="mt-6 flex justify-end gap-2">
-                <button
-                  @click="closeYearSemModal"
-                  class="px-4 py-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
-                >
-                  Cancel
-                </button>
-                <button
-                  @click="confirmYearSem"
-                  :disabled="!selectedYear || !selectedSem"
-                  class="px-4 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Confirm
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- ✅ Confirm Generation Modal -->
-          <div
-            v-if="showGenerateConfirm"
-            class="fixed inset-0 flex items-center justify-center bg-black/40 z-50"
-          >
-            <div
-              class="bg-white w-full max-w-sm rounded-2xl shadow-lg p-6 relative"
-            >
-              <button
-                @click="closeGenerateConfirm"
-                class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
-              >
-                ✖
-              </button>
-
-              <h2 class="text-lg font-semibold text-green-700 mb-3">
-                ⚙ Confirm Auto Generation
-              </h2>
-              <p class="text-gray-600 mb-6 text-sm">
-                Are you sure you want to generate a schedule for
-                <strong>{{ selectedYear }}</strong> -
-                <strong>
-                  {{
-                    selectedSem == 1
-                      ? "1st Semester"
-                      : selectedSem == 2
-                      ? "2nd Semester"
-                      : "Summer"
-                  }}
-                </strong>
-                ?
-              </p>
-
-              <div class="flex justify-end gap-2">
-                <button
-                  @click="closeGenerateConfirm"
-                  class="px-4 py-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
-                >
-                  Cancel
-                </button>
-                <button
-                  @click="generateSchedule"
-                  class="px-4 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700 transition"
-                >
-                  Generate
-                </button>
-              </div>
-            </div>
           </div>
 
           <!-- Save this schedule -->
@@ -164,6 +55,177 @@
             </div>
             <span class="font-medium text-sm">Save this schedule</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Faculty Table -->
+    <div v-if="showFacultyTable" class="mt-6 bg-white rounded-xl border p-5">
+      <!-- FILTER BAR -->
+
+      <div
+        class="flex flex-wrap items-center justify-between gap-4 mb-3 text-gray-700"
+      >
+        <!-- Items per page -->
+        <div class="flex items-center gap-2">
+          <label class="text-sm font-medium">Show:</label>
+          <div class="relative">
+            <select
+              v-model="itemsPerPage"
+              @change="changePage(1)"
+              class="appearance-none rounded-lg border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+            <!-- Custom arrow -->
+            <div
+              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+          </div>
+          <span class="text-sm font-medium">per page</span>
+        </div>
+
+        <!-- Institute & Program Filter Dropdowns -->
+        <div class="flex flex-wrap items-center gap-4">
+          <!-- Institute Filter -->
+          <div class="flex items-center gap-2">
+            <label
+              for="instituteFilter"
+              class="text-sm text-gray-600 font-medium"
+            >
+              Institute:
+            </label>
+            <select
+              id="instituteFilter"
+              v-model="selectedInstituteId"
+              class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 w-[180px]"
+            >
+              <option value="">All Institutes</option>
+              <option
+                v-for="institute in uniqueInstituteIds"
+                :key="institute"
+                :value="institute"
+              >
+                Institute {{ institute }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Program Filter -->
+          <div class="flex items-center gap-2">
+            <label
+              for="programFilter"
+              class="text-sm text-gray-600 font-medium"
+            >
+              Program:
+            </label>
+            <select
+              id="programFilter"
+              v-model="selectedProgramId"
+              :disabled="!selectedInstituteId"
+              class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 disabled:cursor-not-allowed w-[180px]"
+            >
+              <option value="">All Programs</option>
+              <option
+                v-for="programId in filteredProgramIds"
+                :key="programId"
+                :value="programId"
+              >
+                Program {{ programId }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- FACULTY TABLE -->
+      <div
+        class="w-full mt-5 rounded-xl border bg-white overflow-hidden shadow-sm max-h-[500px] overflow-y-auto"
+      >
+        <table class="min-w-full text-sm text-gray-700 border-collapse">
+          <thead class="bg-defaultGreen text-white sticky top-0 z-10">
+            <tr>
+              <th class="px-4 py-3 text-left">Faculty Name</th>
+              <th class="px-4 py-3 text-center w-28">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(slots, instructor) in paginatedFaculty"
+              :key="instructor"
+              class="hover:bg-green-50 transition-all border-t"
+            >
+              <td class="px-4 py-3 text-gray-700 font-medium truncate">
+                {{ instructor }}
+              </td>
+              <td class="px-4 py-3 text-center">
+                <button
+                  @click="viewFacultySchedule(instructor)"
+                  class="px-3 py-1 h-8 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-lg flex items-center gap-1"
+                >
+                  <icon name="eye" /> View
+                </button>
+              </td>
+            </tr>
+
+            <tr
+              v-if="!Object.keys(filteredFacultyByInstituteAndProgram).length"
+              class="text-center"
+            >
+              <td colspan="2" class="py-4 text-gray-500">No faculty found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex justify-between items-center mt-4">
+        <div class="text-gray-700">
+          Showing {{ startIndex }} to {{ endIndex }} of
+          {{ filteredData.length }} faculty
+        </div>
+        <div class="flex items-center">
+          <button
+            @click="changePage(currentPage - 1)"
+            :disabled="currentPage === 1"
+            class="px-3 py-1 bg-gray-300 text-gray-700 rounded-l-md hover:bg-gray-400"
+          >
+            &lt;
+          </button>
+          <span v-for="page in pageNumbers" :key="'page-' + page">
+            <button
+              @click="changePage(page)"
+              :class="{
+                ' bg-defaultGreen text-white': currentPage === page,
+                'bg-gray-200 text-gray-700': currentPage !== page,
+              }"
+              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+            >
+              {{ page }}
+            </button>
+          </span>
+          <button
+            @click="changePage(currentPage + 1)"
+            :disabled="currentPage === totalPages"
+            class="px-3 py-1 bg-gray-300 text-gray-700 rounded-r-md hover:bg-gray-400"
+          >
+            &gt;
+          </button>
         </div>
       </div>
     </div>
@@ -196,13 +258,13 @@
       {{ error }}
     </div>
 
-    <!-- Schedule -->
+    <!-- Schedule Display -->
     <div
-      v-else
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[80vh]"
+      v-else-if="!showFacultyTable"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[70vh]"
     >
       <div
-        v-for="(slots, instructor) in groupedSchedule"
+        v-for="(slots, instructor) in filteredGroupedSchedule"
         :key="instructor"
         class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-200 flex flex-col"
       >
@@ -218,11 +280,11 @@
           <table class="w-full text-sm text-left border-collapse">
             <thead class="sticky top-0 bg-gray-100 z-10">
               <tr class="text-gray-700 text-sm">
-                <th class="px-4 py-2 border border-gray-200">Time</th>
+                <th class="px-4 py-2 border border-gray-200 w-24">Time</th>
                 <th
                   v-for="day in days"
                   :key="day"
-                  class="px-4 py-2 border border-gray-200 text-center"
+                  class="px-4 py-2 border border-gray-200 text-center w-30"
                 >
                   {{ day }}
                 </th>
@@ -235,18 +297,16 @@
                 class="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition"
               >
                 <td
-                  class="px-4 py-3 border border-gray-200 font-medium text-gray-700"
+                  class="px-4 py-3 border border-gray-200 font-medium text-gray-700 text-xs w-24"
                 >
                   {{ slot.start }} - {{ slot.end }}
                 </td>
 
-                <!-- Per-day cells -->
                 <td
                   v-for="day in days"
                   :key="day"
-                  class="relative px-4 py-3 border border-gray-200 text-center align-top"
+                  class="relative px-2 py-2 border border-gray-200 text-center align-top min-h-[80px]"
                 >
-                  <!-- Loop over items that start in this slot -->
                   <template
                     v-for="item in getScheduleForCell(slot, day, instructor)"
                     :key="item.course_name + item.start_hour + item.room_name"
@@ -255,26 +315,32 @@
                       v-if="isStartingSlot(item, slot)"
                       :rowspan="getRowSpan(item)"
                       :class="[
-                        'absolute left-1 right-1 border rounded-lg text-xs text-gray-800 shadow-sm overflow-hidden',
+                        'absolute inset-x-1 border rounded-lg text-xs text-gray-800 shadow-sm overflow-hidden transition-all duration-200',
                         getTypeColor(item.type),
                       ]"
                       :style="{
-                        top: '2px',
+                        top: '4px',
                         height: getBlockHeight(item) + 'px',
+                        minHeight: '75px',
+                        maxHeight: '90px',
+                        width: 'calc(100% - 0.5rem)',
                       }"
                     >
-                      <div class="p-2">
-                        <p class="font-semibold">
-                          {{ item.course_name }} ({{ item.type }})
+                      <div class="p-2 text-[12px] leading-snug truncate">
+                        <p class="font-semibold truncate">
+                          {{ item.course_name }}
                         </p>
-                        <p class="text-gray-600">Room: {{ item.room_name }}</p>
-                        <p class="text-gray-600">Set: {{ item.set }}</p>
+                        <p class="text-gray-600 truncate">
+                          {{ item.room_name }}
+                        </p>
+                        <p class="text-gray-600 truncate">
+                          Set: {{ item.set }}
+                        </p>
 
-                        <!-- Conflict Button -->
                         <button
                           v-if="item.conflict"
                           @click="openConflictModal(item)"
-                          class="mt-2 px-2 py-1 text-xs rounded bg-red-100 text-red-600 hover:bg-red-200 transition"
+                          class="mt-2 w-full text-center px-2 py-1 text-xs rounded bg-red-100 text-red-600 hover:bg-red-200 transition"
                         >
                           ⚠ View Conflict
                         </button>
@@ -343,19 +409,18 @@ import icon from "@/assets/icon.vue";
 
 export default {
   name: "FacultySchedule",
-  components: {
-    icon,
-  },
+  components: { icon },
   data() {
-    const currentYear = new Date().getFullYear();
-
     return {
       user: {},
       schedule: [],
       groupedSchedule: {},
+      filteredGroupedSchedule: {},
       loading: false,
       error: null,
       isTable: true,
+      showFacultyTable: false,
+      selectedInstructor: null,
       days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       timeSlots: [
         { start: "8:00 AM", end: "9:00 AM" },
@@ -367,100 +432,150 @@ export default {
         { start: "2:00 PM", end: "3:00 PM" },
         { start: "3:00 PM", end: "4:00 PM" },
         { start: "4:00 PM", end: "5:00 PM" },
+        { start: "5:00 PM", end: "6:00 PM" },
       ],
-
       progress: 0,
       progressInterval: null,
-
-      // Conflict modal state
       showConflictModal: false,
       selectedConflict: {},
-
-      // ✅ Year & Semester modal states
-      showYearSemModal: false,
-      showGenerateConfirm: false,
-      selectedYear: "",
-      selectedSem: "",
-
-      yearOptions: [
-        currentYear - 3,
-        currentYear - 2,
-        currentYear - 1,
-        currentYear,
-        currentYear + 1,
-        currentYear + 2,
-        currentYear + 3,
-      ],
+      selectedInstituteId: "",
+      selectedProgramId: "",
+      currentPage: 1,
+      itemsPerPage: 10,
     };
   },
-
   computed: {
-    filteredSchedules() {
-      const result = {};
-      for (const instructor in this.groupedSchedule) {
-        for (const day of this.days) {
-          for (const slot of this.timeSlots) {
-            const instructorSlots = this.groupedSchedule[instructor] || [];
-            const slotStart = this.timeToMinutes(slot.start);
-            const slotEnd = this.timeToMinutes(slot.end);
+    paginatedFaculty() {
+      const allFaculty = Object.entries(
+        this.filteredFacultyByInstituteAndProgram
+      );
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return Object.fromEntries(allFaculty.slice(start, end));
+    },
 
-            const filtered = instructorSlots.filter((item) => {
-              if (!item.day || !item.start_hour || !item.end_hour) return false;
-              const itemDay = item.day.slice(0, 3);
-              const itemStart = this.convertToMinutes(item.start_hour);
-              const itemEnd = this.convertToMinutes(item.end_hour);
-              return (
-                slotStart < itemEnd && itemStart < slotEnd && itemDay === day
-              );
-            });
+    totalPages() {
+      return Math.ceil(
+        Object.keys(this.filteredFacultyByInstituteAndProgram).length /
+          this.itemsPerPage
+      );
+    },
+    startIndex() {
+      if (Object.keys(this.filteredFacultyByInstituteAndProgram).length === 0)
+        return 0;
+      return (this.currentPage - 1) * this.itemsPerPage + 1;
+    },
 
-            result[`${instructor}-${day}-${slot.start}`] = filtered;
-          }
-        }
+    endIndex() {
+      const total = Object.keys(
+        this.filteredFacultyByInstituteAndProgram
+      ).length;
+      const end = this.currentPage * this.itemsPerPage;
+      return end > total ? total : end;
+    },
+
+    pageNumbers() {
+      const pages = [];
+      for (let i = 1; i <= this.totalPages; i++) {
+        pages.push(i);
       }
-      return result;
+      return pages;
+    },
+
+    // Get unique faculty_institute_id values
+    uniqueInstituteIds() {
+      const ids = new Set();
+      Object.values(this.groupedSchedule).forEach((facultySlots) => {
+        facultySlots.forEach((slot) => {
+          if (slot.faculty_institute_id) ids.add(slot.faculty_institute_id);
+        });
+      });
+      return Array.from(ids);
+    },
+
+    // Get unique program_id values filtered by selected institute
+    filteredProgramIds() {
+      const ids = new Set();
+      Object.values(this.groupedSchedule).forEach((facultySlots) => {
+        facultySlots.forEach((slot) => {
+          if (
+            (!this.selectedInstituteId ||
+              slot.faculty_institute_id == this.selectedInstituteId) &&
+            slot.program_id
+          ) {
+            ids.add(slot.program_id);
+          }
+        });
+      });
+      return Array.from(ids);
+    },
+
+    // Filter faculty by both institute and program
+    filteredFacultyByInstituteAndProgram() {
+      const filtered = {};
+      for (const [instructor, slots] of Object.entries(this.groupedSchedule)) {
+        const match = slots.some((s) => {
+          const matchesInstitute =
+            !this.selectedInstituteId ||
+            s.faculty_institute_id == this.selectedInstituteId;
+          const matchesProgram =
+            !this.selectedProgramId || s.program_id == this.selectedProgramId;
+          return matchesInstitute && matchesProgram;
+        });
+        if (match) filtered[instructor] = slots;
+      }
+      return filtered;
     },
   },
-
+  watch: {
+    // Reset program selection when institute changes
+    selectedInstituteId() {
+      this.selectedProgramId = "";
+    },
+  },
   methods: {
-    // 🧩 Layout helpers
+    filteredData() {
+      return Object.keys(this.filteredFacultyByInstituteAndProgram);
+    },
+    changePage(page) {
+      if (page >= 1 && page <= this.totalPages) {
+        this.currentPage = page;
+      }
+    },
+    viewFacultySchedule(instructor) {
+      this.selectedInstructor = instructor;
+      this.filteredGroupedSchedule = {
+        [instructor]: this.groupedSchedule[instructor],
+      };
+      this.showFacultyTable = false;
+    },
+    // ... keep all your existing methods unchanged
     getRowSpan(item) {
       const start = this.convertToMinutes(item.start_hour);
       const end = this.convertToMinutes(item.end_hour);
       const duration = end - start;
-      const slotDuration = 60; // 1 hour per slot
-      return Math.ceil(duration / slotDuration);
+      return Math.ceil(duration / 60);
     },
-
     isStartingSlot(item, slot) {
       const slotStart = this.timeToMinutes(slot.start);
       const itemStart = this.convertToMinutes(item.start_hour);
       return itemStart >= slotStart && itemStart < slotStart + 60;
     },
-
     getTypeColor(type) {
       switch (type) {
         case "Lecture":
           return "bg-green-100 border-green-400";
         case "Laboratory":
           return "bg-blue-100 border-blue-400";
-        case "Seminar":
-          return "bg-yellow-100 border-yellow-400";
-        case "Research":
-          return "bg-purple-100 border-purple-400";
         default:
           return "bg-gray-100 border-gray-300";
       }
     },
-
     getBlockHeight(item) {
-      const slotHeight = 40; // px per hour
       const start = this.convertToMinutes(item.start_hour);
       const end = this.convertToMinutes(item.end_hour);
-      const duration = end - start;
-      return (duration / 60) * slotHeight;
+      return ((end - start) / 60) * 40;
     },
-
     deduplicateSchedules(schedules) {
       const seen = new Set();
       return schedules.filter((s) => {
@@ -470,80 +585,33 @@ export default {
         return true;
       });
     },
-
-    // ✅ Modal controls
-    openYearSemModal() {
-      this.showYearSemModal = true;
-    },
-    closeYearSemModal() {
-      this.showYearSemModal = false;
-      this.selectedYear = "";
-      this.selectedSem = "";
-    },
-    async confirmYearSem() {
-      try {
-        const payload = {
-          year: String(this.selectedYear),
-          semester: Number(this.selectedSem), // ✅ ensure integer
-        };
-
-        await axios.post("http://localhost:8000/selected-year-sem", payload);
-
-        this.showYearSemModal = false;
-        this.showGenerateConfirm = true;
-
-        console.log("Year and Semester saved successfully:", payload);
-      } catch (error) {
-        console.error("Error saving year/semester:", error);
-        this.$toast?.error?.(
-          "Failed to save year and semester. Please try again."
-        );
-      }
-    },
-    closeGenerateConfirm() {
-      this.showGenerateConfirm = false;
-    },
-
     async generateSchedule() {
-      this.showGenerateConfirm = false;
-      await this.fetchSchedule(this.selectedYear, this.selectedSem);
+      await this.fetchSchedule();
     },
-
-    // ✅ Main data fetch with year + semester
-    async fetchSchedule(year, sem) {
+    async fetchSchedule() {
       this.loading = true;
       this.error = null;
       this.progress = 0;
-
       this.progressInterval = setInterval(() => {
-        if (this.progress < 90) {
-          this.progress += Math.random() * 10;
-        }
+        if (this.progress < 90) this.progress += Math.random() * 10;
       }, 200);
 
       try {
         const response = await axios.get(
-          `http://localhost:8000/generated-scheduled/load?year=${year}&semester=${sem}`
+          "http://localhost:8000/generated-scheduled/load"
         );
 
         if (response.data.success && response.data.data) {
           const allSchedules = Object.values(response.data.data).flatMap(
             (set) => set.best_schedule || []
           );
-
           const deduped = this.deduplicateSchedules(allSchedules);
           const filtered = deduped.filter(
             (s) => s.institute_id === this.user.institute_id
           );
-
-          const conflicts = this.detectConflicts(filtered);
           this.schedule = filtered;
           this.groupedSchedule = this.groupByInstructor(this.schedule);
-
-          if (conflicts.length > 0) {
-            this.selectedConflict = { conflicts };
-            this.showConflictModal = true;
-          }
+          this.filteredGroupedSchedule = this.groupedSchedule;
         } else {
           this.error = "Invalid schedule format.";
         }
@@ -559,8 +627,6 @@ export default {
         }, 300);
       }
     },
-
-    // 🧠 Schedule utilities
     groupByInstructor(schedule) {
       return schedule.reduce((acc, item) => {
         const instructor = item.faculty_name || "Unknown";
@@ -569,54 +635,17 @@ export default {
         return acc;
       }, {});
     },
-
     getScheduleForCell(slot, day, instructor) {
       const instructorSlots = this.groupedSchedule[instructor] || [];
       const slotStart = this.timeToMinutes(slot.start);
       const slotEnd = this.timeToMinutes(slot.end);
-
       return instructorSlots.filter((item) => {
-        if (!item.day || !item.start_hour || !item.end_hour) return false;
-        const itemDay = item.day.slice(0, 3);
+        const itemDay = item.day?.slice(0, 3);
         const itemStart = this.convertToMinutes(item.start_hour);
         const itemEnd = this.convertToMinutes(item.end_hour);
         return slotStart < itemEnd && itemStart < slotEnd && itemDay === day;
       });
     },
-
-    detectConflicts(schedule) {
-      let conflicts = [];
-      const seen = new Set();
-
-      for (let i = 0; i < schedule.length; i++) {
-        for (let j = i + 1; j < schedule.length; j++) {
-          const a = schedule[i];
-          const b = schedule[j];
-
-          if (a.day === b.day) {
-            const overlap =
-              this.convertToMinutes(a.start_hour) <
-                this.convertToMinutes(b.end_hour) &&
-              this.convertToMinutes(b.start_hour) <
-                this.convertToMinutes(a.end_hour);
-
-            if (
-              overlap &&
-              (a.faculty_id === b.faculty_id || a.room_id === b.room_id)
-            ) {
-              const key = `${a.course_id}-${b.course_id}-${a.day}-${a.start_hour}-${a.end_hour}`;
-              if (!seen.has(key)) {
-                conflicts.push(a, b);
-                seen.add(key);
-              }
-            }
-          }
-        }
-      }
-      return conflicts;
-    },
-
-    // 🕒 Time conversion helpers
     timeToMinutes(timeStr) {
       let [time, ampm] = timeStr.split(" ");
       let [h, m] = time.split(":").map(Number);
@@ -624,12 +653,9 @@ export default {
       if (ampm === "AM" && h === 12) h = 0;
       return h * 60 + m;
     },
-
     convertToMinutes(hour) {
       return Math.floor(hour) * 60 + Math.round((hour % 1) * 60);
     },
-
-    // ⚠ Conflict modal controls
     openConflictModal(item) {
       this.selectedConflict = item;
       this.showConflictModal = true;
@@ -638,146 +664,24 @@ export default {
       this.showConflictModal = false;
       this.selectedConflict = {};
     },
-
-    // 👤 Fetch authenticated user
     async fetchUser() {
       try {
-        const response = await axios.get("http://localhost:8000/auth/me", {
+        const res = await axios.get("http://localhost:8000/auth/me", {
           withCredentials: true,
         });
-        if (response.data) {
-          this.user = response.data;
-          console.log("Authenticated User:", this.user);
+        if (res.data) {
+          this.user = res.data;
         } else {
           this.$router.push("/");
         }
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
+      } catch (err) {
+        console.error("Failed to fetch user:", err);
         this.$router.push("/");
       }
     },
   },
-
   async mounted() {
     await this.fetchUser();
   },
 };
 </script>
-
-<style scoped>
-.container {
-  padding: 20px;
-  background: #f9fafb;
-  min-height: 100vh;
-}
-.text-text {
-  color: #4b5563;
-}
-.grid-wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  gap: 20px;
-}
-.schedule-wrapper {
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-.instructor-header {
-  background: #147452;
-  color: white;
-  padding: 10px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-align: center;
-}
-.schedule-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 0;
-}
-.schedule-table th,
-.schedule-table td {
-  border: 1px solid #d1d5db;
-  padding: 6px;
-  text-align: center;
-  font-size: 0.9rem;
-}
-.schedule-table th {
-  background: #f3f4f6;
-  font-weight: 600;
-}
-.cell-item {
-  margin-bottom: 4px;
-}
-.loading,
-.error {
-  text-align: center;
-  font-size: 1.1rem;
-}
-.error {
-  color: #dc2626;
-}
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.35);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.loading-content {
-  width: 80%;
-  max-width: 400px;
-  text-align: center;
-}
-
-.progress-bar {
-  width: 80%;
-  height: 20px;
-  background: #e5e7eb;
-  border-radius: 10px;
-  margin: 0 auto;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: #4df58b;
-  width: 0%;
-  transition: width 0.2s ease;
-}
-
-.loading-text {
-  margin-top: 8px;
-  font-size: 0.95rem;
-  color: #374151;
-}
-@keyframes bounce-custom {
-  0%,
-  80%,
-  100% {
-    transform: scale(0);
-  }
-  40% {
-    transform: scale(1);
-  }
-}
-.bounce-delay-0 {
-  animation: bounce-custom 1s infinite;
-}
-.bounce-delay-200 {
-  animation: bounce-custom 1s infinite;
-  animation-delay: 0.5s;
-}
-.bounce-delay-400 {
-  animation: bounce-custom 1s infinite;
-  animation-delay: 0.4s;
-}
-</style>

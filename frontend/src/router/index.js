@@ -66,6 +66,13 @@ const routes = [
         meta: { requiresAuth: true, role: "Admin" },
         children: [],
       },
+      {
+        path: "/programs",
+        name: "programs",
+        component: () => import("@/components/admin/records/programs.vue"),
+        meta: { requiresAuth: true, role: "Admin" },
+        children: [],
+      },
 
       {
         path: "/rooms",
@@ -75,10 +82,33 @@ const routes = [
         children: [],
       },
       {
+        path: "/school-years",
+        name: "school-years",
+        component: () => import("@/components/admin/records/school-year.vue"),
+        meta: { requiresAuth: true, role: "Admin" },
+        children: [],
+      },
+      {
+        path: "/system-overview",
+        name: "system-overview",
+        component: () =>
+          import("@/components/admin/records/system-overview.vue"),
+        meta: { requiresAuth: true, role: "Admin" },
+        children: [],
+      },
+      {
         path: "/admin-assign-classes",
         name: "admin-assign-classes",
         component: () =>
           import("@/components/admin/records/assign-classes.vue"),
+        meta: { requiresAuth: true, role: "Admin" },
+        children: [],
+      },
+      {
+        path: "/admin-assigned-courses",
+        name: "admin-assigned-courses",
+        component: () =>
+          import("@/components/admin/records/assigned-course.vue"),
         meta: { requiresAuth: true, role: "Admin" },
         children: [],
       },
@@ -94,6 +124,13 @@ const routes = [
         path: "/class-list",
         name: "class-list",
         component: () => import("@/components/admin/records/class-list.vue"),
+        meta: { requiresAuth: true, role: "Admin" },
+        children: [],
+      },
+      {
+        path: "/classes",
+        name: "classes",
+        component: () => import("@/components/admin/records/classes.vue"),
         meta: { requiresAuth: true, role: "Admin" },
         children: [],
       },
@@ -153,6 +190,33 @@ const routes = [
         children: [],
       },
       {
+        path: "/program-programs",
+        name: "program-programs",
+        component: () => import("@/components/admin/records/programs.vue"),
+        meta: { requiresAuth: true, roles: ["Program Chairperson"] },
+        children: [],
+      },
+      {
+        path: "/year-section",
+        name: "year-section",
+        component: () =>
+          import(
+            "@/components/program-chairperson/program-record/year-section.vue"
+          ),
+        meta: { requiresAuth: true, role: "Program Chairperson" },
+        children: [],
+      },
+      {
+        path: "/assigned-course",
+        name: "assigned-course",
+        component: () =>
+          import(
+            "@/components/program-chairperson/program-record/assigned-course.vue"
+          ),
+        meta: { requiresAuth: true, role: "Program Chairperson" },
+        children: [],
+      },
+      {
         path: "/program-chairperson-assign-classes",
         name: "program-chairperson-assign-classes",
         component: () =>
@@ -179,6 +243,15 @@ const routes = [
         component: () =>
           import(
             "@/components/program-chairperson/program-record/faculty-loads.vue"
+          ),
+        meta: { requiresAuth: true, role: "Program Chairperson" },
+      },
+      {
+        path: "/faculty-expertise",
+        name: "faculty-expertise",
+        component: () =>
+          import(
+            "@/components/program-chairperson/program-record/faculty-expertise.vue"
           ),
         meta: { requiresAuth: true, role: "Program Chairperson" },
       },

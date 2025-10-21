@@ -30,7 +30,7 @@
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
               <option value="5">5</option>
@@ -104,7 +104,7 @@
               v-model="searchQuery"
               type="text"
               placeholder="Search..."
-              class="rounded-full border border-green-600 bg-white px-4 py-2 pl-10 text-sm shadow-sm w-[250px] transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+              class="rounded-full border border-green-600 bg-white px-4 py-2 pl-10 text-sm shadow-sm w-full sm:w-[280px] transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @input="changePage(1)"
             />
             <!-- Search icon -->
@@ -127,78 +127,70 @@
       </div>
 
       <!-- Table -->
-      <div class="w-full mt-1 rounded-xl overflow-hidden">
-        <div
-          class="overflow-y-auto transition-all duration-300"
-          :class="tableHeightClass"
-        >
-          <table
-            class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
+      <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+        <table class="min-w-full text-sm text-gray-700 border-collapse">
+          <thead
+            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
-            <thead
-              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+            <tr>
+              <th class="px-4 py-3 text-left rounded-tl-lg">#</th>
+              <th class="px-4 py-3 text-left">Curriculum</th>
+              <th class="px-4 py-3 text-left">Course Code</th>
+              <th class="px-4 py-3 text-left">Description</th>
+              <th class="px-4 py-3 text-center">Semester</th>
+              <th class="px-4 py-3 text-center">Year Level</th>
+              <th class="px-4 py-3 text-center">Lecture</th>
+              <th class="px-4 py-3 text-center">Lab</th>
+              <th class="px-4 py-3 text-center">Units</th>
+              <th class="px-4 py-3 text-center">Pre-requisite</th>
+              <th class="px-4 py-3 text-center rounded-tr-lg">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(c, index) in paginatedData"
+              :key="c.course_id"
+              class="hover:bg-green-50 transition-all border-t"
             >
-              <tr>
-                <th class="px-4 py-3 text-left rounded-tl-lg">#</th>
-                <th class="px-4 py-2 text-left">Curriculum</th>
-                <th class="px-4 py-2 text-left">Course Code</th>
-                <th class="px-4 py-2 text-left">Description</th>
-                <th class="px-4 py-2 text-center">Semester</th>
-                <th class="px-4 py-2 text-center">Year Level</th>
-                <th class="px-4 py-2 text-center">Lecture</th>
-                <th class="px-4 py-2 text-center">Lab</th>
-                <th class="px-4 py-2 text-center">Units</th>
-                <th class="px-4 py-2 text-center">Pre-requisite</th>
-                <th class="px-4 py-2 text-left rounded-tr-lg">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(c, index) in paginatedData"
-                :key="c.course_id"
-                class="bg-white hover:bg-green-50 transition border rounded-md shadow-sm"
-              >
-                <td class="px-4 py-2">{{ startIndex + index }}</td>
-                <td class="px-4 py-2">{{ c.curriculum?.curriculum_name }}</td>
-                <td class="px-4 py-2">{{ c.course_code }}</td>
-                <td class="px-4 py-2">{{ c.course_description }}</td>
-                <td class="px-4 py-2 text-center">{{ c.course_semester }}</td>
-                <td class="px-4 py-2 text-center">{{ c.course_level }}</td>
-                <td class="px-4 py-2 text-center">{{ c.course_lec }}</td>
-                <td class="px-4 py-2 text-center">{{ c.course_lab }}</td>
-                <td class="px-4 py-2 text-center">
-                  {{ c.course_lec + c.course_lab }}
-                </td>
-                <td class="px-4 py-2 text-center">
-                  {{ c.course_requisite || "-" }}
-                </td>
-                <td class="px-4 py-2">
-                  <div class="flex gap-2">
-                    <button
-                      class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
-                      @click="toggleEdit(c)"
-                    >
-                      <icon name="edit" /> Edit
-                    </button>
-                    <button
-                      class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                      @click="toggleDelete(c)"
-                    >
-                      <icon name="delete" /> Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr v-if="paginatedData.length === 0">
-                <td colspan="11" class="text-center py-8 text-gray-400">
-                  No records found
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+              <td class="px-4 py-3">{{ startIndex + index }}</td>
+              <td class="px-4 py-3">{{ c.curriculum?.curriculum_name }}</td>
+              <td class="px-4 py-3">{{ c.course_code }}</td>
+              <td class="px-4 py-3">{{ c.course_description }}</td>
+              <td class="px-4 py-3 text-center">{{ c.course_semester }}</td>
+              <td class="px-4 py-3 text-center">{{ c.course_level }}</td>
+              <td class="px-4 py-3 text-center">{{ c.course_lec }}</td>
+              <td class="px-4 py-3 text-center">{{ c.course_lab }}</td>
+              <td class="px-4 py-3 text-center">
+                {{ c.course_lec + c.course_lab }}
+              </td>
+              <td class="px-4 py-3 text-center">
+                {{ c.course_requisite || "-" }}
+              </td>
+              <td class="px-4 py-3">
+                <div class="flex justify-center gap-2">
+                  <button
+                    class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
+                    @click="toggleEdit(c)"
+                  >
+                    <icon name="edit" /> Edit
+                  </button>
+                  <button
+                    class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                    @click="toggleDelete(c)"
+                  >
+                    <icon name="delete" /> Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr v-if="paginatedData.length === 0">
+              <td colspan="11" class="text-center py-8 text-gray-400">
+                No records found
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
         <div class="text-gray-700">

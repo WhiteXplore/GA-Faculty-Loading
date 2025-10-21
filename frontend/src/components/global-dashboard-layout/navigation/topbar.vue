@@ -21,58 +21,27 @@
     </div>
 
     <!-- Right Section -->
-    <div class="flex items-center gap-2">
-      <!-- Year Selector -->
-      <div class="relative w-26">
+    <div class="flex items-center gap-3">
+      <!-- School Year Selector -->
+      <div class="relative w-48">
         <select
-          id="year"
-          v-model="selectedYear"
-          @change="updateYear"
+          id="schoolYear"
+          v-model="selectedSchoolYearId"
+          @change="updateSchoolYear"
           class="w-full appearance-none rounded-full border border-green-600 bg-white px-4 py-1.5 pr-10 text-green-900 text-sm font-semibold shadow-md cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:outline-none hover:shadow-lg"
         >
+          <option value="" disabled>Select School Year</option>
           <option
-            v-for="year in years"
-            :key="year"
-            :value="year"
+            v-for="sy in schoolYears"
+            :key="sy.school_year_id"
+            :value="sy.school_year_id"
             class="text-sm"
           >
-            {{ year }}
+            {{ sy.school_year_name }} - {{ getSemesterLabel(sy.semester) }}
           </option>
         </select>
 
         <!-- Custom Dropdown Icon -->
-        <div
-          class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-green-700"
-        >
-          <svg
-            class="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </div>
-      </div>
-
-      <!-- Semester Selector -->
-      <div class="relative w-[145px]">
-        <select
-          id="semester"
-          v-model="selectedSemester"
-          @change="updateSemester"
-          class="w-full appearance-none rounded-full border border-green-600 bg-white px-4 py-1.5 pr-10 text-green-900 text-sm font-semibold shadow-md cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:outline-none hover:shadow-lg"
-        >
-          <option v-for="sem in semesters" :key="sem.value" :value="sem.value">
-            {{ sem.label }}
-          </option>
-        </select>
-
         <div
           class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-green-700"
         >
@@ -131,18 +100,11 @@ export default {
   name: "TopBarPage",
   components: { Profile },
   data() {
-    const currentYear = new Date().getFullYear();
     return {
       isOpenProfile: false,
       user: {},
-      selectedYear: currentYear,
-      selectedSemester: 1, // store numeric value (1, 2, 3)
-      years: Array.from({ length: 10 }, (_, i) => currentYear - i),
-      semesters: [
-        { value: 1, label: "1st Semester" },
-        { value: 2, label: "2nd Semester" },
-        { value: 3, label: "Summer" },
-      ],
+      selectedSchoolYearId: "",
+      schoolYears: [],
       currentTime: new Date(),
     };
   },
@@ -201,72 +163,86 @@ export default {
       }
     },
 
-    async fetchActiveYear() {
+    async fetchSchoolYears() {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/school-year/get-school-years"
+        );
+        this.schoolYears = response.data;
+      } catch (error) {
+        console.error("Failed to fetch school years:", error);
+      }
+    },
+
+    async fetchActiveSchoolYear() {
       try {
         const res = await axios.get("http://localhost:8000/active-year/active");
         if (res.data) {
-          this.selectedYear = res.data.year;
+          // Find the school year that matches the active year
+          const activeSchoolYear = this.schoolYears.find(
+            (sy) => sy.is_active === true
+          );
+          if (activeSchoolYear) {
+            this.selectedSchoolYearId = activeSchoolYear.school_year_id;
+          }
 
-          // 👇 sync to store so TableCourses reacts
+          // 👇 sync to store so other components react
           const store = useFetchDataStore();
           store.year = res.data.year;
         }
       } catch (error) {
-        console.error("Failed to fetch active year:", error);
+        console.error("Failed to fetch active school year:", error);
       }
     },
 
-    async fetchActiveSemester() {
+    async updateSchoolYear() {
       try {
-        const res = await axios.get(
-          "http://localhost:8000/active-semester/active"
+        const selectedSY = this.schoolYears.find(
+          (sy) => sy.school_year_id === this.selectedSchoolYearId
         );
-        if (res.data) {
-          this.selectedSemester = Number(res.data.semester);
+
+        if (selectedSY) {
+          // Update the active school year in database
+          await axios.patch(
+            `http://localhost:8000/school-year/update-school-year/${selectedSY.school_year_id}`,
+            { is_active: true }
+          );
+
+          // Deactivate other school years
+          const otherSchoolYears = this.schoolYears.filter(
+            (sy) => sy.school_year_id !== this.selectedSchoolYearId
+          );
+          for (const sy of otherSchoolYears) {
+            if (sy.is_active) {
+              await axios.patch(
+                `http://localhost:8000/school-year/update-school-year/${sy.school_year_id}`,
+                { is_active: false }
+              );
+            }
+          }
+
+          // Sync to store
           const store = useFetchDataStore();
-          store.sem = Number(res.data.semester); // ✅ FIXED
+          store.year = selectedSY.start_year;
+
+          // Refresh school years list
+          await this.fetchSchoolYears();
         }
       } catch (error) {
-        console.error("Failed to fetch active semester:", error);
+        console.error("Failed to update school year:", error);
       }
     },
 
-    async updateSemester() {
-      try {
-        const res = await axios.post("http://localhost:8000/active-semester", {
-          semester: this.selectedSemester,
-        });
-        if (res.data?.semester) {
-          this.selectedSemester = res.data.semester;
-          const store = useFetchDataStore();
-          store.sem = res.data.semester; // ✅ FIXED
-        }
-      } catch (error) {
-        console.error("Failed to update semester:", error);
-      }
-    },
-
-    async updateYear() {
-      try {
-        const res = await axios.post("http://localhost:8000/active-year", {
-          year: this.selectedYear,
-        });
-        if (res.data?.year) {
-          this.selectedYear = res.data.year;
-
-          // 👇 sync to store so TableCourses refreshes
-          const store = useFetchDataStore();
-          store.year = res.data.year;
-        }
-      } catch (error) {
-        console.error("Failed to update active year:", error);
-      }
+    getSemesterLabel(semester) {
+      if (semester === 1) return "1st Sem";
+      if (semester === 2) return "2nd Sem";
+      return "";
     },
   },
   mounted() {
     this.fetchUser();
-    this.fetchActiveYear();
-    this.fetchActiveSemester();
+    this.fetchSchoolYears();
+    this.fetchActiveSchoolYear();
 
     this.timer = setInterval(() => {
       this.currentTime = new Date();

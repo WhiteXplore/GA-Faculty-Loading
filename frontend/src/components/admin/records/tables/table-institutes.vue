@@ -32,7 +32,7 @@
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
               <option value="5">5</option>
@@ -90,80 +90,96 @@
       </div>
 
       <!-- Data Table -->
-      <div class="w-full mt-1 rounded-xl shadow overflow-hidden">
-        <div
-          :class="tableHeightClass"
-          class="overflow-y-auto transition-all duration-300"
-        >
-          <table
-            class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
-          >
-            <thead
-              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
-            >
-              <tr>
-                <th class="w-10 px-4 py-2 text-left rounded-tl-lg font-normal">
-                  ID
-                </th>
-                <th class="px-4 py-3 text-left font-normal">Institute Code</th>
-                <th class="px-4 py-3 text-left font-normal">
-                  Institute Description
-                </th>
-                <th class="px-4 py-3 text-left font-normal">Program Code</th>
-                <th class="px-4 py-3 text-left font-normal">
-                  Program Description
-                </th>
-                <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(program, index) in paginatedData"
-                :key="program.program_id"
-                class="bg-white hover:bg-green-50 transition-all border border-gray-200 rounded-md shadow-sm"
-              >
-                <td class="px-4 py-2 text-left">{{ startIndex + index }}</td>
-                <td class="px-4 py-2 text-left">
-                  {{ program.institute?.institute_code }}
-                </td>
-                <td class="px-4 py-2 text-left">
-                  {{ program.institute?.institute_name }}
-                </td>
-                <td class="px-4 py-2 text-left">
-                  {{ program.program_code }}
-                </td>
-                <td class="px-4 py-2 text-left">
-                  {{ program.program_name }}
-                </td>
-                <td class="px-4 py-2 text-left">
-                  <div class="flex gap-2">
-                    <button
-                      class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
-                      @click="toggleEdit(program)"
-                    >
-                      <icon name="edit" /> Edit
-                    </button>
-                    <button
-                      class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                      @click="toggleDelete(program)"
-                    >
-                      <icon name="delete" /> Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr v-if="paginatedData.length === 0">
-                <td colspan="5" class="text-center py-8 text-gray-400">
-                  No records found
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
 
+      <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+        <table class="min-w-full text-sm text-gray-700 border-collapse">
+          <thead
+            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+          >
+            <tr>
+              <th
+                class="w-10 px-4 py-3 text-left font-normal rounded-tl-lg border-b border-gray-200"
+              >
+                ID
+              </th>
+              <th
+                class="px-4 py-3 text-left font-normal border-b border-gray-200"
+              >
+                Institute Code
+              </th>
+              <th
+                class="px-4 py-3 text-left font-normal border-b border-gray-200"
+              >
+                Institute Description
+              </th>
+              <th
+                class="px-4 py-3 text-left font-normal border-b border-gray-200"
+              >
+                Program Code
+              </th>
+              <th
+                class="px-4 py-3 text-left font-normal border-b border-gray-200"
+              >
+                Program Description
+              </th>
+              <th
+                class="px-4 py-3 text-left font-normal border-b border-gray-200 rounded-tr-lg"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr
+              v-for="(program, index) in paginatedData"
+              :key="program.program_id"
+              class="hover:bg-green-50 transition-all border-t"
+            >
+              <td class="px-4 py-3 border-t border-gray-200">
+                {{ startIndex + index }}
+              </td>
+              <td class="px-4 py-3 border-t border-gray-200">
+                {{ program.institute?.institute_code }}
+              </td>
+              <td class="px-4 py-3 border-t border-gray-200">
+                {{ program.institute?.institute_name }}
+              </td>
+              <td class="px-4 py-3 border-t border-gray-200">
+                {{ program.program_code }}
+              </td>
+              <td class="px-4 py-3 border-t border-gray-200">
+                {{ program.program_name }}
+              </td>
+              <td class="px-4 py-3 border-t border-gray-200">
+                <div class="flex gap-2">
+                  <button
+                    class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
+                    @click="toggleEdit(program)"
+                  >
+                    <icon name="edit" /> Edit
+                  </button>
+                  <button
+                    class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                    @click="toggleDelete(program)"
+                  >
+                    <icon name="delete" /> Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr v-if="paginatedData.length === 0">
+              <td
+                colspan="6"
+                class="text-center py-8 text-gray-400 border-t border-gray-200"
+              >
+                No records found
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
         <div class="text-gray-700">

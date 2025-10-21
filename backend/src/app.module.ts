@@ -14,8 +14,10 @@ import { CalendarModule } from './calendar/calendar.module';
 import { AssignClassModule } from './assign_class/assign_class.module';
 import { GeneratedScheduledModule } from './generated_scheduled/generated_scheduled.module';
 import { ActiveYearModule } from './active_year/active_year.module';
-import { ActiveSemModule } from './active_sem/active_sem.module';
-import { SelectedYearSemModule } from './selected-year-sem/selected-year-sem.module';
+import { SchoolYearModule } from './school_year/school_year.module';
+import { ClassModule } from './class/class.module';
+
+import { ProgramYearCoursesModule } from './program_year_courses/program_year_courses.module';
 
 @Module({
   imports: [
@@ -49,8 +51,10 @@ import { SelectedYearSemModule } from './selected-year-sem/selected-year-sem.mod
     AssignClassModule,
     GeneratedScheduledModule,
     ActiveYearModule,
-    ActiveSemModule,
-    SelectedYearSemModule,
+    SchoolYearModule,
+    ClassModule,
+
+    ProgramYearCoursesModule,
   ],
 })
 export class AppModule {}

@@ -25,21 +25,17 @@
         <!-- Form Content -->
         <div class="p-5 w-[32vw] space-y-6">
           <!-- Semester Tabs -->
-          <div class="flex justify-center gap-2">
-            <button
-              v-for="sem in [1, 2, 3]"
-              :key="sem"
-              type="button"
-              @click="selectedSemester = sem"
-              :class="[
-                'px-4 py-2 rounded-lg font-semibold border transition-all',
-                selectedSemester === sem
-                  ? 'bg-defaultGreen text-white border-defaultGreen'
-                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-100',
-              ]"
+          <!-- Semester Dropdown -->
+          <div class="w-full mx-auto space-y-1">
+            <label class="font-bold text-sm">Select Semester:</label>
+            <select
+              v-model="selectedSemester"
+              class="w-full border px-3 py-2.5 border-gray-600 rounded-md text-sm text-gray-800 focus:ring-2 focus:ring-defaultGreen outline-none"
             >
-              {{ getSemesterName(sem) }}
-            </button>
+              <option v-for="sem in [1, 2, 3]" :key="sem" :value="sem">
+                {{ getSemesterName(sem) }}
+              </option>
+            </select>
           </div>
 
           <!-- Semester View -->
@@ -188,7 +184,7 @@
                       "
                       class="text-xs text-red-500"
                     >
-                      (Already in Expertise)
+                      (Already Selected)
                     </span>
                   </li>
                 </ul>
@@ -277,6 +273,10 @@ export default {
           c.curriculum?.program?.institute_id ===
             this.userData?.institute?.institute_id &&
           c.curriculum?.program_id === this.userData?.program?.program_id &&
+          // ✅ Exclude courses already in Other Expertise
+          !this.currentSemesterData.other_expertise.some(
+            (e) => e.course_id === c.course_id
+          ) &&
           (c.course_code
             .toLowerCase()
             .includes(this.searchQuery.toLowerCase()) ||
@@ -292,6 +292,10 @@ export default {
           c.course_semester === this.selectedSemester &&
           c.curriculum?.program?.institute_id ===
             this.userData?.institute?.institute_id &&
+          // exclude courses already in expertise
+          !this.currentSemesterData.expertise.some(
+            (e) => e.course_id === c.course_id
+          ) &&
           (c.course_code
             .toLowerCase()
             .includes(this.otherSearchQuery.toLowerCase()) ||

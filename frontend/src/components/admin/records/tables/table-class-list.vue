@@ -21,15 +21,18 @@
       </div>
     </div>
 
-    <div class="text-[14px] bg-white rounded-xl">
-      <div class="mt-4 overflow-x-auto border p-2 rounded-xl">
-        <!-- Top controls -->
-        <div class="text-gray-700 flex justify-between items-start mt-1">
-          <!-- Items Per Page -->
-          <div class="flex items-center">
+    <!-- Table -->
+    <div class="mt-4 overflow-x-auto border p-3 rounded-xl bg-white">
+      <!-- Top Controls -->
+      <div
+        class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
+      >
+        <!-- Items Per Page -->
+        <div class="flex items-center gap-2">
+          <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="px-1 py-1 border rounded-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
               <option value="5">5</option>
@@ -37,136 +40,153 @@
               <option value="15">15</option>
               <option value="20">20</option>
             </select>
-            <span class="ml-2">Per page</span>
+            <!-- Custom arrow -->
+            <div
+              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
           </div>
-
-          <!-- Search -->
-          <div class="flex items-center">
-            <input
-              v-model="searchQuery"
-              type="text"
-              class="px-3 w-[300px] py-3 border rounded-md"
-              placeholder="Search..."
-              @input="changePage(1)"
-            />
-          </div>
+          <span class="text-sm font-medium">Per page</span>
         </div>
 
-        <!-- Table -->
-        <div class="w-full rounded-xl shadow overflow-hidden">
-          <div
-            class="overflow-y-auto transition-all duration-300"
-            :class="tableHeightClass"
+        <!-- Search -->
+        <div class="flex items-center">
+          <input
+            v-model="searchQuery"
+            type="text"
+            class="px-3 w-[300px] py-3 border rounded-md"
+            placeholder="Search..."
+            @input="changePage(1)"
+          />
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="w-full rounded-xl shadow overflow-hidden">
+        <div
+          class="overflow-y-auto transition-all duration-300"
+          :class="tableHeightClass"
+        >
+          <table
+            class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
           >
-            <table
-              class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
+            <thead
+              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
-              <thead
-                class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+              <tr>
+                <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
+                  ID
+                </th>
+                <th class="px-4 py-3 text-left font-normal">Institute</th>
+                <th class="px-4 py-3 text-left font-normal">Room Name</th>
+                <th class="px-4 py-3 text-left font-normal">Room Type</th>
+                <th class="px-4 py-3 text-left font-normal">Room Capacity</th>
+                <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(rooms_data, index) in paginatedData"
+                :key="rooms_data.rooms_id"
+                class="hover:bg-green-50 transition-all border-t"
               >
-                <tr>
-                  <th
-                    class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal"
-                  >
-                    ID
-                  </th>
-                  <th class="px-4 py-3 text-left font-normal">Institute</th>
-                  <th class="px-4 py-3 text-left font-normal">Room Name</th>
-                  <th class="px-4 py-3 text-left font-normal">Room Type</th>
-                  <th class="px-4 py-3 text-left font-normal">Room Capacity</th>
-                  <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="(rooms_data, index) in paginatedData"
-                  :key="rooms_data.rooms_id"
-                  class="bg-white hover:bg-green-50 transition-all border border-gray-200 rounded-md shadow-sm"
-                >
-                  <td class="px-4 py-3 text-left">
-                    {{ startIndex + index }}
-                  </td>
-                  <td class="px-4 py-3 text-left">
-                    {{ rooms_data.institute?.institute_name }}
-                  </td>
-                  <td class="px-4 py-3 text-left">
-                    {{ rooms_data.room_name }}
-                  </td>
-                  <td class="px-4 py-3 text-left">
-                    {{ rooms_data.room_type }}
-                  </td>
-                  <td class="px-4 py-3 text-left">
-                    {{ rooms_data.room_capacity }}
-                  </td>
-                  <td class="px-4 py-3 text-left">
-                    <div class="flex gap-2">
-                      <button
-                        class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1"
-                        @click="toggleEdit(rooms_data)"
-                      >
-                        <icon name="edit" /> Edit
-                      </button>
-                      <button
-                        class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                        @click="toggleDelete(rooms_data)"
-                      >
-                        <icon name="delete" /> Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr v-if="paginatedData.length === 0">
-                  <td colspan="6" class="text-center py-6 text-gray-400">
-                    No records found
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                <td class="px-4 py-3 text-left">
+                  {{ startIndex + index }}
+                </td>
+                <td class="px-4 py-3 text-left">
+                  {{ rooms_data.institute?.institute_name }}
+                </td>
+                <td class="px-4 py-3 text-left">
+                  {{ rooms_data.room_name }}
+                </td>
+                <td class="px-4 py-3 text-left">
+                  {{ rooms_data.room_type }}
+                </td>
+                <td class="px-4 py-3 text-left">
+                  {{ rooms_data.room_capacity }}
+                </td>
+                <td class="px-4 py-3 text-left">
+                  <div class="flex gap-2">
+                    <button
+                      class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1"
+                      @click="toggleEdit(rooms_data)"
+                    >
+                      <icon name="edit" /> Edit
+                    </button>
+                    <button
+                      class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                      @click="toggleDelete(rooms_data)"
+                    >
+                      <icon name="delete" /> Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr v-if="paginatedData.length === 0">
+                <td colspan="6" class="text-center py-6 text-gray-400">
+                  No records found
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
 
-        <!-- Pagination -->
-        <div class="flex justify-between items-center mt-4">
-          <div class="text-gray-700">
-            <span>
-              Showing {{ startIndex }} to {{ endIndex }} of
-              {{ filteredData.length }} entries
-            </span>
-          </div>
-          <div class="flex items-center">
+      <!-- Pagination -->
+      <div class="flex justify-between items-center mt-4">
+        <div class="text-gray-700">
+          <span>
+            Showing {{ startIndex }} to {{ endIndex }} of
+            {{ filteredData.length }} entries
+          </span>
+        </div>
+        <div class="flex items-center">
+          <button
+            @click="changePage(currentPage - 1)"
+            :disabled="currentPage === 1"
+            class="px-3 py-1 bg-gray-300 text-gray-700 rounded-l-md hover:bg-gray-400"
+          >
+            &lt;
+          </button>
+          <span v-for="page in pageNumbers" :key="'page-' + page">
             <button
-              @click="changePage(currentPage - 1)"
-              :disabled="currentPage === 1"
-              class="px-3 py-1 bg-gray-300 text-gray-700 rounded-l-md hover:bg-gray-400"
+              @click="changePage(page)"
+              :class="{
+                ' bg-defaultGreen text-white': currentPage === page,
+                'bg-gray-200 text-gray-700': currentPage !== page,
+              }"
+              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
             >
-              &lt;
+              {{ page }}
             </button>
-            <span v-for="page in pageNumbers" :key="'page-' + page">
-              <button
-                @click="changePage(page)"
-                :class="{
-                  ' bg-defaultGreen text-white': currentPage === page,
-                  'bg-gray-200 text-gray-700': currentPage !== page,
-                }"
-                class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
-              >
-                {{ page }}
-              </button>
-            </span>
-            <button
-              @click="changePage(currentPage + 1)"
-              :disabled="currentPage === totalPages"
-              class="px-3 py-1 bg-gray-300 text-gray-700 rounded-r-md hover:bg-gray-400"
-            >
-              &gt;
-            </button>
-          </div>
+          </span>
+          <button
+            @click="changePage(currentPage + 1)"
+            :disabled="currentPage === totalPages"
+            class="px-3 py-1 bg-gray-300 text-gray-700 rounded-r-md hover:bg-gray-400"
+          >
+            &gt;
+          </button>
         </div>
       </div>
     </div>
   </div>
+
   <addRooms v-if="isAdd" @close="closeView" @refresh="loadRooms" />
   <addRooms
     v-if="showEditModal && selectedRoom"

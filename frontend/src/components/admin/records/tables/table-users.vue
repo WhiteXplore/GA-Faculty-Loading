@@ -30,7 +30,7 @@
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
               <option value="5">5</option>
@@ -88,79 +88,71 @@
       </div>
 
       <!-- Data Table -->
-      <div class="w-full rounded-xl mt-1 overflow-hidden">
-        <div
-          class="overflow-y-auto transition-all duration-300"
-          :class="tableHeightClass"
-        >
-          <table
-            class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
+      <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+        <table class="min-w-full text-sm text-gray-700 border-collapse">
+          <thead
+            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
-            <thead
-              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+            <tr>
+              <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
+                ID
+              </th>
+              <th class="px-4 py-3 text-left font-normal">Name</th>
+
+              <th class="px-4 py-3 text-left font-normal">Institute</th>
+              <th class="px-4 py-3 text-left font-normal">Program</th>
+              <th class="px-4 py-3 text-left font-normal">Position</th>
+              <th class="px-4 py-3 text-left font-normal">Email</th>
+              <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(user, index) in paginatedData"
+              :key="user.id"
+              class="hover:bg-green-50 transition-all border-t"
             >
-              <tr>
-                <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
-                  ID
-                </th>
-                <th class="px-4 py-3 text-left font-normal">Name</th>
+              <td class="px-4 py-3 text-left">{{ startIndex + index }}</td>
+              <td class="px-4 py-3 text-left">
+                {{ user.first_name }} {{ user.last_name }}
+              </td>
 
-                <th class="px-4 py-3 text-left font-normal">Institute</th>
-                <th class="px-4 py-3 text-left font-normal">Program</th>
-                <th class="px-4 py-3 text-left font-normal">Position</th>
-                <th class="px-4 py-3 text-left font-normal">Email</th>
-                <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(user, index) in paginatedData"
-                :key="user.id"
-                class="bg-white hover:bg-green-50 transition-all border border-gray-200 rounded-md shadow-sm"
-              >
-                <td class="px-4 py-3 text-left">{{ startIndex + index }}</td>
-                <td class="px-4 py-3 text-left">
-                  {{ user.first_name }} {{ user.last_name }}
-                </td>
+              <td class="px-4 py-3 text-left">
+                {{ getInstituteName(user.institute_id) }}
+              </td>
+              <td class="px-4 py-3 text-left">
+                {{ getProgramName(user.program_id) }}
+              </td>
+              <td class="px-4 py-3 text-left">{{ user.role }}</td>
+              <td class="px-4 py-3 text-left">{{ user.email }}</td>
+              <td class="px-4 py-3 text-left">
+                <div class="flex gap-2">
+                  <button
+                    class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1"
+                    @click="toggleEdit(user)"
+                  >
+                    <icon name="edit" /> Edit
+                  </button>
 
-                <td class="px-4 py-3 text-left">
-                  {{ getInstituteName(user.institute_id) }}
-                </td>
-                <td class="px-4 py-3 text-left">
-                  {{ getProgramName(user.program_id) }}
-                </td>
-                <td class="px-4 py-3 text-left">{{ user.role }}</td>
-                <td class="px-4 py-3 text-left">{{ user.email }}</td>
-                <td class="px-4 py-3 text-left">
-                  <div class="flex gap-2">
-                    <button
-                      class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1"
-                      @click="toggleEdit(user)"
-                    >
-                      <icon name="edit" /> Edit
-                    </button>
-
-                    <button
-                      class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-900 rounded-lg flex items-center gap-1"
-                      @click="toggleDelete(user)"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr v-if="paginatedData.length === 0">
-                <td colspan="7" class="text-center py-6 text-gray-400">
-                  No records found
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                  <button
+                    class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-900 rounded-lg flex items-center gap-1"
+                    @click="toggleDelete(user)"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr v-if="paginatedData.length === 0">
+              <td colspan="7" class="text-center py-6 text-gray-400">
+                No records found
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
         <div class="text-gray-700">

@@ -21,10 +21,11 @@
       </div>
     </div>
 
+    <!-- Table -->
     <div class="mt-4 overflow-x-auto border p-3 rounded-xl bg-white">
-      <!-- Top controls -->
+      <!-- Top Controls -->
       <div
-        class="flex justify-between items-center flex-wrap gap-3 sm:gap-4 text-gray-700 bg-white"
+        class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
       >
         <!-- Items per page -->
         <div class="flex items-center gap-2">
@@ -89,78 +90,70 @@
       </div>
 
       <!-- Table -->
-      <div class="w-full rounded-xl mt-1 overflow-hidden">
-        <div
-          class="overflow-y-auto transition-all duration-300"
-          :class="tableHeightClass"
-        >
-          <table
-            class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
+      <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+        <table class="min-w-full text-sm text-gray-700 border-collapse">
+          <thead
+            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
-            <thead
-              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+            <tr>
+              <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
+                ID
+              </th>
+              <th class="px-4 py-3 text-left font-normal">Institute</th>
+              <th class="px-4 py-3 text-left font-normal">Room Name</th>
+              <th class="px-4 py-3 text-left font-normal">Room Type</th>
+              <th class="px-4 py-3 text-left font-normal">Room Capacity</th>
+              <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(rooms_data, index) in paginatedData"
+              :key="rooms_data.rooms_id"
+              class="hover:bg-green-50 transition-all border-t"
             >
-              <tr>
-                <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
-                  ID
-                </th>
-                <th class="px-4 py-3 text-left font-normal">Institute</th>
-                <th class="px-4 py-3 text-left font-normal">Room Name</th>
-                <th class="px-4 py-3 text-left font-normal">Room Type</th>
-                <th class="px-4 py-3 text-left font-normal">Room Capacity</th>
-                <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(rooms_data, index) in paginatedData"
-                :key="rooms_data.rooms_id"
-                class="bg-white hover:bg-green-50 transition-all border border-gray-200 rounded-md shadow-sm"
-              >
-                <td class="px-4 py-3 text-left">
-                  {{ startIndex + index }}
-                </td>
-                <td class="px-4 py-3 text-left">
-                  {{ rooms_data.institute?.institute_name }}
-                </td>
-                <td class="px-4 py-3 text-left">
-                  {{ rooms_data.room_name }}
-                </td>
-                <td class="px-4 py-3 text-left">
-                  {{ rooms_data.room_type }}
-                </td>
-                <td class="px-4 py-3 text-left">
-                  {{ rooms_data.room_capacity }}
-                </td>
-                <td class="px-4 py-3 text-left">
-                  <div class="flex gap-2">
-                    <button
-                      class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1"
-                      @click="toggleEdit(rooms_data)"
-                    >
-                      <icon name="edit" /> Edit
-                    </button>
-                    <button
-                      class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                      @click="toggleDelete(rooms_data)"
-                    >
-                      <icon name="delete" /> Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr v-if="paginatedData.length === 0">
-                <td colspan="6" class="text-center py-6 text-gray-400">
-                  No records found
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+              <td class="px-4 py-3 text-left">
+                {{ startIndex + index }}
+              </td>
+              <td class="px-4 py-3 text-left">
+                {{ rooms_data.institute?.institute_name }}
+              </td>
+              <td class="px-4 py-3 text-left">
+                {{ rooms_data.room_name }}
+              </td>
+              <td class="px-4 py-3 text-left">
+                {{ rooms_data.room_type }}
+              </td>
+              <td class="px-4 py-3 text-left">
+                {{ rooms_data.room_capacity }}
+              </td>
+              <td class="px-4 py-3 text-left">
+                <div class="flex gap-2">
+                  <button
+                    class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1"
+                    @click="toggleEdit(rooms_data)"
+                  >
+                    <icon name="edit" /> Edit
+                  </button>
+                  <button
+                    class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                    @click="toggleDelete(rooms_data)"
+                  >
+                    <icon name="delete" /> Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr v-if="paginatedData.length === 0">
+              <td colspan="6" class="text-center py-6 text-gray-400">
+                No records found
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
         <div class="text-gray-700">
