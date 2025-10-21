@@ -35,7 +35,7 @@
         </p>
         <p
           :class="{
-            'text-[12px] font-medium tracking-wider': isExpanded,
+            'text-[13px] font-medium tracking-wider': isExpanded,
             hidden: !isExpanded,
           }"
         >
@@ -46,7 +46,9 @@
       <div v-if="isExpanded" class="w-full h-0.5 bg-[#fbfbfb] mt-4"></div>
 
       <!-- Dynamic Menu -->
-      <div class="flex flex-col mt-6 gap-2 tracking-wide text-[12px] w-full overflow-y-auto max-h-[calc(100vh-200px)] pr-2 scrollbar-thin">
+      <div
+        class="flex flex-col mt-6 gap-2 tracking-wide text-[13px] w-full overflow-auto max-h-[calc(100vh-200px)] pr-2 scrollbar-glass"
+      >
         <template v-for="section in roleMenuSections" :key="section.title">
           <div v-if="isExpanded" class="text-md text-white mt-1 text-left">
             {{ section.title }}
@@ -56,12 +58,12 @@
             <router-link
               v-if="!item.children"
               :to="item.route"
-              class="flex items-center w-full gap-5 p-2 rounded-md transition-all duration-200"
+              class="flex items-center w-full gap-5 rounded-md transition-all duration-200"
               :class="[
                 $route.path.startsWith(item.route)
-                  ? 'bg-white text-green-700'
-                  : 'text-white hover:bg-white hover:text-gray-800',
-                !isExpanded ? 'justify-center' : 'justify-start',
+                  ? 'bg-white text-green-700 p-2'
+                  : 'text-white hover:bg-white hover:text-gray-800 p-2  hover:p-2',
+                !isExpanded ? 'justify-center h-8' : 'justify-start p-2',
               ]"
             >
               <icon :name="item.icon" />
@@ -101,7 +103,7 @@
               </div>
 
               <transition name="slide">
-                <div 
+                <div
                   v-show="isDropdownOpen === item.name && isExpanded"
                   class="max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100"
                 >
@@ -109,7 +111,7 @@
                     v-for="(sub, index) in item.children"
                     :key="sub.name"
                     :to="sub.route"
-                    class="block w-full py-2 px-[60px] text-[12px] transition-all duration-200 text-left border border-white"
+                    class="block w-full py-2 px-[60px] text-[13px] transition-all duration-200 text-left border border-white"
                     :class="[
                       $route.path.startsWith(sub.route)
                         ? 'bg-defaultGreen text-white '
@@ -132,8 +134,8 @@
     <!-- Main Content -->
     <div
       :class="{
-        'ml-16': !isExpanded,
-        'ml-64': isExpanded,
+        'ml-[55px]': !isExpanded,
+        'ml-[247px]': isExpanded,
       }"
       class="flex-grow transition-all pt-2 min-h-screen rounded-t-xl overflow-y-auto z-50"
     >
@@ -176,31 +178,39 @@ export default {
             ],
           },
           {
-            title: "Records",
+            title: "Records Management",
             items: [
               {
                 name: "Setup",
-                icon: "setting",
+                icon: "set-up",
                 children: [
                   // { name: "Instructors", route: "/instructors" },
                   { name: "Institutes", route: "/institutes" },
                   { name: "Curriculum", route: "/curriculums" },
                   { name: "Courses", route: "/courses" },
-                  { name: "Specializations", route: "/specializations" },
                   { name: "Rooms", route: "/rooms" },
                   { name: "School Years", route: "/school-years" },
                   { name: "System Overview", route: "/system-overview" },
                 ],
               },
-              { name: "Faculty List", icon: "users", route: "/instructors" },
               {
-                name: "Class List",
-                icon: "folder",
-                route: "/admin-assign-classes",
+                name: "Faculty List",
+                icon: "faculty-list",
+                route: "/instructors",
+              },
+              // {
+              //   name: "Class List",
+              //   icon: "class-list",
+              //   route: "/admin-assign-classes",
+              // },
+              {
+                name: "Assigned Course",
+                icon: "class-list",
+                route: "/admin-assigned-courses",
               },
               {
-                name: "Classes",
-                icon: "folder",
+                name: "Year & Section",
+                icon: "class-list",
                 route: "/classes",
               },
             ],
@@ -209,15 +219,15 @@ export default {
             title: "Generation",
             items: [
               {
-                icon: "arrow-path",
+                icon: "faculty-loading",
                 name: "Faculty Loading",
                 route: "/faculty-loads",
               },
-              {
-                icon: "folder",
-                name: "Exam Scheduling",
-                route: "/exam-loading",
-              },
+              // {
+              //   icon: "folder",
+              //   name: "Exam Scheduling",
+              //   route: "/exam-loading",
+              // },
             ],
           },
           {
@@ -225,7 +235,7 @@ export default {
             items: [
               {
                 name: "Reports",
-                icon: "reports",
+                icon: "prospectus",
                 children: [
                   { name: "Prospectus", route: "/report-curriculum-offers" },
                 ],
@@ -237,7 +247,7 @@ export default {
             items: [
               {
                 name: "User Management",
-                icon: "users",
+                icon: "user-account",
                 children: [{ name: "Users list", route: "/user-accounts" }],
               },
             ],
@@ -260,29 +270,29 @@ export default {
             items: [
               {
                 name: "Courses",
-                icon: "setting",
+                icon: "set-up",
                 route: "/program-courses",
               },
+              // {
+              //   name: "Programs",
+              //   icon: "setting",
+              //   route: "/program-programs",
+              // },
               {
-                name: "Specializations",
-                icon: "setting",
-                route: "/program-specializations",
+                name: "Year & Section",
+                icon: "class-list",
+                route: "/year-section",
               },
               {
-                name: "Programs",
-                icon: "setting",
-                route: "/program-programs",
+                name: "Assigned Course",
+                icon: "class-list",
+                route: "/assigned-course",
               },
-              {
-                name: "Add Year/Section",
-                icon: "add-students",
-                route: "/add-year-section",
-              },
-              {
-                name: "Assign Classes",
-                icon: "reports",
-                route: "/program-chairperson-assign-classes",
-              },
+              // {
+              //   name: "Assign Classes",
+              //   icon: "reports",
+              //   route: "/program-chairperson-assign-classes",
+              // },
             ],
           },
 
@@ -290,24 +300,24 @@ export default {
             title: "Load Management",
             items: [
               {
-                name: "Load Generation",
-                icon: "arrow-path",
+                name: "Generated Load",
+                icon: "faculty-loading",
                 route: "/load-generation",
               },
-              {
-                name: "Faculty Loading",
-                icon: "users",
-                route: "/program-faculty-loading",
-              },
+              // {
+              //   name: "Faculty Loading",
+              //   icon: "users",
+              //   route: "/program-faculty-loading",
+              // },
             ],
           },
           {
             title: "Documents",
             items: [
               {
-                name: "Prospectus",
+                name: "Faculty Expertise Overview",
                 icon: "reports",
-                route: "/report-curriculum-offers",
+                route: "/faculty-expertise",
               },
             ],
           },
@@ -427,28 +437,40 @@ export default {
   opacity: 1;
 }
 
-/* Custom scrollbar for dropdown menus */
-.scrollbar-thin::-webkit-scrollbar {
+/* 🌿 Glass Effect Scrollbar */
+.scrollbar-glass::-webkit-scrollbar {
   width: 6px;
 }
 
-.scrollbar-thin::-webkit-scrollbar-track {
-  background: #f1f1f1;
+.scrollbar-glass::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
   border-radius: 10px;
 }
 
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  background: #888;
+.scrollbar-glass::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0.15)
+  );
   border-radius: 10px;
+  backdrop-filter: blur(4px);
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
-.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: #555;
+.scrollbar-glass::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.45),
+    rgba(255, 255, 255, 0.25)
+  );
 }
 
-/* For Firefox */
-.scrollbar-thin {
+/* 🦊 Firefox Support */
+.scrollbar-glass {
   scrollbar-width: thin;
-  scrollbar-color: #888 #f1f1f1;
+  scrollbar-color: rgba(255, 255, 255, 0.4) rgba(255, 255, 255, 0.1);
 }
 </style>

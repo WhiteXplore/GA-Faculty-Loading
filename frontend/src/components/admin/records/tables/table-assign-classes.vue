@@ -47,18 +47,18 @@
       </div>
     </div>
 
-    <!-- Table Container -->
+    <!-- Table -->
     <div class="mt-4 overflow-x-auto border p-3 rounded-xl bg-white">
       <!-- Top Controls -->
       <div
-        class="flex justify-between items-center flex-wrap gap-3 sm:gap-4 text-gray-700 bg-white"
+        class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
       >
         <!-- Items per page -->
         <div class="flex items-center gap-2">
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md focus:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
               <option value="5">5</option>

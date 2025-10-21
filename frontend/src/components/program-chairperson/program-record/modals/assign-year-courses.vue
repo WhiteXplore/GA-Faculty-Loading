@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-40 z-50"
+    class="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-40 z-50 min-h-screen"
     @click.self="closeModal"
   >
     <div

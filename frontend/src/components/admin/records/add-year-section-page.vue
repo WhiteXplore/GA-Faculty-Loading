@@ -1,56 +1,81 @@
 <template>
-  <div class="px-2 mt-2">
-    <!-- Headers -->
-    <div class="flex justify-between items-start">
-      <h1 class="font-semibold tracking-wide text-md">Add Year/Section</h1>
-    </div>
+  <div class="p-4 md:p-6 space-y-6 text-[13px]">
+    <!-- HEADER -->
+    <!-- <div
+      class="flex items-center justify-between bg-gradient-to-r from-green-600 to-green-500 text-white px-5 py-3 rounded-xl shadow-sm"
+    >
+      <h1 class="text-lg font-semibold tracking-wide">
+        Year & Section Management
+      </h1>
+      <div class="flex gap-2">
+        <button
+          @click="openYearSectionModal"
+          class="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-all"
+        >
+          <icon name="add-students" class="w-4 h-4" />
+          <span class="text-sm font-medium">Add Section</span>
+        </button>
+        <button
+          @click="openAssignCoursesModal"
+          class="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-all"
+        >
+          <icon name="setting" class="w-4 h-4" />
+          <span class="text-sm font-medium">Assign Courses</span>
+        </button>
+      </div>
+    </div> -->
 
-    <!-- Main Content  -->
-    <div class="mt-3">
+    <!-- MAIN CONTENT -->
+    <div class="space-y-6">
       <!-- Program Card -->
       <div
         v-if="userProgram"
-        class="border p-4 rounded-xl bg-white shadow-sm hover:shadow-md transition-all"
+        class="bg-white border border-green-100 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all"
       >
-        <div class="flex justify-between items-center">
+        <div
+          class="flex flex-col md:flex-row md:items-center md:justify-between gap-3"
+        >
+          <!-- Program Info -->
           <div>
             <h2 class="text-lg font-bold text-gray-800">
               {{ userProgram.program_name }}
             </h2>
-            <p class="text-sm text-gray-600">
-              Code: {{ userProgram.program_code }}
-            </p>
-            <p class="text-sm text-gray-600" v-if="userProgram.institute">
-              Institute: {{ userProgram.institute.institute_name }}
-            </p>
+            <div class="text-sm text-gray-600">
+              <p>Code: {{ userProgram.program_code }}</p>
+              <p v-if="userProgram.institute">
+                Institute: {{ userProgram.institute.institute_name }}
+              </p>
+            </div>
           </div>
+
+          <!-- Quick Actions -->
           <div class="flex gap-3">
             <button
               @click="openYearSectionModal"
-              class="flex items-center gap-2 px-4 py-3 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+              class="flex items-center gap-2 px-4 py-2 bg-defaultGreen text-white rounded-lg shadow-sm hover:bg-green-700 transition"
             >
-              <icon name="add-students" class="w-5 h-5" />
-              <span class="font-medium">Add Year/Section</span>
+              <icon name="add-students" class="w-4 h-4" />
+              <span>Add Year/Section</span>
             </button>
             <button
               @click="openAssignCoursesModal"
-              class="flex items-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+              class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg shadow-sm hover:bg-blue-700 transition"
             >
-              <icon name="setting" class="w-5 h-5" />
-              <span class="font-medium">Assign Courses</span>
+              <icon name="setting" class="w-4 h-4" />
+              <span>Assign Courses</span>
             </button>
           </div>
         </div>
 
         <!-- Instructions -->
-        <div class="mt-4 bg-blue-50 p-3 rounded-md">
-          <h3 class="font-bold text-sm text-blue-800 mb-2">Instructions:</h3>
-          <ul class="text-xs text-blue-700 space-y-1 list-disc list-inside">
-            <li>Click "Add Year/Section" to configure class sections</li>
-            <li>Select the school year for the sections</li>
-            <li>Set the number of sections for each year level (1st-4th)</li>
-            <li>Define the class size for each section</li>
-            <li>Sections will be automatically named (A, B, C, etc.)</li>
+        <div class="mt-5 bg-blue-50 border border-blue-100 p-4 rounded-lg">
+          <h3 class="font-semibold text-sm text-blue-900 mb-2">Instructions</h3>
+          <ul class="text-xs text-blue-700 list-disc list-inside space-y-1">
+            <li>Click "Add Year/Section" to configure sections.</li>
+            <li>Select the school year for the new sections.</li>
+            <li>Set number of sections for each year level (1st–4th).</li>
+            <li>Define the class size for each section.</li>
+            <li>Sections will be automatically named (A, B, C, etc.).</li>
           </ul>
         </div>
       </div>
@@ -58,175 +83,179 @@
       <!-- Loading State -->
       <div
         v-else-if="loading"
-        class="border p-8 rounded-xl bg-white shadow-sm text-center"
+        class="bg-white border p-8 rounded-xl shadow-sm text-center"
       >
-        <p class="text-gray-500">Loading program information...</p>
+        <p class="text-gray-500 animate-pulse">
+          Loading program information...
+        </p>
       </div>
 
       <!-- No Program Found -->
-      <div
-        v-else
-        class="border p-8 rounded-xl bg-white shadow-sm text-center"
-      >
-        <icon name="question" class="w-16 h-16 text-gray-300 mx-auto mb-4" />
-        <p class="text-gray-500">No program found for your account.</p>
-        <p class="text-sm text-gray-400 mt-2">
+      <div v-else class="bg-white border p-8 rounded-xl shadow-sm text-center">
+        <icon name="question" class="w-14 h-14 text-gray-300 mx-auto mb-4" />
+        <p class="text-gray-600 font-medium">
+          No program found for your account.
+        </p>
+        <p class="text-sm text-gray-400 mt-1">
           Please contact the administrator.
         </p>
       </div>
 
-      <!-- Created Sections Table -->
-      <div v-if="userProgram && filteredClasses.length > 0" class="mt-4">
-        <div class="border p-4 rounded-xl bg-white shadow-sm">
-          <div class="flex justify-between items-center mb-3">
-            <h3 class="font-bold text-md text-gray-800">
-              Created Sections for {{ activeSchoolYearName }}
-            </h3>
-            <span class="text-sm text-gray-600">
-              Total: {{ filteredClasses.length }} section(s)
-            </span>
-          </div>
+      <!-- SECTIONS TABLE -->
+      <div
+        v-if="userProgram && filteredClasses.length > 0"
+        class="bg-white border p-5 rounded-2xl shadow-sm"
+      >
+        <div class="flex justify-between items-center mb-3">
+          <h3 class="font-semibold text-gray-800">
+            Created Sections – {{ activeSchoolYearName }}
+          </h3>
+          <span class="text-xs text-gray-500">
+            {{ filteredClasses.length }} section(s)
+          </span>
+        </div>
 
-          <!-- Table -->
-          <div class="overflow-x-auto">
-            <table class="min-w-full text-sm text-gray-700">
-              <thead class="bg-defaultGreen text-white">
-                <tr>
-                  <th class="px-4 py-2 text-left rounded-tl-lg">#</th>
-                  <th class="px-4 py-2 text-left">Section Name</th>
-                  <th class="px-4 py-2 text-center">Class Size</th>
-                  <th class="px-4 py-2 text-left rounded-tr-lg">School Year</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="(cls, index) in filteredClasses"
-                  :key="cls.class_id"
-                  class="border-b hover:bg-green-50"
-                >
-                  <td class="px-4 py-2">{{ index + 1 }}</td>
-                  <td class="px-4 py-2 font-semibold">{{ cls.set_name }}</td>
-                  <td class="px-4 py-2 text-center">{{ cls.class_size }}</td>
-                  <td class="px-4 py-2">{{ cls.schoolYear?.school_year_name }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="overflow-x-auto rounded-lg border">
+          <table class="min-w-full text-sm">
+            <thead class="bg-defaultGreen text-white text-left">
+              <tr>
+                <th class="px-4 py-2 rounded-tl-lg">#</th>
+                <th class="px-4 py-2">Section Name</th>
+                <th class="px-4 py-2 text-center">Class Size</th>
+                <th class="px-4 py-2 rounded-tr-lg">School Year</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(cls, index) in filteredClasses"
+                :key="cls.class_id"
+                class="border-b hover:bg-green-50 transition-colors"
+              >
+                <td class="px-4 py-2">{{ index + 1 }}</td>
+                <td class="px-4 py-2 font-medium">{{ cls.set_name }}</td>
+                <td class="px-4 py-2 text-center">{{ cls.class_size }}</td>
+                <td class="px-4 py-2">
+                  {{ cls.schoolYear?.school_year_name }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
-      <!-- No Sections Message -->
+      <!-- NO SECTIONS -->
       <div
         v-else-if="userProgram && !loading && filteredClasses.length === 0"
-        class="mt-4 border p-8 rounded-xl bg-white shadow-sm text-center"
+        class="bg-white border p-8 rounded-xl shadow-sm text-center"
       >
-        <p class="text-gray-500">
+        <p class="text-gray-600">
           No sections created for {{ activeSchoolYearName }} yet.
         </p>
-        <p class="text-sm text-gray-400 mt-2">
-          Click "Add Year/Section" to create sections for this school year.
+        <p class="text-sm text-gray-400 mt-1">
+          Click "Add Year/Section" to create sections.
         </p>
       </div>
 
-      <!-- Assigned Courses by Year Level -->
-      <div v-if="userProgram && assignedCourses.length > 0" class="mt-4">
-        <div class="border p-4 rounded-xl bg-white shadow-sm">
-          <div class="flex justify-between items-center mb-3">
-            <h3 class="font-bold text-md text-gray-800">
-              Assigned Courses for {{ activeSchoolYearName }}
-            </h3>
-            <button
-              @click="openAssignCoursesModal"
-              class="px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              <icon name="setting" class="w-4 h-4 inline mr-1" />
-              Edit Assignments
-            </button>
-          </div>
+      <!-- ASSIGNED COURSES -->
+      <div
+        v-if="userProgram && assignedCourses.length > 0"
+        class="bg-white border p-5 rounded-2xl shadow-sm"
+      >
+        <div class="flex justify-between items-center mb-3">
+          <h3 class="font-semibold text-gray-800">
+            Assigned Courses – {{ activeSchoolYearName }}
+          </h3>
+          <button
+            @click="openAssignCoursesModal"
+            class="px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition"
+          >
+            <icon name="setting" class="w-4 h-4 inline mr-1" />
+            Edit
+          </button>
+        </div>
 
-          <!-- Year Level Tabs/Sections -->
-          <div class="space-y-4">
+        <div class="space-y-3">
+          <div
+            v-for="year in [1, 2, 3, 4]"
+            :key="year"
+            class="border rounded-lg overflow-hidden"
+          >
+            <!-- Year Header -->
             <div
-              v-for="year in [1, 2, 3, 4]"
-              :key="year"
-              class="border rounded-lg overflow-hidden"
+              @click="toggleYearDisplay(year)"
+              class="flex justify-between items-center p-3 bg-gray-50 hover:bg-gray-100 cursor-pointer transition"
             >
-              <!-- Year Header -->
-              <div
-                @click="toggleYearDisplay(year)"
-                class="flex justify-between items-center p-3 bg-gray-100 hover:bg-gray-200 cursor-pointer transition-colors"
-              >
-                <div class="flex items-center gap-2">
-                  <icon
-                    :name="
-                      expandedYearsDisplay.includes(year)
-                        ? 'arrow-down'
-                        : 'arrow-right'
-                    "
-                    class="w-4 h-4 text-gray-600"
-                  />
-                  <h4 class="font-bold text-sm text-gray-800">
-                    {{ getYearLabel(year) }}
-                  </h4>
-                  <span
-                    v-if="getCoursesByYearLevel(year).length > 0"
-                    class="px-2 py-1 bg-green-500 text-white text-xs rounded-full"
-                  >
-                    {{ getCoursesByYearLevel(year).length }} course(s)
-                  </span>
-                </div>
+              <div class="flex items-center gap-2">
+                <icon
+                  :name="
+                    expandedYearsDisplay.includes(year)
+                      ? 'arrow-down'
+                      : 'arrow-right'
+                  "
+                  class="w-4 h-4 text-gray-600"
+                />
+                <h4 class="font-semibold text-sm text-gray-800">
+                  {{ getYearLabel(year) }}
+                </h4>
+                <span
+                  v-if="getCoursesByYearLevel(year).length > 0"
+                  class="px-2 py-1 bg-green-500 text-white text-xs rounded-full"
+                >
+                  {{ getCoursesByYearLevel(year).length }} course(s)
+                </span>
               </div>
+            </div>
 
-              <!-- Year Content -->
+            <!-- Year Content -->
+            <transition name="fade">
               <div
                 v-if="expandedYearsDisplay.includes(year)"
                 class="p-4 bg-white"
               >
                 <div
                   v-if="getCoursesByYearLevel(year).length > 0"
-                  class="grid grid-cols-1 md:grid-cols-2 gap-3"
+                  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
                 >
                   <div
                     v-for="assignment in getCoursesByYearLevel(year)"
                     :key="assignment.id"
-                    class="p-3 border border-gray-200 rounded-lg hover:border-green-400 transition-colors"
+                    class="p-3 border rounded-lg hover:border-green-400 transition"
                   >
-                    <p class="font-semibold text-sm text-gray-800">
+                    <p class="font-medium text-gray-800">
                       {{ assignment.course?.course_code }}
                     </p>
                     <p class="text-xs text-gray-600 mt-1">
                       {{ assignment.course?.course_description }}
                     </p>
-                    <p class="text-xs text-gray-500 mt-1">
-                      Curriculum:
+                    <p class="text-xs text-gray-500 mt-1 italic">
                       {{ assignment.course?.curriculum?.curriculum_name }}
                     </p>
                   </div>
                 </div>
-                <div v-else class="text-center py-6 text-gray-500 text-sm">
-                  <p>No courses assigned for this year level yet.</p>
+                <div v-else class="py-6 text-center text-gray-500 text-sm">
+                  No courses assigned for this year level.
                 </div>
               </div>
-            </div>
+            </transition>
           </div>
         </div>
       </div>
 
-      <!-- No Courses Assigned Message -->
+      <!-- NO ASSIGNED COURSES -->
       <div
         v-else-if="userProgram && !loading && assignedCourses.length === 0"
-        class="mt-4 border p-8 rounded-xl bg-white shadow-sm text-center"
+        class="bg-white border p-8 rounded-xl shadow-sm text-center"
       >
-        <icon name="question" class="w-16 h-16 text-gray-300 mx-auto mb-4" />
-        <p class="text-gray-500">
+        <icon name="question" class="w-14 h-14 text-gray-300 mx-auto mb-4" />
+        <p class="text-gray-600">
           No courses assigned to year levels for {{ activeSchoolYearName }} yet.
         </p>
-        <p class="text-sm text-gray-400 mt-2">
-          Click "Assign Courses" to assign courses to each year level.
+        <p class="text-sm text-gray-400 mt-1">
+          Click "Assign Courses" to start assigning.
         </p>
         <button
           @click="openAssignCoursesModal"
-          class="mt-4 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+          class="mt-4 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"
         >
           <icon name="setting" class="w-5 h-5 inline mr-2" />
           Assign Courses Now
@@ -235,15 +264,13 @@
     </div>
   </div>
 
-  <!-- Add Year/Section Modal -->
+  <!-- MODALS -->
   <addYearSection
     v-if="showYearSectionModal && userProgram"
     :programData="userProgram"
     @close="closeYearSectionModal"
     @refresh="loadUserProgram"
   />
-
-  <!-- Assign Year Courses Modal -->
   <assignYearCourses
     v-if="showAssignCoursesModal && userProgram"
     :programData="userProgram"
@@ -255,8 +282,8 @@
 <script>
 import icon from "@/assets/icon.vue";
 import { toast } from "vue3-toastify";
-import addYearSection from "./modals/add-year-section.vue";
-import assignYearCourses from "./modals/assign-year-courses.vue";
+import addYearSection from "../../program-chairperson/program-record/modals/add-year-section.vue";
+import assignYearCourses from "../../program-chairperson/program-record/modals/assign-year-courses.vue";
 import axios from "axios";
 import { useFetchDataStore } from "@/store/fetch-data-store";
 import { mapState } from "pinia";
@@ -455,4 +482,3 @@ export default {
 <style scoped>
 /* Add any required styles here */
 </style>
-

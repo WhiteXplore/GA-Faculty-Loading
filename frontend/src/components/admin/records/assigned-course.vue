@@ -2,23 +2,23 @@
   <div class="px-2 mt-2">
     <!-- Headers -->
     <div class="flex justify-between items-start">
-      <h1 class="font-semibold tracking-wide text-md">Courses</h1>
+      <h1 class="font-semibold tracking-wide text-md">Assigned Course</h1>
     </div>
 
     <!-- Main Content  -->
     <div class="mt-3">
       <!-- Table -->
-      <tableCourses />
+      <TableAssignedCourse />
     </div>
   </div>
 </template>
 
 <script>
-import tableCourses from "./tables/table-courses.vue";
+import TableAssignedCourse from "@/components/admin/records/tables/table-assigned-course.vue";
 export default {
-  name: "CoursesPage",
+  name: "RoomsPage",
   components: {
-    tableCourses,
+    TableAssignedCourse,
   },
 };
 </script>

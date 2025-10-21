@@ -30,7 +30,7 @@
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
               <option value="5">5</option>
@@ -104,7 +104,7 @@
               v-model="searchQuery"
               type="text"
               placeholder="Search..."
-              class="rounded-full border border-green-600 bg-white px-4 py-2 pl-10 text-sm shadow-sm w-[250px] transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+              class="rounded-full border border-green-600 bg-white px-4 py-2 pl-10 text-sm shadow-sm w-full sm:w-[280px] transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @input="changePage(1)"
             />
             <!-- Search icon -->
@@ -127,78 +127,70 @@
       </div>
 
       <!-- Table -->
-      <div class="w-full mt-1 rounded-xl overflow-hidden">
-        <div
-          class="overflow-y-auto transition-all duration-300"
-          :class="tableHeightClass"
-        >
-          <table
-            class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
+      <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+        <table class="min-w-full text-sm text-gray-700 border-collapse">
+          <thead
+            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
-            <thead
-              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+            <tr>
+              <th class="px-4 py-3 text-left rounded-tl-lg">#</th>
+              <th class="px-4 py-3 text-left">Curriculum</th>
+              <th class="px-4 py-3 text-left">Course Code</th>
+              <th class="px-4 py-3 text-left">Description</th>
+              <th class="px-4 py-3 text-center">Semester</th>
+              <th class="px-4 py-3 text-center">Year Level</th>
+              <th class="px-4 py-3 text-center">Lecture</th>
+              <th class="px-4 py-3 text-center">Lab</th>
+              <th class="px-4 py-3 text-center">Units</th>
+              <th class="px-4 py-3 text-center">Pre-requisite</th>
+              <th class="px-4 py-3 text-center rounded-tr-lg">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(c, index) in paginatedData"
+              :key="c.course_id"
+              class="hover:bg-green-50 transition-all border-t"
             >
-              <tr>
-                <th class="px-4 py-3 text-left rounded-tl-lg">#</th>
-                <th class="px-4 py-2 text-left">Curriculum</th>
-                <th class="px-4 py-2 text-left">Course Code</th>
-                <th class="px-4 py-2 text-left">Description</th>
-                <th class="px-4 py-2 text-center">Semester</th>
-                <th class="px-4 py-2 text-center">Year Level</th>
-                <th class="px-4 py-2 text-center">Lecture</th>
-                <th class="px-4 py-2 text-center">Lab</th>
-                <th class="px-4 py-2 text-center">Units</th>
-                <th class="px-4 py-2 text-center">Pre-req</th>
-                <th class="px-4 py-2 text-left rounded-tr-lg">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(c, index) in paginatedData"
-                :key="c.course_id"
-                class="bg-white hover:bg-green-50 transition border rounded-md shadow-sm"
-              >
-                <td class="px-4 py-2">{{ startIndex + index }}</td>
-                <td class="px-4 py-2">{{ c.curriculum?.curriculum_name }}</td>
-                <td class="px-4 py-2">{{ c.course_code }}</td>
-                <td class="px-4 py-2">{{ c.course_description }}</td>
-                <td class="px-4 py-2 text-center">{{ c.course_semester }}</td>
-                <td class="px-4 py-2 text-center">{{ c.course_level }}</td>
-                <td class="px-4 py-2 text-center">{{ c.course_lec }}</td>
-                <td class="px-4 py-2 text-center">{{ c.course_lab }}</td>
-                <td class="px-4 py-2 text-center">
-                  {{ c.course_lec + c.course_lab }}
-                </td>
-                <td class="px-4 py-2 text-center">
-                  {{ c.course_requisite || "-" }}
-                </td>
-                <td class="px-4 py-2">
-                  <div class="flex gap-2">
-                    <button
-                      class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
-                      @click="toggleEdit(c)"
-                    >
-                      <icon name="edit" /> Edit
-                    </button>
-                    <button
-                      class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                      @click="toggleDelete(c)"
-                    >
-                      <icon name="delete" /> Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr v-if="paginatedData.length === 0">
-                <td colspan="11" class="text-center py-8 text-gray-400">
-                  No records found
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+              <td class="px-4 py-3">{{ startIndex + index }}</td>
+              <td class="px-4 py-3">{{ c.curriculum?.curriculum_name }}</td>
+              <td class="px-4 py-3">{{ c.course_code }}</td>
+              <td class="px-4 py-3">{{ c.course_description }}</td>
+              <td class="px-4 py-3 text-center">{{ c.course_semester }}</td>
+              <td class="px-4 py-3 text-center">{{ c.course_level }}</td>
+              <td class="px-4 py-3 text-center">{{ c.course_lec }}</td>
+              <td class="px-4 py-3 text-center">{{ c.course_lab }}</td>
+              <td class="px-4 py-3 text-center">
+                {{ c.course_lec + c.course_lab }}
+              </td>
+              <td class="px-4 py-3 text-center">
+                {{ c.course_requisite || "-" }}
+              </td>
+              <td class="px-4 py-3">
+                <div class="flex justify-center gap-2">
+                  <button
+                    class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
+                    @click="toggleEdit(c)"
+                  >
+                    <icon name="edit" /> Edit
+                  </button>
+                  <button
+                    class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                    @click="toggleDelete(c)"
+                  >
+                    <icon name="delete" /> Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr v-if="paginatedData.length === 0">
+              <td colspan="11" class="text-center py-8 text-gray-400">
+                No records found
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
         <div class="text-gray-700">
@@ -297,6 +289,7 @@ import axios from "axios";
 export default {
   name: "TableCourses",
   components: { icon, addCourses },
+
   data() {
     return {
       currentPage: 1,
@@ -312,11 +305,13 @@ export default {
       selectedCourse: null,
       showEditModal: false,
       activeYear: null,
-      user: null, // 👈 add local user here
+      activeSem: null,
+      user: null,
     };
   },
+
   computed: {
-    ...mapState(useFetchDataStore, ["courses", "year"]),
+    ...mapState(useFetchDataStore, ["courses", "year", "sem"]),
 
     uniqueCurriculums() {
       const names = this.filteredCourses.map(
@@ -327,9 +322,9 @@ export default {
 
     filteredCourses() {
       let result = this.courses || [];
+      const currentUser = this.user;
 
-      const currentUser = this.user; // ✅ now use local user
-
+      // Filter by Program Chairperson's institute & program
       if (currentUser?.role === "Program Chairperson") {
         result = result.filter(
           (c) =>
@@ -339,6 +334,7 @@ export default {
         );
       }
 
+      // Filter by Active Year
       if (this.activeYear) {
         result = result.filter(
           (c) =>
@@ -347,12 +343,25 @@ export default {
         );
       }
 
+      // Filter by Active Semester
+      if (this.activeSem) {
+        const semValue =
+          typeof this.activeSem === "object"
+            ? this.activeSem.semester
+            : this.activeSem;
+        result = result.filter(
+          (c) => Number(c.course_semester) === Number(semValue)
+        );
+      }
+
+      // Filter by selected curriculum
       if (this.selectedCurriculum) {
         result = result.filter(
           (c) => c.curriculum?.curriculum_name === this.selectedCurriculum
         );
       }
 
+      // Search filter
       if (this.searchQuery) {
         const query = this.searchQuery.toLowerCase();
         result = result.filter(
@@ -378,41 +387,53 @@ export default {
     totalPages() {
       return Math.ceil(this.filteredData.length / this.itemsPerPage) || 1;
     },
+
     pageNumbers() {
       return Array.from({ length: this.totalPages }, (_, i) => i + 1);
     },
+
     startIndex() {
       return this.filteredData.length === 0
         ? 0
         : (this.currentPage - 1) * this.itemsPerPage + 1;
     },
+
     endIndex() {
       const end = this.currentPage * this.itemsPerPage;
       return Math.min(end, this.filteredData.length);
     },
+
     tableHeightClass() {
       const count = this.paginatedData.length;
       return count <= 10 ? "h-auto" : "h-[65vh]";
     },
   },
+
   methods: {
     async loadCourses() {
       const store = useFetchDataStore();
       await store.fetchCourses();
     },
+
     async loadActiveYear() {
       const store = useFetchDataStore();
       await store.fetchActiveYear();
       this.activeYear = store.year;
     },
+
+    async loadActiveSem() {
+      const store = useFetchDataStore();
+      await store.fetchActiveSem();
+      this.activeSem = store.sem;
+    },
+
     async fetchUser() {
       try {
         const response = await axios.get("http://localhost:8000/auth/me", {
           withCredentials: true,
         });
         if (response.data) {
-          this.user = response.data; // ✅ save into local state
-          console.log("Authenticated User:", this.user);
+          this.user = response.data;
         } else {
           this.$router.push("/");
         }
@@ -426,14 +447,17 @@ export default {
       this.isAddCourses = true;
       this.isTable = true;
     },
+
     toggleEdit(item) {
       this.selectedCourse = item;
       this.showEditModal = true;
     },
+
     toggleDelete(item) {
       this.recordToDelete = item;
       this.showDeleteModal = true;
     },
+
     confirmDelete() {
       if (!this.recordToDelete || isNaN(this.recordToDelete.course_id)) {
         toast.error("Invalid course ID.");
@@ -448,32 +472,70 @@ export default {
           this.recordToDelete = null;
           this.loadCourses();
           toast.success("Record deleted successfully");
-        });
+        })
+        .catch(() => toast.error("Failed to delete record"));
     },
+
     changePage(page) {
       this.currentPage = Math.max(1, Math.min(page, this.totalPages));
     },
+
     closeView() {
       this.isAddCourses = false;
       this.isUploadData = false;
     },
+
     closeModal() {
       this.showEditModal = false;
       this.selectedCourse = null;
     },
   },
+
   watch: {
-    year(newVal) {
-      if (newVal) {
-        this.activeYear = newVal;
-        this.loadCourses();
-      }
+    year: {
+      async handler(newVal) {
+        if (newVal) {
+          this.activeYear = newVal;
+          await this.loadCourses();
+          this.currentPage = 1;
+        }
+      },
+      immediate: true,
+    },
+
+    sem: {
+      async handler(newVal, oldVal) {
+        if (newVal !== oldVal && newVal !== null && newVal !== undefined) {
+          console.log("🔁 Active semester changed:", newVal);
+          this.activeSem = newVal;
+
+          // Reload courses immediately after semester changes
+          await this.$nextTick();
+          await this.loadCourses();
+          this.currentPage = 1;
+
+          console.log("✅ Courses reloaded for semester:", newVal);
+        }
+      },
+      immediate: true,
     },
   },
+
   async mounted() {
     await this.fetchUser();
-    await this.loadActiveYear(); // fetch year first
-    await this.loadCourses(); // then fetch courses
+    await this.loadActiveYear();
+    await this.loadActiveSem();
+    await this.loadCourses();
+
+    // ✅ Reactively listen for semester changes at the store level
+    const store = useFetchDataStore();
+    store.$subscribe((mutation, state) => {
+      if (mutation.events.key === "sem") {
+        console.log("📢 Store semester changed:", state.sem);
+        this.activeSem = state.sem;
+        this.loadCourses();
+      }
+    });
   },
 };
 </script>

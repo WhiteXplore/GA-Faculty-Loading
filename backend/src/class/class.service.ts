@@ -19,11 +19,7 @@ export class ClassService {
 
   async findAll(): Promise<Class[]> {
     return await this.classRepository.find({
-      relations: [
-        'schoolYear',
-        'program',
-        'program.institute',
-      ],
+      relations: ['schoolYear', 'program', 'program.institute'],
       order: { created_at: 'DESC' },
     });
   }
@@ -55,4 +51,3 @@ export class ClassService {
     await this.classRepository.remove(classEntity);
   }
 }
-

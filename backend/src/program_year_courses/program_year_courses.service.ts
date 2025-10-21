@@ -31,7 +31,13 @@ export class ProgramYearCoursesService {
 
   async findAll(): Promise<ProgramYearCourse[]> {
     return await this.programYearCourseRepository.find({
-      relations: ['program', 'course', 'schoolYear', 'course.curriculum'],
+      relations: [
+        'program',
+        'program.institute',
+        'course',
+        'schoolYear',
+        'course.curriculum',
+      ],
     });
   }
 
@@ -44,7 +50,13 @@ export class ProgramYearCoursesService {
         program_id: programId,
         school_year_id: schoolYearId,
       },
-      relations: ['program', 'course', 'schoolYear', 'course.curriculum'],
+      relations: [
+        'program',
+        'program.institute',
+        'course',
+        'schoolYear',
+        'course.curriculum',
+      ],
       order: {
         year_level: 'ASC',
         course: {
@@ -65,14 +77,20 @@ export class ProgramYearCoursesService {
         year_level: yearLevel,
         school_year_id: schoolYearId,
       },
-      relations: ['program', 'course', 'schoolYear', 'course.curriculum'],
+      relations: [
+        'program',
+        'program.institute',
+        'course',
+        'schoolYear',
+        'course.curriculum',
+      ],
     });
   }
 
   async findOne(id: number): Promise<ProgramYearCourse | null> {
     return await this.programYearCourseRepository.findOne({
       where: { id },
-      relations: ['program', 'course', 'schoolYear'],
+      relations: ['program', 'program.institute', 'course', 'schoolYear'],
     });
   }
 
@@ -100,4 +118,3 @@ export class ProgramYearCoursesService {
     });
   }
 }
-

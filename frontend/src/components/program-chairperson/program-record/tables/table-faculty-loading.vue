@@ -78,7 +78,7 @@
                 <tr
                   v-for="(instructor_data, index) in paginatedData"
                   :key="instructor_data.instructor_id"
-                  class="bg-white hover:bg-green-50 transition-all border border-gray-200 rounded-md shadow-sm"
+                  class="hover:bg-green-50 transition-all border-t"
                 >
                   <td class="px-4 py-2 text-left">
                     {{ startIndex + index }}

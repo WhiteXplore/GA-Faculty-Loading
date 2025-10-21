@@ -2,23 +2,23 @@
   <div class="px-2 mt-2">
     <!-- Headers -->
     <div class="flex justify-between items-start">
-      <h1 class="font-semibold tracking-wide text-md">Specializations</h1>
+      <h1 class="font-semibold tracking-wide text-md">Year & Section</h1>
     </div>
 
     <!-- Main Content  -->
     <div class="mt-3">
       <!-- Table -->
-      <tableSpecializations />
+      <TableYearSection />
     </div>
   </div>
 </template>
 
 <script>
-import tableSpecializations from "./tables/table-specializations.vue";
+import TableYearSection from "../../program-chairperson/program-record/tables/table-year-section.vue";
 export default {
-  name: "SpecializationsPage",
+  name: "RoomsPage",
   components: {
-    tableSpecializations,
+    TableYearSection,
   },
 };
 </script>
@@ -26,4 +26,3 @@ export default {
 <style scoped>
 /* Add any required styles here */
 </style>
-

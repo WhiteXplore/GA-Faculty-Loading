@@ -3,7 +3,14 @@
     <!-- Header -->
     <div class="text-sm flex justify-between">
       <div class="text-[13px] text-text mt-4 font-regular">
-        Pages / Faculty List
+        Pages /
+        <span class="font-semibold text-green-900">
+          {{
+            user && user.role === "Program Chairperson"
+              ? "Faculty Under My Program"
+              : "Faculty List"
+          }}
+        </span>
       </div>
     </div>
 
@@ -17,7 +24,7 @@
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md focus:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md focus:shadow-md"
               @change="changePage(1)"
             >
               <option value="5">5</option>
@@ -73,67 +80,60 @@
       </div>
 
       <!-- Faculty Table -->
-      <div class="w-full mt-3 rounded-xl overflow-hidden">
-        <div
-          class="overflow-y-auto transition-all duration-300"
-          :class="tableHeightClass"
-        >
-          <table class="min-w-full table-auto border text-sm text-gray-700">
-            <thead
-              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+      <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+        <table class="min-w-full text-sm text-gray-700 border-collapse">
+          <thead
+            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+          >
+            <tr>
+              <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
+                ID
+              </th>
+              <th class="px-4 py-3 text-left font-normal">Faculty Name</th>
+              <th class="px-4 py-3 text-left font-normal">Institute</th>
+              <th class="px-4 py-3 text-left font-normal">Program</th>
+              <th class="px-4 py-3 text-center font-normal">Role</th>
+              <th class="px-4 py-3 text-center rounded-tr-lg font-normal">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(user, index) in paginatedData"
+              :key="user.id"
+              class="hover:bg-green-50 transition-all border-t"
             >
-              <tr>
-                <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
-                  ID
-                </th>
-                <th class="px-4 py-3 text-left font-normal">Faculty Name</th>
-                <th class="px-4 py-3 text-left font-normal">Institute</th>
-                <th class="px-4 py-3 text-left font-normal">Program</th>
-                <th class="px-4 py-3 text-left font-normal">Role</th>
-                <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(user, index) in paginatedData"
-                :key="user.id"
-                class="bg-white hover:bg-green-50 transition border rounded-md shadow-sm"
-              >
-                <td class="px-4 py-3">{{ startIndex + index }}</td>
-                <td class="px-4 py-3">
-                  {{ user.first_name }} {{ user.last_name }}
-                </td>
-                <td class="px-4 py-3">
-                  {{ user.institute?.institute_name || "N/A" }}
-                </td>
-                <td class="px-4 py-3">
-                  {{ user.program?.program_name || "N/A" }}
-                </td>
-                <td class="px-4 py-3 text-center">{{ user.role }}</td>
-                <td class="px-4 py-3">
-                  <div class="flex gap-2">
-                    <!-- View button -->
-                    <button
-                      class="px-3 py-1 h-8 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-lg flex items-center gap-1"
-                      @click="toggleView(user)"
-                    >
-                      <icon name="eye" /> View
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr v-if="paginatedData.length === 0">
-                <td colspan="6" class="text-center py-8 text-gray-400">
-                  No faculty found
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+              <td class="px-4 py-3">{{ startIndex + index }}</td>
+              <td class="px-4 py-3">
+                {{ user.first_name }} {{ user.last_name }}
+              </td>
+              <td class="px-4 py-3">
+                {{ user.institute?.institute_name || "N/A" }}
+              </td>
+              <td class="px-4 py-3">
+                {{ user.program?.program_name || "N/A" }}
+              </td>
+              <td class="px-4 py-3 text-center">{{ user.role }}</td>
+              <td class="px-4 py-3 items-center justify-center flex">
+                <div class="flex gap-2">
+                  <button
+                    class="px-3 py-1 h-8 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-lg flex items-center gap-1"
+                    @click="toggleView(user)"
+                  >
+                    <icon name="eye" /> View
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr v-if="paginatedData.length === 0">
+              <td colspan="6" class="text-center py-8 text-gray-400">
+                No faculty found
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
         <div class="text-gray-700">
@@ -170,127 +170,118 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- View Modal -->
+  <!-- View Modal -->
+  <div
+    v-if="showViewModal"
+    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+  >
     <div
-      v-if="showViewModal"
-      class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+      class="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 relative animate-slideUp"
     >
-      <div
-        class="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 relative animate-slideUp"
-      >
-        <!-- Header -->
-        <div class="flex justify-between items-center border-b pb-3 mb-4">
-          <h2
-            class="text-xl font-semibold text-gray-900 flex items-center gap-2"
+      <!-- Header -->
+      <div class="flex justify-between items-center border-b pb-3 mb-4">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <svg
+            class="w-6 h-6 text-green-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
-            <svg
-              class="w-6 h-6 text-green-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 11c0 1.657-1.343 3-3 3S6 12.657 6 11s1.343-3 3-3 3 1.343 3 3zm0 0v10m0-10c0 1.657 1.343 3 3 3s3-1.343 3-3-1.343-3-3-3-3 1.343-3 3z"
-              />
-            </svg>
-            Faculty Expertise
-          </h2>
-          <button
-            @click="showViewModal = false"
-            class="text-gray-400 hover:text-gray-600 transition"
-          >
-            ✕
-          </button>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 11c0 1.657-1.343 3-3 3S6 12.657 6 11s1.343-3 3-3 3 1.343 3 3zm0 0v10m0-10c0 1.657 1.343 3 3 3s3-1.343 3-3-1.343-3-3-3-3 1.343-3 3z"
+            />
+          </svg>
+          Faculty Expertise
+        </h2>
+        <button
+          @click="showViewModal = false"
+          class="text-gray-400 hover:text-gray-600 transition"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- Content -->
+      <div class="space-y-4" v-if="selectedFaculty">
+        <div class="grid gap-2 text-xs">
+          <p class="flex space-x-6">
+            <span class="font-semibold text-gray-700">Name:</span>
+            <span class="text-gray-900">
+              {{ selectedFaculty.first_name }} {{ selectedFaculty.last_name }}
+            </span>
+          </p>
+          <p class="flex space-x-2">
+            <span class="font-semibold text-gray-700">Institute:</span>
+            <span class="text-gray-900">
+              {{ selectedFaculty.institute?.institute_name || "N/A" }}
+            </span>
+          </p>
+          <p class="flex space-x-2">
+            <span class="font-semibold text-gray-700">Program:</span>
+            <span class="text-gray-900">
+              {{ selectedFaculty.program?.program_name || "N/A" }}
+            </span>
+          </p>
         </div>
 
-        <!-- Content -->
-        <div class="space-y-4" v-if="selectedFaculty">
-          <!-- Faculty Info -->
-          <div class="grid gap-2 text-sm">
-            <p class="flex space-x-6">
-              <span class="font-semibold text-gray-700">Name:</span>
-              <span class="text-gray-900">
-                {{ selectedFaculty.first_name }} {{ selectedFaculty.last_name }}
-              </span>
-            </p>
-            <p class="flex space-x-2">
-              <span class="font-semibold text-gray-700">Institute:</span>
-              <span class="text-gray-900">
-                {{ selectedFaculty.institute?.institute_name || "N/A" }}
-              </span>
-            </p>
-            <p class="flex space-x-2">
-              <span class="font-semibold text-gray-700">Program:</span>
-              <span class="text-gray-900">
-                {{ selectedFaculty.program?.program_name || "N/A" }}
-              </span>
-            </p>
-          </div>
-
-          <!-- Expertise Section -->
-          <div class="pt-3 border-t">
-            <h3 class="font-semibold text-gray-800 mb-2">Expertise</h3>
-            <ul
-              class="list-disc list-inside ml-2 space-y-1 text-gray-700 text-sm"
-            >
-              <li
-                v-for="(other, i) in selectedFaculty.expertise || []"
-                :key="i"
-              >
-                {{ other.course?.course_code }} -
-                {{ other.course?.course_description }}
-              </li>
-              <li
-                v-if="
-                  !selectedFaculty.expertise ||
-                  selectedFaculty.expertise.length === 0
-                "
-                class="text-gray-500 italic"
-              >
-                No expertise added
-              </li>
-            </ul>
-          </div>
-
-          <!-- Other Expertise Section -->
-          <div class="pt-3 border-t">
-            <h3 class="font-semibold text-gray-800 mb-2">Other Expertise</h3>
-            <ul
-              class="list-disc list-inside ml-2 space-y-1 text-gray-700 text-sm"
-            >
-              <li
-                v-for="(other, i) in selectedFaculty.other_expertise || []"
-                :key="i"
-              >
-                {{ other.course?.course_code }} -
-                {{ other.course?.course_description }}
-              </li>
-              <li
-                v-if="
-                  !selectedFaculty.other_expertise ||
-                  selectedFaculty.other_expertise.length === 0
-                "
-                class="text-gray-500 italic"
-              >
-                None other expertise added
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="flex justify-end mt-6">
-          <button
-            @click="showViewModal = false"
-            class="px-5 py-2 rounded-lg bg-[#147452] text-white font-medium hover:bg-green-700 transition"
+        <div class="pt-3 border-t">
+          <h3 class="font-semibold text-gray-800 mb-2">Expertise</h3>
+          <ul
+            class="list-disc list-inside ml-2 space-y-1 text-gray-700 text-sm"
           >
-            Close
-          </button>
+            <li v-for="(other, i) in selectedFaculty.expertise || []" :key="i">
+              {{ other.course?.course_code }} -
+              {{ other.course?.course_description }}
+            </li>
+            <li
+              v-if="
+                !selectedFaculty.expertise ||
+                selectedFaculty.expertise.length === 0
+              "
+              class="text-gray-500 italic"
+            >
+              No expertise added
+            </li>
+          </ul>
         </div>
+
+        <div class="pt-3 border-t">
+          <h3 class="font-semibold text-gray-800 mb-2">Other Expertise</h3>
+          <ul
+            class="list-disc list-inside ml-2 space-y-1 text-gray-700 text-sm"
+          >
+            <li
+              v-for="(other, i) in selectedFaculty.other_expertise || []"
+              :key="i"
+            >
+              {{ other.course?.course_code }} -
+              {{ other.course?.course_description }}
+            </li>
+            <li
+              v-if="
+                !selectedFaculty.other_expertise ||
+                selectedFaculty.other_expertise.length === 0
+              "
+              class="text-gray-500 italic"
+            >
+              None other expertise added
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex justify-end mt-6">
+        <button
+          @click="showViewModal = false"
+          class="px-5 py-3 rounded-lg bg-[#147452] text-white font-medium hover:bg-green-700 transition"
+        >
+          Close
+        </button>
       </div>
     </div>
   </div>
@@ -298,7 +289,7 @@
 
 <script>
 import icon from "@/assets/icon.vue";
-import { toast } from "vue3-toastify";
+// import { toast } from "vue3-toastify";
 import { useFetchDataStore } from "../../../../store/fetch-data-store";
 import { mapState } from "pinia";
 import axios from "axios";
@@ -317,28 +308,50 @@ export default {
       selectedFaculty: null,
       showEditModal: false,
       showViewModal: false,
+      user: null, // ✅ added for current logged-in user
     };
   },
   computed: {
     ...mapState(useFetchDataStore, ["rawusers"]),
+
     filteredData() {
       const query = this.searchQuery.toLowerCase();
+      const currentUser = this.user;
 
-      // Filter only Program Chairperson and Faculty
-      return this.rawusers
-        .filter((u) => u.role === "Program Chairperson" || u.role === "Faculty")
-        .filter((u) =>
-          [
-            `${u.first_name} ${u.last_name}`,
-            u.institute?.institute_name || "",
-            u.program?.program_name || "",
-            u.role || "",
-          ]
-            .join(" ")
-            .toLowerCase()
-            .includes(query)
+      if (!this.rawusers || !currentUser) return [];
+
+      let list = [];
+
+      // Admin → All faculty and PC
+      if (currentUser.role === "Admin") {
+        list = this.rawusers.filter(
+          (u) => u.role === "Program Chairperson" || u.role === "Faculty"
         );
+      }
+      // Program Chairperson → Faculty only in same institute + program
+      else if (currentUser.role === "Program Chairperson") {
+        list = this.rawusers.filter(
+          (u) =>
+            u.role === "Faculty" &&
+            u.institute?.institute_id === currentUser.institute_id &&
+            u.program?.program_id === currentUser.program_id
+        );
+      }
+
+      // Search filter
+      return list.filter((u) =>
+        [
+          `${u.first_name} ${u.last_name}`,
+          u.institute?.institute_name || "",
+          u.program?.program_name || "",
+          u.role || "",
+        ]
+          .join(" ")
+          .toLowerCase()
+          .includes(query)
+      );
     },
+
     totalPages() {
       return Math.ceil(this.filteredData.length / this.itemsPerPage) || 1;
     },
@@ -359,50 +372,43 @@ export default {
       return Array.from({ length: this.totalPages }, (_, i) => i + 1);
     },
     tableHeightClass() {
-      return this.itemsPerPage > 10 ? "max-h-[500px]" : "max-h-[400px]";
+      const count = this.paginatedData.length;
+      return count <= 10 ? "h-auto" : "h-[65vh]";
     },
   },
+
   methods: {
     async loadUsers() {
       const store = useFetchDataStore();
       await store.fetchRawUsers();
     },
-    toggleEdit(user) {
-      this.selectedFaculty = user;
-      this.showEditModal = true;
-    },
-    toggleDelete(user) {
-      this.recordToDelete = user;
-      this.showDeleteModal = true;
-    },
     toggleView(user) {
       this.selectedFaculty = user;
       this.showViewModal = true;
     },
-    async confirmDelete() {
-      if (!this.recordToDelete || !Number.isInteger(this.recordToDelete.id)) {
-        toast.error("Invalid user ID.");
-        return;
-      }
-      const userId = this.recordToDelete.id;
-      try {
-        await axios.delete(`http://localhost:8000/users/delete/${userId}`);
-        this.recordToDelete = null;
-        this.showDeleteModal = false;
-        new Audio(require("@/assets/delete.mp3")).play();
-        await this.loadUsers();
-        toast.success("Faculty deleted successfully");
-      } catch (error) {
-        console.error("Delete failed:", error);
-        toast.error("Failed to delete faculty.");
-      }
-    },
     changePage(page) {
       this.currentPage = Math.max(1, Math.min(page, this.totalPages));
     },
+    async fetchUser() {
+      try {
+        const response = await axios.get("http://localhost:8000/auth/me", {
+          withCredentials: true,
+        });
+        if (response.data) {
+          this.user = response.data;
+        } else {
+          this.$router.push("/");
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+        this.$router.push("/");
+      }
+    },
   },
-  mounted() {
-    this.loadUsers();
+
+  async mounted() {
+    await this.fetchUser();
+    await this.loadUsers();
   },
 };
 </script>

@@ -1,10 +1,9 @@
 <template>
   <div class="space-y-6 text-[13px]">
     <!-- HEADER -->
-    <div class="text-sm flex justify-between" v-if="user">
+    <div class="text-sm flex justify-between">
       <div class="text-[13px] text-text mt-4">Pages / Year & Section</div>
       <button
-        v-if="user.role !== 'Admin'"
         @click="openYearSectionModal"
         class="flex items-center gap-2 px-4 py-2 text-green-600 bg-white border border-green-500 rounded-xl shadow-sm hover:bg-green-600 hover:text-white transition-all duration-300"
       >
@@ -37,118 +36,6 @@
         v-if="filteredAndSearchedClasses.length > 0"
         class="mt-4 overflow-x-auto border p-3 rounded-xl bg-white"
       >
-        <div v-if="user">
-          <div
-            class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
-            v-if="user.role === 'Admin'"
-          >
-            <!-- Items per page -->
-            <div class="flex items-center gap-2">
-              <div class="relative">
-                <select
-                  v-model="itemsPerPage"
-                  class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
-                  @change="changePage(1)"
-                >
-                  <option value="5">5</option>
-                  <option value="10">10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
-                </select>
-                <!-- Custom arrow -->
-                <div
-                  class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
-                >
-                  <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
-              </div>
-              <span class="text-sm font-medium">Per page</span>
-            </div>
-
-            <!-- Filters -->
-            <div class="flex items-center gap-3 flex-wrap">
-              <!-- Curriculum Filter -->
-              <div class="relative">
-                <select
-                  v-model="selectedProgramId"
-                  class="appearance-none rounded-full border border-green-600 bg-white px-4 py-2 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
-                  @change="changePage(1)"
-                >
-                  <option value="">All Programs</option>
-                  <template
-                    v-for="(programs, institute) in programsByInstitute"
-                    :key="institute"
-                  >
-                    <optgroup :label="institute">
-                      <option
-                        v-for="prog in programs"
-                        :key="prog.program_id"
-                        :value="prog.program_id"
-                      >
-                        {{ prog.program_name }}
-                      </option>
-                    </optgroup>
-                  </template>
-                </select>
-                <div
-                  class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
-                >
-                  <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Search -->
-              <div class="relative">
-                <input
-                  v-model="searchQuery"
-                  type="text"
-                  placeholder="Search..."
-                  class="rounded-full border border-green-600 bg-white px-4 py-2 pl-10 text-sm shadow-sm w-full sm:w-[280px] transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
-                  @input="changePage(1)"
-                />
-                <!-- Search icon -->
-                <div
-                  class="absolute inset-y-0 left-3 flex items-center text-green-700 pointer-events-none"
-                >
-                  <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle cx="11" cy="11" r="8" />
-                    <path d="M21 21l-4.35-4.35" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <!-- Table -->
         <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
           <table
@@ -159,7 +46,12 @@
             >
               <tr>
                 <th class="px-4 py-3 text-left w-[5%] rounded-tl-lg">#</th>
-
+                <th
+                  v-if="user.role === 'Admin'"
+                  class="px-4 py-3 text-left w-[20%]"
+                >
+                  Program
+                </th>
                 <th class="px-4 py-3 text-left w-[15%]">Program</th>
                 <th class="px-4 py-3 text-left w-[15%]">Section Name</th>
                 <th class="px-4 py-3 text-center w-[18%]">Class Size</th>
@@ -175,7 +67,9 @@
                 class="hover:bg-green-50 transition-all border-t"
               >
                 <td class="px-4 py-3 text-left">{{ startIndex + index }}</td>
-
+                <td v-if="user.role === 'Admin'" class="px-4 py-3 text-left">
+                  {{ cls.program?.program_name }}
+                </td>
                 <td class="px-4 py-3 text-left">
                   {{ cls.program?.program_code }}
                 </td>
@@ -347,30 +241,6 @@ export default {
   },
   computed: {
     ...mapState(useFetchDataStore, ["year"]),
-    uniqueInstitutes() {
-      // Get all institute names from the classes
-      const institutes = this.classes.map(
-        (cls) => cls.program?.institute?.institute_name
-      );
-      // Remove duplicates
-      return [...new Set(institutes)];
-    },
-
-    programsByInstitute() {
-      const grouped = {};
-      this.classes.forEach((cls) => {
-        const instituteName = cls.program?.institute?.institute_name;
-        if (!grouped[instituteName]) grouped[instituteName] = [];
-        grouped[instituteName].push(cls.program);
-      });
-      // Remove duplicate programs per institute
-      for (const institute in grouped) {
-        grouped[institute] = grouped[institute].filter(
-          (v, i, a) => a.findIndex((p) => p.program_id === v.program_id) === i
-        );
-      }
-      return grouped;
-    },
     activeSchoolYearName() {
       const sy = this.schoolYears.find((s) => s.is_active);
       return sy ? sy.school_year_name : "Current School Year";

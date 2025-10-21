@@ -2,23 +2,25 @@
   <div class="px-2 mt-2">
     <!-- Headers -->
     <div class="flex justify-between items-start">
-      <h1 class="font-semibold tracking-wide text-md">Year & Section</h1>
+      <h1 class="font-semibold tracking-wide text-md">
+        Faculty Expertise Overview
+      </h1>
     </div>
 
     <!-- Main Content  -->
     <div class="mt-3">
       <!-- Table -->
-      <tableClasses />
+      <tableFacultyExpertise />
     </div>
   </div>
 </template>
 
 <script>
-import tableClasses from "./tables/table-classes.vue";
+import tableFacultyExpertise from "./tables/table-faculty-expertise.vue";
 export default {
-  name: "ClassesPage",
+  name: "FacultyLoadingPage",
   components: {
-    tableClasses,
+    tableFacultyExpertise,
   },
 };
 </script>

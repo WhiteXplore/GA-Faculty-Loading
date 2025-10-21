@@ -63,7 +63,6 @@
 
       <!-- Profile -->
       <div class="flex items-center gap-2">
-        <!-- Profile Picture -->
         <div
           ref="profileIcon"
           class="w-10 h-10 rounded-full border-2 border-transparent hover:border-green-500 cursor-pointer transition"
@@ -76,14 +75,11 @@
           />
         </div>
 
-        <!-- User Info -->
         <div class="text-left leading-tight">
           <h1 class="text-sm font-semibold text-gray-800">
             {{ user.last_name }}, {{ user.first_name || "Guest" }}
           </h1>
-          <h2 class="text-xs text-gray-500">
-            {{ user.role || "No Role" }}
-          </h2>
+          <h2 class="text-xs text-gray-500">{{ user.role || "No Role" }}</h2>
         </div>
       </div>
     </div>
@@ -112,6 +108,7 @@ export default {
       currentTime: new Date(),
     };
   },
+
   computed: {
     formattedDate() {
       return this.currentTime.toLocaleDateString("en-US", {
@@ -130,21 +127,7 @@ export default {
       });
     },
   },
-  mounted() {
-    this.fetchUser();
-    this.fetchSchoolYears();
-    this.fetchActiveSchoolYear();
 
-    this.timer = setInterval(() => {
-      this.currentTime = new Date();
-    }, 1000);
-
-    document.addEventListener("click", this.handleClickOutside);
-  },
-  beforeUnmount() {
-    clearInterval(this.timer);
-    document.removeEventListener("click", this.handleClickOutside);
-  },
   methods: {
     toggleOpenProfile() {
       this.isOpenProfile = !this.isOpenProfile;
@@ -217,7 +200,7 @@ export default {
         const selectedSY = this.schoolYears.find(
           (sy) => sy.school_year_id === this.selectedSchoolYearId
         );
-        
+
         if (selectedSY) {
           // Update the active school year in database
           await axios.patch(
@@ -255,6 +238,21 @@ export default {
       if (semester === 2) return "2nd Sem";
       return "";
     },
+  },
+  mounted() {
+    this.fetchUser();
+    this.fetchSchoolYears();
+    this.fetchActiveSchoolYear();
+
+    this.timer = setInterval(() => {
+      this.currentTime = new Date();
+    }, 1000);
+
+    document.addEventListener("click", this.handleClickOutside);
+  },
+  beforeUnmount() {
+    clearInterval(this.timer);
+    document.removeEventListener("click", this.handleClickOutside);
   },
 };
 </script>

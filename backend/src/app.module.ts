@@ -16,7 +16,7 @@ import { GeneratedScheduledModule } from './generated_scheduled/generated_schedu
 import { ActiveYearModule } from './active_year/active_year.module';
 import { SchoolYearModule } from './school_year/school_year.module';
 import { ClassModule } from './class/class.module';
-import { SpecializationModule } from './specialization/specialization.module';
+
 import { ProgramYearCoursesModule } from './program_year_courses/program_year_courses.module';
 
 @Module({
@@ -53,7 +53,7 @@ import { ProgramYearCoursesModule } from './program_year_courses/program_year_co
     ActiveYearModule,
     SchoolYearModule,
     ClassModule,
-    SpecializationModule,
+
     ProgramYearCoursesModule,
   ],
 })

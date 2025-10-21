@@ -30,7 +30,7 @@
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
               <option value="5">5</option>
@@ -153,7 +153,9 @@
                 class="bg-white hover:bg-green-50 transition border rounded-md shadow-sm"
               >
                 <td class="px-4 py-2">{{ startIndex + index }}</td>
-                <td class="px-4 py-2">{{ prog.institute?.institute_name || 'N/A' }}</td>
+                <td class="px-4 py-2">
+                  {{ prog.institute?.institute_name || "N/A" }}
+                </td>
                 <td class="px-4 py-2">{{ prog.program_code }}</td>
                 <td class="px-4 py-2">{{ prog.program_name }}</td>
                 <td class="px-4 py-2">
@@ -283,7 +285,7 @@
 import icon from "@/assets/icon.vue";
 import { toast } from "vue3-toastify";
 import addProgram from "../modals/add-program.vue";
-import addYearSection from "../modals/add-year-section.vue";
+import addYearSection from "../../../program-chairperson/program-record/modals/add-year-section.vue";
 import { useFetchDataStore } from "../../../../store/fetch-data-store";
 import { mapState } from "pinia";
 import axios from "axios";
@@ -451,4 +453,3 @@ export default {
   },
 };
 </script>
-

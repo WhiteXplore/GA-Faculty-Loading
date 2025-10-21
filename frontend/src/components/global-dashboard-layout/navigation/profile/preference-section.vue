@@ -3,42 +3,52 @@
     v-if="user.role !== 'Admin'"
     class="w-full lg:flex-1 bg-white rounded-2xl"
   >
-    <div class="text-left">
-      <div class="flex justify-end items-center mb-6">
-        <button
-          class="gap-1 flex items-center cursor-pointer border border-green-600 text-green-600 px-2 py-1 rounded-lg hover:bg-green-50 transition"
-          @click="$emit('add')"
+    <!-- Header / Add Button -->
+    <div class="flex justify-end items-center mb-6">
+      <button
+        class="gap-1 flex items-center cursor-pointer border border-green-600 text-green-600 px-2 py-1 rounded-lg hover:bg-green-50 transition"
+        @click="$emit('add')"
+      >
+        <icon :name="'circle-add'" />
+        <span>Edit Expertise</span>
+      </button>
+    </div>
+
+    <div class="h-auto overflow-auto space-y-8">
+      <!-- Loop through semesters -->
+      <div
+        v-for="sem in [1, 2, 3]"
+        :key="sem"
+        class="bg-white border border-gray-200 rounded-xl p-4 transition-shadow duration-300"
+      >
+        <!-- Semester Header -->
+        <h2
+          class="text-xl font-bold text-green-800 mb-4 flex items-center gap-2"
         >
-          <icon :name="'circle-add'" />
-          <span>Add</span>
-        </button>
-      </div>
-      <div class="h-auto overflow-auto">
+          <span>{{ getSemesterName(sem) }}</span>
+        </h2>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Expertise -->
-          <div
-            class="bg-white rounded-2xl p-4 border border-gray-200 transition-shadow duration-300"
-          >
-            <h2
-              class="text-xl font-semibold text-gray-800 mb-4 border-b border-gray-200 pb-3"
+          <div class="border rounded-xl p-4">
+            <h3
+              class="text-lg font-semibold text-green-900 mb-3 border-b border-green-300 pb-2"
             >
-              My Expertise
-            </h2>
-            <ul class="flex flex-col gap-5">
+              Expertise
+            </h3>
+
+            <ul class="flex flex-col gap-4">
               <li
-                v-for="(item, idx) in user.expertise"
-                :key="'expdb-' + idx"
-                class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center px-4 py-3 text-green-800 rounded-md"
+                v-for="(item, idx) in filteredExpertiseBySemester(sem)"
+                :key="'exp-' + sem + '-' + idx"
+                class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center px-3 py-2 bg-white rounded-md"
               >
                 <div class="flex items-center gap-3">
-                  <!-- Green check circle -->
                   <span
-                    class="flex items-center justify-center w-6 h-6 rounded-full bg-green-600 text-white text-xs font-bold border-2 border-spacing-1 border-green-500"
+                    class="flex items-center justify-center w-6 h-6 rounded-full bg-green-600 text-white text-xs font-bold"
                   >
                     ✓
                   </span>
-
-                  <!-- Course info -->
                   <div class="flex flex-col">
                     <span class="font-semibold text-sm">
                       {{ item.course?.course_code || "N/A" }}
@@ -50,38 +60,35 @@
                 </div>
               </li>
             </ul>
+
             <p
-              v-if="!user.expertise || user.expertise.length === 0"
-              class="text-sm text-gray-400 mt-3 italic"
+              v-if="filteredExpertiseBySemester(sem).length === 0"
+              class="text-sm text-gray-400 mt-3 italic text-center"
             >
-              No expertise saved in database.
+              No expertise for this semester.
             </p>
           </div>
 
           <!-- Other Expertise -->
-          <div
-            class="bg-white rounded-2xl p-4 border border-gray-200 transition-shadow duration-300"
-          >
-            <h2
-              class="text-xl font-semibold text-gray-800 mb-4 border-b border-gray-200 pb-3"
+          <div class="border rounded-xl p-4">
+            <h3
+              class="text-lg font-semibold text-blue-900 mb-3 border-b border-blue-300 pb-2"
             >
-              My Other Expertise
-            </h2>
-            <ul class="flex flex-col gap-3">
+              Other Expertise
+            </h3>
+
+            <ul class="flex flex-col gap-4">
               <li
-                v-for="(item, idx) in user.other_expertise"
-                :key="'othdb-' + idx"
-                class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center px-4 py-3 text-blue-800 rounded-md"
+                v-for="(item, idx) in filteredOtherBySemester(sem)"
+                :key="'oth-' + sem + '-' + idx"
+                class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center px-3 py-2 bg-white rounded-md"
               >
-                <div class="flex items-center gap-5">
-                  <!-- Blue check circle -->
+                <div class="flex items-center gap-3">
                   <span
-                    class="flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold border-2 border-spacing-1 border-blue-500"
+                    class="flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold"
                   >
                     ✓
                   </span>
-
-                  <!-- Course info -->
                   <div class="flex flex-col">
                     <span class="font-semibold text-sm">
                       {{ item.course?.course_code || "N/A" }}
@@ -94,12 +101,11 @@
               </li>
             </ul>
 
-            <!-- Empty State -->
             <p
-              v-if="!user.other_expertise || user.other_expertise.length === 0"
-              class="text-sm text-gray-400 mt-3 italic"
+              v-if="filteredOtherBySemester(sem).length === 0"
+              class="text-sm text-gray-400 mt-3 italic text-center"
             >
-              No other expertise saved in database.
+              No other expertise for this semester.
             </p>
           </div>
         </div>
@@ -116,6 +122,26 @@ export default {
   components: { icon },
   props: {
     user: { type: Object, required: true },
+  },
+  methods: {
+    getSemesterName(sem) {
+      if (sem === 1) return "1st Semester";
+      if (sem === 2) return "2nd Semester";
+      if (sem === 3) return "Summer";
+      return "N/A";
+    },
+    filteredExpertiseBySemester(sem) {
+      if (!this.user?.expertise) return [];
+      return this.user.expertise.filter(
+        (e) => e.course?.course_semester === sem
+      );
+    },
+    filteredOtherBySemester(sem) {
+      if (!this.user?.other_expertise) return [];
+      return this.user.other_expertise.filter(
+        (e) => e.course?.course_semester === sem
+      );
+    },
   },
 };
 </script>

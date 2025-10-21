@@ -30,7 +30,7 @@
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
               <option value="5">5</option>
@@ -68,7 +68,7 @@
               v-model="searchQuery"
               type="text"
               placeholder="Search..."
-              class="rounded-full border border-green-600 bg-white px-4 py-2 pl-10 text-sm shadow-sm w-[250px] transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+              class="rounded-full border border-green-600 bg-white px-4 py-2 pl-10 text-sm shadow-sm w-full sm:w-[280px] transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @input="changePage(1)"
             />
             <!-- Search icon -->
@@ -91,77 +91,71 @@
       </div>
 
       <!-- Table -->
-      <div class="w-full mt-1 rounded-xl overflow-hidden">
-        <div
-          class="overflow-y-auto transition-all duration-300"
-          :class="tableHeightClass"
-        >
-          <table
-            class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
+      <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+        <table class="min-w-full text-sm text-gray-700 border-collapse">
+          <thead
+            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
-            <thead
-              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+            <tr>
+              <th class="px-4 py-3 text-left rounded-tl-lg">#</th>
+              <th class="px-4 py-3 text-left">School Year</th>
+              <th class="px-4 py-3 text-center">Start Year</th>
+              <th class="px-4 py-3 text-center">End Year</th>
+              <th class="px-4 py-3 text-center">Semester</th>
+              <th class="px-4 py-3 text-center">Status</th>
+              <th class="px-4 py-3 text-left rounded-tr-lg">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(sy, index) in paginatedData"
+              :key="sy.school_year_id"
+              class="hover:bg-green-50 transition-all border-t"
             >
-              <tr>
-                <th class="px-4 py-3 text-left rounded-tl-lg">#</th>
-                <th class="px-4 py-2 text-left">School Year</th>
-                <th class="px-4 py-2 text-center">Start Year</th>
-                <th class="px-4 py-2 text-center">End Year</th>
-                <th class="px-4 py-2 text-center">Semester</th>
-                <th class="px-4 py-2 text-center">Status</th>
-                <th class="px-4 py-2 text-left rounded-tr-lg">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(sy, index) in paginatedData"
-                :key="sy.school_year_id"
-                class="bg-white hover:bg-green-50 transition border rounded-md shadow-sm"
-              >
-                <td class="px-4 py-2">{{ startIndex + index }}</td>
-                <td class="px-4 py-2">{{ sy.school_year_name }}</td>
-                <td class="px-4 py-2 text-center">{{ sy.start_year }}</td>
-                <td class="px-4 py-2 text-center">{{ sy.end_year }}</td>
-                <td class="px-4 py-2 text-center">{{ getSemesterLabel(sy.semester) }}</td>
-                <td class="px-4 py-2 text-center">
-                  <span
-                    :class="
-                      sy.is_active
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-gray-100 text-gray-800'
-                    "
-                    class="px-2 py-1 rounded-full text-xs font-semibold"
+              <td class="px-4 py-3">{{ startIndex + index }}</td>
+              <td class="px-4 py-3">{{ sy.school_year_name }}</td>
+              <td class="px-4 py-3 text-center">{{ sy.start_year }}</td>
+              <td class="px-4 py-3 text-center">{{ sy.end_year }}</td>
+              <td class="px-4 py-3 text-center">
+                {{ getSemesterLabel(sy.semester) }}
+              </td>
+              <td class="px-4 py-3 text-center">
+                <span
+                  :class="
+                    sy.is_active
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-gray-100 text-gray-800'
+                  "
+                  class="px-2 py-1 rounded-full text-xs font-semibold"
+                >
+                  {{ sy.is_active ? "Active" : "Inactive" }}
+                </span>
+              </td>
+              <td class="px-4 py-3">
+                <div class="flex gap-2">
+                  <button
+                    class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
+                    @click="toggleEdit(sy)"
                   >
-                    {{ sy.is_active ? "Active" : "Inactive" }}
-                  </span>
-                </td>
-                <td class="px-4 py-2">
-                  <div class="flex gap-2">
-                    <button
-                      class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
-                      @click="toggleEdit(sy)"
-                    >
-                      <icon name="edit" /> Edit
-                    </button>
-                    <button
-                      class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                      @click="toggleDelete(sy)"
-                    >
-                      <icon name="delete" /> Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr v-if="paginatedData.length === 0">
-                <td colspan="7" class="text-center py-8 text-gray-400">
-                  No records found
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                    <icon name="edit" /> Edit
+                  </button>
+                  <button
+                    class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                    @click="toggleDelete(sy)"
+                  >
+                    <icon name="delete" /> Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr v-if="paginatedData.length === 0">
+              <td colspan="7" class="text-center py-8 text-gray-400">
+                No records found
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
         <div class="text-gray-700">
@@ -234,13 +228,13 @@
     <div class="w-full h-[1px] bg-gray-200 mt-4"></div>
     <div class="flex gap-2 mt-4">
       <button
-        class="bg-red-400 px-3 py-2 text-white rounded-md hover:bg-white hover:border hover:border-red-800 hover:text-red-800"
+        class="bg-red-400 px-3 py-3 text-white rounded-md hover:bg-white hover:border hover:border-red-800 hover:text-red-800"
         @click="showDeleteModal = false"
       >
         No, Cancel
       </button>
       <button
-        class="bg-green-400 px-3 py-2 text-white rounded-md hover:bg-white hover:border hover:border-green-800 hover:text-green-800"
+        class="bg-green-400 px-3 py-3 text-white rounded-md hover:bg-white hover:border hover:border-green-800 hover:text-green-800"
         @click="confirmDelete"
       >
         Yes, Delete
@@ -340,10 +334,7 @@ export default {
       this.showDeleteModal = true;
     },
     confirmDelete() {
-      if (
-        !this.recordToDelete ||
-        isNaN(this.recordToDelete.school_year_id)
-      ) {
+      if (!this.recordToDelete || isNaN(this.recordToDelete.school_year_id)) {
         toast.error("Invalid school year ID.");
         return;
       }
@@ -383,4 +374,3 @@ export default {
   },
 };
 </script>
-
