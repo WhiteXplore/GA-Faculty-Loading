@@ -201,12 +201,12 @@
                   <span
                     class="px-2 py-1 rounded-full text-xs"
                     :class="
-                      room.room_category === 'Lecture'
+                      room.room_type === 'Lecture'
                         ? 'bg-green-100 text-green-800'
                         : 'bg-orange-100 text-orange-800'
                     "
                   >
-                    {{ room.room_category }}
+                    {{ room.room_type || 'N/A' }}
                   </span>
                 </td>
                 <td class="px-4 py-3">{{ room.room_building || "N/A" }}</td>
@@ -466,7 +466,7 @@
                     </p>
                     <div class="mt-2 grid grid-cols-2 gap-2 text-sm text-gray-600">
                       <div><strong>Type:</strong> {{ assignment.type }}</div>
-                      <div><strong>Set/Section:</strong> {{ assignment.set }}</div>
+                      <div><strong>Year Level & Section:</strong> {{ getYearLevelFromSet(assignment.set) }} - {{ assignment.set }}</div>
                       <div><strong>Day:</strong> {{ assignment.day }}</div>
                       <div><strong>Time:</strong> {{ assignment.start_hour }}:00 - {{ assignment.end_hour }}:00</div>
                       <div><strong>Room:</strong> {{ assignment.room_name }}</div>
@@ -753,6 +753,24 @@ export default {
       if (!setName) return null;
       const match = setName.match(/(\d+)(?:st|nd|rd|th)\s*year/i);
       return match ? parseInt(match[1]) : null;
+    },
+    getYearLevelFromSet(setLetter) {
+      // Find the class that matches this set letter
+      const matchedClass = this.classes.find(cls => {
+        // Extract the last character(s) from set_name as the section letter
+        const setNameParts = cls.set_name?.match(/([A-Z])$/i);
+        return setNameParts && setNameParts[1] === setLetter;
+      });
+      
+      if (matchedClass && matchedClass.set_name) {
+        const yearLevel = this.extractYearLevel(matchedClass.set_name);
+        if (yearLevel) {
+          return this.getYearLevelLabel(yearLevel);
+        }
+      }
+      
+      // Fallback: Return generic text if no match found
+      return "Unknown Year";
     },
   },
   async mounted() {

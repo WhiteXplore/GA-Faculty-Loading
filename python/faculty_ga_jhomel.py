@@ -36,10 +36,10 @@ from sqlalchemy import create_engine, Table, MetaData, select
 # MySQL Connection (adjust creds/host/db as needed)
 # =========================
 DB_USER = "root"
-DB_PASS = "admin12345.."
+DB_PASS = "root"
 DB_HOST = "127.0.0.2"
 DB_PORT = 3306
-DB_NAME = "dnsc_class_scheduler"
+DB_NAME = "dnsc_class_scheduler_ga"
 
 engine = create_engine(
     f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}",
@@ -71,6 +71,9 @@ courses_table = Table("course_view", metadata, autoload_with=engine)
 assigned_set_courses_table = Table(
     "assigned_set_courses", metadata, autoload_with=engine)
 rooms_table = Table("rooms", metadata, autoload_with=engine)
+classes_table = Table(
+    "classes", metadata, autoload_with=engine)
+program_year_courses_table = Table("program_year_courses", metadata, autoload_with=engine)
 
 
 def fetch_table_data(table):
@@ -88,6 +91,8 @@ faculty_expertise = fetch_table_data(faculty_expertise_table)
 courses = fetch_table_data(courses_table)
 assigned_set_courses = fetch_table_data(assigned_set_courses_table)
 rooms = fetch_table_data(rooms_table)
+classes = fetch_table_data(classes_table)
+program_year_courses = fetch_table_data(program_year_courses_table)
 
 # =========================
 # HELPER FUNCTIONS
@@ -672,3 +677,19 @@ if __name__ == "__main__":
 
     # print nicely
     print(json.dumps(all_schedules, indent=2))
+    print("\nLoaded rooms data:")
+    print(json.dumps(rooms, indent=2, default=str))
+    print("\nLoaded programs data:")
+    print(json.dumps(programs, indent=2, default=str))
+    print("\nLoaded faculty data:")
+    print(json.dumps(faculty, indent=2, default=str))
+    print("\nLoaded faculty_expertise data:")
+    print(json.dumps(faculty_expertise, indent=2, default=str))
+    print("\nLoaded courses data:")
+    print(json.dumps(courses, indent=2, default=str))
+    print("\nLoaded assigned_set_courses data:")
+    print(json.dumps(assigned_set_courses, indent=2, default=str))
+    print("\nLoaded classes data:")
+    print(json.dumps(classes, indent=2, default=str))
+    print("\nLoaded program_year_courses data:")
+    print(json.dumps(program_year_courses, indent=2, default=str))
