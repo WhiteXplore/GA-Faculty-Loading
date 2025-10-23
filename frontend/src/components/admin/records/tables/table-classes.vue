@@ -448,7 +448,7 @@ export default {
 
       try {
         await axios.delete(
-          `http://localhost:8000/class/delete-id/${this.deleteTargetId}`,
+          `http://localhost:8000/courses/delete-id/${this.deleteTargetId}`,
           { withCredentials: true }
         );
 

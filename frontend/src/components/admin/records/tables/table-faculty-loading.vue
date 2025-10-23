@@ -17,7 +17,7 @@
               class="p-1 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-white transition"
             >
               <icon
-                :name="'user-group'"
+                :name="'users'"
                 class="w-4 h-4 text-blue-600 group-hover:text-blue-600"
               />
             </div>
@@ -233,22 +233,39 @@
     <!-- Loading -->
     <div
       v-if="loading"
-      class="fixed inset-0 flex items-center justify-center bg-black/40 z-50"
+      class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50"
     >
-      <div
-        class="space-y-5 flex flex-col items-center justify-center p-5 bg-white rounded-3xl shadow-lg"
-      >
-        <div class="flex space-x-2">
-          <span class="w-3 h-3 bg-green-500 rounded-full bounce-delay-0"></span>
-          <span
-            class="w-3 h-3 bg-green-500 rounded-full bounce-delay-200"
-          ></span>
-          <span
-            class="w-3 h-3 bg-green-500 rounded-full bounce-delay-400"
-          ></span>
-        </div>
-        <div class="text-gray-700 font-medium">
-          Generating Schedule... {{ Math.floor(progress) }}%
+      <div class="relative flex items-center justify-center">
+        <!-- Animated Glow Aura -->
+        <div
+          class="absolute w-52 h-44 bg-gradient-to-r from-green-400/30 to-emerald-500/30 rounded-3xl animate-ping"
+        ></div>
+
+        <!-- Card Container -->
+        <div
+          class="relative flex flex-col items-center justify-center bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/30"
+        >
+          <!-- Smooth Rotating Loader -->
+          <div class="relative mb-4">
+            <div
+              class="w-12 h-12 border-4 border-green-400 border-t-transparent rounded-full animate-spin"
+            ></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="text-green-600 text-sm font-semibold">
+                {{ Math.floor(progress) }}%
+              </span>
+            </div>
+          </div>
+
+          <!-- Loading Text -->
+          <div class="text-gray-700 font-semibold text-[15px] tracking-wide">
+            Generating Schedule...
+          </div>
+
+          <!-- Subtext -->
+          <div class="text-xs text-gray-500 mt-1">
+            Please wait while we finalize your data.
+          </div>
         </div>
       </div>
     </div>
@@ -261,92 +278,105 @@
     <!-- Schedule Display -->
     <div
       v-else-if="!showFacultyTable"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[70vh]"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[61.2vh]"
     >
       <div
         v-for="(slots, instructor) in filteredGroupedSchedule"
         :key="instructor"
-        class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-200 flex flex-col"
+        class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 flex flex-col"
       >
         <!-- Instructor Header -->
         <div
-          class="bg-defaultGreen text-white text-center py-3 font-semibold text-lg"
+          :class="[
+            'text-white text-center py-3 font-semibold text-lg',
+            getProgramColor(instructor),
+          ]"
         >
           {{ instructor }}
         </div>
 
         <!-- Scrollable Table -->
         <div class="overflow-x-auto overflow-y-auto flex-1">
-          <table class="w-full text-sm text-left border-collapse">
+          <table class="w-full text-left border-collapse">
             <thead class="sticky top-0 bg-gray-100 z-10">
-              <tr class="text-gray-700 text-sm">
+              <tr class="text-gray-700 text-[11px]">
                 <th class="px-4 py-2 border border-gray-200 w-24">Time</th>
                 <th
                   v-for="day in days"
                   :key="day"
-                  class="px-4 py-2 border border-gray-200 text-center w-30"
+                  class="px-4 py-2 border border-gray-200 text-center w-32"
                 >
                   {{ day }}
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr
-                v-for="slot in timeSlots"
-                :key="slot.start + slot.end"
-                class="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition"
-              >
-                <td
-                  class="px-4 py-3 border border-gray-200 font-medium text-gray-700 text-xs w-24"
+              <!-- Show time slots if available -->
+              <template v-if="timeSlots.length > 0">
+                <tr
+                  v-for="slot in timeSlots"
+                  :key="slot.start + slot.end"
+                  class="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition"
                 >
-                  {{ slot.start }} - {{ slot.end }}
-                </td>
-
-                <td
-                  v-for="day in days"
-                  :key="day"
-                  class="relative px-2 py-2 border border-gray-200 text-center align-top min-h-[80px]"
-                >
-                  <template
-                    v-for="item in getScheduleForCell(slot, day, instructor)"
-                    :key="item.course_name + item.start_hour + item.room_name"
+                  <td
+                    class="px-4 py-4 border border-gray-200 font-medium text-gray-700 text-[11px] w-28 whitespace-nowrap text-center"
                   >
-                    <div
-                      v-if="isStartingSlot(item, slot)"
-                      :rowspan="getRowSpan(item)"
-                      :class="[
-                        'absolute inset-x-1 border rounded-lg text-xs text-gray-800 shadow-sm overflow-hidden transition-all duration-200',
-                        getTypeColor(item.type),
-                      ]"
-                      :style="{
-                        top: '4px',
-                        height: getBlockHeight(item) + 'px',
-                        minHeight: '75px',
-                        maxHeight: '90px',
-                        width: 'calc(100% - 0.5rem)',
-                      }"
-                    >
-                      <div class="p-2 text-[12px] leading-snug truncate">
-                        <p class="font-semibold truncate">
-                          {{ item.course_name }}
-                        </p>
-                        <p class="text-gray-600 truncate">
-                          {{ item.room_name }}
-                        </p>
-                        <p class="text-gray-600 truncate">
-                          Set: {{ item.set }}
-                        </p>
+                    {{ slot.start }} - {{ slot.end }}
+                  </td>
 
-                        <button
-                          v-if="item.conflict"
-                          @click="openConflictModal(item)"
-                          class="mt-2 w-full text-center px-2 py-1 text-xs rounded bg-red-100 text-red-600 hover:bg-red-200 transition"
-                        >
-                          ⚠ View Conflict
-                        </button>
+                  <td
+                    v-for="day in days"
+                    :key="day"
+                    class="relative px-2 py-2 border border-gray-200 text-center align-top min-h-[80px] whitespace-nowrap"
+                  >
+                    <template
+                      v-for="item in getScheduleForCell(slot, day, instructor)"
+                      :key="item.course_name + item.start_hour + item.room_name"
+                    >
+                      <div
+                        v-if="isStartingSlot(item, slot)"
+                        :rowspan="getRowSpan(item)"
+                        :class="[
+                          'absolute inset-x-1 border rounded-lg text-[11px] text-gray-800 shadow-sm overflow-hidden transition-all duration-200 whitespace-nowrap',
+                          getTypeColor(item.type),
+                        ]"
+                        :style="{
+                          top: '4px',
+                          height: getBlockHeight(item) + 'px',
+                          minHeight: '75px',
+                          maxHeight: '90px',
+                          width: 'calc(100% - 0.5rem)',
+                        }"
+                      >
+                        <div class="p-2 text-[11px] leading-snug truncate">
+                          <p class="font-semibold truncate">
+                            {{ item.course_name }}
+                          </p>
+                          <p class="text-gray-600 truncate">
+                            {{ item.room_name }}
+                          </p>
+                          <p class="text-gray-600 truncate">
+                            Set: {{ item.set }}
+                          </p>
+
+                          <button
+                            v-if="item.conflict"
+                            @click="openConflictModal(item)"
+                            class="mt-2 w-full text-center px-2 py-1 text-[11px] rounded bg-red-100 text-red-600 hover:bg-red-200 transition"
+                          >
+                            ⚠ View Conflict
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </template>
+                    </template>
+                  </td>
+                </tr>
+              </template>
+
+              <!-- Show this if there are no time slots -->
+              <tr v-else>
+                <td colspan="8" class="py-4 text-center text-gray-500">
+                  No schedule available.
                 </td>
               </tr>
             </tbody>
@@ -534,6 +564,21 @@ export default {
     },
   },
   methods: {
+    getProgramColor(instructor) {
+      const slots = this.groupedSchedule[instructor];
+      if (!slots || slots.length === 0) return "bg-defaultGreen"; // fallback
+
+      const programId = slots[0].program_id;
+
+      switch (programId) {
+        case 31:
+          return "bg-violet-600"; // violet
+        case 32:
+          return "bg-amber-900"; // maroon (use amber-900 or you can replace with bg-[#800000])
+        default:
+          return "bg-defaultGreen"; // default color
+      }
+    },
     filteredData() {
       return Object.keys(this.filteredFacultyByInstituteAndProgram);
     },
@@ -549,7 +594,7 @@ export default {
       };
       this.showFacultyTable = false;
     },
-    // ... keep all your existing methods unchanged
+
     getRowSpan(item) {
       const start = this.convertToMinutes(item.start_hour);
       const end = this.convertToMinutes(item.end_hour);

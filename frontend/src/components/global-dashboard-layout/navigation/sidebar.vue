@@ -24,6 +24,7 @@
             'w-16 rounded-full border-white border ': isExpanded,
             hidden: !isExpanded,
           }"
+          whitespace-nowrap
         />
         <p
           :class="{
@@ -142,7 +143,7 @@
       <slot>
         <div class="bg-white w-auto min-h-screen shadow mr-2 rounded-t-xl">
           <adminTopbar />
-          <div class="p-2">
+          <div class="">
             <router-view></router-view>
           </div>
         </div>
@@ -269,9 +270,16 @@ export default {
             title: "Record Management",
             items: [
               {
-                name: "Courses",
+                name: "Setup",
                 icon: "set-up",
-                route: "/program-courses",
+                children: [
+                  { name: "Courses", route: "/program-courses" },
+                  { name: "Year & Section", route: "/year-section" },
+                  {
+                    name: "Assigned Course",
+                    route: "/program-chair-assigned-courses",
+                  },
+                ],
               },
               // {
               //   name: "Programs",
@@ -279,14 +287,14 @@ export default {
               //   route: "/program-programs",
               // },
               {
-                name: "Year & Section",
-                icon: "class-list",
-                route: "/year-section",
+                name: "Faculty List",
+                icon: "faculty-list",
+                route: "/program-chair-instructors",
               },
               {
-                name: "Assigned Course",
+                name: "Class & Assigned Courses",
                 icon: "class-list",
-                route: "/assigned-course",
+                route: "/program-chairperson-class-assigned-classes",
               },
               // {
               //   name: "Assign Classes",
@@ -316,7 +324,7 @@ export default {
             items: [
               {
                 name: "Faculty Expertise Overview",
-                icon: "reports",
+                icon: "expertise",
                 route: "/faculty-expertise",
               },
             ],

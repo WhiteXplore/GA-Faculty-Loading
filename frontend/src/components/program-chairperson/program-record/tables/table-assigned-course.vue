@@ -22,10 +22,10 @@
       <!-- TABLE VIEW -->
       <div
         v-if="!selectedGroup"
-        class="bg-white border rounded-2xl shadow-sm overflow-hidden"
+        class="bg-white border rounded-xl shadow-sm overflow-hidden"
       >
         <table class="w-full text-sm">
-          <thead class="bg-green-600 text-white">
+          <thead class="bg-defaultGreen text-white">
             <tr>
               <th class="py-3 px-4 text-left">Institute</th>
               <th class="py-3 px-4 text-left">Program</th>
@@ -61,7 +61,6 @@
       </div>
 
       <!-- DETAILED VIEW -->
-      <!-- DETAILED VIEW -->
       <div
         v-else
         class="bg-white border rounded-2xl p-5 mt-5 shadow-sm animate-fadeIn"
@@ -69,11 +68,11 @@
         <!-- Header -->
         <div class="flex justify-between items-center mb-4">
           <div>
-            <h2 class="text-lg font-bold text-green-700">
-              {{ selectedGroup.institute }}
+            <h2 class="text-lg font-bold text-gray-800">
+              {{ selectedGroup.program }} ({{ selectedGroup.schoolYear }})
             </h2>
             <p class="text-sm text-gray-700">
-              {{ selectedGroup.program }} ({{ selectedGroup.schoolYear }})
+              {{ selectedGroup.institute }}
             </p>
           </div>
           <button
@@ -94,7 +93,7 @@
             <!-- Header with Arrow + Year Label + Count -->
             <div
               @click="toggleYearDisplay(year)"
-              class="flex justify-between items-center p-3 bg-gray-50 hover:bg-gray-100 cursor-pointer"
+              class="flex justify-between items-center p-3 bg-gray-50 hover:bg-gray-100 cursor-pointer border-b"
             >
               <div class="flex items-center gap-2">
                 <icon
@@ -106,31 +105,27 @@
                 <h4 class="font-semibold text-sm text-gray-800">
                   {{ getYearLabel(year) }}
                 </h4>
-                <span
-                  v-if="
-                    getCoursesByYear(selectedGroup.courses, year).length > 0
-                  "
-                  class="px-2 py-1 bg-green-500 text-white text-xs rounded-full"
-                >
-                  {{ getCoursesByYear(selectedGroup.courses, year).length }}
-                  course(s)
-                </span>
               </div>
+              <span
+                v-if="getCoursesByYear(selectedGroup.courses, year).length > 0"
+                class="px-2 py-1 bg-green-500 text-white text-xs rounded-full"
+              >
+                {{ getCoursesByYear(selectedGroup.courses, year).length }}
+                course(s)
+              </span>
             </div>
 
             <!-- Expandable Table -->
             <transition name="fade">
-              <div v-if="expandedYears.includes(year)" class="p-4 bg-white">
+              <div v-if="expandedYears.includes(year)" class="p-2 bg-white">
                 <div
                   v-if="
                     getCoursesByYear(selectedGroup.courses, year).length > 0
                   "
-                  class="overflow-x-auto"
+                  class="overflow-x-auto border rounded-lg"
                 >
-                  <table
-                    class="min-w-full border border-gray-200 rounded-lg overflow-hidden"
-                  >
-                    <thead class="bg-green-50 text-green-700 text-sm">
+                  <table class="min-w-full border rounded-lg overflow-hidden">
+                    <thead class="bg-defaultGreen text-white text-sm">
                       <tr>
                         <th class="px-4 py-2 border-b text-left w-1/4">
                           Course Code
@@ -149,10 +144,10 @@
                         :key="course.id"
                         class="border-b hover:bg-gray-50 transition"
                       >
-                        <td class="px-4 py-2">
+                        <td class="px-4 py-3">
                           {{ course.course?.course_code }}
                         </td>
-                        <td class="px-4 py-2">
+                        <td class="px-4 py-3">
                           {{ course.course?.course_description }}
                         </td>
                       </tr>
@@ -235,19 +230,20 @@
         </div>
       </div>
     </div>
+
+    <!-- MODAL FOR CHAIRPERSON -->
+    <assignYearCourses
+      v-if="showAssignCoursesModal && userProgram"
+      :programData="userProgram"
+      @close="closeAssignCoursesModal"
+      @refresh="loadAssignedCourses"
+    />
   </div>
-  <!-- MODAL FOR CHAIRPERSON -->
-  <assignYearCourses
-    v-if="showAssignCoursesModal && userProgram"
-    :programData="userProgram"
-    @close="closeAssignCoursesModal"
-    @refresh="loadAssignedCourses"
-  />
 </template>
 
 <script>
 import icon from "@/assets/icon.vue";
-import assignYearCourses from "@/components/program-chairperson/program-record/modals/assign-year-courses.vue";
+import assignYearCourses from "@/components/admin/records/modals/add-year-section.vue";
 import axios from "axios";
 
 export default {

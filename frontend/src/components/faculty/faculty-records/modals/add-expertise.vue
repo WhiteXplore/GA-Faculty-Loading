@@ -48,7 +48,9 @@
               <!-- Expertise -->
               <div class="relative space-y-2">
                 <label class="font-bold"
-                  >Expertise ({{ getSemesterName(selectedSemester) }}):</label
+                  >Field of Expertise ({{
+                    getSemesterName(selectedSemester)
+                  }}):</label
                 >
 
                 <!-- Searchable input -->
@@ -132,10 +134,10 @@
                 </div>
               </div>
 
-              <!-- Other Expertise -->
+              <!-- Non-specialized Subjects -->
               <div class="relative space-y-2">
                 <label class="font-bold"
-                  >Other Expertise ({{
+                  >Non-specialized Subjects ({{
                     getSemesterName(selectedSemester)
                   }}):</label
                 >
