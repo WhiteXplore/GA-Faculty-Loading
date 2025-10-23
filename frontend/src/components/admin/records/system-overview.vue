@@ -201,12 +201,12 @@
                   <span
                     class="px-2 py-1 rounded-full text-xs"
                     :class="
-                      room.room_category === 'Lecture'
+                      room.room_type === 'Lecture'
                         ? 'bg-green-100 text-green-800'
                         : 'bg-orange-100 text-orange-800'
                     "
                   >
-                    {{ room.room_category }}
+                    {{ room.room_type || 'N/A' }}
                   </span>
                 </td>
                 <td class="px-4 py-3">{{ room.room_building || "N/A" }}</td>
