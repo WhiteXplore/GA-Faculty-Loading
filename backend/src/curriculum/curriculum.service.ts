@@ -19,7 +19,7 @@ export class CurriculumService {
 
   async findAll(): Promise<Curriculum[]> {
     return await this.curriculumRepository.find({
-      relations: ['program'],
+      relations: ['program', 'program.institute'],
     });
   }
 

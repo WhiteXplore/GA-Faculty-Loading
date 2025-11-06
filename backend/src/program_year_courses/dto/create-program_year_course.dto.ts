@@ -19,11 +19,3 @@ export class CreateProgramYearCourseDto {
   @IsNotEmpty()
   school_year_id: number;
 }
-
-
-
-
-
-
-
-

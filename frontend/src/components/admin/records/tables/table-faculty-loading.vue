@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- Table / Auto Generation Button -->
+    <!-- Top Controls -->
     <div v-if="isTable" class="mb-6">
       <div class="flex justify-between items-center">
         <div class="text-sm text-gray-600 mt-4 font-medium">
@@ -17,7 +17,7 @@
               class="p-1 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-white transition"
             >
               <icon
-                :name="'user-group'"
+                name="users"
                 class="w-4 h-4 text-blue-600 group-hover:text-blue-600"
               />
             </div>
@@ -27,30 +27,30 @@
           <!-- Auto Generation Button -->
           <div
             @click="generateSchedule"
-            class="group flex items-center gap-2 px-4 py-2 border border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl shadow-sm cursor-pointer transition"
+            class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
           >
             <div
-              class="p-1 bg-green-100 rounded-full flex items-center justify-center group-hover:bg-white transition"
+              class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
             >
               <icon
-                :name="'arrow-path'"
-                class="w-4 h-4 text-green-600 group-hover:text-green-600"
+                name="arrow-path"
+                class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
               />
             </div>
             <span class="font-medium text-sm">Auto Generation</span>
           </div>
 
-          <!-- Save this schedule -->
+          <!-- Save Schedule -->
           <div
             @click="saveScheduled"
-            class="group flex items-center gap-2 px-4 py-2 border border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl shadow-sm cursor-pointer transition"
+            class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
           >
             <div
-              class="p-1 bg-green-100 rounded-full flex items-center justify-center group-hover:bg-white transition"
+              class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
             >
               <icon
-                :name="'circle-check'"
-                class="w-4 h-4 text-green-600 group-hover:text-green-600"
+                name="circle-check"
+                class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
               />
             </div>
             <span class="font-medium text-sm">Save this schedule</span>
@@ -60,9 +60,10 @@
     </div>
 
     <!-- Faculty Table -->
-    <div v-if="showFacultyTable" class="mt-6 bg-white rounded-xl border p-5">
-      <!-- FILTER BAR -->
-
+    <div
+      v-if="showFacultyTable && !selectedInstructor"
+      class="mt-6 bg-white rounded-xl border p-5"
+    >
       <div
         class="flex flex-wrap items-center justify-between gap-4 mb-3 text-gray-700"
       >
@@ -155,100 +156,120 @@
         </div>
       </div>
 
-      <!-- FACULTY TABLE -->
+      <!-- Table -->
       <div
-        class="w-full mt-5 rounded-xl border bg-white overflow-hidden shadow-sm max-h-[500px] overflow-y-auto"
+        class="w-full mt-4 rounded-xl border bg-white overflow-hidden shadow-sm max-h-[500px] overflow-y-auto"
       >
-        <table class="min-w-full text-sm text-gray-700 border-collapse">
+        <table
+          class="min-w-full text-sm text-gray-700 border-collapse table-auto"
+        >
           <thead class="bg-defaultGreen text-white sticky top-0 z-10">
             <tr>
-              <th class="px-4 py-3 text-left">Faculty Name</th>
-              <th class="px-4 py-3 text-center w-28">Action</th>
+              <th
+                class="px-5 py-3 text-left font-semibold w-auto whitespace-nowrap"
+              >
+                Faculty Name
+              </th>
+              <th
+                class="px-5 py-3 text-center font-semibold w-[150px] whitespace-nowrap"
+              >
+                Action
+              </th>
             </tr>
           </thead>
+
           <tbody>
             <tr
               v-for="(slots, instructor) in paginatedFaculty"
               :key="instructor"
-              class="hover:bg-green-50 transition-all border-t"
+              class="hover:bg-green-50 border-t transition-colors"
             >
-              <td class="px-4 py-3 text-gray-700 font-medium truncate">
+              <td class="px-5 py-3 font-medium text-gray-800 whitespace-nowrap">
                 {{ instructor }}
               </td>
-              <td class="px-4 py-3 text-center">
+              <td class="px-5 py-3 text-center">
                 <button
                   @click="viewFacultySchedule(instructor)"
-                  class="px-3 py-1 h-8 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-lg flex items-center gap-1"
+                  class="flex items-center justify-center gap-1 mx-auto px-3 py-1.5 border border-blue-400 text-blue-700 hover:bg-blue-100 rounded-lg text-sm font-medium transition"
                 >
-                  <icon name="eye" /> View
+                  <icon name="eye" class="w-4 h-4" /> View
                 </button>
               </td>
             </tr>
 
             <tr
-              v-if="!Object.keys(filteredFacultyByInstituteAndProgram).length"
-              class="text-center"
+              v-if="!Object.keys(filteredGroupedSchedule).length"
+              class="text-center bg-gray-50"
             >
-              <td colspan="2" class="py-4 text-gray-500">No faculty found.</td>
+              <td colspan="2" class="py-5 text-gray-500">No faculty found.</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
-          Showing {{ startIndex }} to {{ endIndex }} of
-          {{ filteredData.length }} faculty
-        </div>
-        <div class="flex items-center">
-          <button
-            @click="changePage(currentPage - 1)"
-            :disabled="currentPage === 1"
-            class="px-3 py-1 bg-gray-300 text-gray-700 rounded-l-md hover:bg-gray-400"
-          >
-            &lt;
-          </button>
-          <span v-for="page in pageNumbers" :key="'page-' + page">
-            <button
-              @click="changePage(page)"
-              :class="{
-                ' bg-defaultGreen text-white': currentPage === page,
-                'bg-gray-200 text-gray-700': currentPage !== page,
-              }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
-            >
-              {{ page }}
-            </button>
-          </span>
-          <button
-            @click="changePage(currentPage + 1)"
-            :disabled="currentPage === totalPages"
-            class="px-3 py-1 bg-gray-300 text-gray-700 rounded-r-md hover:bg-gray-400"
-          >
-            &gt;
-          </button>
-        </div>
+
+      <!-- Pagination Controls -->
+      <div
+        v-if="totalPages > 1"
+        class="flex justify-center items-center gap-3 mt-4 text-sm"
+      >
+        <button
+          @click="changePage(currentPage - 1)"
+          :disabled="currentPage === 1"
+          class="px-3 py-1.5 border rounded-lg hover:bg-gray-100 disabled:opacity-50"
+        >
+          Prev
+        </button>
+
+        <span class="font-medium">
+          Page {{ currentPage }} of {{ totalPages }}
+        </span>
+
+        <button
+          @click="changePage(currentPage + 1)"
+          :disabled="currentPage === totalPages"
+          class="px-3 py-1.5 border rounded-lg hover:bg-gray-100 disabled:opacity-50"
+        >
+          Next
+        </button>
       </div>
     </div>
 
-    <!-- Loading -->
+    <!-- Loading Overlay -->
     <div
       v-if="loading"
-      class="fixed inset-0 flex items-center justify-center bg-black/40 z-50"
+      class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50"
     >
-      <div
-        class="space-y-5 flex flex-col items-center justify-center p-5 bg-white rounded-3xl shadow-lg"
-      >
-        <div class="flex space-x-2">
-          <span class="w-3 h-3 bg-green-500 rounded-full bounce-delay-0"></span>
-          <span
-            class="w-3 h-3 bg-green-500 rounded-full bounce-delay-200"
-          ></span>
-          <span
-            class="w-3 h-3 bg-green-500 rounded-full bounce-delay-400"
-          ></span>
-        </div>
-        <div class="text-gray-700 font-medium">
-          Generating Schedule... {{ Math.floor(progress) }}%
+      <div class="relative flex items-center justify-center">
+        <!-- Animated Glow Aura -->
+        <div
+          class="absolute w-52 h-44 bg-gradient-to-r from-green-400/30 to-emerald-500/30 rounded-3xl animate-ping"
+        ></div>
+
+        <!-- Card Container -->
+        <div
+          class="relative flex flex-col items-center justify-center bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-white/30"
+        >
+          <!-- Smooth Rotating Loader -->
+          <div class="relative mb-4">
+            <div
+              class="w-12 h-12 border-4 border-green-400 border-t-transparent rounded-full animate-spin"
+            ></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="text-green-600 text-sm font-semibold">
+                {{ Math.floor(progress) }}%
+              </span>
+            </div>
+          </div>
+
+          <!-- Loading Text -->
+          <div class="text-gray-700 font-semibold text-[15px] tracking-wide">
+            Generating Schedule...
+          </div>
+
+          <!-- Subtext -->
+          <div class="text-xs text-gray-500 mt-1">
+            Please wait while we finalize your data.
+          </div>
         </div>
       </div>
     </div>
@@ -259,98 +280,116 @@
     </div>
 
     <!-- Schedule Display -->
-    <div
-      v-else-if="!showFacultyTable"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[70vh]"
-    >
+    <div v-else-if="!showFacultyTable" class="relative">
+      <!-- Back Button (only shows when viewing one instructor) -->
       <div
-        v-for="(slots, instructor) in filteredGroupedSchedule"
-        :key="instructor"
-        class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-200 flex flex-col"
+        v-if="Object.keys(filteredGroupedSchedule).length === 1"
+        class="mb-4"
       >
-        <!-- Instructor Header -->
-        <div
-          class="bg-defaultGreen text-white text-center py-3 font-semibold text-lg"
+        <button
+          @click="backToFacultyTable"
+          class="flex items-center gap-2 px-4 py-2 border border-gray-400 text-gray-700 hover:bg-gray-100 rounded-lg shadow-sm transition"
         >
-          {{ instructor }}
-        </div>
+          <icon name="arrow-left" class="w-4 h-4" />
+          <span class="font-medium text-sm">Back to Faculty List</span>
+        </button>
+      </div>
 
-        <!-- Scrollable Table -->
-        <div class="overflow-x-auto overflow-y-auto flex-1">
-          <table class="w-full text-sm text-left border-collapse">
-            <thead class="sticky top-0 bg-gray-100 z-10">
-              <tr class="text-gray-700 text-sm">
-                <th class="px-4 py-2 border border-gray-200 w-24">Time</th>
-                <th
-                  v-for="day in days"
-                  :key="day"
-                  class="px-4 py-2 border border-gray-200 text-center w-30"
-                >
-                  {{ day }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="slot in timeSlots"
-                :key="slot.start + slot.end"
-                class="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition"
-              >
-                <td
-                  class="px-4 py-3 border border-gray-200 font-medium text-gray-700 text-xs w-24"
-                >
-                  {{ slot.start }} - {{ slot.end }}
-                </td>
+      <!-- Schedule Cards -->
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[71.5vh] overflow-y-auto pr-2"
+      >
+        <div
+          v-for="(records, instructor) in filteredGroupedSchedule"
+          :key="instructor"
+          class="bg-white rounded-xl overflow-hidden border border-gray-200 flex flex-col"
+        >
+          <!-- Instructor Header -->
+          <div
+            :class="[
+              'text-white text-center py-3 font-semibold text-sm',
+              getProgramColor(instructor),
+            ]"
+          >
+            {{ instructor }}
+          </div>
 
-                <td
-                  v-for="day in days"
-                  :key="day"
-                  class="relative px-2 py-2 border border-gray-200 text-center align-top min-h-[80px]"
-                >
-                  <template
-                    v-for="item in getScheduleForCell(slot, day, instructor)"
-                    :key="item.course_name + item.start_hour + item.room_name"
+          <!-- Scrollable Schedule Table -->
+          <div class="overflow-x-auto overflow-y-auto flex-1">
+            <table class="w-full text-left border-collapse text-[11px]">
+              <thead class="sticky top-0 bg-gray-100 z-10">
+                <tr class="text-gray-700">
+                  <th class="px-4 py-2 border border-gray-200 w-24 text-center">
+                    Time
+                  </th>
+                  <th
+                    v-for="day in days"
+                    :key="day"
+                    class="px-4 py-2 border border-gray-200 text-center w-28"
                   >
-                    <div
-                      v-if="isStartingSlot(item, slot)"
-                      :rowspan="getRowSpan(item)"
-                      :class="[
-                        'absolute inset-x-1 border rounded-lg text-xs text-gray-800 shadow-sm overflow-hidden transition-all duration-200',
-                        getTypeColor(item.type),
-                      ]"
-                      :style="{
-                        top: '4px',
-                        height: getBlockHeight(item) + 'px',
-                        minHeight: '75px',
-                        maxHeight: '90px',
-                        width: 'calc(100% - 0.5rem)',
-                      }"
-                    >
-                      <div class="p-2 text-[12px] leading-snug truncate">
-                        <p class="font-semibold truncate">
-                          {{ item.course_name }}
-                        </p>
-                        <p class="text-gray-600 truncate">
-                          {{ item.room_name }}
-                        </p>
-                        <p class="text-gray-600 truncate">
-                          Set: {{ item.set }}
-                        </p>
+                    {{ day }}
+                  </th>
+                </tr>
+              </thead>
 
-                        <button
-                          v-if="item.conflict"
-                          @click="openConflictModal(item)"
-                          class="mt-2 w-full text-center px-2 py-1 text-xs rounded bg-red-100 text-red-600 hover:bg-red-200 transition"
-                        >
-                          ⚠ View Conflict
-                        </button>
+              <tbody>
+                <tr
+                  v-for="slot in timeSlots"
+                  :key="slot.start + slot.end"
+                  class="odd:bg-white even:bg-gray-50"
+                >
+                  <td
+                    class="px-4 py-4 border border-gray-200 font-medium text-center whitespace-nowrap"
+                  >
+                    {{ formatTime(slot.start) }} - {{ formatTime(slot.end) }}
+                  </td>
+
+                  <td
+                    v-for="day in days"
+                    :key="day"
+                    class="relative border border-gray-200 text-center align-top h-[60px] p-0"
+                  >
+                    <template
+                      v-for="item in getScheduleForCell(slot, day, instructor)"
+                      :key="item.course_name + item.start_hour + item.room_name"
+                    >
+                      <div
+                        v-if="isStartingSlot(item, slot)"
+                        :class="[
+                          'absolute inset-x-1 border rounded-lg text-[11px] text-gray-800 shadow-sm overflow-hidden transition-all duration-200 whitespace-nowrap',
+                          getTypeColor(item.type),
+                        ]"
+                        :style="{
+                          top: getBlockTop(item),
+                          height: getBlockHeight(item) + 'px',
+                          width: 'calc(100% - 0.5rem)',
+                        }"
+                      >
+                        <div class="p-2 leading-snug truncate">
+                          <p class="font-semibold truncate">
+                            {{ item.course_name }}
+                          </p>
+                          <p class="text-gray-600 truncate">
+                            {{ item.room_name }}
+                          </p>
+                          <p class="text-gray-600 truncate">
+                            Set: {{ item.set }}
+                          </p>
+                          <button
+                            v-if="item.conflict"
+                            @click="openConflictModal(item)"
+                            class="mt-2 w-full text-center px-2 py-1 text-[10px] rounded bg-red-100 text-red-600 hover:bg-red-200 transition"
+                          >
+                            ⚠ View Conflict
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </template>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                    </template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -384,8 +423,8 @@
             <p class="text-gray-600">
               🕒 {{ conflict.start_hour }} - {{ conflict.end_hour }}
             </p>
-            <p class="text-gray-600">📍 Room: {{ conflict.room_name }}</p>
-            <p class="text-gray-600">👨‍🏫 Faculty: {{ conflict.faculty_name }}</p>
+            <p class="text-gray-600">📍 {{ conflict.room_name }}</p>
+            <p class="text-gray-600">👨‍🏫 {{ conflict.faculty_name }}</p>
             <p class="text-gray-600">📌 Set: {{ conflict.set }}</p>
           </div>
         </div>
@@ -421,177 +460,128 @@ export default {
       isTable: true,
       showFacultyTable: false,
       selectedInstructor: null,
-      days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      scheduleGenerated: false,
+
+      // Filter controls
+      selectedInstituteId: "",
+      selectedProgramId: "",
+
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       timeSlots: [
-        { start: "8:00 AM", end: "9:00 AM" },
-        { start: "9:00 AM", end: "10:00 AM" },
-        { start: "10:00 AM", end: "11:00 AM" },
-        { start: "11:00 AM", end: "12:00 PM" },
-        { start: "12:00 PM", end: "1:00 PM" },
-        { start: "1:00 PM", end: "2:00 PM" },
-        { start: "2:00 PM", end: "3:00 PM" },
-        { start: "3:00 PM", end: "4:00 PM" },
-        { start: "4:00 PM", end: "5:00 PM" },
-        { start: "5:00 PM", end: "6:00 PM" },
+        { start: 8, end: 9 },
+        { start: 9, end: 10 },
+        { start: 10, end: 11 },
+        { start: 11, end: 12 },
+        { start: 12, end: 13 },
+        { start: 13, end: 14 },
+        { start: 14, end: 15 },
+        { start: 15, end: 16 },
+        { start: 16, end: 17 },
+        { start: 17, end: 18 },
       ],
       progress: 0,
       progressInterval: null,
       showConflictModal: false,
       selectedConflict: {},
-      selectedInstituteId: "",
-      selectedProgramId: "",
       currentPage: 1,
       itemsPerPage: 10,
+      timeSlotHeight: 60,
     };
   },
+
   computed: {
-    paginatedFaculty() {
-      const allFaculty = Object.entries(
-        this.filteredFacultyByInstituteAndProgram
+    // 🔹 Get unique Institute IDs from schedule
+    uniqueInstituteIds() {
+      const ids = new Set(
+        this.schedule
+          .map((s) => s.institute_id)
+          .filter((id) => id !== null && id !== undefined)
       );
+      return Array.from(ids);
+    },
+
+    // 🔹 Get Programs filtered by selected Institute
+    filteredProgramIds() {
+      if (!this.selectedInstituteId) {
+        const allPrograms = new Set(
+          this.schedule
+            .map((s) => s.program_id)
+            .filter((id) => id !== null && id !== undefined)
+        );
+        return Array.from(allPrograms);
+      }
+
+      const programs = new Set(
+        this.schedule
+          .filter((s) => s.institute_id == this.selectedInstituteId)
+          .map((s) => s.program_id)
+          .filter((id) => id !== null && id !== undefined)
+      );
+      return Array.from(programs);
+    },
+
+    // 🔹 Apply pagination to filtered faculty
+    paginatedFaculty() {
+      const allFaculty = Object.entries(this.filteredGroupedSchedule);
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
       return Object.fromEntries(allFaculty.slice(start, end));
     },
 
+    // 🔹 Compute total number of pages
     totalPages() {
       return Math.ceil(
-        Object.keys(this.filteredFacultyByInstituteAndProgram).length /
-          this.itemsPerPage
+        Object.keys(this.filteredGroupedSchedule).length / this.itemsPerPage
       );
     },
-    startIndex() {
-      if (Object.keys(this.filteredFacultyByInstituteAndProgram).length === 0)
-        return 0;
-      return (this.currentPage - 1) * this.itemsPerPage + 1;
-    },
-
-    endIndex() {
-      const total = Object.keys(
-        this.filteredFacultyByInstituteAndProgram
-      ).length;
-      const end = this.currentPage * this.itemsPerPage;
-      return end > total ? total : end;
-    },
-
-    pageNumbers() {
-      const pages = [];
-      for (let i = 1; i <= this.totalPages; i++) {
-        pages.push(i);
-      }
-      return pages;
-    },
-
-    // Get unique faculty_institute_id values
-    uniqueInstituteIds() {
-      const ids = new Set();
-      Object.values(this.groupedSchedule).forEach((facultySlots) => {
-        facultySlots.forEach((slot) => {
-          if (slot.faculty_institute_id) ids.add(slot.faculty_institute_id);
-        });
-      });
-      return Array.from(ids);
-    },
-
-    // Get unique program_id values filtered by selected institute
-    filteredProgramIds() {
-      const ids = new Set();
-      Object.values(this.groupedSchedule).forEach((facultySlots) => {
-        facultySlots.forEach((slot) => {
-          if (
-            (!this.selectedInstituteId ||
-              slot.faculty_institute_id == this.selectedInstituteId) &&
-            slot.program_id
-          ) {
-            ids.add(slot.program_id);
-          }
-        });
-      });
-      return Array.from(ids);
-    },
-
-    // Filter faculty by both institute and program
-    filteredFacultyByInstituteAndProgram() {
-      const filtered = {};
-      for (const [instructor, slots] of Object.entries(this.groupedSchedule)) {
-        const match = slots.some((s) => {
-          const matchesInstitute =
-            !this.selectedInstituteId ||
-            s.faculty_institute_id == this.selectedInstituteId;
-          const matchesProgram =
-            !this.selectedProgramId || s.program_id == this.selectedProgramId;
-          return matchesInstitute && matchesProgram;
-        });
-        if (match) filtered[instructor] = slots;
-      }
-      return filtered;
-    },
   },
+
   watch: {
-    // Reset program selection when institute changes
+    // 🔹 Watch filters and update faculty list dynamically
     selectedInstituteId() {
-      this.selectedProgramId = "";
+      this.filterSchedules();
+      this.selectedProgramId = ""; // reset program when institute changes
+    },
+    selectedProgramId() {
+      this.filterSchedules();
     },
   },
+
   methods: {
-    filteredData() {
-      return Object.keys(this.filteredFacultyByInstituteAndProgram);
+    // 🔹 Format time display
+    formatTime(hour) {
+      const period = hour >= 12 ? "PM" : "AM";
+      const displayHour = hour % 12 === 0 ? 12 : hour % 12;
+      return `${displayHour}:00 ${period}`;
     },
-    changePage(page) {
-      if (page >= 1 && page <= this.totalPages) {
-        this.currentPage = page;
+
+    backToFacultyTable() {
+      this.filteredGroupedSchedule = this.groupedSchedule;
+      this.showFacultyTable = true;
+      this.selectedInstructor = null;
+    },
+
+    async fetchUser() {
+      try {
+        const res = await axios.get("http://localhost:8000/auth/me", {
+          withCredentials: true,
+        });
+        if (res.data) {
+          this.user = res.data;
+        } else {
+          this.$router.push("/");
+        }
+      } catch (err) {
+        console.error("❌ Failed to fetch user:", err);
+        this.$router.push("/");
       }
     },
-    viewFacultySchedule(instructor) {
-      this.selectedInstructor = instructor;
-      this.filteredGroupedSchedule = {
-        [instructor]: this.groupedSchedule[instructor],
-      };
-      this.showFacultyTable = false;
-    },
-    // ... keep all your existing methods unchanged
-    getRowSpan(item) {
-      const start = this.convertToMinutes(item.start_hour);
-      const end = this.convertToMinutes(item.end_hour);
-      const duration = end - start;
-      return Math.ceil(duration / 60);
-    },
-    isStartingSlot(item, slot) {
-      const slotStart = this.timeToMinutes(slot.start);
-      const itemStart = this.convertToMinutes(item.start_hour);
-      return itemStart >= slotStart && itemStart < slotStart + 60;
-    },
-    getTypeColor(type) {
-      switch (type) {
-        case "Lecture":
-          return "bg-green-100 border-green-400";
-        case "Laboratory":
-          return "bg-blue-100 border-blue-400";
-        default:
-          return "bg-gray-100 border-gray-300";
-      }
-    },
-    getBlockHeight(item) {
-      const start = this.convertToMinutes(item.start_hour);
-      const end = this.convertToMinutes(item.end_hour);
-      return ((end - start) / 60) * 40;
-    },
-    deduplicateSchedules(schedules) {
-      const seen = new Set();
-      return schedules.filter((s) => {
-        const key = `${s.course_id}-${s.room_id}-${s.faculty_id}-${s.start_hour}-${s.end_hour}-${s.day}-${s.set}`;
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      });
-    },
-    async generateSchedule() {
-      await this.fetchSchedule();
-    },
+
     async fetchSchedule() {
       this.loading = true;
       this.error = null;
       this.progress = 0;
+
       this.progressInterval = setInterval(() => {
         if (this.progress < 90) this.progress += Math.random() * 10;
       }, 200);
@@ -605,10 +595,15 @@ export default {
           const allSchedules = Object.values(response.data.data).flatMap(
             (set) => set.best_schedule || []
           );
+
           const deduped = this.deduplicateSchedules(allSchedules);
+
           const filtered = deduped.filter(
-            (s) => s.institute_id === this.user.institute_id
+            (s) =>
+              !this.user.institute_id ||
+              s.institute_id === this.user.institute_id
           );
+
           this.schedule = filtered;
           this.groupedSchedule = this.groupByInstructor(this.schedule);
           this.filteredGroupedSchedule = this.groupedSchedule;
@@ -616,7 +611,7 @@ export default {
           this.error = "Invalid schedule format.";
         }
       } catch (err) {
-        console.error(err);
+        console.error("❌ Fetch failed:", err);
         this.error = "Failed to fetch schedule.";
       } finally {
         clearInterval(this.progressInterval);
@@ -624,64 +619,169 @@ export default {
         setTimeout(() => {
           this.loading = false;
           this.progress = 0;
-        }, 300);
+        }, 400);
       }
     },
-    groupByInstructor(schedule) {
-      return schedule.reduce((acc, item) => {
-        const instructor = item.faculty_name || "Unknown";
+
+    // 🔹 Deduplicate same course-day-room combos
+    deduplicateSchedules(schedules) {
+      const seen = new Set();
+      return schedules.filter((item) => {
+        const key = `${item.course_name}-${item.day}-${item.start_hour}-${item.room_name}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    },
+
+    // 🔹 Group schedules by instructor name
+    groupByInstructor(schedules) {
+      return schedules.reduce((acc, s) => {
+        const instructor =
+          s.faculty_name ||
+          s.instructor_name ||
+          `${s.instructor_first_name || ""} ${
+            s.instructor_last_name || ""
+          }`.trim() ||
+          "Unknown Faculty";
+
         if (!acc[instructor]) acc[instructor] = [];
-        acc[instructor].push(item);
+        acc[instructor].push(s);
         return acc;
       }, {});
     },
+
+    // 🔹 Apply institute/program filters dynamically
+    filterSchedules() {
+      let filtered = { ...this.groupedSchedule };
+
+      // 🔹 Filter by Institute
+      if (this.selectedInstituteId) {
+        filtered = Object.fromEntries(
+          Object.entries(filtered).filter(([, schedules]) =>
+            schedules.some((s) => s.institute_id == this.selectedInstituteId)
+          )
+        );
+      }
+
+      // 🔹 Filter by Program
+      if (this.selectedProgramId) {
+        filtered = Object.fromEntries(
+          Object.entries(filtered).filter(([, schedules]) =>
+            schedules.some((s) => s.program_id == this.selectedProgramId)
+          )
+        );
+      }
+
+      this.filteredGroupedSchedule = filtered;
+      this.changePage(1); // reset pagination to first page
+    },
+
     getScheduleForCell(slot, day, instructor) {
-      const instructorSlots = this.groupedSchedule[instructor] || [];
-      const slotStart = this.timeToMinutes(slot.start);
-      const slotEnd = this.timeToMinutes(slot.end);
-      return instructorSlots.filter((item) => {
-        const itemDay = item.day?.slice(0, 3);
-        const itemStart = this.convertToMinutes(item.start_hour);
-        const itemEnd = this.convertToMinutes(item.end_hour);
-        return slotStart < itemEnd && itemStart < slotEnd && itemDay === day;
-      });
+      const instructorSchedules =
+        this.filteredGroupedSchedule[instructor] || [];
+      return instructorSchedules.filter(
+        (item) =>
+          item.day === day &&
+          Number(item.start_hour) < slot.end &&
+          Number(item.end_hour) > slot.start
+      );
     },
-    timeToMinutes(timeStr) {
-      let [time, ampm] = timeStr.split(" ");
-      let [h, m] = time.split(":").map(Number);
-      if (ampm === "PM" && h !== 12) h += 12;
-      if (ampm === "AM" && h === 12) h = 0;
-      return h * 60 + m;
+    getBlockHeight(item) {
+      // Calculate height based on duration
+      const duration = Number(item.end_hour) - Number(item.start_hour);
+
+      // Match exact height of each slot row (computed from CSS)
+      // Each <tr> uses py-4 (=> 1rem top + 1rem bottom = 2rem ≈ 32px)
+      // Each <td> uses border + padding, so effective row height ≈ 56–60px
+      const slotHeight = this.timeSlotHeight; // already 64, perfect baseline
+      const height = duration * slotHeight;
+
+      return height - 1; // small adjustment for pixel rounding
     },
-    convertToMinutes(hour) {
-      return Math.floor(hour) * 60 + Math.round((hour % 1) * 60);
+
+    getBlockTop(item) {
+      // Calculate offset from first slot (8 AM)
+      const start = Number(item.start_hour);
+      const firstSlot = this.timeSlots[0].start;
+      const slotHeight = this.timeSlotHeight;
+
+      // Align exactly to top of time slot rows
+      const offset = (start - firstSlot) * slotHeight;
+
+      return offset; // precise top alignment
     },
+
+    // Check if this is the starting time cell for the schedule
+    isStartingSlot(item, slot) {
+      return Number(item.start_hour) === Number(slot.start);
+    },
+    getTypeColor(type) {
+      return type === "Lecture"
+        ? "bg-green-100 border-green-400"
+        : "bg-blue-100 border-blue-400";
+    },
+
+    getProgramColor(instructor) {
+      const slots = this.groupedSchedule[instructor];
+      if (!slots || slots.length === 0) return "bg-defaultGreen";
+
+      const programId = slots[0].program_id;
+      if (programId === 31) return "bg-violet-600";
+      if (programId === 32) return "bg-amber-800";
+
+      const colors = [
+        "bg-purple-600",
+        "bg-green-600",
+        "bg-blue-600",
+        "bg-amber-600",
+        "bg-pink-600",
+      ];
+      const index =
+        Math.abs(
+          instructor.split("").reduce((sum, c) => sum + c.charCodeAt(0), 0)
+        ) % colors.length;
+      return colors[index];
+    },
+
+    viewFacultySchedule(instructor) {
+      this.filteredGroupedSchedule = {
+        [instructor]: this.groupedSchedule[instructor],
+      };
+      this.showFacultyTable = false;
+    },
+
+    changePage(page) {
+      if (page >= 1 && page <= this.totalPages) {
+        this.currentPage = page;
+      }
+    },
+
     openConflictModal(item) {
       this.selectedConflict = item;
       this.showConflictModal = true;
     },
+
     closeConflictModal() {
       this.showConflictModal = false;
       this.selectedConflict = {};
     },
-    async fetchUser() {
-      try {
-        const res = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
-        if (res.data) {
-          this.user = res.data;
-        } else {
-          this.$router.push("/");
-        }
-      } catch (err) {
-        console.error("Failed to fetch user:", err);
-        this.$router.push("/");
-      }
+
+    async generateSchedule() {
+      await this.fetchSchedule();
+      this.scheduleGenerated = true;
+    },
+
+    async saveScheduled() {
+      alert("💾 Schedule saved successfully (placeholder).");
     },
   },
+
   async mounted() {
     await this.fetchUser();
+    if (this.scheduleGenerated) {
+      await this.fetchSchedule();
+    }
   },
 };
 </script>

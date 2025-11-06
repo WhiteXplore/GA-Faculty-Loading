@@ -2,23 +2,23 @@
   <div class="px-2 mt-2">
     <!-- Headers -->
     <div class="flex justify-between items-start">
-      <h1 class="font-semibold tracking-wide text-md">Classes</h1>
+      <h1 class="font-semibold tracking-wide text-md">Year & Section</h1>
     </div>
 
     <!-- Main Content  -->
     <div class="mt-3">
       <!-- Table -->
-      <tableClassList />
+      <tableYearSection />
     </div>
   </div>
 </template>
 
 <script>
-import tableClassList from "./tables/table-class-list.vue";
+import tableYearSection from "./tables/table-year-section.vue";
 export default {
-  name: "RoomsPage",
+  name: "ClassesPage",
   components: {
-    tableClassList,
+    tableYearSection,
   },
 };
 </script>

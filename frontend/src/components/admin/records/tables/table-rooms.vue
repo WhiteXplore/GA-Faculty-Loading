@@ -7,14 +7,14 @@
 
       <div
         @click="toggleAdd"
-        class="group flex items-center gap-2 px-3 py-2 bg-white text-green-600 rounded-xl shadow-sm hover:shadow-md border border-green-500 hover:bg-green-600 hover:text-white transition-all duration-300 cursor-pointer"
+        class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
       >
         <div
-          class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full group-hover:bg-white transition-colors duration-300"
+          class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
         >
           <icon
             :name="'circle-add'"
-            class="w-4 h-4 text-green-600 transition-colors duration-300 group-hover:text-green-600"
+            class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
           />
         </div>
         <span class="font-medium text-sm">Add Room</span>
@@ -96,40 +96,42 @@
             class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
             <tr>
-              <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
-                ID
+              <th class="px-4 py-3 text-left font-normal w-[20%]">Institute</th>
+              <th class="px-4 py-3 text-center font-normal w-[15%]">
+                Room Name
               </th>
-              <th class="px-4 py-3 text-left font-normal">Institute</th>
-              <th class="px-4 py-3 text-left font-normal">Room Name</th>
-              <th class="px-4 py-3 text-left font-normal">Room Type</th>
-              <th class="px-4 py-3 text-left font-normal">Room Capacity</th>
-              <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
+              <th class="px-4 py-3 text-center font-normal w-[15%]">
+                Room Type
+              </th>
+              <th class="px-4 py-3 text-center font-normal w-[15%]">
+                Room Capacity
+              </th>
+              <th
+                class="px-4 py-3 text-center rounded-tr-lg font-normal w-[20%]"
+              >
                 Actions
               </th>
             </tr>
           </thead>
           <tbody>
             <tr
-              v-for="(rooms_data, index) in paginatedData"
+              v-for="rooms_data in paginatedData"
               :key="rooms_data.rooms_id"
               class="hover:bg-green-50 transition-all border-t"
             >
               <td class="px-4 py-3 text-left">
-                {{ startIndex + index }}
-              </td>
-              <td class="px-4 py-3 text-left">
                 {{ rooms_data.institute?.institute_name }}
               </td>
-              <td class="px-4 py-3 text-left">
+              <td class="px-4 py-3 text-center">
                 {{ rooms_data.room_name }}
               </td>
-              <td class="px-4 py-3 text-left">
+              <td class="px-4 py-3 text-center">
                 {{ rooms_data.room_type }}
               </td>
-              <td class="px-4 py-3 text-left">
+              <td class="px-4 py-3 text-center">
                 {{ rooms_data.room_capacity }}
               </td>
-              <td class="px-4 py-3 text-left">
+              <td class="px-4 py-3 flex justify-center">
                 <div class="flex gap-2">
                   <button
                     class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1"

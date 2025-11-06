@@ -158,8 +158,6 @@
               class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
               <tr>
-                <th class="px-4 py-3 text-left w-[5%] rounded-tl-lg">#</th>
-
                 <th class="px-4 py-3 text-left w-[15%]">Program</th>
                 <th class="px-4 py-3 text-left w-[15%]">Section Name</th>
                 <th class="px-4 py-3 text-center w-[18%]">Class Size</th>
@@ -170,12 +168,10 @@
             </thead>
             <tbody>
               <tr
-                v-for="(cls, index) in paginatedClasses"
+                v-for="cls in paginatedClasses"
                 :key="cls.class_id"
                 class="hover:bg-green-50 transition-all border-t"
               >
-                <td class="px-4 py-3 text-left">{{ startIndex + index }}</td>
-
                 <td class="px-4 py-3 text-left">
                   {{ cls.program?.program_code }}
                 </td>
@@ -448,7 +444,7 @@ export default {
 
       try {
         await axios.delete(
-          `http://localhost:8000/class/delete-id/${this.deleteTargetId}`,
+          `http://localhost:8000/courses/delete-id/${this.deleteTargetId}`,
           { withCredentials: true }
         );
 

@@ -36,10 +36,10 @@ from sqlalchemy import create_engine, Table, MetaData, select
 # MySQL Connection (adjust creds/host/db as needed)
 # =========================
 DB_USER = "root"
-DB_PASS = "root"
+DB_PASS = "admin12345.."
 DB_HOST = "127.0.0.2"
 DB_PORT = 3306
-DB_NAME = "dnsc_class_scheduler_ga"
+DB_NAME = "dnsc_class_scheduler"
 
 engine = create_engine(
     f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}",
@@ -73,7 +73,8 @@ assigned_set_courses_table = Table(
 rooms_table = Table("rooms", metadata, autoload_with=engine)
 classes_table = Table(
     "classes", metadata, autoload_with=engine)
-program_year_courses_table = Table("program_year_courses", metadata, autoload_with=engine)
+program_year_courses_table = Table(
+    "program_year_courses", metadata, autoload_with=engine)
 
 
 def fetch_table_data(table):

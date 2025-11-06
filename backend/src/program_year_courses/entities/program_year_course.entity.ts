@@ -46,11 +46,3 @@ export class ProgramYearCourse {
   @JoinColumn({ name: 'school_year_id' })
   schoolYear: SchoolYear;
 }
-
-
-
-
-
-
-
-

@@ -7,14 +7,14 @@
       </div>
       <div
         @click="toggleAdd"
-        class="flex items-center gap-2 px-3 py-2 bg-white text-green-600 rounded-xl shadow-sm hover:shadow-md border border-green-500 hover:bg-defaultGreen hover:text-white transition-all duration-300 cursor-pointer"
+        class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
       >
         <div
-          class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full group-hover:bg-white transition-colors duration-300"
+          class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
         >
           <icon
             :name="'circle-add'"
-            class="w-4 h-4 text-green-600 transition-colors duration-300 group-hover:text-green-600"
+            class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
           />
         </div>
         <span class="font-medium text-sm">Add Institute </span>
@@ -97,33 +97,14 @@
             class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
             <tr>
-              <th
-                class="w-10 px-4 py-3 text-left font-normal rounded-tl-lg border-b border-gray-200"
-              >
-                ID
+              <th class="px-4 py-3 text-left font-normal">Institute Code</th>
+              <th class="px-4 py-3 text-left font-normal">Institute Title</th>
+              <th class="px-4 py-3 text-left font-normal">Program Code</th>
+              <th class="px-4 py-3 text-left font-normal w-[25%]">
+                Program Title
               </th>
               <th
-                class="px-4 py-3 text-left font-normal border-b border-gray-200"
-              >
-                Institute Code
-              </th>
-              <th
-                class="px-4 py-3 text-left font-normal border-b border-gray-200"
-              >
-                Institute Description
-              </th>
-              <th
-                class="px-4 py-3 text-left font-normal border-b border-gray-200"
-              >
-                Program Code
-              </th>
-              <th
-                class="px-4 py-3 text-left font-normal border-b border-gray-200"
-              >
-                Program Description
-              </th>
-              <th
-                class="px-4 py-3 text-left font-normal border-b border-gray-200 rounded-tr-lg"
+                class="px-4 py-3 text-center rounded-tr-lg font-normal w-[20%]"
               >
                 Actions
               </th>
@@ -132,13 +113,10 @@
 
           <tbody>
             <tr
-              v-for="(program, index) in paginatedData"
+              v-for="program in paginatedData"
               :key="program.program_id"
               class="hover:bg-green-50 transition-all border-t"
             >
-              <td class="px-4 py-3 border-t border-gray-200">
-                {{ startIndex + index }}
-              </td>
               <td class="px-4 py-3 border-t border-gray-200">
                 {{ program.institute?.institute_code }}
               </td>
@@ -151,7 +129,7 @@
               <td class="px-4 py-3 border-t border-gray-200">
                 {{ program.program_name }}
               </td>
-              <td class="px-4 py-3 border-t border-gray-200">
+              <td class="px-4 py-3 flex justify-center">
                 <div class="flex gap-2">
                   <button
                     class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
@@ -296,14 +274,34 @@ export default {
   },
   computed: {
     ...mapState(useFetchDataStore, ["programs", "institutes"]),
+
     filteredData() {
       const query = this.searchQuery.toLowerCase();
-      return this.programs.filter((item) =>
-        `${item.institute?.institute_name} ${item.program_code} ${item.program_name}`
+
+      // Step 1: Filter programs by search query
+      const filtered = this.programs.filter((item) =>
+        `${item.institute?.institute_name} ${item.institute?.institute_code} ${item.program_code} ${item.program_name}`
           .toLowerCase()
           .includes(query)
       );
+
+      // Step 2: Remove duplicates based on all 4 fields
+      const unique = [];
+      const seen = new Set();
+
+      for (const item of filtered) {
+        const key = `${item.institute?.institute_name || ""}|${
+          item.institute?.institute_code || ""
+        }|${item.program_code}|${item.program_name}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          unique.push(item);
+        }
+      }
+
+      return unique;
     },
+
     totalPages() {
       return Math.ceil(this.filteredData.length / this.itemsPerPage) || 1;
     },
@@ -328,6 +326,7 @@ export default {
       return count <= 10 ? "h-auto" : "h-[65vh]";
     },
   },
+
   methods: {
     async loadPrograms() {
       const store = useFetchDataStore();

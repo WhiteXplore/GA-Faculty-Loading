@@ -16,7 +16,6 @@ export const useFetchDataStore = defineStore("fetchData", {
     bachelors: [],
     masters: [],
     doctorates: [],
-    projecs: [],
     institutes: [],
     detailedReportCurriculum: [],
     calendarEvents: [],
@@ -24,10 +23,13 @@ export const useFetchDataStore = defineStore("fetchData", {
     rawusers: [],
     assignClass: [],
     faculty: [],
-    year: null,
-    sem: null, // ✅ Added for active semester
+    year: null, // currently selected year
+    activeYears: [],
+    activeYear: null, // latest active year for table filtering
+    lastUpdatedAt: null,
     loading: false,
     error: null,
+    activeYearInterval: null, // for polling
   }),
 
   actions: {
@@ -35,10 +37,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/instructors/get-instructors"
         );
-        this.instructors = response.data;
+        this.instructors = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch instructors";
       } finally {
@@ -50,10 +52,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/courses/get-courses"
         );
-        this.courses = response.data;
+        this.courses = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch courses";
       } finally {
@@ -65,10 +67,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/curriculums/get-curriculums"
         );
-        this.curriculums = response.data;
+        this.curriculums = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch curriculums";
       } finally {
@@ -80,10 +82,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/programs/get-programs"
         );
-        this.programs = response.data;
+        this.programs = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch programs";
       } finally {
@@ -95,10 +97,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/sections/get-sections"
         );
-        this.sections = response.data;
+        this.sections = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch sections";
       } finally {
@@ -110,10 +112,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/rooms/get-rooms"
         );
-        this.rooms = response.data;
+        this.rooms = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch rooms";
       } finally {
@@ -125,8 +127,8 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get("http://localhost:8000/time/get-time");
-        this.time = response.data;
+        const { data } = await axios.get("http://localhost:8000/time/get-time");
+        this.time = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch time";
       } finally {
@@ -138,10 +140,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/class-schedules/get-class-schedules"
         );
-        this.schedulers = response.data;
+        this.schedulers = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch schedulers";
       } finally {
@@ -153,10 +155,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/projected/get-projected"
         );
-        this.projects = response.data;
+        this.projects = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch projects";
       } finally {
@@ -168,10 +170,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/institute/get-institutes"
         );
-        this.institutes = response.data;
+        this.institutes = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch institutes";
       } finally {
@@ -183,10 +185,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/courses/get-report-curriculum-offer"
         );
-        this.detailedReportCurriculum = response.data;
+        this.detailedReportCurriculum = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch detailedReportCurriculum";
       } finally {
@@ -198,10 +200,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/calendar/get-all-calendar-events"
         );
-        this.calendarEvents = response.data;
+        this.calendarEvents = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch calendarEvents";
       } finally {
@@ -213,8 +215,8 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get("http://localhost:8000/auth/all");
-        this.users = response.data;
+        const { data } = await axios.get("http://localhost:8000/auth/all");
+        this.users = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch users";
       } finally {
@@ -226,10 +228,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/users/get-users"
         );
-        this.rawusers = response.data;
+        this.rawusers = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch rawusers";
       } finally {
@@ -241,10 +243,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/assign-class/get-assign-class"
         );
-        this.assignClass = response.data;
+        this.assignClass = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch assignClass";
       } finally {
@@ -256,10 +258,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8000/instructors/raw"
         );
-        this.faculty = response.data;
+        this.faculty = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch faculty";
       } finally {
@@ -267,67 +269,56 @@ export const useFetchDataStore = defineStore("fetchData", {
       }
     },
 
-    // ✅ Active Year Fetcher
-    async fetchActiveYear() {
+    // 🔹 Active years (real-time reactive)
+    async fetchActiveYears() {
       try {
-        const res = await axios.get("http://localhost:8000/active-year/active");
-
-        if (Array.isArray(res.data)) {
-          const active = res.data.find((item) => item.isActive === true);
-          this.year = active ? active.year : null;
-        } else if (res.data && res.data.isActive) {
-          this.year = res.data.year;
-        } else {
-          this.year = null;
-        }
-      } catch (err) {
-        console.error("Failed to fetch active year:", err);
-      }
-    },
-
-    async updateYear(newYear) {
-      try {
-        await axios.post("http://localhost:8000/active-year", {
-          year: newYear,
-        });
-        this.year = newYear;
-      } catch (err) {
-        console.error("Failed to update active year:", err);
-      }
-    },
-
-    // ✅ Active Semester Fetcher (Fixed)
-    async fetchActiveSem() {
-      try {
-        const res = await axios.get(
-          "http://localhost:8000/active-semester/active"
+        const { data } = await axios.get(
+          "http://localhost:8000/school-year/latest-active"
         );
 
-        if (Array.isArray(res.data)) {
-          // Handle array response (if API ever returns multiple)
-          const active = res.data.find((item) => item.is_active === true);
-          this.sem = active ? active.semester : null;
-        } else if (res.data && res.data.is_active) {
-          // Handle object response (your current case)
-          this.sem = res.data.semester;
-        } else {
-          this.sem = null;
-        }
+        // Ensure array
+        const activeYearsArray = Array.isArray(data) ? data : [data];
 
-        console.log("✅ Active semester fetched:", this.sem);
+        // Only active years
+        this.activeYears = activeYearsArray.filter((year) => year.is_active);
+
+        // Set the latest active year for table filtering
+        const previousYearId = this.activeYear?.school_year_id;
+        this.activeYear = this.activeYears[0] || null;
+
+        // Update timestamp
+        this.lastUpdatedAt =
+          this.activeYears.length > 0
+            ? new Date(this.activeYears[0].updated_at)
+            : null;
+
+        // Return true if year changed
+        return previousYearId !== this.activeYear?.school_year_id;
       } catch (err) {
-        console.error("❌ Failed to fetch active semester:", err);
+        console.error("❌ Failed to fetch school years:", err);
+        this.activeYears = [];
+        this.activeYear = null;
+        this.lastUpdatedAt = null;
+        return false;
       }
     },
 
-    async updateSem(newSem) {
-      try {
-        await axios.post("http://localhost:8000/active-semester", {
-          semester: newSem,
-        });
-        this.sem = newSem; // ✅ instantly update local state
-      } catch (err) {
-        console.error("Failed to update active semester:", err);
+    // 🔹 Start polling active years every interval
+    startActiveYearPolling(intervalMs = 10000) {
+      if (this.activeYearInterval) clearInterval(this.activeYearInterval);
+
+      this.activeYearInterval = setInterval(async () => {
+        const changed = await this.fetchActiveYears();
+        if (changed) {
+          console.log("✅ Active year changed:", this.activeYear);
+        }
+      }, intervalMs);
+    },
+
+    stopActiveYearPolling() {
+      if (this.activeYearInterval) {
+        clearInterval(this.activeYearInterval);
+        this.activeYearInterval = null;
       }
     },
   },

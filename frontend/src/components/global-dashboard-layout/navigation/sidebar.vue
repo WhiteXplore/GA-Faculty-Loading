@@ -24,6 +24,7 @@
             'w-16 rounded-full border-white border ': isExpanded,
             hidden: !isExpanded,
           }"
+          whitespace-nowrap
         />
         <p
           :class="{
@@ -53,16 +54,33 @@
           <div v-if="isExpanded" class="text-md text-white mt-1 text-left">
             {{ section.title }}
           </div>
+          <!-- Collapsible Parent / Non-children items -->
           <div v-for="item in section.items" :key="item.name" class="w-full">
-            <!-- Non-children router-link -->
+            <!-- Special sync item for Program Chairperson -->
+            <div
+              v-if="item.name === 'Class & Assigned Courses'"
+              @click="syncProgramYearCourses(item.route)"
+              class="flex items-center w-full gap-5 rounded-md transition-all duration-200 cursor-pointer select-none"
+              :class="[
+                $route.path.startsWith(item.route)
+                  ? 'bg-white text-green-700 p-2'
+                  : 'text-white hover:bg-white hover:text-gray-800 p-2 hover:p-2',
+                !isExpanded ? 'justify-center h-8' : 'justify-start p-2',
+              ]"
+            >
+              <icon :name="item.icon" />
+              <span v-show="isExpanded">{{ item.name }}</span>
+            </div>
+
+            <!-- Default router-link for all other non-children items -->
             <router-link
-              v-if="!item.children"
+              v-else-if="!item.children"
               :to="item.route"
               class="flex items-center w-full gap-5 rounded-md transition-all duration-200"
               :class="[
                 $route.path.startsWith(item.route)
                   ? 'bg-white text-green-700 p-2'
-                  : 'text-white hover:bg-white hover:text-gray-800 p-2  hover:p-2',
+                  : 'text-white hover:bg-white hover:text-gray-800 p-2 hover:p-2',
                 !isExpanded ? 'justify-center h-8' : 'justify-start p-2',
               ]"
             >
@@ -70,7 +88,7 @@
               <span v-show="isExpanded">{{ item.name }}</span>
             </router-link>
 
-            <!-- Collapsible Parent -->
+            <!-- Collapsible Parent items -->
             <div v-else>
               <div
                 @click="toggleDropdown(item.name)"
@@ -142,7 +160,7 @@
       <slot>
         <div class="bg-white w-auto min-h-screen shadow mr-2 rounded-t-xl">
           <adminTopbar />
-          <div class="p-2">
+          <div class="">
             <router-view></router-view>
           </div>
         </div>
@@ -153,7 +171,7 @@
 
 <script>
 import icon from "@/assets/icon.vue";
-import adminTopbar from "../../../components/global-dashboard-layout/navigation/topbar.vue";
+import adminTopbar from "./Topbar.vue";
 import axios from "axios";
 
 export default {
@@ -186,7 +204,7 @@ export default {
                 children: [
                   // { name: "Instructors", route: "/instructors" },
                   { name: "Institutes", route: "/institutes" },
-                  { name: "Curriculum", route: "/curriculums" },
+                  { name: "Curriculum", route: "/curriculum" },
                   { name: "Courses", route: "/courses" },
                   { name: "Rooms", route: "/rooms" },
                   { name: "School Years", route: "/school-years" },
@@ -198,20 +216,16 @@ export default {
                 icon: "faculty-list",
                 route: "/instructors",
               },
+
               // {
-              //   name: "Class List",
+              //   name: "Assigned Course",
               //   icon: "class-list",
-              //   route: "/admin-assign-classes",
+              //   route: "/admin-assigned-courses",
               // },
-              {
-                name: "Assigned Course",
-                icon: "class-list",
-                route: "/admin-assigned-courses",
-              },
               {
                 name: "Year & Section",
                 icon: "class-list",
-                route: "/classes",
+                route: "/year-section",
               },
             ],
           },
@@ -223,22 +237,15 @@ export default {
                 name: "Faculty Loading",
                 route: "/faculty-loads",
               },
-              // {
-              //   icon: "folder",
-              //   name: "Exam Scheduling",
-              //   route: "/exam-loading",
-              // },
             ],
           },
           {
             title: "Documents",
             items: [
               {
-                name: "Reports",
                 icon: "prospectus",
-                children: [
-                  { name: "Prospectus", route: "/report-curriculum-offers" },
-                ],
+                name: "Prospectus",
+                route: "/report-curriculum-offers",
               },
             ],
           },
@@ -269,30 +276,31 @@ export default {
             title: "Record Management",
             items: [
               {
-                name: "Courses",
+                name: "Setup",
                 icon: "set-up",
-                route: "/program-courses",
+                children: [
+                  { name: "Courses", route: "/program-chair-courses" },
+                  {
+                    name: "Year & Section",
+                    route: "/program-chair-year-section",
+                  },
+                  // {
+                  //   name: "Assign Course",
+                  //   route: "/program-chair-assigned-courses",
+                  // },
+                ],
               },
-              // {
-              //   name: "Programs",
-              //   icon: "setting",
-              //   route: "/program-programs",
-              // },
+
               {
-                name: "Year & Section",
-                icon: "class-list",
-                route: "/year-section",
+                name: "Faculty List",
+                icon: "faculty-list",
+                route: "/program-chair-faculty-list",
               },
               {
-                name: "Assigned Course",
+                name: "Class & Assigned Courses",
                 icon: "class-list",
-                route: "/assigned-course",
+                route: "/program-chair-class-assigned-classes",
               },
-              // {
-              //   name: "Assign Classes",
-              //   icon: "reports",
-              //   route: "/program-chairperson-assign-classes",
-              // },
             ],
           },
 
@@ -304,11 +312,6 @@ export default {
                 icon: "faculty-loading",
                 route: "/load-generation",
               },
-              // {
-              //   name: "Faculty Loading",
-              //   icon: "users",
-              //   route: "/program-faculty-loading",
-              // },
             ],
           },
           {
@@ -316,7 +319,7 @@ export default {
             items: [
               {
                 name: "Faculty Expertise Overview",
-                icon: "reports",
+                icon: "expertise",
                 route: "/faculty-expertise",
               },
             ],
@@ -373,6 +376,18 @@ export default {
     },
   },
   methods: {
+    async syncProgramYearCourses(route) {
+      try {
+        const response = await axios.post(
+          "http://localhost:8000/program-year-courses/sync-from-classes",
+          { withCredentials: true }
+        );
+        console.log("Sync successful:", response.data);
+        this.$router.push(route);
+      } catch (error) {
+        console.error("Failed to sync:", error);
+      }
+    },
     toggleSidebar() {
       this.isExpanded = !this.isExpanded;
     },

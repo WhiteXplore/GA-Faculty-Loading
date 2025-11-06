@@ -33,6 +33,11 @@ export class ProgramYearCoursesController {
     return this.programYearCoursesService.findAll();
   }
 
+  @Get('view-all')
+  findFromView() {
+    return this.programYearCoursesService.findFromView();
+  }
+
   @Get('get-by-program-and-school-year')
   findByProgramAndSchoolYear(
     @Query('program_id') programId: number,
@@ -63,7 +68,10 @@ export class ProgramYearCoursesController {
   }
 
   @Patch('update/:id')
-  update(@Param('id') id: string, @Body() updateDto: UpdateProgramYearCourseDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateDto: UpdateProgramYearCourseDto,
+  ) {
     return this.programYearCoursesService.update(+id, updateDto);
   }
 
@@ -84,12 +92,12 @@ export class ProgramYearCoursesController {
       schoolYearId,
     );
   }
+
+  @Post('sync-from-classes')
+  async syncFromClasses() {
+    await this.programYearCoursesService.syncProgramYearCoursesFromClasses();
+    return {
+      message: 'Program year courses synced successfully from classes.',
+    };
+  }
 }
-
-
-
-
-
-
-
-

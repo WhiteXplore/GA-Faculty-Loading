@@ -20,6 +20,11 @@ export class SchoolYearController {
   create(@Body() createSchoolYearDto: CreateSchoolYearDto) {
     return this.schoolYearService.create(createSchoolYearDto);
   }
+  // school_year.controller.ts
+  @Get('latest-active')
+  getLatestActive() {
+    return this.schoolYearService.findLatestActive();
+  }
 
   @Get('get-school-years')
   findAll() {
@@ -29,6 +34,10 @@ export class SchoolYearController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.schoolYearService.findOne(+id);
+  }
+  @Patch('update-timestamp/:id')
+  async updateTimestamp(@Param('id') id: number) {
+    return this.schoolYearService.updateTimestamp(id);
   }
 
   @Patch('update-school-year/:id')
@@ -48,4 +57,3 @@ export class SchoolYearController {
     return this.schoolYearService.remove(numericId);
   }
 }
-

@@ -14,7 +14,7 @@
     </div>
 
     <!-- Main Layout with Sidebar -->
-    <div class="flex h-[81vh] overflow-hidden rounded-xl bg-white">
+    <div class="flex h-[80vh] overflow-hidden rounded-xl bg-white">
       <!-- Sidebar -->
       <div class="w-64 border-r bg-white p-4">
         <ul class="space-y-2">
@@ -24,7 +24,7 @@
               :class="[
                 'w-full text-left px-3 py-2 rounded-lg',
                 activeTab === 'profile'
-                  ? 'bg-green-100 text-green-700 font-semibold'
+                  ? 'bg-defaultGreen text-white font-semibold'
                   : 'hover:bg-gray-100',
               ]"
             >
@@ -37,7 +37,7 @@
               :class="[
                 'w-full text-left px-3 py-2 rounded-lg',
                 activeTab === 'preference'
-                  ? 'bg-green-100 text-green-700 font-semibold'
+                  ? 'bg-defaultGreen text-white font-semibold'
                   : 'hover:bg-gray-100',
               ]"
             >

@@ -50,11 +50,11 @@
           class="flex items-center gap-2 px-3 py-2 bg-white text-green-600 rounded-xl shadow-sm hover:shadow-md border border-green-500 hover:bg-green-600 hover:text-white transition-all duration-300 cursor-pointer"
         >
           <div
-            class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full group-hover:bg-white transition-colors duration-300"
+            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
           >
             <icon
               :name="'circle-add'"
-              class="w-4 h-4 text-green-600 transition-colors duration-300 group-hover:text-green-600"
+              class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
             />
           </div>
           <span class="font-medium text-sm">Generate Report</span>
@@ -94,13 +94,13 @@
 
       <!-- Sub Header  -->
       <div class="w-full text-center mb-6">
-        <h1 class="uppercase text-lg">Office of the Registrar</h1>
+        <!-- <h1 class="uppercase text-lg">Office of the Registrar</h1> -->
         <p class="font-bold text-lg">{{ currentInstituteName }}</p>
         <p class="text-lg">{{ selectedProgram }}</p>
         <p v-if="filteredCourses.length" class="text-lg">
           Curriculum Checklist Year
-          {{ filteredCourses[0].curriculum?.curriculum_since }}-
-          {{ filteredCourses[0].curriculum?.curriculum_effective }}
+          {{ filteredCourses[0].curriculum?.curriculum_start_year }}-
+          {{ filteredCourses[0].curriculum?.curriculum_end_year }}
         </p>
       </div>
 

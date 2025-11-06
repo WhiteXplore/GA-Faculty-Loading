@@ -54,10 +54,10 @@ export class GeneratedScheduledController {
           // Extract JSON between markers
           const jsonStartMarker = '===JSON_START===';
           const jsonEndMarker = '===JSON_END===';
-          
+
           const startIndex = stdout.indexOf(jsonStartMarker);
           const endIndex = stdout.indexOf(jsonEndMarker);
-          
+
           if (startIndex === -1 || endIndex === -1) {
             console.error('No JSON markers found in Python output.');
             return reject(
@@ -68,11 +68,10 @@ export class GeneratedScheduledController {
           }
 
           // Extract JSON content between markers
-          const jsonString = stdout.substring(
-            startIndex + jsonStartMarker.length,
-            endIndex,
-          ).trim();
-          
+          const jsonString = stdout
+            .substring(startIndex + jsonStartMarker.length, endIndex)
+            .trim();
+
           try {
             const schedule = JSON.parse(jsonString);
             resolve({ success: true, data: schedule });

@@ -2,23 +2,26 @@
   <div class="px-2 mt-2">
     <!-- Headers -->
     <div class="flex justify-between items-start">
-      <h1 class="font-semibold tracking-wide text-md">Exam Schules</h1>
+      <h1 class="font-semibold tracking-wide text-md">
+        Class & Assigned Courses Overview
+      </h1>
     </div>
 
     <!-- Main Content  -->
     <div class="mt-3">
       <!-- Table -->
-      <TableExamSchedules />
+      <TableClassAssignedCourses />
     </div>
   </div>
 </template>
 
 <script>
-import TableExamSchedules from "./tables/table-exam-schedules.vue";
+import TableClassAssignedCourses from "./tables/table-class-assigned-courses.vue";
+
 export default {
-  name: "ExamSchedulesPage",
+  name: "FacultyLoadingPage",
   components: {
-    TableExamSchedules,
+    TableClassAssignedCourses,
   },
 };
 </script>
