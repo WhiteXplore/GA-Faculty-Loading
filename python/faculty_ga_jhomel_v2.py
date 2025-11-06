@@ -1,3 +1,37 @@
+#!/usr/bin/env python3
+"""
+Faculty Loading Genetic Algorithm - Version 2
+
+MEETING SCHEDULE:
+ - Each course can have separate lecture and laboratory meetings
+ - Meetings are scheduled with appropriate durations based on course requirements
+
+FACULTY EXPERTISE SYSTEM:
+ - All assignments (lecture or lab) only consider faculty listed in faculty_expertise for that course
+ - When multiple eligible faculty exist, the algorithm picks the one with the LOWEST projected load
+ - No fallback to non-expert faculty
+
+LOAD CALCULATION:
+ - Lecture: Each hour counts as 1 unit toward faculty load
+ - Laboratory: Each hour counts as 1/3 unit toward faculty load
+ - Maximum faculty load: 18 units
+
+ROOM REQUIREMENTS:
+ - Room type must match the course type (Lecture or Laboratory)
+ - Room capacity must be greater than or equal to the class size
+ - Room must be free for the entire block (schedule + other_schedule)
+ - Room must be available for the entire block (schedule + other_schedule)
+ - Room must be available and conflict-free with all existing schedules
+
+TIME SLOT CONSTRAINTS:
+ - Classes run from 8 AM to 6 PM (10 time slots per day)
+ - 5 days per week (Monday to Friday)
+ - No overnight or multi-day classes allowed
+ - Classes must fit within available time slots
+
+Requirements: sqlalchemy, pymysql
+"""
+
 import random
 import json
 from typing import List, Dict, Tuple, Optional
@@ -47,6 +81,40 @@ class Chromosome:
         return Chromosome([Assignment(**vars(a)) for a in self.assignments])
 
 class FacultyLoadingGA:
+    """
+    Genetic Algorithm for Faculty Loading and Scheduling.
+    
+    ROOM CONSTRAINTS IMPLEMENTATION:
+    ==================================
+    This class implements comprehensive room constraints throughout the scheduling process:
+    
+    1. Room Type Matching:
+       - Laboratory courses are assigned to Laboratory rooms
+       - Lecture courses are assigned to Lecture rooms
+       - Enforced in: _get_suitable_rooms(), fitness calculation
+    
+    2. Room Capacity Validation:
+       - Room capacity must be >= class size
+       - Larger capacity shortages receive proportionally higher penalties
+       - Enforced in: _get_suitable_rooms(), fitness calculation
+    
+    3. Room Time Availability:
+       - Rooms cannot have overlapping assignments
+       - Checked for entire duration of each class
+       - Enforced in: _is_room_available(), _get_suitable_rooms(), fitness calculation
+    
+    4. Optimal Room Usage:
+       - Rewards efficient use of room capacity (70-100% full)
+       - Prevents unnecessary use of oversized rooms
+       - Enforced in: fitness calculation
+    
+    Methods implementing room constraints:
+    - _is_room_available(): Checks if room is free for given time block
+    - _get_suitable_rooms(): Returns rooms matching type, capacity, and availability
+    - calculate_fitness(): Penalizes room constraint violations
+    - mutate(): Ensures mutations respect room constraints
+    """
+    
     def __init__(self, rooms, faculty, faculty_expertise, courses, classes, program_year_courses):
         # Load data
         self.rooms = {r['room_id']: r for r in rooms}
@@ -202,25 +270,79 @@ class FacultyLoadingGA:
         
         return random.choice(candidates)
     
-    def _get_suitable_rooms(self, meeting_type: str, class_size: int) -> List[int]:
-        """Get rooms suitable for this meeting type"""
+    def _is_room_available(self, room_id: int, time_slot: int, duration: int, 
+                           current_assignments: List[Assignment], exclude_assignment=None) -> bool:
+        """
+        Check if a room is available for the entire duration at the given time slot.
+        
+        ROOM AVAILABILITY CONSTRAINTS:
+        - Room must be free for all time slots in [time_slot, time_slot + duration)
+        - No overlapping assignments in the same room
+        - Checks against all existing assignments
+        """
+        for assignment in current_assignments:
+            # Skip if this is the assignment we're trying to reschedule
+            if exclude_assignment and assignment is exclude_assignment:
+                continue
+                
+            # Check if same room
+            if assignment.room_id == room_id:
+                # Check for time overlap
+                if self._time_overlap(time_slot, duration, 
+                                     assignment.time_slot, assignment.duration):
+                    return False
+        return True
+    
+    def _get_suitable_rooms(self, meeting_type: str, class_size: int, 
+                           time_slot: int = None, duration: int = None,
+                           current_assignments: List[Assignment] = None) -> List[int]:
+        """
+        Get rooms suitable for this meeting type with comprehensive constraints.
+        
+        ROOM CONSTRAINT CHECKS:
+        1. Room type must match course type (Lecture/Laboratory)
+        2. Room capacity must be >= class size
+        3. Room must be available for the entire time block (if time_slot provided)
+        """
         suitable = []
         
         for room_id, room in self.rooms.items():
-            # Check capacity
-            if room['room_capacity'] >= class_size:
-                # Check room type
-                if meeting_type == 'laboratory' and room['room_type'] == 'Laboratory':
-                    suitable.append(room_id)
-                elif meeting_type == 'lecture' and room['room_type'] == 'Lecture':
-                    suitable.append(room_id)
+            # CONSTRAINT 1: Check room capacity
+            if room['room_capacity'] < class_size:
+                continue  # Skip rooms that are too small
+            
+            # CONSTRAINT 2: Check room type matches meeting type
+            room_type_match = False
+            if meeting_type == 'laboratory' and room['room_type'] == 'Laboratory':
+                room_type_match = True
+            elif meeting_type == 'lecture' and room['room_type'] == 'Lecture':
+                room_type_match = True
+            
+            if not room_type_match:
+                continue  # Skip rooms with wrong type
+            
+            # CONSTRAINT 3: Check time availability (if time_slot is provided)
+            if time_slot is not None and duration is not None and current_assignments is not None:
+                if not self._is_room_available(room_id, time_slot, duration, current_assignments):
+                    continue  # Skip rooms that are already occupied
+            
+            suitable.append(room_id)
         
-        # If no suitable rooms, return any room with enough capacity
+        # Fallback 1: If no suitable rooms with correct type, try rooms with just correct capacity
         if not suitable:
-            suitable = [rid for rid, r in self.rooms.items() 
-                       if r['room_capacity'] >= class_size]
+            for room_id, room in self.rooms.items():
+                if room['room_capacity'] >= class_size:
+                    if time_slot is not None and duration is not None and current_assignments is not None:
+                        if self._is_room_available(room_id, time_slot, duration, current_assignments):
+                            suitable.append(room_id)
+                    else:
+                        suitable.append(room_id)
         
-        return suitable if suitable else list(self.rooms.keys())
+        # Fallback 2: Return any room if desperate (will be heavily penalized in fitness)
+        if not suitable:
+            suitable = list(self.rooms.keys())
+        
+        return suitable
     
     def create_individual(self) -> Chromosome:
         """Create a random valid schedule with faculty consistency"""
@@ -248,14 +370,13 @@ class FacultyLoadingGA:
                 faculty_id = self._select_faculty_by_load(qualified_faculty, assignments)
                 course_faculty_map[key] = faculty_id  # Remember for consistency
             
-            # Select random suitable room
-            suitable_rooms = self._get_suitable_rooms(meeting_type, class_size)
-            room_id = random.choice(suitable_rooms) if suitable_rooms else random.choice(list(self.rooms.keys()))
-            
-            # Assign random time slot with validation (excluding lunch break)
+            # Assign time slot and room with comprehensive validation
             attempts = 0
             time_slot = 0
+            room_id = None
+            
             while attempts < 100:
+                attempts += 1
                 day = random.randint(0, 4)  # 5 days
                 day_start = day * self.slots_per_day
                 
@@ -263,15 +384,30 @@ class FacultyLoadingGA:
                 slot_in_day = random.randint(0, self.slots_per_day - 1)
                 
                 # Validate that this time block doesn't span lunch
-                if self._is_valid_time_block(slot_in_day, duration):
-                    time_slot = day_start + slot_in_day
-                    break
+                if not self._is_valid_time_block(slot_in_day, duration):
+                    continue
                 
-                attempts += 1
+                time_slot = day_start + slot_in_day
+                
+                # Get suitable rooms that are available at this time
+                # ROOM CONSTRAINTS: type match, capacity, and time availability
+                suitable_rooms = self._get_suitable_rooms(
+                    meeting_type, class_size, time_slot, duration, assignments
+                )
+                
+                if suitable_rooms:
+                    room_id = random.choice(suitable_rooms)
+                    break  # Found valid time slot and room
             
-            # If couldn't find valid slot after attempts, skip this assignment
-            if attempts >= 100:
-                continue
+            # If couldn't find valid slot and room after attempts, use fallback
+            if room_id is None:
+                # Get rooms without time checking (will be penalized in fitness)
+                suitable_rooms = self._get_suitable_rooms(meeting_type, class_size)
+                room_id = random.choice(suitable_rooms) if suitable_rooms else random.choice(list(self.rooms.keys()))
+                # Use a random valid time slot
+                day = random.randint(0, 4)
+                slot_in_day = random.randint(0, max(0, self.slots_per_day - duration))
+                time_slot = day * self.slots_per_day + slot_in_day
             
             assignment = Assignment(
                 class_id=class_id,
@@ -287,7 +423,22 @@ class FacultyLoadingGA:
         return Chromosome(assignments)
     
     def calculate_fitness(self, chromosome: Chromosome) -> float:
-        """Calculate fitness score (higher is better)"""
+        """
+        Calculate fitness score (higher is better).
+        
+        ROOM CONSTRAINTS ENFORCED:
+        1. Room Capacity: Room capacity must be >= class size (penalty: 500 + 10 per student over)
+        2. Room Type Match: 
+           - Laboratory meetings require Laboratory rooms (penalty: 400)
+           - Lecture meetings require Lecture rooms (penalty: 150)
+        3. Room Availability: Same room cannot be used at overlapping times (penalty: 800)
+        4. Optimal Usage: Bonus for rooms 70-100% full (reward: +10)
+        
+        All room constraints are validated in multiple places:
+        - During individual creation (_get_suitable_rooms with time checking)
+        - During mutation (room reassignment with availability check)
+        - During fitness evaluation (penalties for violations)
+        """
         score = 10000.0
         
         # Track conflicts
@@ -309,22 +460,39 @@ class FacultyLoadingGA:
                 overload = faculty_load - self.max_faculty_load
                 score -= overload * 200  # Heavy penalty for overload
             
-            # 3. Room capacity penalty
+            # 3. ROOM CONSTRAINTS - Comprehensive validation
             req = next((r for r in self.teaching_requirements 
                        if r['class_id'] == assignment.class_id 
                        and r['course_id'] == assignment.course_id
                        and r['meeting_type'] == assignment.meeting_type), None)
             
             if req:
-                room = self.rooms[assignment.room_id]
-                if room['room_capacity'] < req['class_size']:
-                    score -= 500
-                
-                # 4. Room type must match
-                if assignment.meeting_type == 'laboratory' and room['room_type'] != 'Laboratory':
-                    score -= 300
-                elif assignment.meeting_type == 'lecture' and room['room_type'] != 'Lecture':
-                    score -= 100
+                room = self.rooms.get(assignment.room_id)
+                if room:
+                    # ROOM CONSTRAINT 1: Capacity must be adequate
+                    # Room capacity must be >= class size
+                    if room['room_capacity'] < req['class_size']:
+                        capacity_shortage = req['class_size'] - room['room_capacity']
+                        score -= 500 + (capacity_shortage * 10)  # Larger shortage = bigger penalty
+                    
+                    # ROOM CONSTRAINT 2: Room type must match meeting type
+                    # Laboratory courses need laboratory rooms, lectures need lecture rooms
+                    if assignment.meeting_type == 'laboratory':
+                        if room['room_type'] != 'Laboratory':
+                            score -= 400  # Heavy penalty for lab in non-lab room
+                    elif assignment.meeting_type == 'lecture':
+                        if room['room_type'] != 'Lecture':
+                            score -= 150  # Moderate penalty for lecture in non-lecture room
+                    
+                    # ROOM CONSTRAINT 3: Bonus for optimal room usage
+                    # Reward for using room close to actual class size (not too oversized)
+                    if room['room_capacity'] >= req['class_size']:
+                        capacity_ratio = req['class_size'] / room['room_capacity']
+                        if capacity_ratio >= 0.7:  # Room is 70-100% full
+                            score += 10  # Small bonus for efficient room usage
+                else:
+                    # Room doesn't exist - critical error
+                    score -= 1000
             
             # 5. Faculty conflicts (same faculty, same time)
             fid = assignment.faculty_id
@@ -457,8 +625,11 @@ class FacultyLoadingGA:
         return Chromosome(child1_assignments), Chromosome(child2_assignments)
     
     def mutate(self, chromosome: Chromosome):
-        """Mutation: randomly change assignment attributes"""
-        for assignment in chromosome.assignments:
+        """
+        Mutation: randomly change assignment attributes with room constraint validation.
+        Ensures mutations respect room capacity, type, and availability.
+        """
+        for i, assignment in enumerate(chromosome.assignments):
             if random.random() < self.mutation_rate:
                 mutation_type = random.randint(0, 2)
                 
@@ -477,22 +648,64 @@ class FacultyLoadingGA:
                         assignment.faculty_id = self._select_faculty_by_load(
                             qualified, chromosome.assignments)
                 
-                elif mutation_type == 1:  # Change room
-                    suitable = self._get_suitable_rooms(assignment.meeting_type, req['class_size'])
+                elif mutation_type == 1:  # Change room with full constraint checking
+                    # Get suitable rooms considering current time slot and availability
+                    # ROOM CONSTRAINTS: type, capacity, and time availability
+                    suitable = self._get_suitable_rooms(
+                        assignment.meeting_type, 
+                        req['class_size'],
+                        assignment.time_slot,
+                        assignment.duration,
+                        chromosome.assignments
+                    )
                     if suitable:
                         assignment.room_id = random.choice(suitable)
+                    else:
+                        # Fallback: try without time checking
+                        suitable = self._get_suitable_rooms(assignment.meeting_type, req['class_size'])
+                        if suitable:
+                            assignment.room_id = random.choice(suitable)
                 
-                else:  # Change time slot (respecting lunch break)
+                else:  # Change time slot and potentially room (respecting lunch break)
                     attempts = 0
-                    while attempts < 50:
+                    found_valid = False
+                    
+                    while attempts < 50 and not found_valid:
+                        attempts += 1
                         day = random.randint(0, 4)
                         day_start = day * self.slots_per_day
                         slot_in_day = random.randint(0, self.slots_per_day - 1)
                         
-                        if self._is_valid_time_block(slot_in_day, assignment.duration):
-                            assignment.time_slot = day_start + slot_in_day
-                            break
-                        attempts += 1
+                        # Check if time block is valid (doesn't span lunch)
+                        if not self._is_valid_time_block(slot_in_day, assignment.duration):
+                            continue
+                        
+                        new_time_slot = day_start + slot_in_day
+                        
+                        # Check if current room is available at new time
+                        # ROOM CONSTRAINT: Room must be free at new time slot
+                        if self._is_room_available(
+                            assignment.room_id, 
+                            new_time_slot, 
+                            assignment.duration,
+                            chromosome.assignments,
+                            exclude_assignment=assignment
+                        ):
+                            assignment.time_slot = new_time_slot
+                            found_valid = True
+                        else:
+                            # Try to find a different room that's available
+                            suitable_rooms = self._get_suitable_rooms(
+                                assignment.meeting_type,
+                                req['class_size'],
+                                new_time_slot,
+                                assignment.duration,
+                                chromosome.assignments
+                            )
+                            if suitable_rooms:
+                                assignment.time_slot = new_time_slot
+                                assignment.room_id = random.choice(suitable_rooms)
+                                found_valid = True
     
     def evolve(self):
         """Main GA loop"""
