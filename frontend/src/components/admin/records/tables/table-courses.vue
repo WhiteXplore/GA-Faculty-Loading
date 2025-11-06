@@ -3,20 +3,51 @@
     <!-- Header -->
     <div class="text-sm flex justify-between">
       <div class="text-[13px] text-text mt-4">Pages / Courses</div>
-
-      <div
-        @click="toggleAdd"
-        class="flex items-center gap-2 px-3 py-2 bg-white text-green-600 rounded-xl shadow-sm hover:shadow-md border border-green-500 hover:bg-defaultGreen hover:text-white transition-all duration-300 cursor-pointer"
-      >
+      <div class="flex items-center gap-2">
         <div
-          class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full group-hover:bg-white transition-colors duration-300"
+          @click="refreshTable"
+          class="flex items-center gap-2 px-3 py-2 bg-blue-800 text-white rounded-xl shadow-sm hover:shadow-md border border-blue-800 hover:bg-white hover:text-blue-800 transition-all duration-300 cursor-pointer"
         >
-          <icon
-            :name="'circle-add'"
-            class="w-4 h-4 text-green-600 transition-colors duration-300 group-hover:text-green-600"
-          />
+          <div
+            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-white transition-colors duration-300"
+          >
+            <icon
+              :name="'refresh'"
+              class="w-5 h-5 text-blue-800 transition-colors duration-300 group-hover:text-blue-600"
+            />
+          </div>
+          <span class="font-medium text-sm">Refresh</span>
         </div>
-        <span class="font-medium text-sm">Add Course</span>
+
+        <div
+          @click="isUploadModal = true"
+          class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
+        >
+          <div
+            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+          >
+            <icon
+              :name="'upload'"
+              class="w-5 h-5 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
+            />
+          </div>
+          <span class="font-medium text-sm">Upload Course</span>
+        </div>
+
+        <div
+          @click="toggleAdd"
+          class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
+        >
+          <div
+            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+          >
+            <icon
+              :name="'circle-add'"
+              class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
+            />
+          </div>
+          <span class="font-medium text-sm">Add Course</span>
+        </div>
       </div>
     </div>
 
@@ -78,6 +109,7 @@
                 {{ curr }}
               </option>
             </select>
+
             <!-- Custom arrow -->
             <div
               class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
@@ -133,10 +165,8 @@
             class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
             <tr>
-              <th class="px-4 py-3 text-left rounded-tl-lg">#</th>
-              <th class="px-4 py-3 text-left">Curriculum</th>
               <th class="px-4 py-3 text-left">Course Code</th>
-              <th class="px-4 py-3 text-left">Description</th>
+              <th class="px-4 py-3 text-left">Course Title</th>
               <th class="px-4 py-3 text-center">Semester</th>
               <th class="px-4 py-3 text-center">Year Level</th>
               <th class="px-4 py-3 text-center">Lecture</th>
@@ -148,14 +178,12 @@
           </thead>
           <tbody>
             <tr
-              v-for="(c, index) in paginatedData"
+              v-for="c in paginatedData"
               :key="c.course_id"
               class="hover:bg-green-50 transition-all border-t"
             >
-              <td class="px-4 py-3">{{ startIndex + index }}</td>
-              <td class="px-4 py-3">{{ c.curriculum?.curriculum_name }}</td>
               <td class="px-4 py-3">{{ c.course_code }}</td>
-              <td class="px-4 py-3">{{ c.course_description }}</td>
+              <td class="px-4 py-3">{{ c.course_title }}</td>
               <td class="px-4 py-3 text-center">{{ c.course_semester }}</td>
               <td class="px-4 py-3 text-center">{{ c.course_level }}</td>
               <td class="px-4 py-3 text-center">{{ c.course_lec }}</td>
@@ -237,6 +265,11 @@
     @close="closeModal"
     @refresh="loadCourses"
   />
+  <uploadCourses
+    v-if="isUploadModal"
+    @close="isUploadModal = false"
+    @refresh="loadCourses"
+  />
 
   <!-- Delete Confirmation -->
   <div v-if="showDeleteModal" class="fixed inset-0 z-50">
@@ -282,13 +315,14 @@
 import icon from "@/assets/icon.vue";
 import { toast } from "vue3-toastify";
 import addCourses from "../modals/add-courses.vue";
+import uploadCourses from "../modals/upload-course.vue";
 import { useFetchDataStore } from "../../../../store/fetch-data-store";
 import { mapState } from "pinia";
 import axios from "axios";
 
 export default {
   name: "TableCourses",
-  components: { icon, addCourses },
+  components: { icon, addCourses, uploadCourses },
 
   data() {
     return {
@@ -300,22 +334,27 @@ export default {
       isEdit: false,
       isTable: true,
       isUploadData: false,
+      isUploadModal: false,
       showDeleteModal: false,
       recordToDelete: null,
       selectedCourse: null,
       showEditModal: false,
-      activeYear: null,
-      activeSem: null,
       user: null,
     };
   },
 
   computed: {
-    ...mapState(useFetchDataStore, ["courses", "year", "sem"]),
+    ...mapState(useFetchDataStore, [
+      "courses",
+      "year",
 
+      "activeYear",
+      "curriculums",
+    ]),
     uniqueCurriculums() {
+      // Get all program names from course curricula
       const names = this.filteredCourses.map(
-        (c) => c.curriculum?.curriculum_name
+        (c) => c.curriculum?.program?.program_name
       );
       return [...new Set(names.filter(Boolean))];
     },
@@ -324,7 +363,7 @@ export default {
       let result = this.courses || [];
       const currentUser = this.user;
 
-      // Filter by Program Chairperson's institute & program
+      // 🔹 Filter by Program Chairperson's institute & program
       if (currentUser?.role === "Program Chairperson") {
         result = result.filter(
           (c) =>
@@ -334,43 +373,37 @@ export default {
         );
       }
 
-      // Filter by Active Year
-      if (this.activeYear) {
+      // 🔹 Filter by Active Year and Semester using curriculum info
+      if (this.activeYear?.is_active) {
         result = result.filter(
           (c) =>
-            String(c.curriculum?.curriculum_effective) ===
-            String(this.activeYear)
+            String(c.curriculum?.curriculum_start_year) ===
+              String(this.activeYear.start_year) &&
+            String(c.curriculum?.curriculum_end_year) ===
+              String(this.activeYear.end_year) &&
+            Number(c.course_semester) === Number(this.activeYear.semester)
         );
       }
 
-      // Filter by Active Semester
-      if (this.activeSem) {
-        const semValue =
-          typeof this.activeSem === "object"
-            ? this.activeSem.semester
-            : this.activeSem;
+      // Filter by selected curriculum (program name)
+      if (this.selectedCurriculum && this.selectedCurriculum !== "") {
         result = result.filter(
-          (c) => Number(c.course_semester) === Number(semValue)
+          (c) => c.curriculum?.program?.program_name === this.selectedCurriculum
         );
       }
 
-      // Filter by selected curriculum
-      if (this.selectedCurriculum) {
-        result = result.filter(
-          (c) => c.curriculum?.curriculum_name === this.selectedCurriculum
-        );
-      }
-
-      // Search filter
+      // 🔹 Search filter
       if (this.searchQuery) {
         const query = this.searchQuery.toLowerCase();
         result = result.filter(
           (c) =>
             c.course_code?.toLowerCase().includes(query) ||
-            c.course_description?.toLowerCase().includes(query) ||
+            c.course_title?.toLowerCase().includes(query) ||
             c.curriculum?.curriculum_name?.toLowerCase().includes(query)
         );
       }
+
+      console.log("Filtered Courses:", result); // 🔹 Log filtered courses
 
       return result;
     },
@@ -410,23 +443,32 @@ export default {
   },
 
   methods: {
+    async refreshTable() {
+      const store = useFetchDataStore();
+      try {
+        await store.fetchActiveYears(); // refresh active year
+        await this.loadCourses(); // refresh courses
+        this.currentPage = 1;
+        toast.success("Table refreshed successfully");
+      } catch (error) {
+        console.error("Failed to refresh table:", error);
+        toast.error("Failed to refresh table");
+      }
+    },
     async loadCourses() {
       const store = useFetchDataStore();
       await store.fetchCourses();
     },
 
-    async loadActiveYear() {
+    async fetchCurriculums() {
       const store = useFetchDataStore();
-      await store.fetchActiveYear();
-      this.activeYear = store.year;
+      try {
+        await store.fetchCurriculums(); // Fetch curriculum data from the store
+        console.log("Curriculums:", store.curriculums); // Log to console
+      } catch (error) {
+        console.error("Failed to fetch curriculums:", error);
+      }
     },
-
-    async loadActiveSem() {
-      const store = useFetchDataStore();
-      await store.fetchActiveSem();
-      this.activeSem = store.sem;
-    },
-
     async fetchUser() {
       try {
         const response = await axios.get("http://localhost:8000/auth/me", {
@@ -492,29 +534,12 @@ export default {
   },
 
   watch: {
-    year: {
-      async handler(newVal) {
-        if (newVal) {
-          this.activeYear = newVal;
-          await this.loadCourses();
-          this.currentPage = 1;
-        }
-      },
-      immediate: true,
-    },
-
-    sem: {
+    // 🔹 Watch activeYear in store
+    activeYear: {
       async handler(newVal, oldVal) {
-        if (newVal !== oldVal && newVal !== null && newVal !== undefined) {
-          console.log("🔁 Active semester changed:", newVal);
-          this.activeSem = newVal;
-
-          // Reload courses immediately after semester changes
-          await this.$nextTick();
+        if (newVal && newVal !== oldVal) {
           await this.loadCourses();
           this.currentPage = 1;
-
-          console.log("✅ Courses reloaded for semester:", newVal);
         }
       },
       immediate: true,
@@ -523,19 +548,13 @@ export default {
 
   async mounted() {
     await this.fetchUser();
-    await this.loadActiveYear();
-    await this.loadActiveSem();
     await this.loadCourses();
+    await this.fetchCurriculums();
+  },
 
-    // ✅ Reactively listen for semester changes at the store level
+  beforeUnmount() {
     const store = useFetchDataStore();
-    store.$subscribe((mutation, state) => {
-      if (mutation.events.key === "sem") {
-        console.log("📢 Store semester changed:", state.sem);
-        this.activeSem = state.sem;
-        this.loadCourses();
-      }
-    });
+    store.stopActiveYearPolling(); // Stop polling when component unmounts
   },
 };
 </script>

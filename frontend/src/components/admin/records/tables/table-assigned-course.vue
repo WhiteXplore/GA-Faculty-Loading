@@ -27,10 +27,10 @@
         <table class="w-full text-sm">
           <thead class="bg-defaultGreen text-white">
             <tr>
-              <th class="py-3 px-4 text-left">Institute</th>
-              <th class="py-3 px-4 text-left">Program</th>
-              <th class="py-3 px-4 text-left">School Year</th>
-              <th class="py-3 px-4 text-center w-28">Action</th>
+              <th class="py-3 px-4 text-left w-[20%]">Institute</th>
+              <th class="py-3 px-4 text-left w-[25%]">Program</th>
+              <th class="py-3 px-4 text-center w-[20%]">School Year</th>
+              <th class="py-3 px-4 text-center w-[20%]">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -41,13 +41,12 @@
             >
               <td class="py-3 px-4">{{ group.institute }}</td>
               <td class="py-3 px-4">{{ group.program }}</td>
-              <td class="py-3 px-4">{{ group.schoolYear }}</td>
-              <td class="py-3 px-4 text-center">
+              <td class="py-3 px-4 text-center">{{ group.schoolYear }}</td>
+              <td class="py-3 px-4 flex justify-center">
                 <button
-                  @click="viewDetails(group)"
-                  class="px-3 py-1 text-green-600 border border-green-500 rounded-lg hover:bg-green-600 hover:text-white transition-all duration-300"
+                  class="px-3 py-1 h-8 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-lg flex items-center gap-1"
                 >
-                  View
+                  <icon name="eye" /> View
                 </button>
               </td>
             </tr>

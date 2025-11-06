@@ -86,13 +86,10 @@
             class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
             <tr>
-              <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
-                ID
-              </th>
               <th class="px-4 py-3 text-left font-normal">Faculty Name</th>
               <th class="px-4 py-3 text-left font-normal">Institute</th>
-              <th class="px-4 py-3 text-left font-normal">Program</th>
-              <th class="px-4 py-3 text-center font-normal">Role</th>
+              <th class="px-4 py-3 text-left font-normal w-[30%]">Program</th>
+              <th class="px-4 py-3 text-left font-normal w-[15%]">Role</th>
               <th class="px-4 py-3 text-center rounded-tr-lg font-normal">
                 Actions
               </th>
@@ -100,11 +97,10 @@
           </thead>
           <tbody>
             <tr
-              v-for="(user, index) in paginatedData"
+              v-for="user in paginatedData"
               :key="user.id"
               class="hover:bg-green-50 transition-all border-t"
             >
-              <td class="px-4 py-3">{{ startIndex + index }}</td>
               <td class="px-4 py-3">
                 {{ user.first_name }} {{ user.last_name }}
               </td>
@@ -114,7 +110,7 @@
               <td class="px-4 py-3">
                 {{ user.program?.program_name || "N/A" }}
               </td>
-              <td class="px-4 py-3 text-center">{{ user.role }}</td>
+              <td class="px-4 py-3 text-left">{{ user.role }}</td>
               <td class="px-4 py-3 items-center justify-center flex">
                 <div class="flex gap-2">
                   <button

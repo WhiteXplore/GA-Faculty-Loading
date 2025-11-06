@@ -53,7 +53,6 @@ import { ProgramYearCoursesModule } from './program_year_courses/program_year_co
     ActiveYearModule,
     SchoolYearModule,
     ClassModule,
-
     ProgramYearCoursesModule,
   ],
 })

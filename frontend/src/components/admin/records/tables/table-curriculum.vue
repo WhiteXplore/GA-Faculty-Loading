@@ -7,14 +7,14 @@
 
       <div
         @click="toggleAdd"
-        class="flex items-center gap-2 px-3 py-2 bg-white text-green-600 rounded-xl shadow-sm hover:shadow-md border border-green-500 hover:bg-defaultGreen hover:text-white transition-all duration-300 cursor-pointer"
+        class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
       >
         <div
-          class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full group-hover:bg-white transition-colors duration-300"
+          class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
         >
           <icon
             :name="'circle-add'"
-            class="w-4 h-4 text-green-600 transition-colors duration-300 group-hover:text-green-600"
+            class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
           />
         </div>
         <span class="font-medium text-sm">Add Curriculum</span>
@@ -96,35 +96,35 @@
             class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
             <tr>
-              <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
+              <!-- <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
                 ID
-              </th>
-              <th class="px-4 py-3 text-left font-normal">Program Name</th>
-              <th class="px-4 py-3 text-left font-normal">Curriculum Name</th>
+              </th> -->
+              <th class="px-4 py-3 text-left font-normal">Program Title</th>
+              <!-- <th class="px-4 py-3 text-left font-normal">Curriculum Name</th> -->
               <th class="px-4 py-3 text-left font-normal">Effective Year</th>
 
-              <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
+              <th class="px-4 py-3 text-center rounded-tr-lg font-normal">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody>
             <tr
-              v-for="(curriculum_data, index) in paginatedData"
+              v-for="curriculum_data in paginatedData"
               :key="curriculum_data.curriculum_id"
               class="hover:bg-green-50 transition-all border-t"
             >
-              <td class="px-4 py-3 text-left">{{ startIndex + index }}</td>
+              <!-- <td class="px-4 py-3 text-left">{{ startIndex + index }}</td> -->
               <td class="px-4 py-3 text-left">
                 {{ curriculum_data.program?.program_name }}
               </td>
-              <td class="px-4 py-3 text-left">
+              <!-- <td class="px-4 py-3 text-left">
                 {{ curriculum_data.curriculum_name }}
-              </td>
+              </td> -->
               <td class="px-4 py-3 text-left">
-                {{ curriculum_data.curriculum_effective }}
+                {{ curriculum_data.curriculum_end_year }}
               </td>
-              <td class="px-4 py-3 text-left">
+              <td class="px-4 py-3 text-left flex justify-center">
                 <div class="flex gap-2">
                   <button
                     class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"

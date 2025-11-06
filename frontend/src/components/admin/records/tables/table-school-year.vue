@@ -6,14 +6,14 @@
 
       <div
         @click="toggleAdd"
-        class="flex items-center gap-2 px-3 py-2 bg-white text-green-600 rounded-xl shadow-sm hover:shadow-md border border-green-500 hover:bg-defaultGreen hover:text-white transition-all duration-300 cursor-pointer"
+        class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
       >
         <div
-          class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full group-hover:bg-white transition-colors duration-300"
+          class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
         >
           <icon
             :name="'circle-add'"
-            class="w-4 h-4 text-green-600 transition-colors duration-300 group-hover:text-green-600"
+            class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
           />
         </div>
         <span class="font-medium text-sm">Add School Year</span>
@@ -97,25 +97,25 @@
             class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
             <tr>
-              <th class="px-4 py-3 text-left rounded-tl-lg">#</th>
-              <th class="px-4 py-3 text-left">School Year</th>
-              <th class="px-4 py-3 text-center">Start Year</th>
-              <th class="px-4 py-3 text-center">End Year</th>
-              <th class="px-4 py-3 text-center">Semester</th>
-              <th class="px-4 py-3 text-center">Status</th>
-              <th class="px-4 py-3 text-left rounded-tr-lg">Actions</th>
+              <th class="px-4 py-3 text-left w-[10%]">School Year</th>
+              <!-- <th class="px-4 py-3 text-center">Start Year</th>
+              <th class="px-4 py-3 text-center">End Year</th> -->
+              <th class="px-4 py-3 text-center w-[20%]">Semester</th>
+              <th class="px-4 py-3 text-center w-[20%]">Status</th>
+              <th class="px-4 py-3 text-center rounded-tr-lg w-[20%]">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr
-              v-for="(sy, index) in paginatedData"
+              v-for="sy in paginatedData"
               :key="sy.school_year_id"
               class="hover:bg-green-50 transition-all border-t"
             >
-              <td class="px-4 py-3">{{ startIndex + index }}</td>
               <td class="px-4 py-3">{{ sy.school_year_name }}</td>
-              <td class="px-4 py-3 text-center">{{ sy.start_year }}</td>
-              <td class="px-4 py-3 text-center">{{ sy.end_year }}</td>
+              <!-- <td class="px-4 py-3 text-center">{{ sy.start_year }}</td>
+              <td class="px-4 py-3 text-center">{{ sy.end_year }}</td> -->
               <td class="px-4 py-3 text-center">
                 {{ getSemesterLabel(sy.semester) }}
               </td>
@@ -131,7 +131,7 @@
                   {{ sy.is_active ? "Active" : "Inactive" }}
                 </span>
               </td>
-              <td class="px-4 py-3">
+              <td class="px-4 py-3 flex justify-center">
                 <div class="flex gap-2">
                   <button
                     class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"

@@ -21,32 +21,37 @@
     </div>
 
     <!-- Right Section -->
-    <div class="flex items-center gap-3">
-      <!-- School Year Selector -->
-      <div class="relative w-48">
+    <div class="flex items-center gap-5">
+      <!-- Dropdown if more than one active year -->
+      <div
+        v-if="activeYears.length > 1"
+        class="relative flex items-center gap-2"
+      >
+        <!-- Select Container -->
         <select
-          id="schoolYear"
           v-model="selectedSchoolYearId"
           @change="updateSchoolYear"
-          class="w-full appearance-none rounded-full border border-green-600 bg-white px-4 py-1.5 pr-10 text-green-900 text-sm font-semibold shadow-md cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:outline-none hover:shadow-lg"
+          @focus="isDropdownOpen = true"
+          @blur="isDropdownOpen = false"
+          class="appearance-none rounded-full border border-green-600 bg-white px-4 py-1.5 w-52 text-green-900 text-sm font-semibold shadow-md cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:outline-none hover:shadow-lg"
         >
-          <option value="" disabled>Select School Year</option>
+          <option value="" disabled>Select Active School Year</option>
           <option
-            v-for="sy in schoolYears"
+            v-for="sy in activeYears"
             :key="sy.school_year_id"
             :value="sy.school_year_id"
-            class="text-sm"
           >
-            {{ sy.school_year_name }} - {{ getSemesterLabel(sy.semester) }}
+            {{ sy.school_year_name }} — {{ getSemesterLabel(sy.semester) }}
           </option>
         </select>
 
-        <!-- Custom Dropdown Icon -->
+        <!-- Arrow Icon Outside -->
         <div
-          class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-green-700"
+          class="transition-transform duration-300 text-green-700 cursor-pointer"
+          :class="{ 'rotate-180': isDropdownOpen }"
         >
           <svg
-            class="w-4 h-4"
+            class="w-5 h-5"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
@@ -59,6 +64,18 @@
             />
           </svg>
         </div>
+      </div>
+
+      <!-- Static text if one or none -->
+      <div
+        v-else
+        class="bg-green-50 border border-green-600 rounded-full px-5 py-1.5 shadow-md text-green-900 text-sm font-semibold flex items-center justify-center"
+      >
+        <span v-if="activeYears.length === 1">
+          {{ activeYears[0].school_year_name }} —
+          {{ getSemesterLabel(activeYears[0].semester) }}
+        </span>
+        <span v-else class="text-gray-500">No Active Year</span>
       </div>
 
       <!-- Profile -->
@@ -94,7 +111,6 @@
 <script>
 import axios from "axios";
 import Profile from "./profile-setting.vue";
-import { useFetchDataStore } from "@/store/fetch-data-store";
 
 export default {
   name: "TopBarPage",
@@ -103,9 +119,13 @@ export default {
     return {
       isOpenProfile: false,
       user: {},
+      activeYears: [],
       selectedSchoolYearId: "",
-      schoolYears: [],
       currentTime: new Date(),
+      lastUpdatedAt: null,
+      yearCheckInterval: null,
+      activeYear: null,
+      isDropdownOpen: false,
     };
   },
 
@@ -132,6 +152,7 @@ export default {
     toggleOpenProfile() {
       this.isOpenProfile = !this.isOpenProfile;
     },
+
     handleClickOutside(event) {
       const dropdown = this.$refs.profileDropdown;
       const icon = this.$refs.profileIcon;
@@ -163,96 +184,77 @@ export default {
       }
     },
 
-    async fetchSchoolYears() {
+    async fetchActiveYears() {
       try {
         const response = await axios.get(
           "http://localhost:8000/school-year/get-school-years"
         );
-        this.schoolYears = response.data;
-      } catch (error) {
-        console.error("Failed to fetch school years:", error);
-      }
-    },
+        const allYears = response.data;
+        this.activeYears = allYears.filter((sy) => sy.is_active);
 
-    async fetchActiveSchoolYear() {
-      try {
-        const res = await axios.get("http://localhost:8000/active-year/active");
-        if (res.data) {
-          // Find the school year that matches the active year
-          const activeSchoolYear = this.schoolYears.find(
-            (sy) => sy.is_active === true
-          );
-          if (activeSchoolYear) {
-            this.selectedSchoolYearId = activeSchoolYear.school_year_id;
-          }
+        if (this.activeYears.length === 0) {
+          this.activeYear = null;
+          return;
+        }
 
-          // 👇 sync to store so other components react
-          const store = useFetchDataStore();
-          store.year = res.data.year;
+        // Sort by updated_at descending
+        this.activeYears.sort(
+          (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
+        );
+
+        const latest = this.activeYears[0];
+
+        if (
+          !this.activeYear ||
+          this.activeYear.school_year_id !== latest.school_year_id ||
+          this.activeYear.updated_at !== latest.updated_at
+        ) {
+          this.activeYear = latest;
+          this.selectedSchoolYearId = latest.school_year_id;
+          this.lastUpdatedAt = new Date(latest.updated_at);
+
+          // Reload courses for this active year
+          this.loadCoursesForActiveYear();
         }
       } catch (error) {
-        console.error("Failed to fetch active school year:", error);
+        console.error("❌ Failed to fetch school years:", error);
       }
     },
 
     async updateSchoolYear() {
       try {
-        const selectedSY = this.schoolYears.find(
+        const selectedSY = this.activeYears.find(
           (sy) => sy.school_year_id === this.selectedSchoolYearId
         );
+        if (!selectedSY) return;
 
-        if (selectedSY) {
-          // Update the active school year in database
-          await axios.patch(
-            `http://localhost:8000/school-year/update-school-year/${selectedSY.school_year_id}`,
-            { is_active: true }
-          );
+        await axios.patch(
+          `http://localhost:8000/school-year/update-timestamp/${selectedSY.school_year_id}`
+        );
 
-          // Deactivate other school years
-          const otherSchoolYears = this.schoolYears.filter(
-            (sy) => sy.school_year_id !== this.selectedSchoolYearId
-          );
-          for (const sy of otherSchoolYears) {
-            if (sy.is_active) {
-              await axios.patch(
-                `http://localhost:8000/school-year/update-school-year/${sy.school_year_id}`,
-                { is_active: false }
-              );
-            }
-          }
+        console.log(
+          "✅ Updated timestamp for school year:",
+          selectedSY.school_year_name
+        );
 
-          // Sync to store
-          const store = useFetchDataStore();
-          store.year = selectedSY.start_year;
-
-          // Refresh school years list
-          await this.fetchSchoolYears();
-        }
+        const prevSelected = this.selectedSchoolYearId;
+        await this.fetchActiveYears();
+        this.selectedSchoolYearId = prevSelected;
       } catch (error) {
-        console.error("Failed to update school year:", error);
+        console.error("❌ Failed to update school year timestamp:", error);
       }
     },
 
     getSemesterLabel(semester) {
-      if (semester === 1) return "1st Sem";
-      if (semester === 2) return "2nd Sem";
+      if (semester === 1) return "1st Semester";
+      if (semester === 2) return "2nd Semester";
       return "";
     },
   },
+
   mounted() {
     this.fetchUser();
-    this.fetchSchoolYears();
-    this.fetchActiveSchoolYear();
-
-    this.timer = setInterval(() => {
-      this.currentTime = new Date();
-    }, 1000);
-
-    document.addEventListener("click", this.handleClickOutside);
-  },
-  beforeUnmount() {
-    clearInterval(this.timer);
-    document.removeEventListener("click", this.handleClickOutside);
+    this.fetchActiveYears();
   },
 };
 </script>

@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="flex justify-between items-center mt-6 mb-2">
       <div class="text-[13px] text-gray-700">
-        Pages / Faculty Expertise Overview
+        Pages / Class & Assigned Courses
       </div>
       <span class="text-sm bg-defaultGreen text-white px-3 py-1 rounded-full">
         {{ filteredClasses.length }} Classes
@@ -299,6 +299,20 @@ export default {
       if (this.user?.role === "Program Chairperson" && this.user?.program_id) {
         result = result.filter((c) => c.program_id === this.user.program_id);
       }
+
+      // Sort by year level and section letter
+      result = result.sort((a, b) => {
+        const yearA = this.extractYearLevel(a.set_name) || 0;
+        const yearB = this.extractYearLevel(b.set_name) || 0;
+
+        if (yearA !== yearB) return yearA - yearB;
+
+        // Extract section letter (last character after dash, e.g., 'A' in '1st Year - A')
+        const sectionA = a.set_name?.split("-").pop().trim() || "";
+        const sectionB = b.set_name?.split("-").pop().trim() || "";
+
+        return sectionA.localeCompare(sectionB);
+      });
 
       return result;
     },

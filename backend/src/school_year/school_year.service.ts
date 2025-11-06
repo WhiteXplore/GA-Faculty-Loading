@@ -17,6 +17,40 @@ export class SchoolYearService {
     return await this.schoolYearRepository.save(schoolYear);
   }
 
+  async updateTimestamp(id: number) {
+    // 1️⃣ Find the school year
+    const year = await this.schoolYearRepository.findOne({
+      where: { school_year_id: id },
+    });
+
+    if (!year) {
+      return { message: '❌ School year not found' };
+    }
+
+    // 2️⃣ Update its timestamp (always, even if active)
+    year.updated_at = new Date();
+    await this.schoolYearRepository.save(year);
+
+    return {
+      message: '✅ School year timestamp updated successfully',
+      data: year,
+    };
+  }
+
+  // school_year.service.ts
+  async findLatestActive(): Promise<SchoolYear> {
+    const latestActiveYear = await this.schoolYearRepository.findOne({
+      where: { is_active: true },
+      order: { updated_at: 'DESC' },
+    });
+
+    if (!latestActiveYear) {
+      throw new NotFoundException('No active school year found');
+    }
+
+    return latestActiveYear;
+  }
+
   async findAll(): Promise<SchoolYear[]> {
     return await this.schoolYearRepository.find({
       order: { start_year: 'DESC' },
@@ -52,4 +86,3 @@ export class SchoolYearService {
     await this.schoolYearRepository.remove(schoolYear);
   }
 }
-

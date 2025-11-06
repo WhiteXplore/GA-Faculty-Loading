@@ -3,17 +3,34 @@
     <!-- HEADER -->
     <div class="text-sm flex justify-between">
       <div class="text-[13px] text-text mt-4">Pages / Year & Section</div>
-      <button
-        @click="openYearSectionModal"
-        class="flex items-center gap-2 px-4 py-2 text-green-600 bg-white border border-green-500 rounded-xl shadow-sm hover:bg-green-600 hover:text-white transition-all duration-300"
-      >
+
+      <div class="flex items-center gap-2">
         <div
-          class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full"
+          @click="refreshTable"
+          class="flex items-center gap-2 px-3 py-2 bg-blue-800 text-white rounded-xl shadow-sm hover:shadow-md border border-blue-800 hover:bg-white hover:text-blue-800 transition-all duration-300 cursor-pointer"
         >
-          <icon name="circle-add" class="w-4 h-4" />
+          <div
+            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-white transition-colors duration-300"
+          >
+            <icon
+              :name="'refresh'"
+              class="w-5 h-5 text-blue-800 transition-colors duration-300 group-hover:text-blue-600"
+            />
+          </div>
+          <span class="font-medium text-sm">Refresh</span>
         </div>
-        <span class="font-medium">Add Year/Section</span>
-      </button>
+        <button
+          @click="openYearSectionModal"
+          class="flex items-center gap-2 px-4 py-2 text-green-600 bg-white border border-green-500 rounded-xl shadow-sm hover:bg-green-600 hover:text-white transition-all duration-300"
+        >
+          <div
+            class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full"
+          >
+            <icon name="circle-add" class="w-4 h-4" />
+          </div>
+          <span class="font-medium">Add Year/Section</span>
+        </button>
+      </div>
     </div>
 
     <!-- MAIN CONTENT -->
@@ -29,114 +46,106 @@
         <p class="text-sm text-gray-600" v-if="userProgram.institute">
           Institute: {{ userProgram.institute.institute_name }}
         </p>
-      </div>
-
-      <!-- SECTIONS TABLE -->
-      <div
-        v-if="filteredAndSearchedClasses.length > 0"
-        class="mt-4 overflow-x-auto border p-3 rounded-xl bg-white"
-      >
-        <!-- Table -->
-        <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-          <table
-            class="min-w-full text-sm text-gray-700 border-collapse table-auto"
-          >
-            <thead
-              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+        <!-- SECTIONS TABLE -->
+        <div v-if="filteredAndSearchedClasses.length > 0">
+          <!-- Table -->
+          <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+            <table
+              class="min-w-full text-sm text-gray-700 border-collapse table-auto"
             >
-              <tr>
-                <th class="px-4 py-3 text-left w-[5%] rounded-tl-lg">#</th>
-                <th
-                  v-if="user.role === 'Admin'"
-                  class="px-4 py-3 text-left w-[20%]"
-                >
-                  Program
-                </th>
-                <th class="px-4 py-3 text-left w-[15%]">Program</th>
-                <th class="px-4 py-3 text-left w-[15%]">Section Name</th>
-                <th class="px-4 py-3 text-center w-[18%]">Class Size</th>
-                <th class="px-4 py-3 text-center w-[18%]">School Year</th>
-
-                <th class="px-4 py-3 text-center w-[10%]">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(cls, index) in paginatedClasses"
-                :key="cls.class_id"
-                class="hover:bg-green-50 transition-all border-t"
+              <thead
+                class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
               >
-                <td class="px-4 py-3 text-left">{{ startIndex + index }}</td>
-                <td v-if="user.role === 'Admin'" class="px-4 py-3 text-left">
-                  {{ cls.program?.program_name }}
-                </td>
-                <td class="px-4 py-3 text-left">
-                  {{ cls.program?.program_code }}
-                </td>
-                <td class="px-4 py-3 font-medium text-left">
-                  {{ cls.set_name }}
-                </td>
-                <td class="px-4 py-3 text-center">{{ cls.class_size }}</td>
-                <td class="px-4 py-3 text-center">
-                  {{ cls.schoolYear?.school_year_name }}
-                </td>
-
-                <td class="px-4 py-3 flex justify-center gap-2">
-                  <!-- Delete Button -->
-                  <button
-                    @click="promptDelete(cls.class_id)"
-                    class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                <tr>
+                  <th
+                    v-if="user.role === 'Admin'"
+                    class="px-4 py-3 text-left w-[20%]"
                   >
-                    <icon name="delete" /> Delete
-                  </button>
-                </td>
-              </tr>
-
-              <tr v-if="paginatedClasses.length === 0">
-                <td
-                  :colspan="user.role === 'Admin' ? 6 : 5"
-                  class="text-center py-6 text-gray-400"
+                    Program
+                  </th>
+                  <th class="px-4 py-3 text-left w-[15%]">Program</th>
+                  <th class="px-4 py-3 text-left w-[15%]">Section Name</th>
+                  <th class="px-4 py-3 text-center w-[18%]">Class Size</th>
+                  <th class="px-4 py-3 text-center w-[18%]">School Year</th>
+                  <th class="px-4 py-3 text-center w-[20%]">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="cls in paginatedClasses"
+                  :key="cls.class_id"
+                  class="hover:bg-green-50 transition-all border-t"
                 >
-                  No matching sections found
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                  <td v-if="user.role === 'Admin'" class="px-4 py-3 text-left">
+                    {{ cls.program?.program_name }}
+                  </td>
+                  <td class="px-4 py-3 text-left">
+                    {{ cls.program?.program_code }}
+                  </td>
+                  <td class="px-4 py-3 font-medium text-left">
+                    {{ cls.set_name }}
+                  </td>
+                  <td class="px-4 py-3 text-center">{{ cls.class_size }}</td>
+                  <td class="px-4 py-3 text-center">
+                    {{ cls.schoolYear?.school_year_name }}
+                  </td>
+                  <td class="px-4 py-3 flex justify-center gap-2">
+                    <!-- Delete Button -->
+                    <button
+                      @click="promptDelete(cls.class_id)"
+                      class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                    >
+                      <icon name="delete" /> Delete
+                    </button>
+                  </td>
+                </tr>
 
-        <!-- Pagination -->
-        <div class="flex justify-between items-center mt-4 text-gray-700">
-          <div>
-            Showing {{ startIndex }} to {{ endIndex }} of
-            {{ filteredAndSearchedClasses.length }} entries
+                <tr v-if="paginatedClasses.length === 0">
+                  <td
+                    :colspan="user.role === 'Admin' ? 6 : 5"
+                    class="text-center py-6 text-gray-400"
+                  >
+                    No matching sections found
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="flex items-center">
-            <button
-              @click="changePage(currentPage - 1)"
-              :disabled="currentPage === 1"
-              class="px-3 py-1 bg-gray-300 text-gray-700 rounded-l-md hover:bg-gray-400 disabled:opacity-50"
-            >
-              &lt;
-            </button>
-            <button
-              v-for="page in pageNumbers"
-              :key="'page-' + page"
-              @click="changePage(page)"
-              :class="{
-                'bg-defaultGreen text-white': currentPage === page,
-                'bg-gray-200 text-gray-700': currentPage !== page,
-              }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
-            >
-              {{ page }}
-            </button>
-            <button
-              @click="changePage(currentPage + 1)"
-              :disabled="currentPage === totalPages"
-              class="px-3 py-1 bg-gray-300 text-gray-700 rounded-r-md hover:bg-gray-400 disabled:opacity-50"
-            >
-              &gt;
-            </button>
+
+          <!-- Pagination -->
+          <div class="flex justify-between items-center mt-4 text-gray-700">
+            <div>
+              Showing {{ startIndex }} to {{ endIndex }} of
+              {{ filteredAndSearchedClasses.length }} entries
+            </div>
+            <div class="flex items-center">
+              <button
+                @click="changePage(currentPage - 1)"
+                :disabled="currentPage === 1"
+                class="px-3 py-1 bg-gray-300 text-gray-700 rounded-l-md hover:bg-gray-400 disabled:opacity-50"
+              >
+                &lt;
+              </button>
+              <button
+                v-for="page in pageNumbers"
+                :key="'page-' + page"
+                @click="changePage(page)"
+                :class="{
+                  'bg-defaultGreen text-white': currentPage === page,
+                  'bg-gray-200 text-gray-700': currentPage !== page,
+                }"
+                class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+              >
+                {{ page }}
+              </button>
+              <button
+                @click="changePage(currentPage + 1)"
+                :disabled="currentPage === totalPages"
+                class="px-3 py-1 bg-gray-300 text-gray-700 rounded-r-md hover:bg-gray-400 disabled:opacity-50"
+              >
+                &gt;
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -165,12 +174,14 @@
   </div>
 
   <!-- MODAL -->
+  <!-- 🔹 Fixed modal rendering -->
   <addYearSection
-    v-if="showYearSectionModal && userProgram"
-    :programData="userProgram"
+    v-if="showYearSectionModal"
+    :programData="userProgram || {}"
     @close="closeYearSectionModal"
     @refresh="loadUserProgram"
   />
+
   <div v-if="showDeleteModal" class="fixed inset-0 z-50">
     <div class="absolute inset-0 bg-gray-800 bg-opacity-40"></div>
     <div
@@ -226,43 +237,37 @@ export default {
       showYearSectionModal: false,
       userProgram: null,
       user: null,
-      programs: [],
-      selectedProgramId: "",
-      loading: true,
       classes: [],
-      schoolYears: [],
-      activeSchoolYearId: null,
-      showDeleteModal: false,
-      deleteTargetId: null, // ✅ store classId to delete
+      programs: [],
       searchQuery: "",
       currentPage: 1,
       itemsPerPage: 10,
+      showDeleteModal: false,
+      deleteTargetId: null,
+      loading: true,
     };
   },
   computed: {
-    ...mapState(useFetchDataStore, ["year"]),
-    activeSchoolYearName() {
-      const sy = this.schoolYears.find((s) => s.is_active);
-      return sy ? sy.school_year_name : "Current School Year";
+    ...mapState(useFetchDataStore, ["activeYear", "year"]),
+
+    activeSchoolYearId() {
+      return this.activeYear?.school_year_id || null;
     },
 
-    // ✅ Filter logic updated for Admin/Program Chairperson roles
+    activeSchoolYearName() {
+      return this.activeYear?.school_year_name || "Current School Year";
+    },
+
     filteredClasses() {
       if (!this.activeSchoolYearId) return [];
 
-      // Admin → filter by selectedProgramId if set
       if (this.user?.role === "Admin") {
-        return this.classes.filter((cls) => {
-          const matchProgram =
-            !this.selectedProgramId ||
-            String(cls.program_id) === String(this.selectedProgramId);
-          const matchSY =
-            String(cls.school_year_id) === String(this.activeSchoolYearId);
-          return matchProgram && matchSY;
-        });
+        return this.classes.filter(
+          (cls) =>
+            String(cls.school_year_id) === String(this.activeSchoolYearId)
+        );
       }
 
-      // Program Chairperson → filter by their own program
       if (this.userProgram) {
         return this.classes.filter(
           (cls) =>
@@ -285,15 +290,20 @@ export default {
         this.filteredAndSearchedClasses.length / this.itemsPerPage
       );
     },
+
     startIndex() {
-      return (this.currentPage - 1) * this.itemsPerPage + 1;
+      return this.filteredAndSearchedClasses.length === 0
+        ? 0
+        : (this.currentPage - 1) * this.itemsPerPage + 1;
     },
+
     endIndex() {
       return Math.min(
         this.startIndex + this.itemsPerPage - 1,
         this.filteredAndSearchedClasses.length
       );
     },
+
     paginatedClasses() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       return this.filteredAndSearchedClasses.slice(
@@ -301,18 +311,66 @@ export default {
         start + this.itemsPerPage
       );
     },
+
     pageNumbers() {
       return Array.from({ length: this.totalPages }, (_, i) => i + 1);
     },
   },
   methods: {
-    // Called when Delete button is clicked
+    async refreshTable() {
+      const store = useFetchDataStore();
+      this.loading = true;
+
+      try {
+        await this.fetchUser();
+        await store.fetchActiveYears();
+        await this.loadClasses();
+        await this.loadPrograms();
+        await this.loadUserProgram();
+        this.currentPage = 1;
+        toast.success("Table refreshed successfully");
+      } catch (error) {
+        console.error("Error refreshing table:", error);
+        toast.error("Failed to refresh table");
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async fetchUser() {
+      const { data } = await axios.get("http://localhost:8000/auth/me", {
+        withCredentials: true,
+      });
+      this.user = data;
+    },
+
+    async loadPrograms() {
+      const { data } = await axios.get(
+        "http://localhost:8000/programs/get-programs"
+      );
+      this.programs = data;
+    },
+
+    async loadUserProgram() {
+      if (this.user?.role === "Program Chairperson") {
+        this.userProgram = this.programs.find(
+          (p) => String(p.program_id) === String(this.user.program_id)
+        );
+      }
+    },
+
+    async loadClasses() {
+      const { data } = await axios.get(
+        "http://localhost:8000/class/get-classes"
+      );
+      this.classes = data;
+    },
+
     promptDelete(classId) {
       this.deleteTargetId = classId;
       this.showDeleteModal = true;
     },
 
-    // Called from the modal "Yes, Delete" button
     async confirmDelete() {
       if (!this.deleteTargetId) return;
 
@@ -321,73 +379,48 @@ export default {
           `http://localhost:8000/class/delete-id/${this.deleteTargetId}`,
           { withCredentials: true }
         );
-
-        // Refresh class list
         await this.loadClasses();
         toast.success("Record deleted successfully");
-        // Close modal
         this.showDeleteModal = false;
         this.deleteTargetId = null;
       } catch (error) {
         console.error("Error deleting class:", error);
-        alert("Failed to delete class. Please try again.");
+        toast.error("Failed to delete class");
       }
     },
-    async fetchUser() {
-      const { data } = await axios.get("http://localhost:8000/auth/me", {
-        withCredentials: true,
-      });
-      this.user = data;
-    },
-    async loadPrograms() {
-      const { data } = await axios.get(
-        "http://localhost:8000/programs/get-programs"
-      );
-      this.programs = data;
-    },
-    async loadUserProgram() {
-      if (this.user?.role === "Program Chairperson") {
-        const { data } = await axios.get(
-          "http://localhost:8000/programs/get-programs"
-        );
-        this.userProgram = data.find(
-          (p) => String(p.program_id) === String(this.user.program_id)
-        );
-      }
-    },
-    async loadClasses() {
-      const { data } = await axios.get(
-        "http://localhost:8000/class/get-classes"
-      );
-      this.classes = data;
-    },
-    async loadSchoolYears() {
-      const { data } = await axios.get(
-        "http://localhost:8000/school-year/get-school-years"
-      );
-      this.schoolYears = data;
-      const active = data.find((s) => s.is_active);
-      if (active) this.activeSchoolYearId = active.school_year_id;
-    },
-    changePage(page) {
-      if (page >= 1 && page <= this.totalPages) {
-        this.currentPage = page;
-      }
-    },
+
     openYearSectionModal() {
       this.showYearSectionModal = true;
     },
+
     closeYearSectionModal() {
       this.showYearSectionModal = false;
       this.loadClasses();
     },
+
+    changePage(page) {
+      if (page >= 1 && page <= this.totalPages) this.currentPage = page;
+    },
   },
+
+  watch: {
+    activeYear: {
+      async handler() {
+        this.currentPage = 1;
+        await this.loadClasses();
+      },
+      immediate: true,
+    },
+  },
+
   async mounted() {
     await this.fetchUser();
-    await this.loadSchoolYears();
+    const store = useFetchDataStore();
+    await store.fetchActiveYears();
     await this.loadClasses();
-    await this.loadPrograms(); // ✅ fetch all programs
+    await this.loadPrograms();
     await this.loadUserProgram();
+    this.loading = false;
   },
 };
 </script>
