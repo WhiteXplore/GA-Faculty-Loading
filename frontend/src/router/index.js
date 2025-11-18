@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "@/views/LoginView.vue";
-import globalSidebar from "../components/global-dashboard-layout/navigation/Sidebar.vue";
+import globalSidebar from "../components/global-dashboard-layout/navigation/sidebar.vue";
 // import ProgramChairSidebar from "../components/program-chairperson/navigation/sidebar.vue";
 import landingPage from "../components/global/LandingPage.vue";
 import NotFound from "@/views/404.vue";
@@ -43,19 +43,19 @@ const routes = [
       {
         path: "/instructors",
         name: "instructors",
-        component: () => import("@/components/admin/records/Instructor.vue"),
+        component: () => import("@/components/admin/records/instructor.vue"),
         meta: { requiresAuth: true, role: "Admin" },
       },
       {
         path: "/institutes",
         name: "instituts",
-        component: () => import("@/components/admin/records/Institutes.vue"),
+        component: () => import("@/components/admin/records/institutes.vue"),
         meta: { requiresAuth: true, role: "Admin" },
       },
       {
         path: "/curriculum",
         name: "curriculum",
-        component: () => import("@/components/admin/records/Curriculum.vue"),
+        component: () => import("@/components/admin/records/curriculum.vue"),
         meta: { requiresAuth: true, roles: ["Admin"] },
         children: [],
       },
@@ -69,7 +69,7 @@ const routes = [
       {
         path: "/programs",
         name: "programs",
-        component: () => import("@/components/admin/records/Programs.vue"),
+        component: () => import("@/components/admin/records/programs.vue"),
         meta: { requiresAuth: true, role: "Admin" },
         children: [],
       },
@@ -77,7 +77,7 @@ const routes = [
       {
         path: "/rooms",
         name: "rooms",
-        component: () => import("@/components/admin/records/Rooms.vue"),
+        component: () => import("@/components/admin/records/rooms.vue"),
         meta: { requiresAuth: true, role: "Admin" },
         children: [],
       },
@@ -124,7 +124,7 @@ const routes = [
       {
         path: "/user-accounts",
         name: "user-accounts",
-        component: () => import("@/components/admin/records/Users.vue"),
+        component: () => import("@/components/admin/records/users.vue"),
         meta: { requiresAuth: true, role: "Admin" },
         children: [],
       },
@@ -177,7 +177,7 @@ const routes = [
       {
         path: "/program-chair-faculty-list",
         name: "program-chair-faculty-list",
-        component: () => import("@/components/admin/records/Instructor.vue"),
+        component: () => import("@/components/admin/records/instructor.vue"),
         meta: { requiresAuth: true, role: "Program Chairperson" },
       },
       {
@@ -191,7 +191,7 @@ const routes = [
       {
         path: "/program-programs",
         name: "program-programs",
-        component: () => import("@/components/admin/records/Programs.vue"),
+        component: () => import("@/components/admin/records/programs.vue"),
         meta: { requiresAuth: true, roles: ["Program Chairperson"] },
         children: [],
       },

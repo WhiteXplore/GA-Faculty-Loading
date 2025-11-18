@@ -7,7 +7,10 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { RoomsService } from './rooms.service';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';
@@ -42,5 +45,11 @@ export class RoomsController {
   @Delete('delete-id/:id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.roomsService.remove(id);
+  }
+
+  @Post('upload-excel')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadExcel(@UploadedFile() file: any) {
+    return await this.roomsService.uploadExcel(file);
   }
 }
