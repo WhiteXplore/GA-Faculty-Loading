@@ -352,7 +352,7 @@ export default {
     async loadCourses() {
       try {
         const response = await axios.get(
-          "http://localhost:8000/courses/get-courses"
+          process.env.VUE_APP_API_BASE_URL + "/courses/get-courses"
         );
         this.allCourses = response.data;
       } catch (error) {
@@ -363,7 +363,7 @@ export default {
     async loadSchoolYears() {
       try {
         const response = await axios.get(
-          "http://localhost:8000/school-year/get-school-years"
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
         );
         this.schoolYears = response.data;
       } catch (error) {
@@ -375,7 +375,8 @@ export default {
 
       try {
         const response = await axios.get(
-          "http://localhost:8000/program-year-courses/get-by-program-and-school-year",
+          process.env.VUE_APP_API_BASE_URL +
+            "/program-year-courses/get-by-program-and-school-year",
           {
             params: {
               program_id: this.programData.program_id,
@@ -432,7 +433,8 @@ export default {
         // Delete existing assignments for this program and school year
         for (let year = 1; year <= 4; year++) {
           await axios.delete(
-            "http://localhost:8000/program-year-courses/delete-by-year-level",
+            process.env.VUE_APP_API_BASE_URL +
+              "/program-year-courses/delete-by-year-level",
             {
               params: {
                 program_id: this.programData.program_id,
@@ -445,7 +447,8 @@ export default {
 
         // Create new assignments
         await axios.post(
-          "http://localhost:8000/program-year-courses/create-bulk",
+          process.env.VUE_APP_API_BASE_URL +
+            "/program-year-courses/create-bulk",
           bulkData
         );
 

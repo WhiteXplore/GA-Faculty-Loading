@@ -345,7 +345,7 @@ export default {
       const roomId = this.recordToDelete.room_id;
 
       axios
-        .delete(`http://localhost:8000/rooms/delete-id/${roomId}`)
+        .delete(process.env.VUE_APP_API_BASE_URL + `/rooms/delete-id/${roomId}`)
         .then(() => {
           this.recordToDelete = null;
           this.showDeleteModal = false;

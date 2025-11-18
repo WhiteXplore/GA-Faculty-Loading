@@ -8,9 +8,13 @@
     <!-- Faculty with Expertise Section -->
     <div class="mb-6">
       <div class="border rounded-xl bg-white shadow-sm overflow-hidden">
-        <div class="bg-defaultGreen text-white px-4 py-3 flex justify-between items-center">
+        <div
+          class="bg-defaultGreen text-white px-4 py-3 flex justify-between items-center"
+        >
           <h2 class="font-bold text-lg">Faculty & Expertise</h2>
-          <span class="text-sm bg-white text-defaultGreen px-3 py-1 rounded-full">
+          <span
+            class="text-sm bg-white text-defaultGreen px-3 py-1 rounded-full"
+          >
             {{ faculty.length }} Faculty
           </span>
         </div>
@@ -50,8 +54,12 @@
                 <th class="px-4 py-3 text-left font-semibold">Institute</th>
                 <th class="px-4 py-3 text-left font-semibold">Program</th>
                 <th class="px-4 py-3 text-left font-semibold">Role</th>
-                <th class="px-4 py-3 text-left font-semibold">Course Expertise</th>
-                <th class="px-4 py-3 text-left font-semibold">Schedule Assignments</th>
+                <th class="px-4 py-3 text-left font-semibold">
+                  Course Expertise
+                </th>
+                <th class="px-4 py-3 text-left font-semibold">
+                  Schedule Assignments
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -71,18 +79,23 @@
                   {{ fac.program?.program_name || "N/A" }}
                 </td>
                 <td class="px-4 py-3">
-                  <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">
+                  <span
+                    class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800"
+                  >
                     Faculty
                   </span>
                 </td>
                 <td class="px-4 py-3">
-                  <div v-if="fac.expertise && fac.expertise.length > 0" class="flex flex-wrap gap-1">
+                  <div
+                    v-if="fac.expertise && fac.expertise.length > 0"
+                    class="flex flex-wrap gap-1"
+                  >
                     <span
                       v-for="exp in fac.expertise.slice(0, 3)"
                       :key="exp.id"
                       class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-md"
                     >
-                      {{ exp.course?.course_code || 'N/A' }}
+                      {{ exp.course?.course_code || "N/A" }}
                     </span>
                     <span
                       v-if="fac.expertise.length > 3"
@@ -91,7 +104,9 @@
                       +{{ fac.expertise.length - 3 }} more
                     </span>
                   </div>
-                  <span v-else class="text-gray-400 text-xs">No expertise listed</span>
+                  <span v-else class="text-gray-400 text-xs"
+                    >No expertise listed</span
+                  >
                 </td>
                 <td class="px-4 py-3">
                   <div v-if="getFacultyAssignments(fac).length > 0">
@@ -102,7 +117,9 @@
                       View Courses ({{ getFacultyAssignments(fac).length }})
                     </button>
                   </div>
-                  <span v-else class="text-gray-400 text-xs">No courses assigned</span>
+                  <span v-else class="text-gray-400 text-xs"
+                    >No courses assigned</span
+                  >
                 </td>
               </tr>
               <tr v-if="filteredFaculty.length === 0">
@@ -115,7 +132,10 @@
         </div>
 
         <!-- Pagination -->
-        <div v-if="filteredFaculty.length > 0" class="px-4 py-3 bg-gray-50 border-t">
+        <div
+          v-if="filteredFaculty.length > 0"
+          class="px-4 py-3 bg-gray-50 border-t"
+        >
           <div class="flex justify-between items-center">
             <span class="text-sm text-gray-600">
               Showing {{ facultyStartIndex }} to {{ facultyEndIndex }} of
@@ -143,7 +163,9 @@
                 {{ page }}
               </button>
               <button
-                @click="facultyPage = Math.min(facultyTotalPages, facultyPage + 1)"
+                @click="
+                  facultyPage = Math.min(facultyTotalPages, facultyPage + 1)
+                "
                 :disabled="facultyPage === facultyTotalPages"
                 class="px-3 py-1 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
               >
@@ -158,7 +180,9 @@
     <!-- Rooms Section -->
     <div class="mb-6">
       <div class="border rounded-xl bg-white shadow-sm overflow-hidden">
-        <div class="bg-blue-600 text-white px-4 py-3 flex justify-between items-center">
+        <div
+          class="bg-blue-600 text-white px-4 py-3 flex justify-between items-center"
+        >
           <h2 class="font-bold text-lg">Available Rooms</h2>
           <span class="text-sm bg-white text-blue-600 px-3 py-1 rounded-full">
             {{ rooms.length }} Rooms
@@ -206,12 +230,14 @@
                         : 'bg-orange-100 text-orange-800'
                     "
                   >
-                    {{ room.room_type || 'N/A' }}
+                    {{ room.room_type || "N/A" }}
                   </span>
                 </td>
                 <td class="px-4 py-3">{{ room.room_building || "N/A" }}</td>
                 <td class="px-4 py-3 text-center">
-                  <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                  <span
+                    class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full"
+                  >
                     Available
                   </span>
                 </td>
@@ -230,7 +256,9 @@
     <!-- Classes with Courses Section -->
     <div class="mb-6">
       <div class="border rounded-xl bg-white shadow-sm overflow-hidden">
-        <div class="bg-purple-600 text-white px-4 py-3 flex justify-between items-center">
+        <div
+          class="bg-purple-600 text-white px-4 py-3 flex justify-between items-center"
+        >
           <h2 class="font-bold text-lg">Classes & Assigned Courses</h2>
           <span class="text-sm bg-white text-purple-600 px-3 py-1 rounded-full">
             {{ classes.length }} Classes
@@ -251,11 +279,7 @@
               class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               <option value="">All Programs</option>
-              <option
-                v-for="prog in uniquePrograms"
-                :key="prog"
-                :value="prog"
-              >
+              <option v-for="prog in uniquePrograms" :key="prog" :value="prog">
                 {{ prog }}
               </option>
             </select>
@@ -272,7 +296,9 @@
                 <th class="px-4 py-3 text-left font-semibold">Program</th>
                 <th class="px-4 py-3 text-center font-semibold">Class Size</th>
                 <th class="px-4 py-3 text-left font-semibold">School Year</th>
-                <th class="px-4 py-3 text-left font-semibold">Assigned Courses</th>
+                <th class="px-4 py-3 text-left font-semibold">
+                  Assigned Courses
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -289,7 +315,9 @@
                   {{ cls.program?.program_name || "N/A" }}
                 </td>
                 <td class="px-4 py-3 text-center">
-                  <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                  <span
+                    class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
+                  >
                     {{ cls.class_size }} students
                   </span>
                 </td>
@@ -315,7 +343,10 @@
         </div>
 
         <!-- Pagination -->
-        <div v-if="filteredClasses.length > 0" class="px-4 py-3 bg-gray-50 border-t">
+        <div
+          v-if="filteredClasses.length > 0"
+          class="px-4 py-3 bg-gray-50 border-t"
+        >
           <div class="flex justify-between items-center">
             <span class="text-sm text-gray-600">
               Showing {{ classStartIndex }} to {{ classEndIndex }} of
@@ -361,8 +392,12 @@
       class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"
       @click.self="closeCoursesModal"
     >
-      <div class="bg-white rounded-xl shadow-2xl w-[800px] max-h-[80vh] overflow-y-auto">
-        <div class="bg-purple-600 text-white px-6 py-4 flex justify-between items-center sticky top-0">
+      <div
+        class="bg-white rounded-xl shadow-2xl w-[800px] max-h-[80vh] overflow-y-auto"
+      >
+        <div
+          class="bg-purple-600 text-white px-6 py-4 flex justify-between items-center sticky top-0"
+        >
           <h3 class="font-bold text-lg">
             Courses for {{ selectedClass?.set_name }}
           </h3>
@@ -390,7 +425,10 @@
                     {{ course.course?.course_description }}
                   </p>
                   <div class="mt-2 flex gap-4 text-xs text-gray-500">
-                    <span>Year Level: {{ getYearLevelLabel(course.year_level) }}</span>
+                    <span
+                      >Year Level:
+                      {{ getYearLevelLabel(course.year_level) }}</span
+                    >
                     <span>Lec: {{ course.course?.course_lec || 0 }} hrs</span>
                     <span>Lab: {{ course.course?.course_lab || 0 }} hrs</span>
                     <span>Units: {{ course.course?.course_credit || 0 }}</span>
@@ -400,7 +438,10 @@
             </div>
           </div>
           <div v-else class="text-center py-8 text-gray-500">
-            <icon name="question" class="w-16 h-16 text-gray-300 mx-auto mb-4" />
+            <icon
+              name="question"
+              class="w-16 h-16 text-gray-300 mx-auto mb-4"
+            />
             <p>No courses assigned to this class yet.</p>
           </div>
         </div>
@@ -413,10 +454,15 @@
       class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"
       @click.self="closeFacultyCoursesModal"
     >
-      <div class="bg-white rounded-xl shadow-2xl w-[900px] max-h-[80vh] overflow-y-auto">
-        <div class="bg-green-600 text-white px-6 py-4 flex justify-between items-center sticky top-0">
+      <div
+        class="bg-white rounded-xl shadow-2xl w-[900px] max-h-[80vh] overflow-y-auto"
+      >
+        <div
+          class="bg-green-600 text-white px-6 py-4 flex justify-between items-center sticky top-0"
+        >
           <h3 class="font-bold text-lg">
-            Faculty Details: {{ selectedFaculty ? getFacultyFullName(selectedFaculty) : '' }}
+            Faculty Details:
+            {{ selectedFaculty ? getFacultyFullName(selectedFaculty) : "" }}
           </h3>
           <button
             @click="closeFacultyCoursesModal"
@@ -429,17 +475,29 @@
         <div class="p-6">
           <!-- Course Expertise Section -->
           <div class="mb-6">
-            <h4 class="font-bold text-md text-gray-800 mb-3 flex items-center gap-2">
-              <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs">EXPERTISE</span>
+            <h4
+              class="font-bold text-md text-gray-800 mb-3 flex items-center gap-2"
+            >
+              <span
+                class="px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs"
+                >EXPERTISE</span
+              >
               Courses Faculty Can Teach
             </h4>
-            <div v-if="selectedFaculty?.expertise && selectedFaculty.expertise.length > 0" class="flex flex-wrap gap-2">
+            <div
+              v-if="
+                selectedFaculty?.expertise &&
+                selectedFaculty.expertise.length > 0
+              "
+              class="flex flex-wrap gap-2"
+            >
               <span
                 v-for="exp in selectedFaculty.expertise"
                 :key="exp.id"
                 class="px-3 py-2 bg-purple-100 text-purple-800 text-sm rounded-lg border border-purple-200"
               >
-                {{ exp.course?.course_code }} - {{ exp.course?.course_description }}
+                {{ exp.course?.course_code }} -
+                {{ exp.course?.course_description }}
               </span>
             </div>
             <div v-else class="text-gray-500 text-sm italic">
@@ -449,8 +507,13 @@
 
           <!-- Schedule Assignments Section -->
           <div>
-            <h4 class="font-bold text-md text-gray-800 mb-3 flex items-center gap-2">
-              <span class="px-2 py-1 bg-green-100 text-green-800 rounded text-xs">SCHEDULED</span>
+            <h4
+              class="font-bold text-md text-gray-800 mb-3 flex items-center gap-2"
+            >
+              <span
+                class="px-2 py-1 bg-green-100 text-green-800 rounded text-xs"
+                >SCHEDULED</span
+              >
               Current Teaching Schedule
             </h4>
             <div v-if="facultyCourses.length > 0" class="space-y-3">
@@ -464,20 +527,40 @@
                     <p class="font-bold text-gray-800 text-base">
                       {{ index + 1 }}. {{ assignment.course_name }}
                     </p>
-                    <div class="mt-2 grid grid-cols-2 gap-2 text-sm text-gray-600">
+                    <div
+                      class="mt-2 grid grid-cols-2 gap-2 text-sm text-gray-600"
+                    >
                       <div><strong>Type:</strong> {{ assignment.type }}</div>
-                      <div><strong>Year Level & Section:</strong> {{ getYearLevelFromSet(assignment.set) }} - {{ assignment.set }}</div>
+                      <div>
+                        <strong>Year Level & Section:</strong>
+                        {{ getYearLevelFromSet(assignment.set) }} -
+                        {{ assignment.set }}
+                      </div>
                       <div><strong>Day:</strong> {{ assignment.day }}</div>
-                      <div><strong>Time:</strong> {{ assignment.start_hour }}:00 - {{ assignment.end_hour }}:00</div>
-                      <div><strong>Room:</strong> {{ assignment.room_name }}</div>
-                      <div><strong>Duration:</strong> {{ assignment.end_hour - assignment.start_hour }} hour(s)</div>
+                      <div>
+                        <strong>Time:</strong> {{ assignment.start_hour }}:00 -
+                        {{ assignment.end_hour }}:00
+                      </div>
+                      <div>
+                        <strong>Room:</strong> {{ assignment.room_name }}
+                      </div>
+                      <div>
+                        <strong>Duration:</strong>
+                        {{
+                          assignment.end_hour - assignment.start_hour
+                        }}
+                        hour(s)
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div v-else class="text-center py-8 text-gray-500">
-              <icon name="question" class="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <icon
+                name="question"
+                class="w-16 h-16 text-gray-300 mx-auto mb-4"
+              />
               <p>No courses assigned in the generated schedule yet.</p>
             </div>
           </div>
@@ -503,25 +586,25 @@ export default {
       classCourses: [],
       selectedClass: null,
       showCoursesModal: false,
-      
+
       // Faculty courses
       generatedSchedule: [],
       facultyCourses: [],
       selectedFaculty: null,
       showFacultyCoursesModal: false,
-      
+
       // Search and filters
       facultySearch: "",
       roomSearch: "",
       classSearch: "",
       selectedInstitute: "",
       selectedProgram: "",
-      
+
       // Pagination
       facultyPage: 1,
       classPage: 1,
       itemsPerPage: 10,
-      
+
       loading: true,
     };
   },
@@ -529,7 +612,7 @@ export default {
     // Faculty filtering and pagination
     filteredFaculty() {
       let result = this.faculty;
-      
+
       if (this.facultySearch) {
         const query = this.facultySearch.toLowerCase();
         result = result.filter((f) => {
@@ -537,13 +620,13 @@ export default {
           return fullName.includes(query);
         });
       }
-      
+
       if (this.selectedInstitute) {
         result = result.filter(
           (f) => f.institute?.institute_name === this.selectedInstitute
         );
       }
-      
+
       return result;
     },
     paginatedFaculty() {
@@ -568,34 +651,34 @@ export default {
         .filter(Boolean);
       return [...new Set(institutes)];
     },
-    
+
     // Rooms filtering
     filteredRooms() {
       if (!this.roomSearch) return this.rooms;
-      
+
       const query = this.roomSearch.toLowerCase();
       return this.rooms.filter((r) =>
         r.room_name?.toLowerCase().includes(query)
       );
     },
-    
+
     // Classes filtering and pagination
     filteredClasses() {
       let result = this.classes;
-      
+
       if (this.classSearch) {
         const query = this.classSearch.toLowerCase();
         result = result.filter((c) =>
           c.set_name?.toLowerCase().includes(query)
         );
       }
-      
+
       if (this.selectedProgram) {
         result = result.filter(
           (c) => c.program?.program_name === this.selectedProgram
         );
       }
-      
+
       return result;
     },
     paginatedClasses() {
@@ -625,10 +708,10 @@ export default {
     async loadFaculty() {
       try {
         const response = await axios.get(
-          "http://localhost:8000/users/get-users"
+          process.env.VUE_APP_API_BASE_URL + "/users/get-users"
         );
         // Filter only users with role 'faculty'
-        this.faculty = response.data.filter(user => user.role === 'Faculty');
+        this.faculty = response.data.filter((user) => user.role === "Faculty");
       } catch (error) {
         console.error("Failed to load faculty:", error);
         toast.error("Failed to load faculty data");
@@ -637,7 +720,7 @@ export default {
     async loadRooms() {
       try {
         const response = await axios.get(
-          "http://localhost:8000/rooms/get-rooms"
+          process.env.VUE_APP_API_BASE_URL + "/rooms/get-rooms"
         );
         this.rooms = response.data;
       } catch (error) {
@@ -648,7 +731,7 @@ export default {
     async loadClasses() {
       try {
         const response = await axios.get(
-          "http://localhost:8000/class/get-classes"
+          process.env.VUE_APP_API_BASE_URL + "/class/get-classes"
         );
         this.classes = response.data;
       } catch (error) {
@@ -659,9 +742,9 @@ export default {
     async loadGeneratedSchedule() {
       try {
         const response = await axios.get(
-          "http://localhost:8000/generated-scheduled/load"
+          process.env.VUE_APP_API_BASE_URL + "/generated-scheduled/load"
         );
-        
+
         if (response.data.success && response.data.data) {
           // Extract all schedules from the response
           const allSchedules = Object.values(response.data.data).flatMap(
@@ -678,10 +761,11 @@ export default {
     async showClassCourses(cls) {
       this.selectedClass = cls;
       this.showCoursesModal = true;
-      
+
       try {
         const response = await axios.get(
-          "http://localhost:8000/program-year-courses/get-by-program-and-school-year",
+          process.env.VUE_APP_API_BASE_URL +
+            "/program-year-courses/get-by-program-and-school-year",
           {
             params: {
               program_id: cls.program_id,
@@ -689,7 +773,7 @@ export default {
             },
           }
         );
-        
+
         // Filter by year level extracted from set_name
         const yearLevel = this.extractYearLevel(cls.set_name);
         if (yearLevel) {
@@ -713,14 +797,14 @@ export default {
       if (!this.generatedSchedule || this.generatedSchedule.length === 0) {
         return [];
       }
-      
+
       const facultyFullName = this.getFacultyFullName(faculty);
-      
+
       // Filter schedule by faculty name
       const assignments = this.generatedSchedule.filter(
         (item) => item.faculty_name === facultyFullName
       );
-      
+
       return assignments;
     },
     showFacultyCourses(faculty) {
@@ -734,10 +818,7 @@ export default {
       this.facultyCourses = [];
     },
     getFacultyFullName(faculty) {
-      const parts = [
-        faculty.first_name,
-        faculty.last_name,
-      ].filter(Boolean);
+      const parts = [faculty.first_name, faculty.last_name].filter(Boolean);
       return parts.join(" ");
     },
     getYearLevelLabel(level) {
@@ -756,19 +837,19 @@ export default {
     },
     getYearLevelFromSet(setLetter) {
       // Find the class that matches this set letter
-      const matchedClass = this.classes.find(cls => {
+      const matchedClass = this.classes.find((cls) => {
         // Extract the last character(s) from set_name as the section letter
         const setNameParts = cls.set_name?.match(/([A-Z])$/i);
         return setNameParts && setNameParts[1] === setLetter;
       });
-      
+
       if (matchedClass && matchedClass.set_name) {
         const yearLevel = this.extractYearLevel(matchedClass.set_name);
         if (yearLevel) {
           return this.getYearLevelLabel(yearLevel);
         }
       }
-      
+
       // Fallback: Return generic text if no match found
       return "Unknown Year";
     },
@@ -806,6 +887,3 @@ export default {
   background: #555;
 }
 </style>
-
-
-

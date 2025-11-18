@@ -387,9 +387,12 @@ export default {
     },
     async fetchUser() {
       try {
-        const response = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/me",
+          {
+            withCredentials: true,
+          }
+        );
         if (response.data) {
           this.user = response.data;
         } else {

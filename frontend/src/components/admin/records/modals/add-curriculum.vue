@@ -163,14 +163,15 @@ export default {
       try {
         if (this.mode === "add") {
           await axios.post(
-            "http://localhost:8000/curriculums/add-curriculums",
+            process.env.VUE_APP_API_BASE_URL + "/curriculums/add-curriculums",
             this.form
           );
           toast.success("Curriculum added successfully!");
           new Audio(require("@/assets/add.mp3")).play();
         } else {
           await axios.patch(
-            `http://localhost:8000/curriculums/update-curriculum/${this.curriculumData.curriculum_id}`,
+            process.env.VUE_APP_API_BASE_URL +
+              `/curriculums/update-curriculum/${this.curriculumData.curriculum_id}`,
             this.form
           );
           toast.success("Curriculum updated successfully!");

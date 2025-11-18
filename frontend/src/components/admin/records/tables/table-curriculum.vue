@@ -350,7 +350,10 @@ export default {
       const curriculumId = this.recordToDelete.curriculum_id;
 
       axios
-        .delete(`http://localhost:8000/curriculums/delete-id/${curriculumId}`)
+        .delete(
+          process.env.VUE_APP_API_BASE_URL +
+            `/curriculums/delete-id/${curriculumId}`
+        )
         .then(() => {
           this.recordToDelete = null;
           this.showDeleteModal = false;

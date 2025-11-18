@@ -346,9 +346,12 @@ export default {
     },
     async fetchUser() {
       try {
-        const res = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
+        const res = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/me",
+          {
+            withCredentials: true,
+          }
+        );
         this.user = res.data;
       } catch (err) {
         console.error("Failed to fetch user:", err);
@@ -357,7 +360,7 @@ export default {
     async loadClasses() {
       try {
         const response = await axios.get(
-          "http://localhost:8000/class/get-classes"
+          process.env.VUE_APP_API_BASE_URL + "/class/get-classes"
         );
         this.classes = response.data;
       } catch (error) {
@@ -371,7 +374,8 @@ export default {
 
       try {
         const response = await axios.get(
-          "http://localhost:8000/program-year-courses/get-by-program-and-school-year",
+          process.env.VUE_APP_API_BASE_URL +
+            "/program-year-courses/get-by-program-and-school-year",
           {
             params: {
               program_id: cls.program_id,

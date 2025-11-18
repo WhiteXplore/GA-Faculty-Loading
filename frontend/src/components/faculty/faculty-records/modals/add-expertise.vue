@@ -342,7 +342,7 @@ export default {
         const payload = { expertise: allExpertise, other_expertise: allOther };
 
         await axios.patch(
-          `http://localhost:8000/auth/update/${this.userData.id}`,
+          process.env.VUE_APP_API_BASE_URL + `/auth/update/${this.userData.id}`,
           payload,
           { withCredentials: true }
         );

@@ -379,9 +379,12 @@ export default {
   methods: {
     async fetchUser() {
       try {
-        const res = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
+        const res = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/me",
+          {
+            withCredentials: true,
+          }
+        );
         this.user = res.data;
       } catch (err) {
         console.error("Failed to fetch user:", err);
@@ -396,7 +399,7 @@ export default {
     async fetchAllCourses() {
       try {
         const res = await axios.get(
-          "http://localhost:8000/courses/get-courses"
+          process.env.VUE_APP_API_BASE_URL + "/courses/get-courses"
         );
         this.allCourses = res.data;
       } catch (err) {

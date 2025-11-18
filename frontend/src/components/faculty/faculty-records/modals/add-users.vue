@@ -309,16 +309,20 @@ export default {
           }
 
           await axios.patch(
-            `http://localhost:8000/auth/update/${userId}`,
+            process.env.VUE_APP_API_BASE_URL + `/auth/update/${userId}`,
             updateData,
             { withCredentials: true }
           );
           toast.success("User updated successfully!");
           this.$emit("updated");
         } else {
-          await axios.post("http://localhost:8000/auth/register", this.form, {
-            withCredentials: true,
-          });
+          await axios.post(
+            process.env.VUE_APP_API_BASE_URL + "/auth/register",
+            this.form,
+            {
+              withCredentials: true,
+            }
+          );
           toast.success("User registered successfully!");
           const audio = new Audio(require("@/assets/add.mp3"));
           audio.play();
@@ -332,9 +336,12 @@ export default {
     },
     async fetchUser() {
       try {
-        const response = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/me",
+          {
+            withCredentials: true,
+          }
+        );
 
         if (response.data) {
           this.user = response.data;

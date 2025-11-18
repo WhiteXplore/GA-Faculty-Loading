@@ -398,7 +398,8 @@ export default {
 
       try {
         const response = await axios.get(
-          "http://localhost:8000/class-schedules/get-class-schedules"
+          process.env.VUE_APP_API_BASE_URL +
+            "/class-schedules/get-class-schedules"
         );
         const existing = response.data;
         console.log("Fetched schedules:", existing);
@@ -490,7 +491,8 @@ export default {
 
         // No conflict — proceed
         await axios.post(
-          "http://localhost:8000/class-schedules/add-class-schedules",
+          process.env.VUE_APP_API_BASE_URL +
+            "/class-schedules/add-class-schedules",
           {
             instructor_id: this.form.instructor_id,
             course_id: this.form.course_id,

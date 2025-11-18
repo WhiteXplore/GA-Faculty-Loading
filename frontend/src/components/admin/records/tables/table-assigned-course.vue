@@ -301,15 +301,18 @@ export default {
   },
   methods: {
     async fetchUser() {
-      const { data } = await axios.get("http://localhost:8000/auth/me", {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(
+        process.env.VUE_APP_API_BASE_URL + "/auth/me",
+        {
+          withCredentials: true,
+        }
+      );
       this.user = data;
     },
     async loadUserProgram() {
       if (this.user?.role !== "Program Chairperson") return;
       const { data } = await axios.get(
-        "http://localhost:8000/programs/get-programs"
+        process.env.VUE_APP_API_BASE_URL + "/programs/get-programs"
       );
       this.userProgram = data.find(
         (p) => String(p.program_id) === String(this.user.program_id)
@@ -318,8 +321,9 @@ export default {
     async loadAssignedCourses() {
       const url =
         this.user?.role === "Admin"
-          ? "http://localhost:8000/program-year-courses/get-all"
-          : "http://localhost:8000/program-year-courses/get-by-program-and-school-year";
+          ? process.env.VUE_APP_API_BASE_URL + "/program-year-courses/get-all"
+          : process.env.VUE_APP_API_BASE_URL +
+            "/program-year-courses/get-by-program-and-school-year";
       const params =
         this.user?.role !== "Admin"
           ? {
@@ -332,7 +336,7 @@ export default {
     },
     async loadSchoolYears() {
       const { data } = await axios.get(
-        "http://localhost:8000/school-year/get-school-years"
+        process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
       );
       const active = data.find((s) => s.is_active);
       if (active) this.activeSchoolYearId = active.school_year_id;

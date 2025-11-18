@@ -432,9 +432,12 @@ export default {
     },
     async fetchUser() {
       try {
-        const response = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/me",
+          {
+            withCredentials: true,
+          }
+        );
         if (response.data) {
           this.user = response.data;
         } else {
@@ -455,7 +458,7 @@ export default {
 
       try {
         const { data: existing } = await axios.get(
-          "http://localhost:8000/assign-class/get-assign-class"
+          process.env.VUE_APP_API_BASE_URL + "/assign-class/get-assign-class"
         );
 
         const conflict = existing.find(
@@ -474,13 +477,14 @@ export default {
 
         if (this.isEditMode) {
           await axios.put(
-            `http://localhost:8000/assign-class/update-id/${this.assignClassData.assign_class_id}`,
+            process.env.VUE_APP_API_BASE_URL +
+              `/assign-class/update-id/${this.assignClassData.assign_class_id}`,
             this.form
           );
           toast.success("Class updated successfully!");
         } else {
           await axios.post(
-            "http://localhost:8000/assign-class/add-assign-class",
+            process.env.VUE_APP_API_BASE_URL + "/assign-class/add-assign-class",
             this.form
           );
           toast.success("Class added successfully!");

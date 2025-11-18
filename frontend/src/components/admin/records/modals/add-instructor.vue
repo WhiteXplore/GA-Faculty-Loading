@@ -318,7 +318,7 @@ export default {
 
       try {
         const response = await axios.post(
-          "http://localhost:8000/instructors/add-instructor",
+          process.env.VUE_APP_API_BASE_URL + "/instructors/add-instructor",
           this.form
         );
         console.log(response);

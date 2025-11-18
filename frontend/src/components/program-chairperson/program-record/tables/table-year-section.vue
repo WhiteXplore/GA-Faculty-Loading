@@ -224,7 +224,7 @@
 <script>
 import icon from "@/assets/icon.vue";
 import { toast } from "vue3-toastify";
-import addYearSection from "@/components/admin/records/modals/add-year-section.vue";
+import addYearSection from "@/components/program-chairperson/program-record/modals/add-year-section.vue";
 import axios from "axios";
 import { mapState } from "pinia";
 import { useFetchDataStore } from "@/store/fetch-data-store";
@@ -338,15 +338,18 @@ export default {
     },
 
     async fetchUser() {
-      const { data } = await axios.get("http://localhost:8000/auth/me", {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(
+        process.env.VUE_APP_API_BASE_URL + "/auth/me",
+        {
+          withCredentials: true,
+        }
+      );
       this.user = data;
     },
 
     async loadPrograms() {
       const { data } = await axios.get(
-        "http://localhost:8000/programs/get-programs"
+        process.env.VUE_APP_API_BASE_URL + "/programs/get-programs"
       );
       this.programs = data;
     },
@@ -361,7 +364,7 @@ export default {
 
     async loadClasses() {
       const { data } = await axios.get(
-        "http://localhost:8000/class/get-classes"
+        process.env.VUE_APP_API_BASE_URL + "/class/get-classes"
       );
       this.classes = data;
     },
@@ -376,7 +379,8 @@ export default {
 
       try {
         await axios.delete(
-          `http://localhost:8000/class/delete-id/${this.deleteTargetId}`,
+          process.env.VUE_APP_API_BASE_URL +
+            `/class/delete-id/${this.deleteTargetId}`,
           { withCredentials: true }
         );
         await this.loadClasses();

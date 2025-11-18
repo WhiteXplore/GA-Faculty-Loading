@@ -444,7 +444,8 @@ export default {
 
       try {
         await axios.delete(
-          `http://localhost:8000/courses/delete-id/${this.deleteTargetId}`,
+          process.env.VUE_APP_API_BASE_URL +
+            `/courses/delete-id/${this.deleteTargetId}`,
           { withCredentials: true }
         );
 
@@ -460,21 +461,24 @@ export default {
       }
     },
     async fetchUser() {
-      const { data } = await axios.get("http://localhost:8000/auth/me", {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(
+        process.env.VUE_APP_API_BASE_URL + "/auth/me",
+        {
+          withCredentials: true,
+        }
+      );
       this.user = data;
     },
     async loadPrograms() {
       const { data } = await axios.get(
-        "http://localhost:8000/programs/get-programs"
+        process.env.VUE_APP_API_BASE_URL + "/programs/get-programs"
       );
       this.programs = data;
     },
     async loadUserProgram() {
       if (this.user?.role === "Program Chairperson") {
         const { data } = await axios.get(
-          "http://localhost:8000/programs/get-programs"
+          process.env.VUE_APP_API_BASE_URL + "/programs/get-programs"
         );
         this.userProgram = data.find(
           (p) => String(p.program_id) === String(this.user.program_id)
@@ -483,13 +487,13 @@ export default {
     },
     async loadClasses() {
       const { data } = await axios.get(
-        "http://localhost:8000/class/get-classes"
+        process.env.VUE_APP_API_BASE_URL + "/class/get-classes"
       );
       this.classes = data;
     },
     async loadSchoolYears() {
       const { data } = await axios.get(
-        "http://localhost:8000/school-year/get-school-years"
+        process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
       );
       this.schoolYears = data;
       const active = data.find((s) => s.is_active);

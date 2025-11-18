@@ -302,7 +302,7 @@ export default {
     async fetchSchoolYears() {
       try {
         const response = await axios.get(
-          "http://localhost:8000/school-year/get-school-years"
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
         );
         this.schoolYears = response.data;
       } catch (error) {
@@ -372,7 +372,10 @@ export default {
 
         // Create all classes
         const promises = classesToCreate.map((classData) =>
-          axios.post("http://localhost:8000/class/add-class", classData)
+          axios.post(
+            process.env.VUE_APP_API_BASE_URL + "/class/add-class",
+            classData
+          )
         );
 
         await Promise.all(promises);

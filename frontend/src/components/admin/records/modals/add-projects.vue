@@ -126,7 +126,7 @@ export default {
 
       try {
         const response = await axios.post(
-          "http://localhost:8000/projected/add-projected",
+          process.env.VUE_APP_API_BASE_URL + "/projected/add-projected",
           this.form
         );
         console.log(response.data);

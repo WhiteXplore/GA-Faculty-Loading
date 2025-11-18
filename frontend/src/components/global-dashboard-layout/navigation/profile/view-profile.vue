@@ -128,9 +128,12 @@ export default {
     ...mapActions(useFetchDataStore, ["fetchRawUsers"]),
     async getSubId() {
       try {
-        const response = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/me",
+          {
+            withCredentials: true,
+          }
+        );
         if (response.data && response.data.sub) {
           this.subId = response.data.sub;
           await this.fetchRawUsers();

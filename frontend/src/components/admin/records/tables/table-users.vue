@@ -341,7 +341,9 @@ export default {
       this.isDeleting = true;
 
       try {
-        await axios.delete(`http://localhost:8000/auth/remove/${userId}`);
+        await axios.delete(
+          process.env.VUE_APP_API_BASE_URL + `/auth/remove/${userId}`
+        );
         this.recordToDelete = null;
         this.showDeleteModal = false;
 

@@ -324,13 +324,14 @@ export default {
 
         if (this.isEdit) {
           await axios.patch(
-            `http://localhost:8000/courses/update-course/${this.courseData.course_id}`,
+            process.env.VUE_APP_API_BASE_URL +
+              `/courses/update-course/${this.courseData.course_id}`,
             payload
           );
           toast.success("Course updated successfully!");
         } else {
           await axios.post(
-            "http://localhost:8000/courses/add-courses",
+            process.env.VUE_APP_API_BASE_URL + "/courses/add-courses",
             payload
           );
           toast.success("Course added successfully!");

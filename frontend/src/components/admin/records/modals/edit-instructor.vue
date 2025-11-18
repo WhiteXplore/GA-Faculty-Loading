@@ -332,7 +332,8 @@ export default {
 
       try {
         await axios.patch(
-          `http://localhost:8000/instructors/update-instructor/${this.form.instructor_id}`,
+          process.env.VUE_APP_API_BASE_URL +
+            `/instructors/update-instructor/${this.form.instructor_id}`,
           this.form
         );
 

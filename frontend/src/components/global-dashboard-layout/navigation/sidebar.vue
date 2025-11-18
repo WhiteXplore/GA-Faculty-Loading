@@ -379,7 +379,8 @@ export default {
     async syncProgramYearCourses(route) {
       try {
         const response = await axios.post(
-          "http://localhost:8000/program-year-courses/sync-from-classes",
+          process.env.VUE_APP_API_BASE_URL +
+            "/program-year-courses/sync-from-classes",
           { withCredentials: true }
         );
         console.log("Sync successful:", response.data);
@@ -415,9 +416,12 @@ export default {
     },
     async fetchUser() {
       try {
-        const response = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/me",
+          {
+            withCredentials: true,
+          }
+        );
         if (response.data) {
           this.user = response.data;
           console.log("Authenticated User:", this.user);

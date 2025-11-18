@@ -38,7 +38,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/instructors/get-instructors"
+          process.env.VUE_APP_API_BASE_URL + "/instructors/get-instructors"
         );
         this.instructors = data;
       } catch (err) {
@@ -53,7 +53,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/courses/get-courses"
+          process.env.VUE_APP_API_BASE_URL + "/courses/get-courses"
         );
         this.courses = data;
       } catch (err) {
@@ -68,7 +68,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/curriculums/get-curriculums"
+          process.env.VUE_APP_API_BASE_URL + "/curriculums/get-curriculums"
         );
         this.curriculums = data;
       } catch (err) {
@@ -83,7 +83,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/programs/get-programs"
+          process.env.VUE_APP_API_BASE_URL + "/programs/get-programs"
         );
         this.programs = data;
       } catch (err) {
@@ -98,7 +98,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/sections/get-sections"
+          process.env.VUE_APP_API_BASE_URL + "/sections/get-sections"
         );
         this.sections = data;
       } catch (err) {
@@ -113,7 +113,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/rooms/get-rooms"
+          process.env.VUE_APP_API_BASE_URL + "/rooms/get-rooms"
         );
         this.rooms = data;
       } catch (err) {
@@ -127,7 +127,9 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const { data } = await axios.get("http://localhost:8000/time/get-time");
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/time/get-time"
+        );
         this.time = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch time";
@@ -141,7 +143,8 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/class-schedules/get-class-schedules"
+          process.env.VUE_APP_API_BASE_URL +
+            "/class-schedules/get-class-schedules"
         );
         this.schedulers = data;
       } catch (err) {
@@ -156,7 +159,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/projected/get-projected"
+          process.env.VUE_APP_API_BASE_URL + "/projected/get-projected"
         );
         this.projects = data;
       } catch (err) {
@@ -171,7 +174,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/institute/get-institutes"
+          process.env.VUE_APP_API_BASE_URL + "/institute/get-institutes"
         );
         this.institutes = data;
       } catch (err) {
@@ -186,7 +189,8 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/courses/get-report-curriculum-offer"
+          process.env.VUE_APP_API_BASE_URL +
+            "/courses/get-report-curriculum-offer"
         );
         this.detailedReportCurriculum = data;
       } catch (err) {
@@ -201,7 +205,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/calendar/get-all-calendar-events"
+          process.env.VUE_APP_API_BASE_URL + "/calendar/get-all-calendar-events"
         );
         this.calendarEvents = data;
       } catch (err) {
@@ -215,7 +219,9 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const { data } = await axios.get("http://localhost:8000/auth/all");
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/all"
+        );
         this.users = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch users";
@@ -229,7 +235,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/users/get-users"
+          process.env.VUE_APP_API_BASE_URL + "/users/get-users"
         );
         this.rawusers = data;
       } catch (err) {
@@ -244,7 +250,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/assign-class/get-assign-class"
+          process.env.VUE_APP_API_BASE_URL + "/assign-class/get-assign-class"
         );
         this.assignClass = data;
       } catch (err) {
@@ -259,7 +265,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/instructors/raw"
+          process.env.VUE_APP_API_BASE_URL + "/instructors/raw"
         );
         this.faculty = data;
       } catch (err) {
@@ -273,7 +279,7 @@ export const useFetchDataStore = defineStore("fetchData", {
     async fetchActiveYears() {
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/school-year/latest-active"
+          process.env.VUE_APP_API_BASE_URL + "/school-year/latest-active"
         );
 
         // Ensure array

@@ -312,7 +312,7 @@ export default {
     async loadSchoolYears() {
       try {
         const response = await axios.get(
-          "http://localhost:8000/school-year/get-school-years"
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
         );
         this.schoolYears = response.data;
       } catch (error) {
@@ -340,7 +340,8 @@ export default {
       }
       axios
         .delete(
-          `http://localhost:8000/school-year/delete-id/${this.recordToDelete.school_year_id}`
+          process.env.VUE_APP_API_BASE_URL +
+            `/school-year/delete-id/${this.recordToDelete.school_year_id}`
         )
         .then(() => {
           this.showDeleteModal = false;
