@@ -28,7 +28,6 @@
               class="px-1 py-1 border rounded-md"
               @change="changePage(1)"
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
@@ -262,7 +261,22 @@ export default {
       return end > this.filteredData.length ? this.filteredData.length : end;
     },
     pageNumbers() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      const total = this.totalPages;
+      if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
+
+      let start = this.currentPage - 1;
+      let end = this.currentPage + 1;
+
+      if (start < 1) {
+        start = 1;
+        end = 3;
+      }
+      if (end > total) {
+        end = total;
+        start = total - 2;
+      }
+
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
   },
   methods: {

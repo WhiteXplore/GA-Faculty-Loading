@@ -60,11 +60,10 @@
         <div class="flex items-center gap-2">
           <div class="relative">
             <select
-              v-model="itemsPerPage"
+              v-model.number="itemsPerPage"
               class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
@@ -160,65 +159,69 @@
 
       <!-- Table -->
       <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-        <table class="min-w-full text-sm text-gray-700 border-collapse">
-          <thead
-            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
-          >
-            <tr>
-              <th class="px-4 py-3 text-left">Course Code</th>
-              <th class="px-4 py-3 text-left">Course Title</th>
-              <th class="px-4 py-3 text-center">Semester</th>
-              <th class="px-4 py-3 text-center">Year Level</th>
-              <th class="px-4 py-3 text-center">Lecture</th>
-              <th class="px-4 py-3 text-center">Lab</th>
-              <th class="px-4 py-3 text-center">Units</th>
-              <th class="px-4 py-3 text-center">Pre-requisite</th>
-              <th class="px-4 py-3 text-center rounded-tr-lg">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="c in paginatedData"
-              :key="c.course_id"
-              class="hover:bg-green-50 transition-all border-t"
+        <!-- Scrollable body wrapper -->
+        <div class="max-h-[65vh] overflow-y-auto">
+          <table class="min-w-full text-sm text-gray-700 border-collapse">
+            <thead
+              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
-              <td class="px-4 py-3">{{ c.course_code }}</td>
-              <td class="px-4 py-3">{{ c.course_title }}</td>
-              <td class="px-4 py-3 text-center">{{ c.course_semester }}</td>
-              <td class="px-4 py-3 text-center">{{ c.course_level }}</td>
-              <td class="px-4 py-3 text-center">{{ c.course_lec }}</td>
-              <td class="px-4 py-3 text-center">{{ c.course_lab }}</td>
-              <td class="px-4 py-3 text-center">
-                {{ c.course_lec + c.course_lab }}
-              </td>
-              <td class="px-4 py-3 text-center">
-                {{ c.course_requisite || "-" }}
-              </td>
-              <td class="px-4 py-3">
-                <div class="flex justify-center gap-2">
-                  <button
-                    class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
-                    @click="toggleEdit(c)"
-                  >
-                    <icon name="edit" /> Edit
-                  </button>
-                  <button
-                    class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                    @click="toggleDelete(c)"
-                  >
-                    <icon name="delete" /> Delete
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr v-if="paginatedData.length === 0">
-              <td colspan="11" class="text-center py-8 text-gray-400">
-                No records found
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              <tr>
+                <th class="px-4 py-3 text-left">Course Code</th>
+                <th class="px-4 py-3 text-left">Course Title</th>
+                <th class="px-4 py-3 text-center">Semester</th>
+                <th class="px-4 py-3 text-center">Year Level</th>
+                <th class="px-4 py-3 text-center">Lecture</th>
+                <th class="px-4 py-3 text-center">Lab</th>
+                <th class="px-4 py-3 text-center">Units</th>
+                <th class="px-4 py-3 text-center">Pre-requisite</th>
+                <th class="px-4 py-3 text-center rounded-tr-lg">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="c in paginatedData"
+                :key="c.course_id"
+                class="hover:bg-green-50 transition-all border-t"
+              >
+                <td class="px-4 py-3">{{ c.course_code }}</td>
+                <td class="px-4 py-3">{{ c.course_title }}</td>
+                <td class="px-4 py-3 text-center">{{ c.course_semester }}</td>
+                <td class="px-4 py-3 text-center">{{ c.course_level }}</td>
+                <td class="px-4 py-3 text-center">{{ c.course_lec }}</td>
+                <td class="px-4 py-3 text-center">{{ c.course_lab }}</td>
+                <td class="px-4 py-3 text-center">
+                  {{ c.course_lec + c.course_lab }}
+                </td>
+                <td class="px-4 py-3 text-center">
+                  {{ c.course_requisite || "-" }}
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex justify-center gap-2">
+                    <button
+                      class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
+                      @click="toggleEdit(c)"
+                    >
+                      <icon name="edit" /> Edit
+                    </button>
+                    <button
+                      class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                      @click="toggleDelete(c)"
+                    >
+                      <icon name="delete" /> Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr v-if="paginatedData.length === 0">
+                <td colspan="11" class="text-center py-8 text-gray-400">
+                  No records found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
         <div class="text-gray-700">
@@ -422,7 +425,22 @@ export default {
     },
 
     pageNumbers() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      const total = this.totalPages;
+      if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
+
+      let start = this.currentPage - 1;
+      let end = this.currentPage + 1;
+
+      if (start < 1) {
+        start = 1;
+        end = 3;
+      }
+      if (end > total) {
+        end = total;
+        start = total - 2;
+      }
+
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
 
     startIndex() {

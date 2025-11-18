@@ -35,7 +35,6 @@
               class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
@@ -99,9 +98,11 @@
               <!-- <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
                 ID
               </th> -->
-              <th class="px-4 py-3 text-left font-normal">Program Title</th>
+              <th class="px-4 py-3 text-left font-normal w-[40%]">
+                Program Title
+              </th>
               <!-- <th class="px-4 py-3 text-left font-normal">Curriculum Name</th> -->
-              <th class="px-4 py-3 text-left font-normal">Effective Year</th>
+              <th class="px-4 py-3 font-normal text-center">Effective Year</th>
 
               <th class="px-4 py-3 text-center rounded-tr-lg font-normal">
                 Actions
@@ -121,7 +122,7 @@
               <!-- <td class="px-4 py-3 text-left">
                 {{ curriculum_data.curriculum_name }}
               </td> -->
-              <td class="px-4 py-3 text-left">
+              <td class="px-4 py-3 text-center">
                 {{ curriculum_data.curriculum_end_year }}
               </td>
               <td class="px-4 py-3 text-left flex justify-center">
@@ -308,7 +309,22 @@ export default {
       return end > this.filteredData.length ? this.filteredData.length : end;
     },
     pageNumbers() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      const total = this.totalPages;
+      if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
+
+      let start = this.currentPage - 1;
+      let end = this.currentPage + 1;
+
+      if (start < 1) {
+        start = 1;
+        end = 3;
+      }
+      if (end > total) {
+        end = total;
+        start = total - 2;
+      }
+
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
     tableHeightClass() {
       const count = this.paginatedData.length;
