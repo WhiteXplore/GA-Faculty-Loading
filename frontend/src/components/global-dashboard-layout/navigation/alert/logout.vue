@@ -61,7 +61,7 @@ export default {
   methods: {
     async toggleLogout() {
       try {
-        await axios.post("http://localhost:8000/auth/logout");
+        await axios.post(process.env.VUE_APP_API_BASE_URL + "/auth/logout");
         this.$emit("close"); // Inform parent to close the modal
         localStorage.removeItem("role");
         localStorage.removeItem("studentData");

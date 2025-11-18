@@ -184,7 +184,7 @@ export default {
     async fetchSchoolYears() {
       try {
         const response = await axios.get(
-          "http://localhost:8000/school-year/get-school-years"
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
         );
         this.schoolYears = response.data;
       } catch (error) {
@@ -218,12 +218,16 @@ export default {
 
         if (this.isEdit) {
           await axios.patch(
-            `http://localhost:8000/class/update-class/${this.classData.class_id}`,
+            process.env.VUE_APP_API_BASE_URL +
+              `/class/update-class/${this.classData.class_id}`,
             payload
           );
           toast.success("Class updated successfully!");
         } else {
-          await axios.post("http://localhost:8000/class/add-class", payload);
+          await axios.post(
+            process.env.VUE_APP_API_BASE_URL + "/class/add-class",
+            payload
+          );
           toast.success("Class added successfully!");
         }
 

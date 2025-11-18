@@ -134,18 +134,19 @@ export default {
 
       if (!this.searchProgramQuery) return result;
       const q = this.searchProgramQuery.toLowerCase();
-      return result.filter((p) =>
-        p.program_name?.toLowerCase().includes(q)
-      );
+      return result.filter((p) => p.program_name?.toLowerCase().includes(q));
     },
   },
   methods: {
     ...mapActions(useFetchDataStore, ["fetchPrograms"]),
     async fetchUser() {
       try {
-        const response = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/me",
+          {
+            withCredentials: true,
+          }
+        );
         if (response.data) {
           this.user = response.data;
         }
@@ -170,13 +171,15 @@ export default {
 
         if (this.isEdit) {
           await axios.patch(
-            `http://localhost:8000/specialization/update-specialization/${this.specializationData.specialization_id}`,
+            process.env.VUE_APP_API_BASE_URL +
+              `/specialization/update-specialization/${this.specializationData.specialization_id}`,
             payload
           );
           toast.success("Specialization updated successfully!");
         } else {
           await axios.post(
-            "http://localhost:8000/specialization/add-specialization",
+            process.env.VUE_APP_API_BASE_URL +
+              "/specialization/add-specialization",
             payload
           );
           toast.success("Specialization added successfully!");
@@ -220,4 +223,3 @@ export default {
   },
 };
 </script>
-

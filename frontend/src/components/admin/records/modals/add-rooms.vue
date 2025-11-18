@@ -184,7 +184,8 @@ export default {
         if (this.isEditMode) {
           // UPDATE existing room
           await axios.put(
-            `http://localhost:8000/rooms/update-id/${this.roomData.room_id}`,
+            process.env.VUE_APP_API_BASE_URL +
+              `/rooms/update-id/${this.roomData.room_id}`,
             this.form
           );
           toast.success("Room updated successfully!");
@@ -192,7 +193,10 @@ export default {
           audio.play();
         } else {
           // ADD new room
-          await axios.post("http://localhost:8000/rooms/add-rooms", this.form);
+          await axios.post(
+            process.env.VUE_APP_API_BASE_URL + "/rooms/add-rooms",
+            this.form
+          );
           toast.success("Room added successfully!");
           const audio = new Audio(require("@/assets/add.mp3"));
           audio.play();

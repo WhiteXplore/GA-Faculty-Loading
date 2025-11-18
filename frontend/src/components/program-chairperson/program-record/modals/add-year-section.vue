@@ -92,7 +92,7 @@
               class="font-semibold text-gray-800 text-md mb-4 flex items-center gap-2"
             >
               <icon name="setting" class="size-4 text-green-700" />
-              <span> Configure Sections per Year Level</span>
+              <span> Configure Sections per Year Levels</span>
             </h3>
 
             <div class="space-y-6">
@@ -302,7 +302,7 @@ export default {
     async fetchSchoolYears() {
       try {
         const response = await axios.get(
-          "http://localhost:8000/school-year/get-school-years"
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
         );
         this.schoolYears = response.data;
       } catch (error) {
@@ -333,7 +333,7 @@ export default {
       if (newNum > currentNum) {
         // Add new sections
         for (let i = currentNum; i < newNum; i++) {
-          year.sections.push({ classSize: 30 });
+          year.sections.push({ classSize: 40 });
         }
       } else if (newNum < currentNum) {
         // Remove excess sections
@@ -372,7 +372,10 @@ export default {
 
         // Create all classes
         const promises = classesToCreate.map((classData) =>
-          axios.post("http://localhost:8000/class/add-class", classData)
+          axios.post(
+            process.env.VUE_APP_API_BASE_URL + "/class/add-class",
+            classData
+          )
         );
 
         await Promise.all(promises);

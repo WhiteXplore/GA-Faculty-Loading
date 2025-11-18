@@ -152,13 +152,14 @@ export default {
 
         if (this.isEdit) {
           await axios.patch(
-            `http://localhost:8000/programs/update-program/${this.programData.program_id}`,
+            process.env.VUE_APP_API_BASE_URL +
+              `/programs/update-program/${this.programData.program_id}`,
             payload
           );
           toast.success("Program updated successfully!");
         } else {
           await axios.post(
-            "http://localhost:8000/programs/add-programs",
+            process.env.VUE_APP_API_BASE_URL + "/programs/add-programs",
             payload
           );
           toast.success("Program added successfully!");
@@ -179,9 +180,7 @@ export default {
       } catch (err) {
         console.error(err);
         toast.error(
-          this.isEdit
-            ? "Failed to update program."
-            : "Failed to add program."
+          this.isEdit ? "Failed to update program." : "Failed to add program."
         );
       }
     },
@@ -196,9 +195,9 @@ export default {
         program_code: this.programData.program_code,
         program_name: this.programData.program_name,
       };
-      this.searchInstituteQuery = this.programData.institute?.institute_name || "";
+      this.searchInstituteQuery =
+        this.programData.institute?.institute_name || "";
     }
   },
 };
 </script>
-

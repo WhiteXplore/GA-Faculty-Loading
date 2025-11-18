@@ -366,7 +366,8 @@ export default {
 
       try {
         await axios.patch(
-          `http://localhost:8000/class-schedules/update-class/${this.classScheduleData.schedule_id}`,
+          process.env.VUE_APP_API_BASE_URL +
+            `/class-schedules/update-class/${this.classScheduleData.schedule_id}`,
           this.form
         );
         toast.success("Class Schedules updated successfully!");

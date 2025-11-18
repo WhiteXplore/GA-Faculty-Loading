@@ -338,13 +338,9 @@ export default {
       this.editData = null;
     },
     toggleEdit(program) {
-      // Log the program you clicked
-      console.log("Edit clicked for program:", program);
-
-      // Set the program to edit
       this.editData = {
         ...program,
-        // Ensure the nested institute object is preserved
+
         institute: program.institute || null,
       };
 
@@ -363,7 +359,8 @@ export default {
       }
       axios
         .delete(
-          `http://localhost:8000/programs/delete-id/${this.recordToDelete.program_id}`
+          process.env.VUE_APP_API_BASE_URL +
+            `/programs/delete-id/${this.recordToDelete.program_id}`
         )
         .then(() => {
           this.recordToDelete = null;

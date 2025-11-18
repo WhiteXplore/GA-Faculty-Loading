@@ -306,7 +306,9 @@ export default {
       const projectId = this.recordToDelete.project_id;
 
       axios
-        .delete(`http://localhost:8000/projected/delete-id/${projectId}`)
+        .delete(
+          process.env.VUE_APP_API_BASE_URL + `/projected/delete-id/${projectId}`
+        )
         .then(() => {
           this.recordToDelete = null;
           this.showDeleteModal = false;

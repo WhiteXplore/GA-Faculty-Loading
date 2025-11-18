@@ -1,33 +1,25 @@
 <template>
-  <!-- Top Bar -->
   <div
     class="bg-white shadow-md px-4 py-2 flex justify-between items-center rounded-t-lg"
   >
-    <!-- Left Section: Title -->
+    <!-- Left: Title -->
     <div class="text-green-900 font-bold text-lg tracking-wide">
       Faculty Loading & Exam Scheduler
     </div>
 
-    <!-- Center Section: Date, Time -->
+    <!-- Center: Date/Time -->
     <div class="flex flex-col items-center">
-      <div class="text-center">
-        <div class="text-sm font-medium text-gray-600">
-          {{ formattedDate }}
-        </div>
-        <div class="text-sm text-gray-500">
-          {{ formattedTime }}
-        </div>
-      </div>
+      <div class="text-sm font-medium text-gray-600">{{ formattedDate }}</div>
+      <div class="text-sm text-gray-500">{{ formattedTime }}</div>
     </div>
 
-    <!-- Right Section -->
+    <!-- Right: Dropdown + Profile -->
     <div class="flex items-center gap-5">
-      <!-- Dropdown if more than one active year -->
+      <!-- Dropdown -->
       <div
         v-if="activeYears.length > 1"
         class="relative flex items-center gap-2"
       >
-        <!-- Select Container -->
         <select
           v-model="selectedSchoolYearId"
           @change="updateSchoolYear"
@@ -45,7 +37,6 @@
           </option>
         </select>
 
-        <!-- Arrow Icon Outside -->
         <div
           class="transition-transform duration-300 text-green-700 cursor-pointer"
           :class="{ 'rotate-180': isDropdownOpen }"
@@ -87,7 +78,7 @@
         >
           <img
             src="../../../assets/img/users.png"
-            alt="Profile Picture"
+            alt="Profile"
             class="w-full h-full rounded-full object-cover"
           />
         </div>
@@ -111,6 +102,7 @@
 <script>
 import axios from "axios";
 import Profile from "./profile-setting.vue";
+import { eventBus } from "@/event-bus";
 
 export default {
   name: "TopBarPage",
@@ -119,16 +111,14 @@ export default {
     return {
       isOpenProfile: false,
       user: {},
-      activeYears: [],
+      schoolYears: [],
       selectedSchoolYearId: "",
       currentTime: new Date(),
-      lastUpdatedAt: null,
-      yearCheckInterval: null,
-      activeYear: null,
       isDropdownOpen: false,
+      yearCheckInterval: null,
+      stopBus: null,
     };
   },
-
   computed: {
     formattedDate() {
       return this.currentTime.toLocaleDateString("en-US", {
@@ -146,115 +136,75 @@ export default {
         hour12: true,
       });
     },
+    activeYears() {
+      return this.schoolYears.filter((y) => y.is_active);
+    },
   },
-
   methods: {
     toggleOpenProfile() {
       this.isOpenProfile = !this.isOpenProfile;
     },
-
-    handleClickOutside(event) {
-      const dropdown = this.$refs.profileDropdown;
-      const icon = this.$refs.profileIcon;
-      if (
-        this.isOpenProfile &&
-        dropdown &&
-        !dropdown.contains(event.target) &&
-        icon &&
-        !icon.contains(event.target)
-      ) {
-        this.isOpenProfile = false;
-      }
-    },
-
     async fetchUser() {
       try {
-        const response = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
-        if (response.data) {
-          this.user = response.data;
-        } else {
-          this.$router.push("/");
-          location.reload();
-        }
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
+        const res = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/me",
+          {
+            withCredentials: true,
+          }
+        );
+        this.user = res.data || {};
+      } catch {
         this.$router.push("/");
       }
     },
-
-    async fetchActiveYears() {
+    async fetchSchoolYears() {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/school-year/get-school-years"
+        const res = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
         );
-        const allYears = response.data;
-        this.activeYears = allYears.filter((sy) => sy.is_active);
-
-        if (this.activeYears.length === 0) {
-          this.activeYear = null;
-          return;
-        }
-
-        // Sort by updated_at descending
-        this.activeYears.sort(
-          (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
-        );
-
-        const latest = this.activeYears[0];
-
-        if (
-          !this.activeYear ||
-          this.activeYear.school_year_id !== latest.school_year_id ||
-          this.activeYear.updated_at !== latest.updated_at
-        ) {
-          this.activeYear = latest;
-          this.selectedSchoolYearId = latest.school_year_id;
-          this.lastUpdatedAt = new Date(latest.updated_at);
-
-          // Reload courses for this active year
-          this.loadCoursesForActiveYear();
-        }
-      } catch (error) {
-        console.error("❌ Failed to fetch school years:", error);
+        this.schoolYears = res.data.map((y) => ({ ...y }));
+        this.autoSelectActiveYear();
+      } catch (err) {
+        console.error(err);
       }
     },
-
     async updateSchoolYear() {
-      try {
-        const selectedSY = this.activeYears.find(
-          (sy) => sy.school_year_id === this.selectedSchoolYearId
-        );
-        if (!selectedSY) return;
-
-        await axios.patch(
-          `http://localhost:8000/school-year/update-timestamp/${selectedSY.school_year_id}`
-        );
-
-        console.log(
-          "✅ Updated timestamp for school year:",
-          selectedSY.school_year_name
-        );
-
-        const prevSelected = this.selectedSchoolYearId;
-        await this.fetchActiveYears();
-        this.selectedSchoolYearId = prevSelected;
-      } catch (error) {
-        console.error("❌ Failed to update school year timestamp:", error);
-      }
+      const selectedSY = this.schoolYears.find(
+        (y) => y.school_year_id === this.selectedSchoolYearId
+      );
+      if (!selectedSY) return;
+      await axios.patch(
+        process.env.VUE_APP_API_BASE_URL +
+          `/school-year/update-timestamp/${selectedSY.school_year_id}`
+      );
+      await this.fetchSchoolYears();
     },
-
-    getSemesterLabel(semester) {
-      if (semester === 1) return "1st Semester";
-      if (semester === 2) return "2nd Semester";
-      return "";
+    autoSelectActiveYear() {
+      const active = this.schoolYears.find((y) => y.is_active);
+      const fallback = [...this.schoolYears].sort(
+        (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
+      )[0];
+      this.selectedSchoolYearId = (active || fallback)?.school_year_id || "";
+    },
+    getSemesterLabel(sem) {
+      return sem === 1 ? "1st Semester" : sem === 2 ? "2nd Semester" : "";
     },
   },
-
   mounted() {
     this.fetchUser();
-    this.fetchActiveYears();
+    this.fetchSchoolYears();
+
+    // Listen to event bus
+    this.stopBus = eventBus.on("schoolYearChanged", () =>
+      this.fetchSchoolYears()
+    );
+
+    // Poll every 10s in case event not emitted
+    this.yearCheckInterval = setInterval(() => this.fetchSchoolYears(), 10000);
+  },
+  beforeUnmount() {
+    clearInterval(this.yearCheckInterval);
+    if (this.stopBus) this.stopBus();
   },
 };
 </script>

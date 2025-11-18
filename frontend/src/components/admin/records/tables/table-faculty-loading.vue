@@ -563,9 +563,12 @@ export default {
 
     async fetchUser() {
       try {
-        const res = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
+        const res = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/me",
+          {
+            withCredentials: true,
+          }
+        );
         if (res.data) {
           this.user = res.data;
         } else {
@@ -588,7 +591,7 @@ export default {
 
       try {
         const response = await axios.get(
-          "http://localhost:8000/generated-scheduled/load"
+          process.env.VUE_APP_API_BASE_URL + "/generated-scheduled/load"
         );
 
         if (response.data.success && response.data.data) {
