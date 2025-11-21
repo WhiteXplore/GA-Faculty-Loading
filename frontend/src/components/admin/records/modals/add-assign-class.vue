@@ -476,7 +476,7 @@ export default {
         }
 
         if (this.isEditMode) {
-          await axios.put(
+          await axios.patch(
             process.env.VUE_APP_API_BASE_URL +
               `/assign-class/update-id/${this.assignClassData.assign_class_id}`,
             this.form

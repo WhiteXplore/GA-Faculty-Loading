@@ -342,7 +342,7 @@ export default {
 
         if (this.isEdit) {
           // EDIT
-          await axios.put(
+          await axios.patch(
             process.env.VUE_APP_API_BASE_URL +
               `/courses/update-course/${this.courseData.course_id}`,
             payload

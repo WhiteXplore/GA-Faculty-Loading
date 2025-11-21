@@ -55,6 +55,33 @@
               </div>
             </div>
 
+            <!-- Building Name   -->
+            <div class="w-full space-y-2">
+              <label for="building_name" class="font-bold"
+                >Building Name:</label
+              >
+              <input
+                v-model="form.building_name"
+                type="text"
+                id="building_name"
+                required
+                class="w-full border px-3 py-3 border-gray-600 rounded-md text-md text-gray-800"
+                placeholder="Enter building name"
+              />
+            </div>
+
+            <!-- Floor Level  -->
+            <div class="w-full space-y-2">
+              <label for="level" class="font-bold">Floor Level:</label>
+              <input
+                v-model="form.level"
+                type="text"
+                id="level"
+                required
+                class="w-full border px-3 py-3 border-gray-600 rounded-md text-md text-gray-800"
+                placeholder="Enter floor level"
+              />
+            </div>
             <!-- Room Name -->
             <div class="w-full space-y-2">
               <label for="room_name" class="font-bold">Room Name:</label>
@@ -161,6 +188,8 @@ export default {
         room_name: "",
         room_type: "",
         room_capacity: "",
+        building_name: "",
+        level: "",
       },
       searchInstituteQuery: "",
       showInstituteDropdown: false,
@@ -183,9 +212,9 @@ export default {
       try {
         if (this.isEditMode) {
           // UPDATE existing room
-          await axios.put(
+          await axios.patch(
             process.env.VUE_APP_API_BASE_URL +
-              `/rooms/update-id/${this.roomData.room_id}`,
+              `/rooms/update-room/${this.roomData.room_id}`,
             this.form
           );
           toast.success("Room updated successfully!");
@@ -221,6 +250,8 @@ export default {
         room_name: this.roomData.room_name,
         room_type: this.roomData.room_type,
         room_capacity: this.roomData.room_capacity,
+        building_name: this.roomData.building_name,
+        level: this.roomData.level,
       };
       this.searchInstituteQuery = this.roomData.institute?.institute_name || "";
     }

@@ -110,14 +110,17 @@
             class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
             <tr>
-              <th class="px-4 py-3 text-left font-normal w-[20%]">Institute</th>
-              <th class="px-4 py-3 text-center font-normal w-[15%]">
-                Room Name
+              <th class="px-4 py-3 text-left font-normal w-[18%]">Institute</th>
+              <th class="px-4 py-3 text-left font-normal w-[15%]">
+                Building Name
               </th>
-              <th class="px-4 py-3 text-center font-normal w-[15%]">
-                Room Type
+              <th class="px-4 py-3 text-center font-normal w-[10%]">
+                Level / Floor
               </th>
-              <th class="px-4 py-3 text-center font-normal w-[15%]">
+              <th class="px-4 py-3 text-left font-normal w-[15%]">Room Name</th>
+
+              <th class="px-4 py-3 text-left font-normal w-[10%]">Room Type</th>
+              <th class="px-4 py-3 text-center font-normal w-[10%]">
                 Room Capacity
               </th>
               <th
@@ -136,10 +139,17 @@
               <td class="px-4 py-3 text-left">
                 {{ rooms_data.institute?.institute_name }}
               </td>
-              <td class="px-4 py-3 text-center">
-                {{ rooms_data.room_name }}
+              <td class="px-4 py-3 text-left">
+                {{ rooms_data.building_name }}
               </td>
               <td class="px-4 py-3 text-center">
+                {{ rooms_data.level }}
+              </td>
+              <td class="px-4 py-3 text-left">
+                {{ rooms_data.room_name }}
+              </td>
+
+              <td class="px-4 py-3 text-left">
                 {{ rooms_data.room_type }}
               </td>
               <td class="px-4 py-3 text-center">
@@ -163,7 +173,7 @@
               </td>
             </tr>
             <tr v-if="paginatedData.length === 0">
-              <td colspan="6" class="text-center py-6 text-gray-400">
+              <td colspan="6" class="text-left py-6 text-gray-400">
                 No records found
               </td>
             </tr>
@@ -244,7 +254,7 @@
     <h1 class="text-[14px] md:text-[16px] font-semibold mt-4">
       Delete Confirmation
     </h1>
-    <p class="mt-2 text-[12px] md:text-[13px] text-center px-8">
+    <p class="mt-2 text-[12px] md:text-[13px] text-left px-8">
       Are you sure you want to delete this record? This action cannot be undone.
     </p>
 
