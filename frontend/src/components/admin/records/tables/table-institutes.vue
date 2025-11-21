@@ -35,7 +35,6 @@
               class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
@@ -90,74 +89,77 @@
       </div>
 
       <!-- Data Table -->
-
       <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-        <table class="min-w-full text-sm text-gray-700 border-collapse">
-          <thead
-            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
-          >
-            <tr>
-              <th class="px-4 py-3 text-left font-normal">Institute Code</th>
-              <th class="px-4 py-3 text-left font-normal">Institute Title</th>
-              <th class="px-4 py-3 text-left font-normal">Program Code</th>
-              <th class="px-4 py-3 text-left font-normal w-[25%]">
-                Program Title
-              </th>
-              <th
-                class="px-4 py-3 text-center rounded-tr-lg font-normal w-[20%]"
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr
-              v-for="program in paginatedData"
-              :key="program.program_id"
-              class="hover:bg-green-50 transition-all border-t"
+        <!-- Scrollable body wrapper -->
+        <div class="max-h-[65vh] overflow-y-auto">
+          <table class="min-w-full text-sm text-gray-700 border-collapse">
+            <thead
+              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
-              <td class="px-4 py-3 border-t border-gray-200">
-                {{ program.institute?.institute_code }}
-              </td>
-              <td class="px-4 py-3 border-t border-gray-200">
-                {{ program.institute?.institute_name }}
-              </td>
-              <td class="px-4 py-3 border-t border-gray-200">
-                {{ program.program_code }}
-              </td>
-              <td class="px-4 py-3 border-t border-gray-200">
-                {{ program.program_name }}
-              </td>
-              <td class="px-4 py-3 flex justify-center">
-                <div class="flex gap-2">
-                  <button
-                    class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
-                    @click="toggleEdit(program)"
-                  >
-                    <icon name="edit" /> Edit
-                  </button>
-                  <button
-                    class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                    @click="toggleDelete(program)"
-                  >
-                    <icon name="delete" /> Delete
-                  </button>
-                </div>
-              </td>
-            </tr>
+              <tr>
+                <th class="px-4 py-3 text-left font-normal">Institute Code</th>
+                <th class="px-4 py-3 text-left font-normal">Institute Title</th>
+                <th class="px-4 py-3 text-left font-normal">Program Code</th>
+                <th class="px-4 py-3 text-left font-normal w-[25%]">
+                  Program Title
+                </th>
+                <th
+                  class="px-4 py-3 text-center rounded-tr-lg font-normal w-[20%]"
+                >
+                  Actions
+                </th>
+              </tr>
+            </thead>
 
-            <tr v-if="paginatedData.length === 0">
-              <td
-                colspan="6"
-                class="text-center py-8 text-gray-400 border-t border-gray-200"
+            <tbody>
+              <tr
+                v-for="program in paginatedData"
+                :key="program.program_id"
+                class="hover:bg-green-50 transition-all border-t"
               >
-                No records found
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                <td class="px-4 py-3 border-t border-gray-200">
+                  {{ program.institute?.institute_code }}
+                </td>
+                <td class="px-4 py-3 border-t border-gray-200">
+                  {{ program.institute?.institute_name }}
+                </td>
+                <td class="px-4 py-3 border-t border-gray-200">
+                  {{ program.program_code }}
+                </td>
+                <td class="px-4 py-3 border-t border-gray-200">
+                  {{ program.program_name }}
+                </td>
+                <td class="px-4 py-3 flex justify-center">
+                  <div class="flex gap-2">
+                    <button
+                      class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
+                      @click="toggleEdit(program)"
+                    >
+                      <icon name="edit" /> Edit
+                    </button>
+                    <button
+                      class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                      @click="toggleDelete(program)"
+                    >
+                      <icon name="delete" /> Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr v-if="paginatedData.length === 0">
+                <td
+                  colspan="6"
+                  class="text-center py-8 text-gray-400 border-t border-gray-200"
+                >
+                  No records found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
         <div class="text-gray-700">
@@ -319,11 +321,22 @@ export default {
       return end > this.filteredData.length ? this.filteredData.length : end;
     },
     pageNumbers() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
-    },
-    tableHeightClass() {
-      const count = this.paginatedData.length;
-      return count <= 10 ? "h-auto" : "h-[65vh]";
+      const total = this.totalPages;
+      if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
+
+      let start = this.currentPage - 1;
+      let end = this.currentPage + 1;
+
+      if (start < 1) {
+        start = 1;
+        end = 3;
+      }
+      if (end > total) {
+        end = total;
+        start = total - 2;
+      }
+
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
   },
 
@@ -340,14 +353,10 @@ export default {
     toggleEdit(program) {
       this.editData = {
         ...program,
-
         institute: program.institute || null,
       };
-
-      // Open the modal
       this.isAdd = true;
     },
-
     toggleDelete(program) {
       this.recordToDelete = program;
       this.showDeleteModal = true;

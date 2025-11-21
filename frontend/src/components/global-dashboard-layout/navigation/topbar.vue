@@ -115,7 +115,6 @@ export default {
       selectedSchoolYearId: "",
       currentTime: new Date(),
       isDropdownOpen: false,
-      yearCheckInterval: null,
       stopBus: null,
     };
   },
@@ -148,9 +147,7 @@ export default {
       try {
         const res = await axios.get(
           process.env.VUE_APP_API_BASE_URL + "/auth/me",
-          {
-            withCredentials: true,
-          }
+          { withCredentials: true }
         );
         this.user = res.data || {};
       } catch {
@@ -163,7 +160,11 @@ export default {
           process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
         );
         this.schoolYears = res.data.map((y) => ({ ...y }));
-        this.autoSelectActiveYear();
+
+        // auto-select if no selection
+        if (!this.selectedSchoolYearId) {
+          this.autoSelectActiveYear();
+        }
       } catch (err) {
         console.error(err);
       }
@@ -173,10 +174,16 @@ export default {
         (y) => y.school_year_id === this.selectedSchoolYearId
       );
       if (!selectedSY) return;
+
       await axios.patch(
         process.env.VUE_APP_API_BASE_URL +
           `/school-year/update-timestamp/${selectedSY.school_year_id}`
       );
+
+      // emit change to event bus
+      eventBus.emit(selectedSY.school_year_id);
+
+      // optionally refetch updated school years
       await this.fetchSchoolYears();
     },
     autoSelectActiveYear() {
@@ -194,16 +201,13 @@ export default {
     this.fetchUser();
     this.fetchSchoolYears();
 
-    // Listen to event bus
-    this.stopBus = eventBus.on("schoolYearChanged", () =>
-      this.fetchSchoolYears()
-    );
-
-    // Poll every 10s in case event not emitted
-    this.yearCheckInterval = setInterval(() => this.fetchSchoolYears(), 10000);
+    // Listen to reactive event bus
+    this.stopBus = eventBus.on((newSchoolYearId) => {
+      this.selectedSchoolYearId = newSchoolYearId;
+      this.fetchSchoolYears();
+    });
   },
   beforeUnmount() {
-    clearInterval(this.yearCheckInterval);
     if (this.stopBus) this.stopBus();
   },
 };

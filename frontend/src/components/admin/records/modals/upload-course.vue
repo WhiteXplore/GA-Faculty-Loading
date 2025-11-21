@@ -134,22 +134,23 @@ export default {
           };
 
           const programMap = {
-            "Bachelor of Science in Information Technology": "BSIT",
-            "Bachelor of Science in Information Systems": "BSIS",
-            "Bachelor of Science in Agro-Forestry": "BSAF",
-            "Bachelor of Science in Fisheries and Aquatic Sciences": "BSFAS",
-            "Bachelor of Science in Food Technology": "BFT",
-            "Bachelor of Science in Marine Biology": "BSMB",
-            "Bachelor of Public Administration": "BPA",
-            "Bachelor of Science in Disaster Resiliency and Management":
-              "BSDRM",
-            "Bachelor of Science in Entrepreneurship": "BSE",
-            "Bachelor of Science in Social Work": "BSW",
-            "Bachelor of Science in Tourism Management": "BSTM",
-            "Bachelor of Arts in Communication": "BSAC",
-            "Bachelor of Secondary Education": "BSE",
-            "Bachelor of Technology and Livelihood Education": "BTLE",
-            "Bachelor of Physical Education": "BPE",
+            BSIT: "Bachelor of Science in Information Technology",
+            BSIS: "Bachelor of Science in Information Systems",
+            BSAF: "Bachelor of Science in Agro-Forestry",
+            BSFAS: "Bachelor of Science in Fisheries and Aquatic Sciences",
+            BSFT: "Bachelor of Science in Food Technology",
+            BSMB: "Bachelor of Science in Marine Biology",
+            BPA: "Bachelor of Public Administration",
+            BSDRM: "Bachelor of Science in Disaster Resiliency and Management",
+            BSENTREP: "Bachelor of Science in Entrepreneurship",
+            BSSW: "Bachelor of Science in Social Work",
+            BSTM: "Bachelor of Science in Tourism Management",
+            BSEDMATH: "Bachelor of Secondary Education Major in Math",
+            BSEDSCI: "Bachelor of Secondary Education Major in Science",
+            BSEDENG: "Bachelor of Secondary Education Major in English",
+            BACOMM: "Bachelor of Arts in Communication",
+            BTLEd: "Bachelor of Technology and Livelihood Education",
+            BPE: "Bachelor of Physical Education",
           };
 
           const semesterMap = { First: 1, Second: 2 };
@@ -164,8 +165,9 @@ export default {
               curriculum_end_year: end,
               institute_code: row.Institute.trim(),
               institute_name: instituteMap[row.Institute.trim()] || "",
-              program_code: programMap[row.Program.trim()] || "",
-              program_name: row.Program.trim(),
+              program_code: row.Program.trim(), // Already a code in your data
+              program_name:
+                programMap[row.Program.trim()] || row.Program.trim(),
               course_level: Number(row["Year Level"]),
               course_semester: semesterMap[row.Semester.trim()] || 0,
               course_code: row["Course Code"].trim(),
@@ -193,56 +195,73 @@ export default {
       this.uploading = true;
 
       try {
-        // 1️⃣ Create only one institute (first row)
-        const firstInstituteRow = this.parsedData[0];
-        const instituteRes = await axios.post(
-          process.env.VUE_APP_API_BASE_URL + "/institute/add-institute",
-          {
-            institute_code: firstInstituteRow.institute_code,
-            institute_name: firstInstituteRow.institute_name,
-          }
-        );
-        const institute = instituteRes.data; // shared institute_id
-
-        // 2️⃣ Deduplicate programs by program_code
-        const uniquePrograms = [
+        // 1️⃣ Deduplicate institutes
+        const uniqueInstitutes = [
           ...new Map(
-            this.parsedData.map((row) => [row.program_code, row])
+            this.parsedData.map((row) => [row.institute_code, row])
           ).values(),
         ];
 
-        const programMap = new Map(); // program_code => program_id
-        const curriculumMap = new Map(); // program_code => curriculum_id
+        const instituteMap = new Map(); // institute_code => institute_id
 
-        // 3️⃣ Create programs and their curriculums
+        // Create each institute in backend
+        for (const inst of uniqueInstitutes) {
+          const res = await axios.post(
+            process.env.VUE_APP_API_BASE_URL + "/institute/add-institute",
+            {
+              institute_code: inst.institute_code,
+              institute_name: inst.institute_name,
+            }
+          );
+          instituteMap.set(inst.institute_code, res.data.institute_id);
+        }
+
+        // 2️⃣ Deduplicate programs by program_code + institute_code
+        const uniquePrograms = [
+          ...new Map(
+            this.parsedData.map((row) => [
+              `${row.institute_code}-${row.program_code}`,
+              row,
+            ])
+          ).values(),
+        ];
+
+        const programMap = new Map(); // program_code+institute => program_id
+        const curriculumMap = new Map(); // program_code+institute => curriculum_id
+
+        // 3️⃣ Create programs and curriculums
         for (const prog of uniquePrograms) {
-          // Create program
           const programRes = await axios.post(
             process.env.VUE_APP_API_BASE_URL + "/programs/add-programs",
             {
               program_code: prog.program_code,
               program_name: prog.program_name,
-              institute_id: institute.institute_id,
+              institute_id: instituteMap.get(prog.institute_code),
             }
           );
           const program = programRes.data;
-          programMap.set(prog.program_code, program.program_id);
+          programMap.set(
+            `${prog.institute_code}-${prog.program_code}`,
+            program.program_id
+          );
 
-          // Create curriculum for this program
           const curriculumRes = await axios.post(
             process.env.VUE_APP_API_BASE_URL + "/curriculums/add-curriculums",
             {
               curriculum_start_year: prog.curriculum_start_year,
               curriculum_end_year: prog.curriculum_end_year,
-              institute_id: institute.institute_id,
+              institute_id: instituteMap.get(prog.institute_code),
               program_id: program.program_id,
             }
           );
           const curriculum = curriculumRes.data;
-          curriculumMap.set(prog.program_code, curriculum.curriculum_id);
+          curriculumMap.set(
+            `${prog.institute_code}-${prog.program_code}`,
+            curriculum.curriculum_id
+          );
         }
 
-        // 4️⃣ Map courses to the correct program & curriculum
+        // 4️⃣ Map courses
         const coursesPayload = this.parsedData.map((row) => ({
           course_level: row.course_level,
           course_semester: row.course_semester,
@@ -250,9 +269,13 @@ export default {
           course_title: row.course_title,
           course_lec: row.course_lec,
           course_lab: row.course_lab,
-          institute_id: institute.institute_id,
-          program_id: programMap.get(row.program_code),
-          curriculum_id: curriculumMap.get(row.program_code),
+          institute_id: instituteMap.get(row.institute_code),
+          program_id: programMap.get(
+            `${row.institute_code}-${row.program_code}`
+          ),
+          curriculum_id: curriculumMap.get(
+            `${row.institute_code}-${row.program_code}`
+          ),
         }));
 
         // 5️⃣ Upload courses
