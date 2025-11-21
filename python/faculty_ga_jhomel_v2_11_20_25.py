@@ -34,7 +34,6 @@ Requirements: sqlalchemy, pymysql
 
 import random
 import json
-import os
 from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass
 from copy import deepcopy
@@ -130,12 +129,12 @@ class FacultyLoadingGA:
         self.classes = {c['class_id']: c for c in classes}
         self.program_year_courses = program_year_courses
 
-        # GA parameters (OPTIMIZED for large datasets)
-        self.population_size = 50  # Reduced from 150 for faster execution
-        self.generations = 100  # Reduced from 300 for faster execution
-        self.mutation_rate = 0.3  # Increased for more exploration
-        self.crossover_rate = 0.7
-        self.elite_size = 5  # Reduced proportionally
+        # GA parameters
+        self.population_size = 150
+        self.generations = 300
+        self.mutation_rate = 0.2
+        self.crossover_rate = 0.8
+        self.elite_size = 15
 
         # Faculty load limit
         self.max_faculty_load = 18.0
@@ -355,7 +354,6 @@ class FacultyLoadingGA:
         """Create a random valid schedule with faculty consistency"""
         assignments = []
         course_faculty_map = {}  # (class_id, course_id) -> faculty_id
-        room_availability_cache = {}  # Cache to speed up room availability checks
 
         for req in self.teaching_requirements:
             class_id = req['class_id']
@@ -378,14 +376,12 @@ class FacultyLoadingGA:
                 faculty_id = self._select_faculty_by_load(qualified_faculty, assignments)
                 course_faculty_map[key] = faculty_id  # Remember for consistency
             
-            # Assign time slot and room - use simpler approach for faster creation
-            # Fitness function will handle conflicts, so we don't need perfect placement here
+            # Assign time slot and room with comprehensive validation
             attempts = 0
             time_slot = 0
             room_id = None
             
-            # Try only 20 attempts instead of 100 for faster creation
-            while attempts < 20:
+            while attempts < 100:
                 attempts += 1
                 day = random.randint(0, 4)  # 5 days
                 day_start = day * self.slots_per_day
@@ -399,9 +395,11 @@ class FacultyLoadingGA:
                 
                 time_slot = day_start + slot_in_day
                 
-                # Get suitable rooms (check availability less aggressively)
-                # Skip time availability check during creation for speed
-                suitable_rooms = self._get_suitable_rooms(meeting_type, class_size)
+                # Get suitable rooms that are available at this time
+                # ROOM CONSTRAINTS: type match, capacity, and time availability
+                suitable_rooms = self._get_suitable_rooms(
+                    meeting_type, class_size, time_slot, duration, assignments
+                )
                 
                 if suitable_rooms:
                     room_id = random.choice(suitable_rooms)
@@ -433,7 +431,6 @@ class FacultyLoadingGA:
     def calculate_fitness(self, chromosome: Chromosome) -> float:
         """
         Calculate fitness score (higher is better).
-        OPTIMIZED: Pre-calculate faculty loads once to avoid O(n²) complexity.
         
         ROOM CONSTRAINTS ENFORCED:
         1. Room Capacity: Room capacity must be >= class size (penalty: 500 + 10 per student over)
@@ -454,19 +451,6 @@ class FacultyLoadingGA:
         faculty_schedule = {}  # faculty_id -> [(time_slot, duration)]
         room_schedule = {}     # room_id -> [(time_slot, duration)]
         class_schedule = {}    # class_id -> [(time_slot, duration)]
-        
-        # PRE-CALCULATE FACULTY LOADS ONCE (PERFORMANCE OPTIMIZATION!)
-        # This avoids O(n²) complexity by calculating all loads upfront
-        faculty_loads = {}
-        for assignment in chromosome.assignments:
-            fid = assignment.faculty_id
-            if fid not in faculty_loads:
-                faculty_loads[fid] = 0.0
-            
-            if assignment.meeting_type == 'lecture':
-                faculty_loads[fid] += assignment.duration  # 1 hour = 1 unit
-            else:  # laboratory
-                faculty_loads[fid] += assignment.duration / 3.0  # 3 hours = 1 unit
 
         for assignment in chromosome.assignments:
             # HARD CONSTRAINTS (heavy penalties)
@@ -476,8 +460,9 @@ class FacultyLoadingGA:
             if assignment.faculty_id not in qualified:
                 score -= 1000  # Massive penalty for unqualified faculty
 
-            # 2. Faculty load limit check (USE PRE-CALCULATED LOAD)
-            faculty_load = faculty_loads[assignment.faculty_id]
+            # 2. Faculty load limit check
+            faculty_load = self._calculate_faculty_load(
+                assignment.faculty_id, chromosome.assignments)
             if faculty_load > self.max_faculty_load:
                 overload = faculty_load - self.max_faculty_load
                 score -= overload * 200  # Heavy penalty for overload
@@ -577,7 +562,12 @@ class FacultyLoadingGA:
                 score -= 10
 
         # 11. Faculty workload balance (encourage even distribution)
-        # USE THE ALREADY CALCULATED faculty_loads dictionary!
+        faculty_loads = {}
+        for assignment in chromosome.assignments:
+            fid = assignment.faculty_id
+            load = self._calculate_faculty_load(fid, [assignment])
+            faculty_loads[fid] = faculty_loads.get(fid, 0.0) + load
+
         if faculty_loads:
             avg_load = sum(faculty_loads.values()) / len(faculty_loads)
             for load in faculty_loads.values():
@@ -647,8 +637,8 @@ class FacultyLoadingGA:
 
     def mutate(self, chromosome: Chromosome):
         """
-        OPTIMIZED Mutation: Fast random changes without expensive validation.
-        Fitness function handles conflict detection and penalties.
+        Mutation: randomly change assignment attributes with room constraint validation.
+        Ensures mutations respect room capacity, type, and availability.
         """
         for i, assignment in enumerate(chromosome.assignments):
             if random.random() < self.mutation_rate:
@@ -663,70 +653,85 @@ class FacultyLoadingGA:
                     continue
 
                 if mutation_type == 0:  # Change faculty (must be qualified)
-                    qualified = self._get_qualified_faculty(assignment.course_id)
+                    qualified = self._get_qualified_faculty(
+                        assignment.course_id)
                     if qualified:
-                        assignment.faculty_id = random.choice(qualified)
+                        # Select based on lowest load
+                        assignment.faculty_id = self._select_faculty_by_load(
+                            qualified, chromosome.assignments)
                 
-                elif mutation_type == 1:  # Change room (simple - no availability check)
-                    # Get suitable rooms by type and capacity only (fast!)
-                    suitable = self._get_suitable_rooms(assignment.meeting_type, req['class_size'])
+                elif mutation_type == 1:  # Change room with full constraint checking
+                    # Get suitable rooms considering current time slot and availability
+                    # ROOM CONSTRAINTS: type, capacity, and time availability
+                    suitable = self._get_suitable_rooms(
+                        assignment.meeting_type, 
+                        req['class_size'],
+                        assignment.time_slot,
+                        assignment.duration,
+                        chromosome.assignments
+                    )
                     if suitable:
                         assignment.room_id = random.choice(suitable)
+                    else:
+                        # Fallback: try without time checking
+                        suitable = self._get_suitable_rooms(assignment.meeting_type, req['class_size'])
+                        if suitable:
+                            assignment.room_id = random.choice(suitable)
                 
-                else:  # Change time slot (simple - just check lunch break)
-                    # Try a few times to get a valid slot
-                    for _ in range(5):
+                else:  # Change time slot and potentially room (respecting lunch break)
+                    attempts = 0
+                    found_valid = False
+                    
+                    while attempts < 50 and not found_valid:
+                        attempts += 1
                         day = random.randint(0, 4)
+                        day_start = day * self.slots_per_day
                         slot_in_day = random.randint(0, self.slots_per_day - 1)
                         
                         # Check if time block is valid (doesn't span lunch)
-                        if self._is_valid_time_block(slot_in_day, assignment.duration):
-                            assignment.time_slot = day * self.slots_per_day + slot_in_day
-                            break
+                        if not self._is_valid_time_block(slot_in_day, assignment.duration):
+                            continue
+                        
+                        new_time_slot = day_start + slot_in_day
+                        
+                        # Check if current room is available at new time
+                        # ROOM CONSTRAINT: Room must be free at new time slot
+                        if self._is_room_available(
+                            assignment.room_id, 
+                            new_time_slot, 
+                            assignment.duration,
+                            chromosome.assignments,
+                            exclude_assignment=assignment
+                        ):
+                            assignment.time_slot = new_time_slot
+                            found_valid = True
+                        else:
+                            # Try to find a different room that's available
+                            suitable_rooms = self._get_suitable_rooms(
+                                assignment.meeting_type,
+                                req['class_size'],
+                                new_time_slot,
+                                assignment.duration,
+                                chromosome.assignments
+                            )
+                            if suitable_rooms:
+                                assignment.time_slot = new_time_slot
+                                assignment.room_id = random.choice(suitable_rooms)
+                                found_valid = True
     
     def evolve(self):
-        """Main GA loop with progress tracking"""
-        import time
-        start_time = time.time()
-        
-        # Initialize population with progress
-        print(f"\n{'='*60}")
-        print(f"GENETIC ALGORITHM - FACULTY SCHEDULING")
-        print(f"{'='*60}")
-        print(f"Population Size: {self.population_size}")
-        print(f"Generations: {self.generations}")
-        print(f"Teaching Requirements: {len(self.teaching_requirements)}")
-        print(f"{'='*60}\n")
-        
-        print("Creating initial population...")
-        population = []
-        for i in range(self.population_size):
-            population.append(self.create_individual())
-            if (i + 1) % 5 == 0 or (i + 1) == self.population_size:
-                progress = (i + 1) / self.population_size * 100
-                bar_length = 40
-                filled = int(bar_length * (i + 1) / self.population_size)
-                bar = '#' * filled + '-' * (bar_length - filled)
-                print(f"  [{bar}] {i+1}/{self.population_size} ({progress:.1f}%)", end='\r')
-        print(f"\nInitial population created!\n")
+        """Main GA loop"""
+        # Initialize population
+        population = [self.create_individual()
+                      for _ in range(self.population_size)]
 
         # Evaluate initial population
-        print("Evaluating initial population...")
-        for i, individual in enumerate(population):
+        for individual in population:
             individual.fitness = self.calculate_fitness(individual)
-            if (i + 1) % 5 == 0 or (i + 1) == self.population_size:
-                progress = (i + 1) / self.population_size * 100
-                bar_length = 40
-                filled = int(bar_length * (i + 1) / self.population_size)
-                bar = '#' * filled + '-' * (bar_length - filled)
-                print(f"  [{bar}] {i+1}/{self.population_size} ({progress:.1f}%)", end='\r')
-        print(f"\nEvaluation complete!\n")
 
         best_solution = max(population, key=lambda x: x.fitness)
 
-        print(f"{'='*60}")
         print(f"Generation 0: Best Fitness = {best_solution.fitness:.2f}")
-        print(f"{'='*60}\n")
 
         no_improvement_count = 0
         best_fitness_ever = best_solution.fitness
@@ -766,32 +771,17 @@ class FacultyLoadingGA:
             if current_best.fitness > best_fitness_ever:
                 best_fitness_ever = current_best.fitness
 
-            # Progress updates with time estimation
-            if generation % 10 == 0 or generation == self.generations:
-                elapsed = time.time() - start_time
-                avg_time = elapsed / generation
-                remaining = (self.generations - generation) * avg_time
-                progress = generation / self.generations * 100
-                
-                print(f"Gen {generation}/{self.generations} ({progress:.1f}%) | "
-                      f"Best: {best_solution.fitness:.2f} | "
-                      f"Elapsed: {elapsed:.1f}s | "
-                      f"ETA: {remaining:.1f}s | "
-                      f"No improve: {no_improvement_count}")
+            if generation % 30 == 0:
+                print(
+                    f"Generation {generation}: Best Fitness = {best_solution.fitness:.2f}")
 
             # Early stopping if no improvement for 50 generations
             if no_improvement_count >= 50:
-                print(f"\nEarly stopping at generation {generation} (no improvement for 50 generations)")
+                print(
+                    f"Early stopping at generation {generation} (no improvement)")
                 break
 
-        elapsed_total = time.time() - start_time
-        print(f"\n{'='*60}")
-        print(f"EVOLUTION COMPLETE!")
-        print(f"{'='*60}")
-        print(f"Final Best Fitness: {best_solution.fitness:.2f}")
-        print(f"Total Time: {elapsed_total:.2f}s ({elapsed_total/60:.2f} minutes)")
-        print(f"Generations Completed: {generation}/{self.generations}")
-        print(f"{'='*60}\n")
+        print(f"\nFinal Best Fitness: {best_solution.fitness:.2f}")
         return best_solution
 
     def format_schedule(self, chromosome: Chromosome) -> str:
@@ -952,109 +942,75 @@ def fetch_table_data(table):
 # Example usage
 if __name__ == "__main__":
     # Load your data from database
-    # rooms_table = Table("rooms", metadata, autoload_with=engine)
-    # faculty_table = Table("faculty", metadata, autoload_with=engine)
-    # faculty_expertise_table = Table(
-    #     "faculty_expertise", metadata, autoload_with=engine)
-    # courses_table = Table("course_view", metadata, autoload_with=engine)
-    # classes_table = Table("classes", metadata, autoload_with=engine)
-    # program_year_courses_table = Table(
-    #     "program_year_course_view", metadata, autoload_with=engine)
+    rooms_table = Table("rooms", metadata, autoload_with=engine)
+    faculty_table = Table("faculty", metadata, autoload_with=engine)
+    faculty_expertise_table = Table(
+        "faculty_expertise", metadata, autoload_with=engine)
+    courses_table = Table("course_view", metadata, autoload_with=engine)
+    classes_table = Table("classes", metadata, autoload_with=engine)
+    program_year_courses_table = Table(
+        "program_year_course_view", metadata, autoload_with=engine)
 
-    # rooms = fetch_table_data(rooms_table)
-    # faculty = fetch_table_data(faculty_table)
-    # faculty_expertise = fetch_table_data(faculty_expertise_table)
-    # courses = fetch_table_data(courses_table)
-    # classes = fetch_table_data(classes_table)
-    # program_year_courses = fetch_table_data(program_year_courses_table)
+    rooms = fetch_table_data(rooms_table)
+    faculty = fetch_table_data(faculty_table)
+    faculty_expertise = fetch_table_data(faculty_expertise_table)
+    courses = fetch_table_data(courses_table)
+    classes = fetch_table_data(classes_table)
+    program_year_courses = fetch_table_data(program_year_courses_table)
 
-    rooms = [
-        {"room_id": 2, "institute_id": 2, "room_capacity": 213213, "room_type": "Laboratory", "room_name": "Lab-1"},
-        {"room_id": 3, "institute_id": 2, "room_capacity": 45, "room_type": "Lecture", "room_name": "Room-301"},
-        {"room_id": 4, "institute_id": 2, "room_capacity": 41, "room_type": "Lecture", "room_name": "IC-1"}
-    ]
+    # rooms = [
+    #     {"room_id": 2, "institute_id": 2, "room_capacity": 213213, "room_type": "Laboratory", "room_name": "Lab-1"},
+    #     {"room_id": 3, "institute_id": 2, "room_capacity": 45, "room_type": "Lecture", "room_name": "Room-301"},
+    #     {"room_id": 4, "institute_id": 2, "room_capacity": 41, "room_type": "Lecture", "room_name": "IC-1"}
+    # ]
 
-    faculty = [
-        {"faculty_id": 2, "user_accounts_id": 2, "name": "Sigfred Navasquez", "institute_id": 2, "program_id": 31},
-        {"faculty_id": 11, "user_accounts_id": 11, "name": "Maria Flora", "institute_id": 2, "program_id": 31},
-        {"faculty_id": 15, "user_accounts_id": 15, "name": "IT1 Faculty", "institute_id": 2, "program_id": 31}
-    ]
+    # faculty = [
+    #     {"faculty_id": 2, "user_accounts_id": 2, "name": "Sigfred Navasquez", "institute_id": 2, "program_id": 31},
+    #     {"faculty_id": 11, "user_accounts_id": 11, "name": "Maria Flora", "institute_id": 2, "program_id": 31},
+    #     {"faculty_id": 15, "user_accounts_id": 15, "name": "IT1 Faculty", "institute_id": 2, "program_id": 31}
+    # ]
 
-    faculty_expertise = [
-        {"faculty_id": 2, "course_id": 11},
-        {"faculty_id": 2, "course_id": 13},
-        {"faculty_id": 2, "course_id": 9},
-        {"faculty_id": 11, "course_id": 9},
-        {"faculty_id": 11, "course_id": 11},
-        {"faculty_id": 11, "course_id": 13},
-        {"faculty_id": 15, "course_id": 9},
-        {"faculty_id": 15, "course_id": 13}
-    ]
+    # faculty_expertise = [
+    #     {"faculty_id": 2, "course_id": 11},
+    #     {"faculty_id": 2, "course_id": 13},
+    #     {"faculty_id": 2, "course_id": 9},
+    #     {"faculty_id": 11, "course_id": 9},
+    #     {"faculty_id": 11, "course_id": 11},
+    #     {"faculty_id": 11, "course_id": 13},
+    #     {"faculty_id": 15, "course_id": 9},
+    #     {"faculty_id": 15, "course_id": 13}
+    # ]
 
-    courses = [
-        {"course_id": 9, "program_id": 31, "course_code": "IT 111", "course_lecture": 3, "course_laboratory": 1},
-        {"course_id": 11, "program_id": 31, "course_code": "IT 112", "course_lecture": 2, "course_laboratory": 1},
-        {"course_id": 13, "program_id": 31, "course_code": "NSTP1", "course_lecture": 3, "course_laboratory": 0},
-        {"course_id": 15, "program_id": 31, "course_code": "SS 111", "course_lecture": 3, "course_laboratory": 0},
-        {"course_id": 16, "program_id": 31, "course_code": "SS 112", "course_lecture": 3, "course_laboratory": 0}
-    ]
+    # courses = [
+    #     {"course_id": 9, "program_id": 31, "course_code": "IT 111", "course_lecture": 3, "course_laboratory": 1},
+    #     {"course_id": 11, "program_id": 31, "course_code": "IT 112", "course_lecture": 2, "course_laboratory": 1},
+    #     {"course_id": 13, "program_id": 31, "course_code": "NSTP1", "course_lecture": 3, "course_laboratory": 0},
+    #     {"course_id": 15, "program_id": 31, "course_code": "SS 111", "course_lecture": 3, "course_laboratory": 0},
+    #     {"course_id": 16, "program_id": 31, "course_code": "SS 112", "course_lecture": 3, "course_laboratory": 0}
+    # ]
 
-    classes = [
-        {"class_id": 14, "school_year_id": 1, "program_id": 31, "set_name": "1st Year - A", "class_size": 34},
-        {"class_id": 18, "school_year_id": 1, "program_id": 31, "set_name": "1st Year - B", "class_size": 35}
-    ]
+    # classes = [
+    #     {"class_id": 14, "school_year_id": 1, "program_id": 31, "set_name": "1st Year - A", "class_size": 34},
+    #     {"class_id": 18, "school_year_id": 1, "program_id": 31, "set_name": "1st Year - B", "class_size": 35}
+    # ]
 
-    program_year_courses = [
-        {"id": 18, "program_id": 31, "course_id": 9, "year_level": 1, "school_year_id": 1},
-        {"id": 19, "program_id": 31, "course_id": 13, "year_level": 1, "school_year_id": 1}
-    ]
+    # program_year_courses = [
+    #     {"id": 18, "program_id": 31, "course_id": 9, "year_level": 1, "school_year_id": 1},
+    #     {"id": 19, "program_id": 31, "course_id": 13, "year_level": 1, "school_year_id": 1}
+    # ]
 
     # Run GA
     ga = FacultyLoadingGA(rooms, faculty, faculty_expertise,
                           courses, classes, program_year_courses)
     best_schedule = ga.evolve()
 
-    # Generate outputs
-    formatted_schedule = ga.format_schedule(best_schedule)
-    json_output = ga.to_json(best_schedule)
-    
-    # Create timestamped filename
-    from datetime import datetime
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    
-    # Define output directory and filenames
-    output_dir = os.path.join(os.path.dirname(__file__), "generated_schedules")
-    os.makedirs(output_dir, exist_ok=True)
-    
-    txt_filename = os.path.join(output_dir, f"schedule_{timestamp}.txt")
-    json_filename = os.path.join(output_dir, f"schedule_{timestamp}.json")
-    
-    # Save human-readable schedule to text file
-    with open(txt_filename, 'w', encoding='utf-8') as f:
-        f.write(formatted_schedule)
-        f.write("\n\n" + "="*60 + "\n")
-        f.write(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write(f"Best Fitness Score: {best_schedule.fitness:.2f}\n")
-        f.write(f"Total Assignments: {len(best_schedule.assignments)}\n")
-        f.write("="*60 + "\n")
-    
-    # Save JSON output to file
-    with open(json_filename, 'w', encoding='utf-8') as f:
-        json.dump(json_output, f, indent=2)
-    
-    # Print to console
+    # Print human-readable schedule
     print("\n")
-    print(formatted_schedule)
+    print(ga.format_schedule(best_schedule))
 
+    # Print JSON for backend (with special markers for parsing)
     print("\n")
     print("===JSON_START===")
+    json_output = ga.to_json(best_schedule)
     print(json.dumps(json_output, indent=2))
     print("===JSON_END===")
-    
-    # Print file save confirmation
-    print("\n" + "="*60)
-    print("FILES SAVED SUCCESSFULLY!")
-    print("="*60)
-    print(f"Text Schedule: {txt_filename}")
-    print(f"JSON Schedule: {json_filename}")
-    print("="*60)

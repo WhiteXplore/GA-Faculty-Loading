@@ -6,16 +6,68 @@
         Pages / User Accounts
       </div>
 
-      <div
-        @click="toggleAdd"
-        class="flex items-center gap-2 px-4 py-2 border text-green-600 border-green-600 rounded-xl hover:bg-green-700 hover:shadow-lg cursor-pointer transition duration-200"
-      >
+      <div class="flex gap-2">
         <div
-          class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
+          @click="toggleImportExpertise"
+          class="flex items-center gap-2 px-3 py-2 border text-purple-600 border-purple-600 rounded-xl hover:bg-purple-700 hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
         >
-          <icon :name="'add-account1.1'" class="w-4 h-4" />
+          <div
+            class="p-1 bg-purple-500 bg-opacity-20 rounded-full flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+              />
+            </svg>
+          </div>
+          <span class="font-medium text-sm">Import Expertise</span>
         </div>
-        <span class="font-medium text-sm">Add Accounts</span>
+
+        <div
+          @click="toggleImport"
+          class="flex items-center gap-2 px-3 py-2 border text-blue-600 border-blue-600 rounded-xl hover:bg-blue-700 hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
+        >
+          <div
+            class="p-1 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+              />
+            </svg>
+          </div>
+          <span class="font-medium text-sm">Import Users</span>
+        </div>
+
+        <div
+          @click="toggleAdd"
+          class="flex items-center gap-2 px-3 py-2 border text-green-600 border-green-600 rounded-xl hover:bg-green-700 hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
+        >
+          <div
+            class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
+          >
+            <icon :name="'add-account1.1'" class="w-4 h-4" />
+          </div>
+          <span class="font-medium text-sm">Add Accounts</span>
+        </div>
       </div>
     </div>
 
@@ -128,16 +180,44 @@
               <td class="px-4 py-3 text-left">{{ user.role }}</td>
               <td class="px-4 py-3 text-left">{{ user.email }}</td>
               <td class="px-4 py-3 text-left">
-                <div class="flex gap-2">
+                <div class="flex gap-2 flex-wrap">
                   <button
-                    class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1"
+                    class="px-3 py-1 h-8 border border-purple-300 hover:bg-purple-200 text-purple-700 rounded-lg flex items-center gap-1 text-xs font-medium"
+                    @click="toggleViewExpertise(user)"
+                    title="View Expertise"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
+                    </svg>
+                    View
+                  </button>
+
+                  <button
+                    class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1 text-xs font-medium"
                     @click="toggleEdit(user)"
                   >
                     <icon name="edit" /> Edit
                   </button>
 
                   <button
-                    class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-900 rounded-lg flex items-center gap-1"
+                    class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-900 rounded-lg flex items-center gap-1 text-xs font-medium"
                     @click="toggleDelete(user)"
                   >
                     Delete
@@ -201,6 +281,21 @@
     @close="closeModal"
     @refresh="loadUsers"
   />
+  <importUsers
+    v-if="showImportModal"
+    @close="closeImportModal"
+    @refresh="loadUsers"
+  />
+  <importExpertise
+    v-if="showImportExpertiseModal"
+    @close="closeImportExpertiseModal"
+    @refresh="loadUsers"
+  />
+  <viewUserExpertise
+    v-if="showViewExpertiseModal && selectedUserExpertise"
+    :userData="selectedUserExpertise"
+    @close="closeViewExpertiseModal"
+  />
 
   <!-- Delete Confirmation Modal -->
   <div
@@ -249,6 +344,9 @@
 <script>
 import icon from "@/assets/icon.vue";
 import addUsers from "../modals/add-users.vue";
+import importUsers from "../modals/import-users.vue";
+import importExpertise from "../modals/import-expertise.vue";
+import viewUserExpertise from "../modals/view-user-expertise.vue";
 
 import { toast } from "vue3-toastify";
 import { useFetchDataStore } from "../../../../store/fetch-data-store";
@@ -260,6 +358,9 @@ export default {
   components: {
     icon,
     addUsers,
+    importUsers,
+    importExpertise,
+    viewUserExpertise,
   },
   data() {
     return {
@@ -269,8 +370,12 @@ export default {
       isAdd: false,
       isTable: true,
       showDeleteModal: false,
+      showImportModal: false,
+      showImportExpertiseModal: false,
+      showViewExpertiseModal: false,
       recordToDelete: null,
       selectedUser: null, // ✅ fixed
+      selectedUserExpertise: null,
       showEditModal: false,
       isDeleting: false,
     };
@@ -323,6 +428,16 @@ export default {
       this.isAdd = true;
       this.isTable = true;
     },
+    toggleImport() {
+      this.showImportModal = true;
+    },
+    toggleImportExpertise() {
+      this.showImportExpertiseModal = true;
+    },
+    toggleViewExpertise(user) {
+      this.selectedUserExpertise = user;
+      this.showViewExpertiseModal = true;
+    },
     toggleEdit(user) {
       this.selectedUser = user; // ✅ fixed
       this.showEditModal = true;
@@ -370,6 +485,16 @@ export default {
     closeModal() {
       this.showEditModal = false;
       this.selectedUser = null;
+    },
+    closeImportModal() {
+      this.showImportModal = false;
+    },
+    closeImportExpertiseModal() {
+      this.showImportExpertiseModal = false;
+    },
+    closeViewExpertiseModal() {
+      this.showViewExpertiseModal = false;
+      this.selectedUserExpertise = null;
     },
   },
   mounted() {

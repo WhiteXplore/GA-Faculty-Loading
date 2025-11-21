@@ -220,7 +220,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/auth/all"
+          process.env.VUE_APP_API_BASE_URL + "/auth/all-raw"
         );
         this.users = data;
       } catch (err) {
