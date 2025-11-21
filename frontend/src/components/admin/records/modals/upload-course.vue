@@ -153,8 +153,6 @@ export default {
             BPE: "Bachelor of Physical Education",
           };
 
-          const semesterMap = { First: 1, Second: 2 };
-
           this.parsedData = json.map((row) => {
             const [start, end] = row["School Year"]
               .split("-")
@@ -169,7 +167,7 @@ export default {
               program_name:
                 programMap[row.Program.trim()] || row.Program.trim(),
               course_level: Number(row["Year Level"]),
-              course_semester: semesterMap[row.Semester.trim()] || 0,
+              course_semester: Number(row.Semester),
               course_code: row["Course Code"].trim(),
               course_title: row["Course Title"].trim(),
               course_lec: Number(row["Lecture Units"]),

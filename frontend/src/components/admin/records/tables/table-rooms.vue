@@ -4,20 +4,35 @@
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / Rooms Availability
       </div>
-
-      <div
-        @click="toggleAdd"
-        class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
-      >
+      <div class="flex gap-2">
         <div
-          class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+          @click="isUploadModal = true"
+          class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
         >
-          <icon
-            :name="'circle-add'"
-            class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
-          />
+          <div
+            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+          >
+            <icon
+              :name="'upload'"
+              class="w-5 h-5 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
+            />
+          </div>
+          <span class="font-medium text-sm">Upload Room</span>
         </div>
-        <span class="font-medium text-sm">Add Room</span>
+        <div
+          @click="toggleAdd"
+          class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
+        >
+          <div
+            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+          >
+            <icon
+              :name="'circle-add'"
+              class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
+            />
+          </div>
+          <span class="font-medium text-sm">Add Room</span>
+        </div>
       </div>
     </div>
 
@@ -202,6 +217,11 @@
     @close="closeModal"
     @refresh="loadRooms"
   />
+  <uploadRooms
+    v-if="isUploadModal"
+    @close="isUploadModal = false"
+    @refresh="loadRooms"
+  />
 
   <!-- Delete Confirmation Modal -->
   <div
@@ -210,7 +230,7 @@
   ></div>
   <div
     v-if="showDeleteModal"
-    class="rounded-xl shadow-lg w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 animate-slideUp"
+    class="rounded-xl shadow-lg w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
   >
     <div
       class="rounded-full w-16 h-16 md:w-20 md:h-20 flex justify-center items-center bg-red-300 animate-pulse"
@@ -250,6 +270,7 @@
 <script>
 import icon from "@/assets/icon.vue";
 import addRooms from "../modals/add-rooms.vue";
+import uploadRooms from "../modals/upload-rooms.vue";
 import { toast } from "vue3-toastify";
 import { useFetchDataStore } from "../../../../store/fetch-data-store";
 import { mapState } from "pinia";
@@ -260,6 +281,7 @@ export default {
   components: {
     icon,
     addRooms,
+    uploadRooms,
   },
   data() {
     return {
@@ -274,6 +296,7 @@ export default {
       recordToDelete: null,
       selectedRoom: null,
       showEditModal: false,
+      isUploadModal: false,
     };
   },
   computed: {

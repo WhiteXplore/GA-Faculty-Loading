@@ -43,19 +43,19 @@ const routes = [
       {
         path: "/instructors",
         name: "instructors",
-        component: () => import("@/components/admin/records/instructor.vue"),
+        component: () => import("@/components/admin/records/Instructor.vue"),
         meta: { requiresAuth: true, role: "Admin" },
       },
       {
         path: "/institutes",
         name: "instituts",
-        component: () => import("@/components/admin/records/institutes.vue"),
+        component: () => import("@/components/admin/records/Institutes.vue"),
         meta: { requiresAuth: true, role: "Admin" },
       },
       {
         path: "/curriculum",
         name: "curriculum",
-        component: () => import("@/components/admin/records/curriculum.vue"),
+        component: () => import("@/components/admin/records/Curriculum.vue"),
         meta: { requiresAuth: true, roles: ["Admin"] },
         children: [],
       },
@@ -77,7 +77,7 @@ const routes = [
       {
         path: "/rooms",
         name: "rooms",
-        component: () => import("@/components/admin/records/rooms.vue"),
+        component: () => import("@/components/admin/records/Rooms.vue"),
         meta: { requiresAuth: true, role: "Admin" },
         children: [],
       },
@@ -124,7 +124,7 @@ const routes = [
       {
         path: "/user-accounts",
         name: "user-accounts",
-        component: () => import("@/components/admin/records/users.vue"),
+        component: () => import("@/components/admin/records/Users.vue"),
         meta: { requiresAuth: true, role: "Admin" },
         children: [],
       },
@@ -177,7 +177,7 @@ const routes = [
       {
         path: "/program-chair-faculty-list",
         name: "program-chair-faculty-list",
-        component: () => import("@/components/admin/records/instructor.vue"),
+        component: () => import("@/components/admin/records/Instructor.vue"),
         meta: { requiresAuth: true, role: "Program Chairperson" },
       },
       {

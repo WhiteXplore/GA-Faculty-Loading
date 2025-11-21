@@ -171,7 +171,7 @@
 
 <script>
 import icon from "@/assets/icon.vue";
-import adminTopbar from "./topbar.vue";
+import adminTopbar from "./Topbar.vue";
 import axios from "axios";
 
 export default {
