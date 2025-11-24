@@ -1,0 +1,4657 @@
+================================================================================
+                         FACULTY LOAD ASSIGNMENTS
+================================================================================
+Generated on: 2025-11-23 15:00:07
+Maximum Load per Faculty: 18 units
+================================================================================
+
+--------------------------------------------------------------------------------
+Faculty: April Acdal (ID: 25)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : RR325
+     Class ID      : 104
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ER327
+     Class ID      : 104
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : RR325
+     Class ID      : 107
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : ER327
+     Class ID      : 107
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : RR325
+     Class ID      : 108
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : ER327
+     Class ID      : 108
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Anselmo Anobong Jr. (ID: 26)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : MB322
+     Class ID      : 73
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : GEELECT1
+     Class ID      : 96
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : GEELECT1
+     Class ID      : 99
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : GEELECT1
+     Class ID      : 100
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Ariel, Balio (ID: 27)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.00 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : THE223
+     Class ID      : 154
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : THE223
+     Class ID      : 155
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : THE326
+     Class ID      : 157
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : THE326
+     Class ID      : 158
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : THE223
+     Class ID      : 159
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Alneza Bangasin (ID: 28)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : ENG111
+     Class ID      : 81
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ENG111
+     Class ID      : 82
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ENG111
+     Class ID      : 83
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : ENG111
+     Class ID      : 86
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : LIT121
+     Class ID      : 143
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : LIT 223
+     Class ID      : 144
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Arcelyn Basilisco (ID: 29)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.00 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : FT 222
+     Class ID      : 80
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : TMBC325
+     Class ID      : 101
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ENTREP 123
+     Class ID      : 111
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : ENTREP 123
+     Class ID      : 112
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : ENTREP 123
+     Class ID      : 113
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Analyn Casipe (ID: 30)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : IT Elec1
+     Class ID      : 52
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IT Elec1
+     Class ID      : 53
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IT Elec1
+     Class ID      : 54
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : IT Elec1
+     Class ID      : 55
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : IT 323
+     Class ID      : 58
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : IT 323
+     Class ID      : 59
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Anababes Catala (ID: 31)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.67 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 2 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : STAT
+     Class ID      : 65
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  2. Course Code   : STAT
+     Class ID      : 69
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  3. Course Code   : TTL2M
+     Class ID      : 150
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : MATH 212
+     Class ID      : 150
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Ann Cereno (ID: 32)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : SCI221
+     Class ID      : 140
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Ariel Gamao (ID: 33)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : ITSPEC3
+     Class ID      : 58
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ITSPEC3
+     Class ID      : 59
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ITSPEC3
+     Class ID      : 60
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : ITSPEC3
+     Class ID      : 62
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Aunel Guillergan (ID: 34)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.00 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : TM121
+     Class ID      : 96
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : TM121
+     Class ID      : 99
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : TM121
+     Class ID      : 100
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : TM325
+     Class ID      : 101
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : TMELECT4 NEW
+     Class ID      : 101
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Abdul Jamara (ID: 35)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : RES2M
+     Class ID      : 151
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Ariel Jumamil (ID: 36)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.00 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : TTL 2B
+     Class ID      : 154
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : TTL 2B
+     Class ID      : 155
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : THE322
+     Class ID      : 157
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : THE322
+     Class ID      : 158
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : TTL 2B
+     Class ID      : 159
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Aldrhiela Lonzaga (ID: 37)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : ITSPEC4
+     Class ID      : 58
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ITSPEC4
+     Class ID      : 59
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ITSPEC4
+     Class ID      : 60
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : ITSPEC4
+     Class ID      : 62
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Alje Canoy (ID: 39)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : STS 121
+     Class ID      : 77
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Analiza Pana (ID: 40)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : Math 111
+     Class ID      : 52
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : Math 111
+     Class ID      : 53
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : Math 111
+     Class ID      : 54
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : Math 111
+     Class ID      : 55
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : MATH 121
+     Class ID      : 147
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : MATH 121
+     Class ID      : 149
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Ana Lagarto (ID: 41)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : GEELECT3
+     Class ID      : 64
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : GEELECT3
+     Class ID      : 67
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : PA3212
+     Class ID      : 124
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : PA3212
+     Class ID      : 125
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : PA3212
+     Class ID      : 131
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : PA3212
+     Class ID      : 134
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Abel Sadji (ID: 42)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.67 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 2 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : MATH 6
+     Class ID      : 64
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  2. Course Code   : MATH 6
+     Class ID      : 67
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  3. Course Code   : MATH111
+     Class ID      : 81
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : MATH111
+     Class ID      : 82
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : MATH111
+     Class ID      : 83
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Alberto, Sumaoy (ID: 43)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : TMBC223
+     Class ID      : 97
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : TMBC223
+     Class ID      : 102
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ELEC 221
+     Class ID      : 114
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : ELEC 221
+     Class ID      : 115
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Aleya Obeda (ID: 44)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : PAELEC2
+     Class ID      : 122
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : SPCOR2 NEW
+     Class ID      : 122
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : PAELEC2
+     Class ID      : 123
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : SPCOR2 NEW
+     Class ID      : 123
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : PAELEC2
+     Class ID      : 130
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : SPCOR2 NEW
+     Class ID      : 130
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Bonita Cantere (ID: 45)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : SS 112
+     Class ID      : 105
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : SS 112
+     Class ID      : 110
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Bryan Macarayo (ID: 46)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : ENTREP 3212
+     Class ID      : 116
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ENTREP 3212
+     Class ID      : 117
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ENTREP 3212
+     Class ID      : 118
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Bryan Villarojo (ID: 47)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : TTL 2S
+     Class ID      : 140
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : RES2S
+     Class ID      : 141
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : RES2S
+     Class ID      : 142
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Boyeth Pelone (ID: 48)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.00 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : DRMRES1
+     Class ID      : 104
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : SCI121_DRM
+     Class ID      : 105
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : DRMRES1
+     Class ID      : 107
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : DRMRES1
+     Class ID      : 108
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : SCI121_DRM
+     Class ID      : 110
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Bernandita Rodriguez (ID: 49)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : FISH326
+     Class ID      : 70
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : FISH326
+     Class ID      : 71
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Benjie Solarte (ID: 50)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : Sci 122
+     Class ID      : 137
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : Sci 122
+     Class ID      : 139
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Cristopher Añana (ID: 51)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : IT 222
+     Class ID      : 56
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IT 222
+     Class ID      : 57
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IT 222
+     Class ID      : 61
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Crisalie Bacarro (ID: 52)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : TMELECT2 NEW
+     Class ID      : 97
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : TMC328
+     Class ID      : 101
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : TMELECT2 NEW
+     Class ID      : 102
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Carylmae Balmores (ID: 53)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : PE2 NEW
+     Class ID      : 72
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : PE2 NEW
+     Class ID      : 75
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : PE2
+     Class ID      : 81
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : PE2
+     Class ID      : 82
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : PE2
+     Class ID      : 83
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : PE2
+     Class ID      : 86
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Carl Ganal (ID: 54)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : MA222
+     Class ID      : 163
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : COMM321
+     Class ID      : 164
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Caressha Bernaldez (ID: 56)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : PE4
+     Class ID      : 80
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : PE 4
+     Class ID      : 56
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : PE 4
+     Class ID      : 57
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : PE 4
+     Class ID      : 61
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : PE 224
+     Class ID      : 114
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : PE 224
+     Class ID      : 115
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Claire Garcia (ID: 57)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : Eng 111
+     Class ID      : 52
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : Eng 111
+     Class ID      : 53
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : Eng 111
+     Class ID      : 54
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : Eng 111
+     Class ID      : 55
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : LIT 221
+     Class ID      : 144
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : ENG 323 NEW
+     Class ID      : 146
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Christhelle Gerona (ID: 58)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : RR323
+     Class ID      : 104
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : RR323
+     Class ID      : 107
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : RR323
+     Class ID      : 108
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Carl Castañeda (ID: 59)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.67 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 2 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : Bio 104
+     Class ID      : 72
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  2. Course Code   : Bio 104
+     Class ID      : 75
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  3. Course Code   : MBELEC1
+     Class ID      : 76
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Christina Lahaylahay (ID: 60)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : Bio 122
+     Class ID      : 64
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : Bio 122
+     Class ID      : 67
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Celeste Ligutom (ID: 61)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : FIL2
+     Class ID      : 147
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : FIL2
+     Class ID      : 149
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : LIT2
+     Class ID      : 162
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : Fil 2
+     Class ID      : 162
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : LIT2
+     Class ID      : 166
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : Fil 2
+     Class ID      : 166
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Carlo Perez (ID: 63)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : PE 122
+     Class ID      : 111
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : PE 122
+     Class ID      : 112
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : PE 122
+     Class ID      : 113
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Criscire Palabrica (ID: 64)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : SCI223
+     Class ID      : 140
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Cyril Ranara (ID: 65)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : Fish 121
+     Class ID      : 64
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : Fish 121
+     Class ID      : 67
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Czarina Giangan (ID: 66)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : GEELECT2
+     Class ID      : 56
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : GEELECT2
+     Class ID      : 57
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : GEELECT2
+     Class ID      : 61
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Cristover Vidal (ID: 67)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : MATH111
+     Class ID      : 86
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : Math 222
+     Class ID      : 150
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : MATH322
+     Class ID      : 151
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Danica Aba (ID: 68)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : TMC123
+     Class ID      : 96
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : TMC123
+     Class ID      : 99
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : TMC123
+     Class ID      : 100
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : TMFL2
+     Class ID      : 101
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Daisy Gabule (ID: 70)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : TMBME1
+     Class ID      : 101
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : CBMEC 321
+     Class ID      : 116
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : CBMEC 321
+     Class ID      : 117
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : CBMEC 321
+     Class ID      : 118
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Daryl Jakosalem (ID: 71)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : SS 121
+     Class ID      : 77
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Edison Bernaldez (ID: 72)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : SS 123
+     Class ID      : 76
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Eirene Canlom (ID: 73)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : P221
+     Class ID      : 103
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : P221
+     Class ID      : 106
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Ester Generale (ID: 75)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : ER328
+     Class ID      : 104
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ER328
+     Class ID      : 107
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ER328
+     Class ID      : 108
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Edison Molina (ID: 78)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : PHYSICS121
+     Class ID      : 72
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : PHYSICS121
+     Class ID      : 75
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Elioena Resma (ID: 79)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : TMBME2 NEW
+     Class ID      : 101
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Frincess Cajano (ID: 82)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : RR324
+     Class ID      : 104
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : RR324
+     Class ID      : 107
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : RR324
+     Class ID      : 108
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Felmark Levara (ID: 83)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.00 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : SS 122
+     Class ID      : 77
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : SPCOR3 NEW
+     Class ID      : 122
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : SPCOR3 NEW
+     Class ID      : 123
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : SPCOR3 NEW
+     Class ID      : 130
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : SPCOR3 NEW
+     Class ID      : 133
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Flonie Romulo (ID: 84)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : IT 321
+     Class ID      : 58
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IT 321
+     Class ID      : 59
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IT 321
+     Class ID      : 60
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : IT 321
+     Class ID      : 62
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : IS321
+     Class ID      : 89
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : IS321
+     Class ID      : 90
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Glenna Apostol (ID: 85)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : SS113
+     Class ID      : 111
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : SS113
+     Class ID      : 112
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : SS113
+     Class ID      : 113
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Grace Guanzon (ID: 86)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : FISH224
+     Class ID      : 65
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : FISH224
+     Class ID      : 69
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : FISH328
+     Class ID      : 70
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : FISH328
+     Class ID      : 71
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Girley Gumanao (ID: 87)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : MBELEC3
+     Class ID      : 73
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Glenne Lagura (ID: 89)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : PARES2
+     Class ID      : 124
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : PARES2
+     Class ID      : 125
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : PARES2
+     Class ID      : 131
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : PARES2
+     Class ID      : 134
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Gladys Bacsa (ID: 90)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : TMC225
+     Class ID      : 97
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : TMC226
+     Class ID      : 97
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : TMC225
+     Class ID      : 102
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : TMC226
+     Class ID      : 102
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Gretchen Olivar (ID: 93)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : IS222
+     Class ID      : 84
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IS222
+     Class ID      : 85
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IS222
+     Class ID      : 87
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : IS222
+     Class ID      : 88
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : ISSPEC5
+     Class ID      : 89
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : ISSPEC5
+     Class ID      : 90
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Gertrude Tampus (ID: 94)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : IS 121
+     Class ID      : 81
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IS 121
+     Class ID      : 82
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IS 121
+     Class ID      : 83
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : IS 121
+     Class ID      : 86
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Hazel Gameng (ID: 96)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.00 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : ISELEC3
+     Class ID      : 89
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ISELEC3
+     Class ID      : 90
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ISELEC3
+     Class ID      : 91
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : ISELEC3
+     Class ID      : 92
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : ISELEC3
+     Class ID      : 93
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Hannah Lolong (ID: 98)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : IT 221
+     Class ID      : 56
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IT 221
+     Class ID      : 57
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IT 324
+     Class ID      : 58
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : IT 324
+     Class ID      : 59
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : IT 323
+     Class ID      : 60
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : IT 324
+     Class ID      : 60
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Hannah Pamilgan (ID: 99)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : MATH321
+     Class ID      : 151
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Ian Padios (ID: 100)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.00 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : ISSPEC6
+     Class ID      : 89
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ISSPEC6
+     Class ID      : 90
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ISSPEC6
+     Class ID      : 91
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : ISSPEC6
+     Class ID      : 92
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : ISSPEC6
+     Class ID      : 93
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Ivy Lumangtad (ID: 102)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.00 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : ENTREP 124
+     Class ID      : 111
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ENTREP 124
+     Class ID      : 112
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ENTREP 124
+     Class ID      : 113
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : ST 221
+     Class ID      : 114
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : ST 221
+     Class ID      : 115
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Iris Salmorin (ID: 103)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : ST323
+     Class ID      : 116
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ST323
+     Class ID      : 117
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ST323
+     Class ID      : 118
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Ian Somosot (ID: 104)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : RES2T
+     Class ID      : 157
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : THE324
+     Class ID      : 157
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : RES2T
+     Class ID      : 158
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : THE324
+     Class ID      : 158
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Jay Esparcia (ID: 106)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : IT 221
+     Class ID      : 61
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IT 324
+     Class ID      : 62
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Jesebel Besas (ID: 109)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : FT RES 1
+     Class ID      : 78
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Jovito Bolacoy (ID: 110)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : ITSPEC1
+     Class ID      : 56
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ITSPEC1
+     Class ID      : 57
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ITSPEC1
+     Class ID      : 61
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : ISSPEC1
+     Class ID      : 84
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : ISSPEC1
+     Class ID      : 85
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : ISSPEC1
+     Class ID      : 87
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Jetro Bulawan (ID: 111)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : ENTREP 3213
+     Class ID      : 116
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ENTREP 3213
+     Class ID      : 117
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ENTREP 3213
+     Class ID      : 118
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Joan Alipoyo (ID: 112)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : MB 121
+     Class ID      : 72
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : MB 121
+     Class ID      : 75
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Jerico Catipay (ID: 113)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : PHYS 221
+     Class ID      : 80
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : SCI321
+     Class ID      : 141
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : SCI321
+     Class ID      : 142
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: John Saligan (ID: 115)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : ELEC 222
+     Class ID      : 114
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ELEC 222
+     Class ID      : 115
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Joannie Consarva (ID: 118)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : PM227
+     Class ID      : 103
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : PM227
+     Class ID      : 106
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Jay Gulanes (ID: 119)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : IT 223
+     Class ID      : 56
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IT 223
+     Class ID      : 57
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IT 223
+     Class ID      : 61
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : IT 323
+     Class ID      : 62
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Jezreyll Cabasag (ID: 120)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : MA221
+     Class ID      : 163
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : COMM322
+     Class ID      : 164
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : COMM323
+     Class ID      : 164
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Janela Las Duce (ID: 123)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : DRM 121
+     Class ID      : 105
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : DRM 121
+     Class ID      : 110
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: John Mercaral (ID: 125)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : IS 122
+     Class ID      : 81
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IS 122
+     Class ID      : 82
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IS 122
+     Class ID      : 83
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : IS 122
+     Class ID      : 86
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Jonette Mahinay (ID: 128)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : AH GEELECT3
+     Class ID      : 76
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Jonalyn Mamoso (ID: 129)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.00 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : THE222
+     Class ID      : 154
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : THE222
+     Class ID      : 155
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : THE323
+     Class ID      : 157
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : THE323
+     Class ID      : 158
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : THE222
+     Class ID      : 159
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Jeralyn Montaño (ID: 131)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : ISELEC1
+     Class ID      : 84
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ISELEC1
+     Class ID      : 85
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ISELEC1
+     Class ID      : 87
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : ISELEC1
+     Class ID      : 88
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : ISSPEC4
+     Class ID      : 89
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : ISSPEC4
+     Class ID      : 90
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Janine Rulona (ID: 133)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.33 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 1 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : EDUC 322
+     Class ID      : 141
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : EDUC 322
+     Class ID      : 142
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ENG 322 NEW
+     Class ID      : 146
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Jhun Vistal (ID: 134)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : P225
+     Class ID      : 103
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : PM228
+     Class ID      : 103
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : P225
+     Class ID      : 106
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : PM228
+     Class ID      : 106
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Julie Tadle (ID: 137)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : IS221
+     Class ID      : 84
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IS221
+     Class ID      : 85
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IS221
+     Class ID      : 87
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : IS221
+     Class ID      : 88
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Jerson Viagedor (ID: 140)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : IT 121
+     Class ID      : 52
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IT 121
+     Class ID      : 53
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IT 121
+     Class ID      : 54
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : IT 121
+     Class ID      : 55
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : TLE 121
+     Class ID      : 153
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : TLE 121
+     Class ID      : 156
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Karla Gumanao (ID: 141)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.00 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : TM223
+     Class ID      : 97
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : TM223
+     Class ID      : 102
+     Program ID    : 139
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ST324
+     Class ID      : 116
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : ST324
+     Class ID      : 117
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : ST324
+     Class ID      : 118
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Kimberly Solano (ID: 142)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.00 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : EDUC 121
+     Class ID      : 153
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : THE221
+     Class ID      : 154
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : THE221
+     Class ID      : 155
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : EDUC 121
+     Class ID      : 156
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : THE221
+     Class ID      : 159
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Kim Dodongan (ID: 143)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : MATH 122
+     Class ID      : 147
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : MATH 122
+     Class ID      : 149
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : Math 221
+     Class ID      : 150
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Kristine Gumanao (ID: 147)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : MB321
+     Class ID      : 73
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : MB221
+     Class ID      : 76
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Krillette Mahinay (ID: 148)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : SCIENCE200
+     Class ID      : 76
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Karl Amper (ID: 150)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : ENG121
+     Class ID      : 143
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Kimberly Sulla (ID: 152)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : Comm 121
+     Class ID      : 162
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : COMM222
+     Class ID      : 163
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : Comm 121
+     Class ID      : 166
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Lanie Gerodias-Albert (ID: 153)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.67 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 2 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : FISH225
+     Class ID      : 65
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : FISH226
+     Class ID      : 65
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  3. Course Code   : FISH225
+     Class ID      : 69
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : FISH226
+     Class ID      : 69
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  5. Course Code   : FISH327
+     Class ID      : 70
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Libh Limama (ID: 154)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : PA226
+     Class ID      : 122
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : PA226
+     Class ID      : 123
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : PA226
+     Class ID      : 130
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : PA226
+     Class ID      : 133
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Louie Bersano (ID: 155)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : Fish 122
+     Class ID      : 64
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : Fish 122
+     Class ID      : 67
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Leizel Esprela (ID: 156)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : STAT 221
+     Class ID      : 80
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Louray Bereber (ID: 157)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : P224
+     Class ID      : 103
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : DRM 122
+     Class ID      : 105
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : P224
+     Class ID      : 106
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : DRM 122
+     Class ID      : 110
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Lord Mondigo (ID: 159)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : FISHRES1
+     Class ID      : 70
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : FISHRES1
+     Class ID      : 71
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Lib Mapansa (ID: 162)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : MATH323
+     Class ID      : 151
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : MATH324
+     Class ID      : 151
+     Program ID    : 146
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Maiko Anicoy (ID: 164)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.33 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 1 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : EDUC 321A
+     Class ID      : 146
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Maybelyn Arcenio (ID: 165)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : P222
+     Class ID      : 103
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : P222
+     Class ID      : 106
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Mico Novecio (ID: 167)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.33 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 1 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : ENG 324 NEW
+     Class ID      : 146
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Mark Bangcaya (ID: 168)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : IT 322
+     Class ID      : 58
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IT 322
+     Class ID      : 59
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IT 322
+     Class ID      : 60
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : IT 322
+     Class ID      : 62
+     Program ID    : 137
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Michel Esmalla (ID: 171)
+--------------------------------------------------------------------------------
+Total Units Load      : 13.33 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 4 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : SCI323
+     Class ID      : 141
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  2. Course Code   : EDUC323
+     Class ID      : 141
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  3. Course Code   : SCI323
+     Class ID      : 142
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  4. Course Code   : EDUC323
+     Class ID      : 142
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Moses Albarico (ID: 174)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : Chem 100
+     Class ID      : 72
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : Chem 100
+     Class ID      : 75
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Maria Umbrosa (ID: 178)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : LIT 222
+     Class ID      : 144
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Marcel Dagohoy (ID: 179)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : PA224
+     Class ID      : 122
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : PA224
+     Class ID      : 123
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : PA224
+     Class ID      : 130
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : PA224
+     Class ID      : 133
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Mayka Dumagil (ID: 180)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.67 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 2 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : PE4 BSFAS
+     Class ID      : 65
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  2. Course Code   : PE4 BSFAS
+     Class ID      : 69
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Mary Pesania (ID: 181)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : Sci 121
+     Class ID      : 137
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : Sci 121
+     Class ID      : 139
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Maria Kasuyo (ID: 183)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : P223
+     Class ID      : 103
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : P223
+     Class ID      : 106
+     Program ID    : 140
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Mark Buladaco (ID: 184)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.00 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : IS223
+     Class ID      : 84
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IS223
+     Class ID      : 85
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IS223
+     Class ID      : 87
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : IS223
+     Class ID      : 88
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Nolie Guadalquiver (ID: 187)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.33 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 1 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : EDUC 221B
+     Class ID      : 154
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : EDUC 222B
+     Class ID      : 154
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : EDUC 221B
+     Class ID      : 155
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : EDUC 222B
+     Class ID      : 155
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : EDUC 321B
+     Class ID      : 157
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Nelma Loja (ID: 189)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : ISSPEC1
+     Class ID      : 88
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Nenito Toledo (ID: 191)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : FT 324
+     Class ID      : 78
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Princess Driz (ID: 192)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.33 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 1 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : ENG 325 NEW
+     Class ID      : 146
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Philip Paja (ID: 194)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : IS323
+     Class ID      : 89
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IS322
+     Class ID      : 89
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IS323
+     Class ID      : 90
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : IS322
+     Class ID      : 90
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : IS323
+     Class ID      : 91
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : IS322
+     Class ID      : 91
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Paquito Relox (ID: 195)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : FT 321
+     Class ID      : 78
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : FT 221
+     Class ID      : 80
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Roben Adjadan (ID: 197)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.33 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 1 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : TLE 122
+     Class ID      : 153
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : TLE221
+     Class ID      : 154
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : TLE221
+     Class ID      : 155
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : TLE 122
+     Class ID      : 156
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : THE321
+     Class ID      : 157
+     Program ID    : 148
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Ryan Balolot (ID: 200)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : TTL 2E
+     Class ID      : 144
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Ronald Decano (ID: 204)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : Math
+     Class ID      : 72
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : Math
+     Class ID      : 75
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Rafael Dela Peña (ID: 205)
+--------------------------------------------------------------------------------
+Total Units Load      : 15.00 units
+Total Lecture Hours   : 15 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 5
+
+Assigned Classes:
+  1. Course Code   : ISSPEC5
+     Class ID      : 91
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IS322
+     Class ID      : 92
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ISSPEC5
+     Class ID      : 92
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : IS322
+     Class ID      : 93
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : ISSPEC5
+     Class ID      : 93
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Rizalyn Duran (ID: 206)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.67 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 2 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : EDUC 222A
+     Class ID      : 140
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : SCI324
+     Class ID      : 141
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  3. Course Code   : SCI324
+     Class ID      : 142
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Romallie Galleto (ID: 207)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : PA3210
+     Class ID      : 124
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : PA3213
+     Class ID      : 124
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : PA3210
+     Class ID      : 125
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : PA3213
+     Class ID      : 125
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : PA3210
+     Class ID      : 131
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : PA3213
+     Class ID      : 131
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Rey Rebucas (ID: 208)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : EDUC 221A
+     Class ID      : 144
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Ria Tabinas (ID: 209)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : FT 121
+     Class ID      : 77
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Renel Jugarap (ID: 210)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : SCI222
+     Class ID      : 140
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Rosie Tejada (ID: 212)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.33 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 1 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : BIO323
+     Class ID      : 70
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : BIO323
+     Class ID      : 71
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : MBRES1
+     Class ID      : 73
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Roanne Anunciado (ID: 214)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : IS321
+     Class ID      : 91
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : IS321
+     Class ID      : 92
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : IS321
+     Class ID      : 93
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Rozel Asna (ID: 216)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.00 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : SS 113
+     Class ID      : 73
+     Program ID    : 135
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Resty Perote (ID: 219)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : CHM 121
+     Class ID      : 77
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : CHM 221
+     Class ID      : 80
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Sharmaine Cabugwason (ID: 223)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : ST 222
+     Class ID      : 114
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ST 222
+     Class ID      : 115
+     Program ID    : 141
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: SABAR HASAN (ID: 225)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.67 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 2 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : SCI322
+     Class ID      : 141
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  2. Course Code   : SCI322
+     Class ID      : 142
+     Program ID    : 144
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Saimehen Iluis (ID: 230)
+--------------------------------------------------------------------------------
+Total Units Load      : 12.67 units
+Total Lecture Hours   : 12 hours
+Total Laboratory Hours: 2 hours
+Number of Classes     : 4
+
+Assigned Classes:
+  1. Course Code   : COMM221
+     Class ID      : 163
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : COMM223
+     Class ID      : 163
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : COMM324
+     Class ID      : 164
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  4. Course Code   : TSD321
+     Class ID      : 164
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Sigfred Navasquez (ID: 234)
+--------------------------------------------------------------------------------
+Total Units Load      : 3.33 units
+Total Lecture Hours   : 3 hours
+Total Laboratory Hours: 1 hours
+Number of Classes     : 1
+
+Assigned Classes:
+  1. Course Code   : COMM325
+     Class ID      : 164
+     Program ID    : 147
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Stacey Monta (ID: 235)
+--------------------------------------------------------------------------------
+Total Units Load      : 9.00 units
+Total Lecture Hours   : 9 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 3
+
+Assigned Classes:
+  1. Course Code   : ISSPEC4
+     Class ID      : 91
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : ISSPEC4
+     Class ID      : 92
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : ISSPEC4
+     Class ID      : 93
+     Program ID    : 138
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Samsel Pampilon (ID: 238)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.33 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 1 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : ENG 221 NEW
+     Class ID      : 144
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : RES 2E
+     Class ID      : 146
+     Program ID    : 145
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Sol Sotomil (ID: 240)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.67 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 2 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : FISHELECT 5
+     Class ID      : 70
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+  2. Course Code   : FISHELECT 5
+     Class ID      : 71
+     Program ID    : 134
+     Lecture Hours : 3
+     Lab Hours     : 1
+     Units Load    : 3.33
+
+
+--------------------------------------------------------------------------------
+Faculty: Troy Ancho (ID: 241)
+--------------------------------------------------------------------------------
+Total Units Load      : 18.00 units
+Total Lecture Hours   : 18 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 6
+
+Assigned Classes:
+  1. Course Code   : PA225
+     Class ID      : 122
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : PA225
+     Class ID      : 123
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  3. Course Code   : PA3211
+     Class ID      : 124
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  4. Course Code   : SPCOR5
+     Class ID      : 124
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  5. Course Code   : PA3211
+     Class ID      : 125
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  6. Course Code   : SPCOR5
+     Class ID      : 125
+     Program ID    : 142
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+--------------------------------------------------------------------------------
+Faculty: Vanesa Cabasan (ID: 242)
+--------------------------------------------------------------------------------
+Total Units Load      : 6.00 units
+Total Lecture Hours   : 6 hours
+Total Laboratory Hours: 0 hours
+Number of Classes     : 2
+
+Assigned Classes:
+  1. Course Code   : FT 322
+     Class ID      : 78
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+  2. Course Code   : FT 323
+     Class ID      : 78
+     Program ID    : 136
+     Lecture Hours : 3
+     Lab Hours     : 0
+     Units Load    : 3.00
+
+
+
+================================================================================
+                              SUMMARY REPORT
+================================================================================
+
+April Acdal                              |  6 courses |  18.00 units | FULL
+Anselmo Anobong Jr.                      |  4 courses |  12.00 units | PARTIAL
+Ariel, Balio                             |  5 courses |  15.00 units | PARTIAL
+Alneza Bangasin                          |  6 courses |  18.00 units | FULL
+Arcelyn Basilisco                        |  5 courses |  15.00 units | PARTIAL
+Analyn Casipe                            |  6 courses |  18.00 units | FULL
+Anababes Catala                          |  4 courses |  12.67 units | PARTIAL
+Ann Cereno                               |  1 courses |   3.00 units | PARTIAL
+Ariel Gamao                              |  4 courses |  12.00 units | PARTIAL
+Aunel Guillergan                         |  5 courses |  15.00 units | PARTIAL
+Abdul Jamara                             |  1 courses |   3.00 units | PARTIAL
+Ariel Jumamil                            |  5 courses |  15.00 units | PARTIAL
+Aldrhiela Lonzaga                        |  4 courses |  12.00 units | PARTIAL
+Alje Canoy                               |  1 courses |   3.00 units | PARTIAL
+Analiza Pana                             |  6 courses |  18.00 units | FULL
+Ana Lagarto                              |  6 courses |  18.00 units | FULL
+Abel Sadji                               |  5 courses |  15.67 units | PARTIAL
+Alberto, Sumaoy                          |  4 courses |  12.00 units | PARTIAL
+Aleya Obeda                              |  6 courses |  18.00 units | FULL
+Bonita Cantere                           |  2 courses |   6.00 units | PARTIAL
+Bryan Macarayo                           |  3 courses |   9.00 units | PARTIAL
+Bryan Villarojo                          |  3 courses |   9.00 units | PARTIAL
+Boyeth Pelone                            |  5 courses |  15.00 units | PARTIAL
+Bernandita Rodriguez                     |  2 courses |   6.00 units | PARTIAL
+Benjie Solarte                           |  2 courses |   6.00 units | PARTIAL
+Cristopher Añana                         |  3 courses |   9.00 units | PARTIAL
+Crisalie Bacarro                         |  3 courses |   9.00 units | PARTIAL
+Carylmae Balmores                        |  6 courses |  18.00 units | FULL
+Carl Ganal                               |  2 courses |   6.00 units | PARTIAL
+Caressha Bernaldez                       |  6 courses |  18.00 units | FULL
+Claire Garcia                            |  6 courses |  18.00 units | FULL
+Christhelle Gerona                       |  3 courses |   9.00 units | PARTIAL
+Carl Castañeda                           |  3 courses |   9.67 units | PARTIAL
+Christina Lahaylahay                     |  2 courses |   6.00 units | PARTIAL
+Celeste Ligutom                          |  6 courses |  18.00 units | FULL
+Carlo Perez                              |  3 courses |   9.00 units | PARTIAL
+Criscire Palabrica                       |  1 courses |   3.00 units | PARTIAL
+Cyril Ranara                             |  2 courses |   6.00 units | PARTIAL
+Czarina Giangan                          |  3 courses |   9.00 units | PARTIAL
+Cristover Vidal                          |  3 courses |   9.00 units | PARTIAL
+Danica Aba                               |  4 courses |  12.00 units | PARTIAL
+Daisy Gabule                             |  4 courses |  12.00 units | PARTIAL
+Daryl Jakosalem                          |  1 courses |   3.00 units | PARTIAL
+Edison Bernaldez                         |  1 courses |   3.00 units | PARTIAL
+Eirene Canlom                            |  2 courses |   6.00 units | PARTIAL
+Ester Generale                           |  3 courses |   9.00 units | PARTIAL
+Edison Molina                            |  2 courses |   6.00 units | PARTIAL
+Elioena Resma                            |  1 courses |   3.00 units | PARTIAL
+Frincess Cajano                          |  3 courses |   9.00 units | PARTIAL
+Felmark Levara                           |  5 courses |  15.00 units | PARTIAL
+Flonie Romulo                            |  6 courses |  18.00 units | FULL
+Glenna Apostol                           |  3 courses |   9.00 units | PARTIAL
+Grace Guanzon                            |  4 courses |  12.00 units | PARTIAL
+Girley Gumanao                           |  1 courses |   3.00 units | PARTIAL
+Glenne Lagura                            |  4 courses |  12.00 units | PARTIAL
+Gladys Bacsa                             |  4 courses |  12.00 units | PARTIAL
+Gretchen Olivar                          |  6 courses |  18.00 units | FULL
+Gertrude Tampus                          |  4 courses |  12.00 units | PARTIAL
+Hazel Gameng                             |  5 courses |  15.00 units | PARTIAL
+Hannah Lolong                            |  6 courses |  18.00 units | FULL
+Hannah Pamilgan                          |  1 courses |   3.00 units | PARTIAL
+Ian Padios                               |  5 courses |  15.00 units | PARTIAL
+Ivy Lumangtad                            |  5 courses |  15.00 units | PARTIAL
+Iris Salmorin                            |  3 courses |   9.00 units | PARTIAL
+Ian Somosot                              |  4 courses |  12.00 units | PARTIAL
+Jay Esparcia                             |  2 courses |   6.00 units | PARTIAL
+Jesebel Besas                            |  1 courses |   3.00 units | PARTIAL
+Jovito Bolacoy                           |  6 courses |  18.00 units | FULL
+Jetro Bulawan                            |  3 courses |   9.00 units | PARTIAL
+Joan Alipoyo                             |  2 courses |   6.00 units | PARTIAL
+Jerico Catipay                           |  3 courses |   9.00 units | PARTIAL
+John Saligan                             |  2 courses |   6.00 units | PARTIAL
+Joannie Consarva                         |  2 courses |   6.00 units | PARTIAL
+Jay Gulanes                              |  4 courses |  12.00 units | PARTIAL
+Jezreyll Cabasag                         |  3 courses |   9.00 units | PARTIAL
+Janela Las Duce                          |  2 courses |   6.00 units | PARTIAL
+John Mercaral                            |  4 courses |  12.00 units | PARTIAL
+Jonette Mahinay                          |  1 courses |   3.00 units | PARTIAL
+Jonalyn Mamoso                           |  5 courses |  15.00 units | PARTIAL
+Jeralyn Montaño                          |  6 courses |  18.00 units | FULL
+Janine Rulona                            |  3 courses |   9.33 units | PARTIAL
+Jhun Vistal                              |  4 courses |  12.00 units | PARTIAL
+Julie Tadle                              |  4 courses |  12.00 units | PARTIAL
+Jerson Viagedor                          |  6 courses |  18.00 units | FULL
+Karla Gumanao                            |  5 courses |  15.00 units | PARTIAL
+Kimberly Solano                          |  5 courses |  15.00 units | PARTIAL
+Kim Dodongan                             |  3 courses |   9.00 units | PARTIAL
+Kristine Gumanao                         |  2 courses |   6.00 units | PARTIAL
+Krillette Mahinay                        |  1 courses |   3.00 units | PARTIAL
+Karl Amper                               |  1 courses |   3.00 units | PARTIAL
+Kimberly Sulla                           |  3 courses |   9.00 units | PARTIAL
+Lanie Gerodias-Albert                    |  5 courses |  15.67 units | PARTIAL
+Libh Limama                              |  4 courses |  12.00 units | PARTIAL
+Louie Bersano                            |  2 courses |   6.00 units | PARTIAL
+Leizel Esprela                           |  1 courses |   3.00 units | PARTIAL
+Louray Bereber                           |  4 courses |  12.00 units | PARTIAL
+Lord Mondigo                             |  2 courses |   6.00 units | PARTIAL
+Lib Mapansa                              |  2 courses |   6.00 units | PARTIAL
+Maiko Anicoy                             |  1 courses |   3.33 units | PARTIAL
+Maybelyn Arcenio                         |  2 courses |   6.00 units | PARTIAL
+Mico Novecio                             |  1 courses |   3.33 units | PARTIAL
+Mark Bangcaya                            |  4 courses |  12.00 units | PARTIAL
+Michel Esmalla                           |  4 courses |  13.33 units | PARTIAL
+Moses Albarico                           |  2 courses |   6.00 units | PARTIAL
+Maria Umbrosa                            |  1 courses |   3.00 units | PARTIAL
+Marcel Dagohoy                           |  4 courses |  12.00 units | PARTIAL
+Mayka Dumagil                            |  2 courses |   6.67 units | PARTIAL
+Mary Pesania                             |  2 courses |   6.00 units | PARTIAL
+Maria Kasuyo                             |  2 courses |   6.00 units | PARTIAL
+Mark Buladaco                            |  4 courses |  12.00 units | PARTIAL
+Nolie Guadalquiver                       |  5 courses |  15.33 units | PARTIAL
+Nelma Loja                               |  1 courses |   3.00 units | PARTIAL
+Nenito Toledo                            |  1 courses |   3.00 units | PARTIAL
+Princess Driz                            |  1 courses |   3.33 units | PARTIAL
+Philip Paja                              |  6 courses |  18.00 units | FULL
+Paquito Relox                            |  2 courses |   6.00 units | PARTIAL
+Roben Adjadan                            |  5 courses |  15.33 units | PARTIAL
+Ryan Balolot                             |  1 courses |   3.00 units | PARTIAL
+Ronald Decano                            |  2 courses |   6.00 units | PARTIAL
+Rafael Dela Peña                         |  5 courses |  15.00 units | PARTIAL
+Rizalyn Duran                            |  3 courses |   9.67 units | PARTIAL
+Romallie Galleto                         |  6 courses |  18.00 units | FULL
+Rey Rebucas                              |  1 courses |   3.00 units | PARTIAL
+Ria Tabinas                              |  1 courses |   3.00 units | PARTIAL
+Renel Jugarap                            |  1 courses |   3.00 units | PARTIAL
+Rosie Tejada                             |  3 courses |   9.33 units | PARTIAL
+Roanne Anunciado                         |  3 courses |   9.00 units | PARTIAL
+Rozel Asna                               |  1 courses |   3.00 units | PARTIAL
+Resty Perote                             |  2 courses |   6.00 units | PARTIAL
+Sharmaine Cabugwason                     |  2 courses |   6.00 units | PARTIAL
+SABAR HASAN                              |  2 courses |   6.67 units | PARTIAL
+Saimehen Iluis                           |  4 courses |  12.67 units | PARTIAL
+Sigfred Navasquez                        |  1 courses |   3.33 units | PARTIAL
+Stacey Monta                             |  3 courses |   9.00 units | PARTIAL
+Samsel Pampilon                          |  2 courses |   6.33 units | PARTIAL
+Sol Sotomil                              |  2 courses |   6.67 units | PARTIAL
+Troy Ancho                               |  6 courses |  18.00 units | FULL
+Vanesa Cabasan                           |  2 courses |   6.00 units | PARTIAL
+
+--------------------------------------------------------------------------------
+Total Faculty with Assignments   : 138
+Total Faculty without Assignments: 99
+================================================================================

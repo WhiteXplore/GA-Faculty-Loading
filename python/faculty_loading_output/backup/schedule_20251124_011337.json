@@ -1,0 +1,3358 @@
+{
+  "metadata": {
+    "generated_at": "2025-11-24 01:13:37",
+    "total_scheduled": 0,
+    "total_unscheduled": 477,
+    "days": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "start_hour": 8,
+    "end_hour": 21
+  },
+  "scheduled_meetings": [],
+  "unscheduled_meetings": [
+    {
+      "class_id": 104,
+      "course_code": "RR325",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 104,
+      "course_code": "ER327",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 107,
+      "course_code": "RR325",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 107,
+      "course_code": "ER327",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 108,
+      "course_code": "RR325",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 108,
+      "course_code": "ER327",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 73,
+      "course_code": "MB322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 96,
+      "course_code": "GEELECT1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 99,
+      "course_code": "GEELECT1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 100,
+      "course_code": "GEELECT1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 154,
+      "course_code": "THE223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 155,
+      "course_code": "THE223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 157,
+      "course_code": "THE326",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 158,
+      "course_code": "THE326",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 159,
+      "course_code": "THE223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 81,
+      "course_code": "ENG111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 82,
+      "course_code": "ENG111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 83,
+      "course_code": "ENG111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 86,
+      "course_code": "ENG111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 143,
+      "course_code": "LIT121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 144,
+      "course_code": "LIT 223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 80,
+      "course_code": "FT 222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 101,
+      "course_code": "TMBC325",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 111,
+      "course_code": "ENTREP 123",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 112,
+      "course_code": "ENTREP 123",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 113,
+      "course_code": "ENTREP 123",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 52,
+      "course_code": "IT Elec1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 53,
+      "course_code": "IT Elec1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 54,
+      "course_code": "IT Elec1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 55,
+      "course_code": "IT Elec1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 58,
+      "course_code": "IT 323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 59,
+      "course_code": "IT 323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 65,
+      "course_code": "STAT",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 65,
+      "course_code": "STAT",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 69,
+      "course_code": "STAT",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 69,
+      "course_code": "STAT",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 150,
+      "course_code": "TTL2M",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 150,
+      "course_code": "MATH 212",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 140,
+      "course_code": "SCI221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 58,
+      "course_code": "ITSPEC3",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 59,
+      "course_code": "ITSPEC3",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 60,
+      "course_code": "ITSPEC3",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 62,
+      "course_code": "ITSPEC3",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 96,
+      "course_code": "TM121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 99,
+      "course_code": "TM121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 100,
+      "course_code": "TM121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 101,
+      "course_code": "TM325",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 101,
+      "course_code": "TMELECT4 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 151,
+      "course_code": "RES2M",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 154,
+      "course_code": "TTL 2B",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 155,
+      "course_code": "TTL 2B",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 157,
+      "course_code": "THE322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 158,
+      "course_code": "THE322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 159,
+      "course_code": "TTL 2B",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 58,
+      "course_code": "ITSPEC4",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 59,
+      "course_code": "ITSPEC4",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 60,
+      "course_code": "ITSPEC4",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 62,
+      "course_code": "ITSPEC4",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 77,
+      "course_code": "STS 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 52,
+      "course_code": "Math 111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 53,
+      "course_code": "Math 111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 54,
+      "course_code": "Math 111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 55,
+      "course_code": "Math 111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 147,
+      "course_code": "MATH 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 149,
+      "course_code": "MATH 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 64,
+      "course_code": "GEELECT3",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 67,
+      "course_code": "GEELECT3",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 124,
+      "course_code": "PA3212",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 125,
+      "course_code": "PA3212",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 131,
+      "course_code": "PA3212",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 134,
+      "course_code": "PA3212",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 64,
+      "course_code": "MATH 6",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 64,
+      "course_code": "MATH 6",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 67,
+      "course_code": "MATH 6",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 67,
+      "course_code": "MATH 6",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 81,
+      "course_code": "MATH111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 82,
+      "course_code": "MATH111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 83,
+      "course_code": "MATH111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 97,
+      "course_code": "TMBC223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 102,
+      "course_code": "TMBC223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 114,
+      "course_code": "ELEC 221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 115,
+      "course_code": "ELEC 221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 122,
+      "course_code": "PAELEC2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 122,
+      "course_code": "SPCOR2 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 123,
+      "course_code": "PAELEC2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 123,
+      "course_code": "SPCOR2 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 130,
+      "course_code": "PAELEC2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 130,
+      "course_code": "SPCOR2 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 105,
+      "course_code": "SS 112",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 110,
+      "course_code": "SS 112",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 116,
+      "course_code": "ENTREP 3212",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 117,
+      "course_code": "ENTREP 3212",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 118,
+      "course_code": "ENTREP 3212",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 140,
+      "course_code": "TTL 2S",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 141,
+      "course_code": "RES2S",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 142,
+      "course_code": "RES2S",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 104,
+      "course_code": "DRMRES1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 105,
+      "course_code": "SCI121_DRM",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 107,
+      "course_code": "DRMRES1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 108,
+      "course_code": "DRMRES1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 110,
+      "course_code": "SCI121_DRM",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 70,
+      "course_code": "FISH326",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 71,
+      "course_code": "FISH326",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 137,
+      "course_code": "Sci 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 139,
+      "course_code": "Sci 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 56,
+      "course_code": "IT 222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 57,
+      "course_code": "IT 222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 61,
+      "course_code": "IT 222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 97,
+      "course_code": "TMELECT2 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 101,
+      "course_code": "TMC328",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 102,
+      "course_code": "TMELECT2 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 72,
+      "course_code": "PE2 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 75,
+      "course_code": "PE2 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 81,
+      "course_code": "PE2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 82,
+      "course_code": "PE2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 83,
+      "course_code": "PE2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 86,
+      "course_code": "PE2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 163,
+      "course_code": "MA222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 164,
+      "course_code": "COMM321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 80,
+      "course_code": "PE4",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 56,
+      "course_code": "PE 4",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 57,
+      "course_code": "PE 4",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 61,
+      "course_code": "PE 4",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 114,
+      "course_code": "PE 224",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 115,
+      "course_code": "PE 224",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 52,
+      "course_code": "Eng 111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 53,
+      "course_code": "Eng 111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 54,
+      "course_code": "Eng 111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 55,
+      "course_code": "Eng 111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 144,
+      "course_code": "LIT 221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 146,
+      "course_code": "ENG 323 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 104,
+      "course_code": "RR323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 107,
+      "course_code": "RR323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 108,
+      "course_code": "RR323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 72,
+      "course_code": "Bio 104",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 72,
+      "course_code": "Bio 104",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 75,
+      "course_code": "Bio 104",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 75,
+      "course_code": "Bio 104",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 76,
+      "course_code": "MBELEC1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 64,
+      "course_code": "Bio 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 67,
+      "course_code": "Bio 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 147,
+      "course_code": "FIL2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 149,
+      "course_code": "FIL2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 162,
+      "course_code": "LIT2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 162,
+      "course_code": "Fil 2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 166,
+      "course_code": "LIT2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 166,
+      "course_code": "Fil 2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 111,
+      "course_code": "PE 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 112,
+      "course_code": "PE 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 113,
+      "course_code": "PE 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 140,
+      "course_code": "SCI223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 64,
+      "course_code": "Fish 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 67,
+      "course_code": "Fish 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 56,
+      "course_code": "GEELECT2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 57,
+      "course_code": "GEELECT2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 61,
+      "course_code": "GEELECT2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 86,
+      "course_code": "MATH111",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 150,
+      "course_code": "Math 222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 151,
+      "course_code": "MATH322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 96,
+      "course_code": "TMC123",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 99,
+      "course_code": "TMC123",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 100,
+      "course_code": "TMC123",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 101,
+      "course_code": "TMFL2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 101,
+      "course_code": "TMBME1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 116,
+      "course_code": "CBMEC 321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 117,
+      "course_code": "CBMEC 321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 118,
+      "course_code": "CBMEC 321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 77,
+      "course_code": "SS 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 76,
+      "course_code": "SS 123",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 103,
+      "course_code": "P221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 106,
+      "course_code": "P221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 104,
+      "course_code": "ER328",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 107,
+      "course_code": "ER328",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 108,
+      "course_code": "ER328",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 72,
+      "course_code": "PHYSICS121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 75,
+      "course_code": "PHYSICS121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 101,
+      "course_code": "TMBME2 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 104,
+      "course_code": "RR324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 107,
+      "course_code": "RR324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 108,
+      "course_code": "RR324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 77,
+      "course_code": "SS 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 122,
+      "course_code": "SPCOR3 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 123,
+      "course_code": "SPCOR3 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 130,
+      "course_code": "SPCOR3 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 133,
+      "course_code": "SPCOR3 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 58,
+      "course_code": "IT 321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 59,
+      "course_code": "IT 321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 60,
+      "course_code": "IT 321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 62,
+      "course_code": "IT 321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 89,
+      "course_code": "IS321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 90,
+      "course_code": "IS321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 111,
+      "course_code": "SS113",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 112,
+      "course_code": "SS113",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 113,
+      "course_code": "SS113",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 65,
+      "course_code": "FISH224",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 69,
+      "course_code": "FISH224",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 70,
+      "course_code": "FISH328",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 71,
+      "course_code": "FISH328",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 73,
+      "course_code": "MBELEC3",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 124,
+      "course_code": "PARES2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 125,
+      "course_code": "PARES2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 131,
+      "course_code": "PARES2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 134,
+      "course_code": "PARES2",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 97,
+      "course_code": "TMC225",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 97,
+      "course_code": "TMC226",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 102,
+      "course_code": "TMC225",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 102,
+      "course_code": "TMC226",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 84,
+      "course_code": "IS222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 85,
+      "course_code": "IS222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 87,
+      "course_code": "IS222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 88,
+      "course_code": "IS222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 89,
+      "course_code": "ISSPEC5",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 90,
+      "course_code": "ISSPEC5",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 81,
+      "course_code": "IS 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 82,
+      "course_code": "IS 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 83,
+      "course_code": "IS 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 86,
+      "course_code": "IS 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 89,
+      "course_code": "ISELEC3",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 90,
+      "course_code": "ISELEC3",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 91,
+      "course_code": "ISELEC3",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 92,
+      "course_code": "ISELEC3",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 93,
+      "course_code": "ISELEC3",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 56,
+      "course_code": "IT 221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 57,
+      "course_code": "IT 221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 58,
+      "course_code": "IT 324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 59,
+      "course_code": "IT 324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 60,
+      "course_code": "IT 323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 60,
+      "course_code": "IT 324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 151,
+      "course_code": "MATH321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 89,
+      "course_code": "ISSPEC6",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 90,
+      "course_code": "ISSPEC6",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 91,
+      "course_code": "ISSPEC6",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 92,
+      "course_code": "ISSPEC6",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 93,
+      "course_code": "ISSPEC6",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 111,
+      "course_code": "ENTREP 124",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 112,
+      "course_code": "ENTREP 124",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 113,
+      "course_code": "ENTREP 124",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 114,
+      "course_code": "ST 221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 115,
+      "course_code": "ST 221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 116,
+      "course_code": "ST323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 117,
+      "course_code": "ST323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 118,
+      "course_code": "ST323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 157,
+      "course_code": "RES2T",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 157,
+      "course_code": "THE324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 158,
+      "course_code": "RES2T",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 158,
+      "course_code": "THE324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 61,
+      "course_code": "IT 221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 62,
+      "course_code": "IT 324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 78,
+      "course_code": "FT RES 1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 56,
+      "course_code": "ITSPEC1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 57,
+      "course_code": "ITSPEC1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 61,
+      "course_code": "ITSPEC1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 84,
+      "course_code": "ISSPEC1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 85,
+      "course_code": "ISSPEC1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 87,
+      "course_code": "ISSPEC1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 116,
+      "course_code": "ENTREP 3213",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 117,
+      "course_code": "ENTREP 3213",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 118,
+      "course_code": "ENTREP 3213",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 72,
+      "course_code": "MB 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 75,
+      "course_code": "MB 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 80,
+      "course_code": "PHYS 221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 141,
+      "course_code": "SCI321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 142,
+      "course_code": "SCI321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 114,
+      "course_code": "ELEC 222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 115,
+      "course_code": "ELEC 222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 103,
+      "course_code": "PM227",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 106,
+      "course_code": "PM227",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 56,
+      "course_code": "IT 223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 57,
+      "course_code": "IT 223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 61,
+      "course_code": "IT 223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 62,
+      "course_code": "IT 323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 163,
+      "course_code": "MA221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 164,
+      "course_code": "COMM322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 164,
+      "course_code": "COMM323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 105,
+      "course_code": "DRM 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 110,
+      "course_code": "DRM 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 81,
+      "course_code": "IS 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 82,
+      "course_code": "IS 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 83,
+      "course_code": "IS 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 86,
+      "course_code": "IS 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 76,
+      "course_code": "AH GEELECT3",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 154,
+      "course_code": "THE222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 155,
+      "course_code": "THE222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 157,
+      "course_code": "THE323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 158,
+      "course_code": "THE323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 159,
+      "course_code": "THE222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 84,
+      "course_code": "ISELEC1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 85,
+      "course_code": "ISELEC1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 87,
+      "course_code": "ISELEC1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 88,
+      "course_code": "ISELEC1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 89,
+      "course_code": "ISSPEC4",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 90,
+      "course_code": "ISSPEC4",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 141,
+      "course_code": "EDUC 322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 142,
+      "course_code": "EDUC 322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 146,
+      "course_code": "ENG 322 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 146,
+      "course_code": "ENG 322 NEW",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 103,
+      "course_code": "P225",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 103,
+      "course_code": "PM228",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 106,
+      "course_code": "P225",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 106,
+      "course_code": "PM228",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 84,
+      "course_code": "IS221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 85,
+      "course_code": "IS221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 87,
+      "course_code": "IS221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 88,
+      "course_code": "IS221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 52,
+      "course_code": "IT 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 53,
+      "course_code": "IT 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 54,
+      "course_code": "IT 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 55,
+      "course_code": "IT 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 153,
+      "course_code": "TLE 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 156,
+      "course_code": "TLE 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 97,
+      "course_code": "TM223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 102,
+      "course_code": "TM223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 116,
+      "course_code": "ST324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 117,
+      "course_code": "ST324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 118,
+      "course_code": "ST324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 153,
+      "course_code": "EDUC 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 154,
+      "course_code": "THE221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 155,
+      "course_code": "THE221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 156,
+      "course_code": "EDUC 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 159,
+      "course_code": "THE221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 147,
+      "course_code": "MATH 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 149,
+      "course_code": "MATH 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 150,
+      "course_code": "Math 221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 73,
+      "course_code": "MB321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 76,
+      "course_code": "MB221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 76,
+      "course_code": "SCIENCE200",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 143,
+      "course_code": "ENG121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 162,
+      "course_code": "Comm 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 163,
+      "course_code": "COMM222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 166,
+      "course_code": "Comm 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 65,
+      "course_code": "FISH225",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 65,
+      "course_code": "FISH226",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 65,
+      "course_code": "FISH226",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 69,
+      "course_code": "FISH225",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 69,
+      "course_code": "FISH226",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 69,
+      "course_code": "FISH226",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 70,
+      "course_code": "FISH327",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 122,
+      "course_code": "PA226",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 123,
+      "course_code": "PA226",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 130,
+      "course_code": "PA226",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 133,
+      "course_code": "PA226",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 64,
+      "course_code": "Fish 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 67,
+      "course_code": "Fish 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 80,
+      "course_code": "STAT 221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 103,
+      "course_code": "P224",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 105,
+      "course_code": "DRM 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 106,
+      "course_code": "P224",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 110,
+      "course_code": "DRM 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 70,
+      "course_code": "FISHRES1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 71,
+      "course_code": "FISHRES1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 151,
+      "course_code": "MATH323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 151,
+      "course_code": "MATH324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 146,
+      "course_code": "EDUC 321A",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 146,
+      "course_code": "EDUC 321A",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 103,
+      "course_code": "P222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 106,
+      "course_code": "P222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 146,
+      "course_code": "ENG 324 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 146,
+      "course_code": "ENG 324 NEW",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 58,
+      "course_code": "IT 322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 59,
+      "course_code": "IT 322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 60,
+      "course_code": "IT 322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 62,
+      "course_code": "IT 322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 141,
+      "course_code": "SCI323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 141,
+      "course_code": "SCI323",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 141,
+      "course_code": "EDUC323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 141,
+      "course_code": "EDUC323",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 142,
+      "course_code": "SCI323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 142,
+      "course_code": "SCI323",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 142,
+      "course_code": "EDUC323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 142,
+      "course_code": "EDUC323",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 72,
+      "course_code": "Chem 100",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 75,
+      "course_code": "Chem 100",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 144,
+      "course_code": "LIT 222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 122,
+      "course_code": "PA224",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 123,
+      "course_code": "PA224",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 130,
+      "course_code": "PA224",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 133,
+      "course_code": "PA224",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 65,
+      "course_code": "PE4 BSFAS",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 65,
+      "course_code": "PE4 BSFAS",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 69,
+      "course_code": "PE4 BSFAS",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 69,
+      "course_code": "PE4 BSFAS",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 137,
+      "course_code": "Sci 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 139,
+      "course_code": "Sci 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 103,
+      "course_code": "P223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 106,
+      "course_code": "P223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 84,
+      "course_code": "IS223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 85,
+      "course_code": "IS223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 87,
+      "course_code": "IS223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 88,
+      "course_code": "IS223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 154,
+      "course_code": "EDUC 221B",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 154,
+      "course_code": "EDUC 222B",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 155,
+      "course_code": "EDUC 221B",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 155,
+      "course_code": "EDUC 222B",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 157,
+      "course_code": "EDUC 321B",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 157,
+      "course_code": "EDUC 321B",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 88,
+      "course_code": "ISSPEC1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 78,
+      "course_code": "FT 324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 146,
+      "course_code": "ENG 325 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 146,
+      "course_code": "ENG 325 NEW",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 89,
+      "course_code": "IS323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 89,
+      "course_code": "IS322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 90,
+      "course_code": "IS323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 90,
+      "course_code": "IS322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 91,
+      "course_code": "IS323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 91,
+      "course_code": "IS322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 78,
+      "course_code": "FT 321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 80,
+      "course_code": "FT 221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 153,
+      "course_code": "TLE 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 154,
+      "course_code": "TLE221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 155,
+      "course_code": "TLE221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 156,
+      "course_code": "TLE 122",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 157,
+      "course_code": "THE321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 157,
+      "course_code": "THE321",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 144,
+      "course_code": "TTL 2E",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 72,
+      "course_code": "Math",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 75,
+      "course_code": "Math",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 91,
+      "course_code": "ISSPEC5",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 92,
+      "course_code": "IS322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 92,
+      "course_code": "ISSPEC5",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 93,
+      "course_code": "IS322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 93,
+      "course_code": "ISSPEC5",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 140,
+      "course_code": "EDUC 222A",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 141,
+      "course_code": "SCI324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 141,
+      "course_code": "SCI324",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 142,
+      "course_code": "SCI324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 142,
+      "course_code": "SCI324",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 124,
+      "course_code": "PA3210",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 124,
+      "course_code": "PA3213",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 125,
+      "course_code": "PA3210",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 125,
+      "course_code": "PA3213",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 131,
+      "course_code": "PA3210",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 131,
+      "course_code": "PA3213",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 144,
+      "course_code": "EDUC 221A",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 77,
+      "course_code": "FT 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 140,
+      "course_code": "SCI222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 70,
+      "course_code": "BIO323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 71,
+      "course_code": "BIO323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 73,
+      "course_code": "MBRES1",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 73,
+      "course_code": "MBRES1",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 91,
+      "course_code": "IS321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 92,
+      "course_code": "IS321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 93,
+      "course_code": "IS321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 73,
+      "course_code": "SS 113",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 77,
+      "course_code": "CHM 121",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 80,
+      "course_code": "CHM 221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 114,
+      "course_code": "ST 222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 115,
+      "course_code": "ST 222",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 141,
+      "course_code": "SCI322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 141,
+      "course_code": "SCI322",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 142,
+      "course_code": "SCI322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 142,
+      "course_code": "SCI322",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 163,
+      "course_code": "COMM221",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 163,
+      "course_code": "COMM223",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 164,
+      "course_code": "COMM324",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 164,
+      "course_code": "COMM324",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 164,
+      "course_code": "TSD321",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 164,
+      "course_code": "TSD321",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 164,
+      "course_code": "COMM325",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 164,
+      "course_code": "COMM325",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 91,
+      "course_code": "ISSPEC4",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 92,
+      "course_code": "ISSPEC4",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 93,
+      "course_code": "ISSPEC4",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 144,
+      "course_code": "ENG 221 NEW",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 146,
+      "course_code": "RES 2E",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 146,
+      "course_code": "RES 2E",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 70,
+      "course_code": "FISHELECT 5",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 70,
+      "course_code": "FISHELECT 5",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 71,
+      "course_code": "FISHELECT 5",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 71,
+      "course_code": "FISHELECT 5",
+      "type": "Laboratory",
+      "hours": 1,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 122,
+      "course_code": "PA225",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 123,
+      "course_code": "PA225",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 124,
+      "course_code": "PA3211",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 124,
+      "course_code": "SPCOR5",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 125,
+      "course_code": "PA3211",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 125,
+      "course_code": "SPCOR5",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 78,
+      "course_code": "FT 322",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    },
+    {
+      "class_id": 78,
+      "course_code": "FT 323",
+      "type": "Lecture",
+      "hours": 3,
+      "reason": "No available room/time slot found"
+    }
+  ]
+}

@@ -24,7 +24,7 @@ ROOM REQUIREMENTS:
  - Room must be available and conflict-free with all existing schedules
 
 TIME SLOT CONSTRAINTS:
- - Classes run from 8 AM to 6 PM (10 time slots per day)
+ - Classes run from 8 AM to 9 PM
  - 5 days per week (Monday to Friday)
  - No overnight or multi-day classes allowed
  - Classes must fit within available time slots
@@ -952,62 +952,62 @@ def fetch_table_data(table):
 # Example usage
 if __name__ == "__main__":
     # Load your data from database
-    # rooms_table = Table("rooms", metadata, autoload_with=engine)
-    # faculty_table = Table("faculty", metadata, autoload_with=engine)
-    # faculty_expertise_table = Table(
-    #     "faculty_expertise", metadata, autoload_with=engine)
-    # courses_table = Table("course_view", metadata, autoload_with=engine)
-    # classes_table = Table("classes", metadata, autoload_with=engine)
-    # program_year_courses_table = Table(
-    #     "program_year_course_view", metadata, autoload_with=engine)
+    rooms_table = Table("rooms", metadata, autoload_with=engine)
+    faculty_table = Table("faculty", metadata, autoload_with=engine)
+    faculty_expertise_table = Table(
+        "faculty_expertise", metadata, autoload_with=engine)
+    courses_table = Table("course_view", metadata, autoload_with=engine)
+    classes_table = Table("classes", metadata, autoload_with=engine)
+    program_year_courses_table = Table(
+        "program_year_course_view", metadata, autoload_with=engine)
 
-    # rooms = fetch_table_data(rooms_table)
-    # faculty = fetch_table_data(faculty_table)
-    # faculty_expertise = fetch_table_data(faculty_expertise_table)
-    # courses = fetch_table_data(courses_table)
-    # classes = fetch_table_data(classes_table)
-    # program_year_courses = fetch_table_data(program_year_courses_table)
+    rooms = fetch_table_data(rooms_table)
+    faculty = fetch_table_data(faculty_table)
+    faculty_expertise = fetch_table_data(faculty_expertise_table)
+    courses = fetch_table_data(courses_table)
+    classes = fetch_table_data(classes_table)
+    program_year_courses = fetch_table_data(program_year_courses_table)
 
-    rooms = [
-        {"room_id": 2, "institute_id": 2, "room_capacity": 213213, "room_type": "Laboratory", "room_name": "Lab-1"},
-        {"room_id": 3, "institute_id": 2, "room_capacity": 45, "room_type": "Lecture", "room_name": "Room-301"},
-        {"room_id": 4, "institute_id": 2, "room_capacity": 41, "room_type": "Lecture", "room_name": "IC-1"}
-    ]
+    # rooms = [
+    #     {"room_id": 2, "institute_id": 2, "room_capacity": 213213, "room_type": "Laboratory", "room_name": "Lab-1"},
+    #     {"room_id": 3, "institute_id": 2, "room_capacity": 45, "room_type": "Lecture", "room_name": "Room-301"},
+    #     {"room_id": 4, "institute_id": 2, "room_capacity": 41, "room_type": "Lecture", "room_name": "IC-1"}
+    # ]
 
-    faculty = [
-        {"faculty_id": 2, "user_accounts_id": 2, "name": "Sigfred Navasquez", "institute_id": 2, "program_id": 31},
-        {"faculty_id": 11, "user_accounts_id": 11, "name": "Maria Flora", "institute_id": 2, "program_id": 31},
-        {"faculty_id": 15, "user_accounts_id": 15, "name": "IT1 Faculty", "institute_id": 2, "program_id": 31}
-    ]
+    # faculty = [
+    #     {"faculty_id": 2, "user_accounts_id": 2, "name": "Sigfred Navasquez", "institute_id": 2, "program_id": 31},
+    #     {"faculty_id": 11, "user_accounts_id": 11, "name": "Maria Flora", "institute_id": 2, "program_id": 31},
+    #     {"faculty_id": 15, "user_accounts_id": 15, "name": "IT1 Faculty", "institute_id": 2, "program_id": 31}
+    # ]
 
-    faculty_expertise = [
-        {"faculty_id": 2, "course_id": 11},
-        {"faculty_id": 2, "course_id": 13},
-        {"faculty_id": 2, "course_id": 9},
-        {"faculty_id": 11, "course_id": 9},
-        {"faculty_id": 11, "course_id": 11},
-        {"faculty_id": 11, "course_id": 13},
-        {"faculty_id": 15, "course_id": 9},
-        {"faculty_id": 15, "course_id": 13}
-    ]
+    # faculty_expertise = [
+    #     {"faculty_id": 2, "course_id": 11},
+    #     {"faculty_id": 2, "course_id": 13},
+    #     {"faculty_id": 2, "course_id": 9},
+    #     {"faculty_id": 11, "course_id": 9},
+    #     {"faculty_id": 11, "course_id": 11},
+    #     {"faculty_id": 11, "course_id": 13},
+    #     {"faculty_id": 15, "course_id": 9},
+    #     {"faculty_id": 15, "course_id": 13}
+    # ]
 
-    courses = [
-        {"course_id": 9, "program_id": 31, "course_code": "IT 111", "course_lecture": 3, "course_laboratory": 1},
-        {"course_id": 11, "program_id": 31, "course_code": "IT 112", "course_lecture": 2, "course_laboratory": 1},
-        {"course_id": 13, "program_id": 31, "course_code": "NSTP1", "course_lecture": 3, "course_laboratory": 0},
-        {"course_id": 15, "program_id": 31, "course_code": "SS 111", "course_lecture": 3, "course_laboratory": 0},
-        {"course_id": 16, "program_id": 31, "course_code": "SS 112", "course_lecture": 3, "course_laboratory": 0}
-    ]
+    # courses = [
+    #     {"course_id": 9, "program_id": 31, "course_code": "IT 111", "course_lecture": 3, "course_laboratory": 1},
+    #     {"course_id": 11, "program_id": 31, "course_code": "IT 112", "course_lecture": 2, "course_laboratory": 1},
+    #     {"course_id": 13, "program_id": 31, "course_code": "NSTP1", "course_lecture": 3, "course_laboratory": 0},
+    #     {"course_id": 15, "program_id": 31, "course_code": "SS 111", "course_lecture": 3, "course_laboratory": 0},
+    #     {"course_id": 16, "program_id": 31, "course_code": "SS 112", "course_lecture": 3, "course_laboratory": 0}
+    # ]
 
-    classes = [
-        {"class_id": 14, "school_year_id": 1, "program_id": 31, "set_name": "1st Year - A", "class_size": 34},
-        {"class_id": 18, "school_year_id": 1, "program_id": 31, "set_name": "1st Year - B", "class_size": 35}
-    ]
+    # classes = [
+    #     {"class_id": 14, "school_year_id": 1, "program_id": 31, "set_name": "1st Year - A", "class_size": 34},
+    #     {"class_id": 18, "school_year_id": 1, "program_id": 31, "set_name": "1st Year - B", "class_size": 35}
+    # ]
 
-    program_year_courses = [
-        {"id": 18, "program_id": 31, "course_id": 9, "year_level": 1, "school_year_id": 1},
-        {"id": 19, "program_id": 31, "course_id": 13, "year_level": 1, "school_year_id": 1}
-    ]
+    # program_year_courses = [
+    #     {"id": 18, "program_id": 31, "course_id": 9, "year_level": 1, "school_year_id": 1},
+    #     {"id": 19, "program_id": 31, "course_id": 13, "year_level": 1, "school_year_id": 1}
+    # ]
 
     # Run GA
     ga = FacultyLoadingGA(rooms, faculty, faculty_expertise,

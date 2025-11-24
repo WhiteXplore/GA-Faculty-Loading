@@ -1,0 +1,490 @@
+====================================================================================================
+                                   CLASS SCHEDULE
+====================================================================================================
+Generated on: 2025-11-24 01:13:37
+Total Scheduled Meetings: 0
+Total Unscheduled Meetings: 477
+====================================================================================================
+
+
+====================================================================================================
+ UNSCHEDULED MEETINGS
+====================================================================================================
+
+Course: RR325 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ER327 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RR325 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ER327 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RR325 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ER327 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MB322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: GEELECT1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: GEELECT1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: GEELECT1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE326 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE326 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENG111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENG111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENG111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENG111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: LIT121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: LIT 223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FT 222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMBC325 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENTREP 123 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENTREP 123 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENTREP 123 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT Elec1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT Elec1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT Elec1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT Elec1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: STAT | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: STAT | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: STAT | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: STAT | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: TTL2M | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH 212 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ITSPEC3 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ITSPEC3 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ITSPEC3 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ITSPEC3 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TM121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TM121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TM121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TM325 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMELECT4 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RES2M | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TTL 2B | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TTL 2B | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TTL 2B | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ITSPEC4 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ITSPEC4 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ITSPEC4 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ITSPEC4 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: STS 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Math 111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Math 111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Math 111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Math 111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: GEELECT3 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: GEELECT3 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA3212 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA3212 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA3212 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA3212 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH 6 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH 6 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: MATH 6 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH 6 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: MATH111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMBC223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMBC223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ELEC 221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ELEC 221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PAELEC2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SPCOR2 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PAELEC2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SPCOR2 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PAELEC2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SPCOR2 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SS 112 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SS 112 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENTREP 3212 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENTREP 3212 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENTREP 3212 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TTL 2S | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RES2S | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RES2S | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: DRMRES1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI121_DRM | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: DRMRES1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: DRMRES1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI121_DRM | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISH326 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISH326 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Sci 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Sci 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMELECT2 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMC328 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMELECT2 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE2 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE2 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MA222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: COMM321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE4 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE 4 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE 4 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE 4 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE 224 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE 224 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Eng 111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Eng 111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Eng 111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Eng 111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: LIT 221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENG 323 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RR323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RR323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RR323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Bio 104 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Bio 104 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: Bio 104 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Bio 104 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: MBELEC1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Bio 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Bio 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FIL2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FIL2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: LIT2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Fil 2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: LIT2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Fil 2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Fish 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Fish 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: GEELECT2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: GEELECT2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: GEELECT2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH111 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Math 222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMC123 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMC123 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMC123 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMFL2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMBME1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: CBMEC 321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: CBMEC 321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: CBMEC 321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SS 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SS 123 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: P221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: P221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ER328 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ER328 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ER328 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PHYSICS121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PHYSICS121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMBME2 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RR324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RR324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RR324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SS 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SPCOR3 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SPCOR3 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SPCOR3 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SPCOR3 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SS113 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SS113 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SS113 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISH224 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISH224 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISH328 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISH328 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MBELEC3 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PARES2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PARES2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PARES2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PARES2 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMC225 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMC226 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMC225 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TMC226 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC5 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC5 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISELEC3 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISELEC3 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISELEC3 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISELEC3 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISELEC3 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC6 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC6 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC6 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC6 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC6 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENTREP 124 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENTREP 124 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENTREP 124 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ST 221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ST 221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ST323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ST323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ST323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RES2T | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RES2T | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FT RES 1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ITSPEC1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ITSPEC1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ITSPEC1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENTREP 3213 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENTREP 3213 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENTREP 3213 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MB 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MB 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PHYS 221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ELEC 222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ELEC 222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PM227 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PM227 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MA221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: COMM322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: COMM323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: DRM 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: DRM 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: AH GEELECT3 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISELEC1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISELEC1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISELEC1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISELEC1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC4 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC4 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENG 322 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENG 322 NEW | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: P225 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PM228 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: P225 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PM228 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TLE 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TLE 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TM223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TM223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ST324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ST324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ST324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Math 221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MB321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MB221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCIENCE200 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENG121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Comm 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: COMM222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Comm 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISH225 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISH226 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISH226 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: FISH225 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISH226 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISH226 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: FISH327 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA226 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA226 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA226 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA226 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Fish 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Fish 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: STAT 221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: P224 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: DRM 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: P224 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: DRM 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISHRES1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISHRES1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MATH324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 321A | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 321A | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: P222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: P222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENG 324 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENG 324 NEW | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: IT 322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IT 322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI323 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: EDUC323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC323 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: SCI323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI323 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: EDUC323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC323 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: Chem 100 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Chem 100 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: LIT 222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA224 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA224 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA224 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA224 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE4 BSFAS | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE4 BSFAS | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: PE4 BSFAS | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PE4 BSFAS | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: Sci 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Sci 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: P223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: P223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 221B | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 222B | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 221B | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 222B | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 321B | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 321B | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: ISSPEC1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FT 324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENG 325 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENG 325 NEW | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: IS323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FT 321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FT 221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TLE 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TLE221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TLE221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TLE 122 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: THE321 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: TTL 2E | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Math | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: Math | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC5 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC5 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC5 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 222A | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI324 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: SCI324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI324 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: PA3210 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA3213 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA3210 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA3213 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA3210 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA3213 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: EDUC 221A | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FT 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: BIO323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: BIO323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MBRES1 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: MBRES1 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: IS321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: IS321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SS 113 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: CHM 121 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: CHM 221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ST 222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ST 222 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI322 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: SCI322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SCI322 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: COMM221 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: COMM223 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: COMM324 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: COMM324 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: TSD321 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: TSD321 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: COMM325 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: COMM325 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: ISSPEC4 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC4 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ISSPEC4 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: ENG 221 NEW | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RES 2E | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: RES 2E | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: FISHELECT 5 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISHELECT 5 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: FISHELECT 5 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FISHELECT 5 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: PA225 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA225 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA3211 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SPCOR5 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: PA3211 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: SPCOR5 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FT 322 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
+Course: FT 323 | Type: Lecture | Hours: 3 | Reason: No available room/time slot found
