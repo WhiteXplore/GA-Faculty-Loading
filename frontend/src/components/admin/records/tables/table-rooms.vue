@@ -4,20 +4,35 @@
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / Rooms Availability
       </div>
-
-      <div
-        @click="toggleAdd"
-        class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
-      >
+      <div class="flex gap-2">
         <div
-          class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+          @click="isUploadModal = true"
+          class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
         >
-          <icon
-            :name="'circle-add'"
-            class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
-          />
+          <div
+            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+          >
+            <icon
+              :name="'upload'"
+              class="w-5 h-5 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
+            />
+          </div>
+          <span class="font-medium text-sm">Upload Room</span>
         </div>
-        <span class="font-medium text-sm">Add Room</span>
+        <div
+          @click="toggleAdd"
+          class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
+        >
+          <div
+            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+          >
+            <icon
+              :name="'circle-add'"
+              class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
+            />
+          </div>
+          <span class="font-medium text-sm">Add Room</span>
+        </div>
       </div>
     </div>
 
@@ -95,14 +110,17 @@
             class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
             <tr>
-              <th class="px-4 py-3 text-left font-normal w-[20%]">Institute</th>
-              <th class="px-4 py-3 text-center font-normal w-[15%]">
-                Room Name
+              <th class="px-4 py-3 text-left font-normal w-[18%]">Institute</th>
+              <th class="px-4 py-3 text-left font-normal w-[15%]">
+                Building Name
               </th>
-              <th class="px-4 py-3 text-center font-normal w-[15%]">
-                Room Type
+              <th class="px-4 py-3 text-center font-normal w-[10%]">
+                Level / Floor
               </th>
-              <th class="px-4 py-3 text-center font-normal w-[15%]">
+              <th class="px-4 py-3 text-left font-normal w-[15%]">Room Name</th>
+
+              <th class="px-4 py-3 text-left font-normal w-[10%]">Room Type</th>
+              <th class="px-4 py-3 text-center font-normal w-[10%]">
                 Room Capacity
               </th>
               <th
@@ -121,10 +139,17 @@
               <td class="px-4 py-3 text-left">
                 {{ rooms_data.institute?.institute_name }}
               </td>
-              <td class="px-4 py-3 text-center">
-                {{ rooms_data.room_name }}
+              <td class="px-4 py-3 text-left">
+                {{ rooms_data.building_name }}
               </td>
               <td class="px-4 py-3 text-center">
+                {{ rooms_data.level }}
+              </td>
+              <td class="px-4 py-3 text-left">
+                {{ rooms_data.room_name }}
+              </td>
+
+              <td class="px-4 py-3 text-left">
                 {{ rooms_data.room_type }}
               </td>
               <td class="px-4 py-3 text-center">
@@ -148,7 +173,7 @@
               </td>
             </tr>
             <tr v-if="paginatedData.length === 0">
-              <td colspan="6" class="text-center py-6 text-gray-400">
+              <td colspan="6" class="text-left py-6 text-gray-400">
                 No records found
               </td>
             </tr>
@@ -202,6 +227,11 @@
     @close="closeModal"
     @refresh="loadRooms"
   />
+  <uploadRooms
+    v-if="isUploadModal"
+    @close="isUploadModal = false"
+    @refresh="loadRooms"
+  />
 
   <!-- Delete Confirmation Modal -->
   <div
@@ -210,7 +240,7 @@
   ></div>
   <div
     v-if="showDeleteModal"
-    class="rounded-xl shadow-lg w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 animate-slideUp"
+    class="rounded-xl shadow-lg w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
   >
     <div
       class="rounded-full w-16 h-16 md:w-20 md:h-20 flex justify-center items-center bg-red-300 animate-pulse"
@@ -224,7 +254,7 @@
     <h1 class="text-[14px] md:text-[16px] font-semibold mt-4">
       Delete Confirmation
     </h1>
-    <p class="mt-2 text-[12px] md:text-[13px] text-center px-8">
+    <p class="mt-2 text-[12px] md:text-[13px] text-left px-8">
       Are you sure you want to delete this record? This action cannot be undone.
     </p>
 
@@ -250,6 +280,7 @@
 <script>
 import icon from "@/assets/icon.vue";
 import addRooms from "../modals/add-rooms.vue";
+import uploadRooms from "../modals/upload-rooms.vue";
 import { toast } from "vue3-toastify";
 import { useFetchDataStore } from "../../../../store/fetch-data-store";
 import { mapState } from "pinia";
@@ -260,6 +291,7 @@ export default {
   components: {
     icon,
     addRooms,
+    uploadRooms,
   },
   data() {
     return {
@@ -274,6 +306,7 @@ export default {
       recordToDelete: null,
       selectedRoom: null,
       showEditModal: false,
+      isUploadModal: false,
     };
   },
   computed: {

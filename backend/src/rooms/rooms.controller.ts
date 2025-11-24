@@ -46,10 +46,4 @@ export class RoomsController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.roomsService.remove(id);
   }
-
-  @Post('upload-excel')
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadExcel(@UploadedFile() file: any) {
-    return await this.roomsService.uploadExcel(file);
-  }
 }

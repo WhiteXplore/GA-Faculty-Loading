@@ -301,7 +301,7 @@ export default {
       try {
         if (this.isEditMode) {
           // UPDATE
-          await axios.put(
+          await axios.patch(
             process.env.VUE_APP_API_BASE_URL + `/auth/update/${this.form.id}`,
             this.form,
             { withCredentials: true }
