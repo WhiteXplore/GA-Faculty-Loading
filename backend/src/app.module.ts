@@ -18,6 +18,7 @@ import { SchoolYearModule } from './school_year/school_year.module';
 import { ClassModule } from './class/class.module';
 
 import { ProgramYearCoursesModule } from './program_year_courses/program_year_courses.module';
+import { FinalGeneratedClassScheduleModule } from './final_generated_class_schedule/final_generated_class_schedule.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { ProgramYearCoursesModule } from './program_year_courses/program_year_co
     SchoolYearModule,
     ClassModule,
     ProgramYearCoursesModule,
+    FinalGeneratedClassScheduleModule,
   ],
 })
 export class AppModule {}

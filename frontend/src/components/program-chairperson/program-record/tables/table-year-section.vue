@@ -46,118 +46,186 @@
         <p class="text-sm text-gray-600" v-if="userProgram.institute">
           Institute: {{ userProgram.institute.institute_name }}
         </p>
+
         <!-- SECTIONS TABLE -->
         <div v-if="filteredAndSearchedClasses.length > 0">
-          <!-- Table -->
-          <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-            <div class="max-h-[65vh] overflow-y-auto">
-              <table class="min-w-full text-sm text-gray-700 border-collapse">
-                <thead
-                  class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
-                >
-                  <tr>
-                    <th
-                      v-if="user.role === 'Admin'"
-                      class="px-4 py-3 text-left w-[20%]"
-                    >
-                      Program
-                    </th>
-                    <th class="px-4 py-3 text-left w-[15%]">Program</th>
-                    <th class="px-4 py-3 text-left w-[15%]">Section Name</th>
-                    <th class="px-4 py-3 text-center w-[18%]">Class Size</th>
-                    <th class="px-4 py-3 text-center w-[18%]">School Year</th>
-                    <th class="px-4 py-3 text-center w-[20%]">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="cls in paginatedClasses"
-                    :key="cls.class_id"
-                    class="hover:bg-green-50 transition-all border-t"
+          <div class="overflow-x-auto border p-3 rounded-tr-xl bg-white">
+            <!-- Controls -->
+            <div
+              class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
+            >
+              <!-- Items per page -->
+              <div class="flex items-center gap-2">
+                <div class="relative">
+                  <select
+                    v-model.number="itemsPerPage"
+                    class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+                    @change="changePage(1)"
                   >
-                    <td
-                      v-if="user.role === 'Admin'"
-                      class="px-4 py-3 text-left"
+                    <option :value="10">10</option>
+                    <option :value="15">15</option>
+                    <option :value="20">20</option>
+                  </select>
+                  <div
+                    class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
                     >
-                      {{ cls.program?.program_name }}
-                    </td>
-                    <td class="px-4 py-3 text-left">
-                      {{ cls.program?.program_code }}
-                    </td>
-                    <td class="px-4 py-3 font-medium text-left">
-                      {{ cls.set_name }}
-                    </td>
-                    <td class="px-4 py-3 text-center">{{ cls.class_size }}</td>
-                    <td class="px-4 py-3 text-center">
-                      {{ cls.schoolYear?.school_year_name }}
-                    </td>
-                    <td class="px-4 py-3 flex justify-center gap-2">
-                      <!-- Delete Button -->
-                      <button
-                        @click="promptDelete(cls.class_id)"
-                        class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <span class="text-sm font-medium">Per page</span>
+              </div>
+
+              <!-- Search -->
+              <div class="relative">
+                <input
+                  v-model="searchQuery"
+                  type="text"
+                  placeholder="Search section ..."
+                  class="rounded-full border border-green-600 bg-white px-4 py-2 pl-10 text-sm shadow-sm w-full sm:w-[280px] transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+                  @input="changePage(1)"
+                />
+                <div
+                  class="absolute inset-y-0 left-3 flex items-center text-green-700 pointer-events-none"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+              <div class="max-h-[65vh] overflow-y-auto">
+                <table class="min-w-full text-sm text-gray-700 border-collapse">
+                  <thead
+                    class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+                  >
+                    <tr>
+                      <th
+                        v-if="user.role === 'Admin'"
+                        class="px-4 py-3 text-left w-[20%]"
                       >
-                        <icon name="delete" /> Delete
-                      </button>
-                    </td>
-                  </tr>
-
-                  <tr v-if="paginatedClasses.length === 0">
-                    <td
-                      :colspan="user.role === 'Admin' ? 6 : 5"
-                      class="text-center py-6 text-gray-400"
+                        Program
+                      </th>
+                      <th class="px-4 py-3 text-left w-[15%]">Program</th>
+                      <th class="px-4 py-3 text-left w-[15%]">Section Name</th>
+                      <th class="px-4 py-3 text-center w-[18%]">Class Size</th>
+                      <th class="px-4 py-3 text-center w-[18%]">School Year</th>
+                      <th class="px-4 py-3 text-center w-[20%]">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="cls in paginatedClasses"
+                      :key="cls.class_id"
+                      class="hover:bg-green-50 transition-all border-t"
                     >
-                      No matching sections found
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+                      <td
+                        v-if="user.role === 'Admin'"
+                        class="px-4 py-3 text-left"
+                      >
+                        {{ cls.program?.program_name }}
+                      </td>
+                      <td class="px-4 py-3 text-left">
+                        {{ cls.program?.program_code }}
+                      </td>
+                      <td class="px-4 py-3 font-medium text-left">
+                        {{ cls.set_name }}
+                      </td>
+                      <td class="px-4 py-3 text-center">
+                        {{ cls.class_size }}
+                      </td>
+                      <td class="px-4 py-3 text-center">
+                        {{ cls.schoolYear?.school_year_name }}
+                      </td>
+                      <td class="px-4 py-3 flex justify-center gap-2">
+                        <!-- Delete Button -->
+                        <button
+                          @click="promptDelete(cls.class_id)"
+                          class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                        >
+                          <icon name="delete" /> Delete
+                        </button>
+                      </td>
+                    </tr>
 
-          <!-- Pagination -->
-          <div class="flex justify-between items-center mt-4 text-gray-700">
-            <div>
-              Showing {{ startIndex }} to {{ endIndex }} of
-              {{ filteredAndSearchedClasses.length }} entries
+                    <tr v-if="paginatedClasses.length === 0">
+                      <td
+                        :colspan="user.role === 'Admin' ? 6 : 5"
+                        class="text-center py-6 text-gray-400"
+                      >
+                        No matching sections found
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-            <div class="flex items-center">
-              <button
-                @click="changePage(currentPage - 1)"
-                :disabled="currentPage === 1"
-                class="px-3 py-1 bg-gray-300 text-gray-700 rounded-l-md hover:bg-gray-400 disabled:opacity-50"
-              >
-                &lt;
-              </button>
-              <button
-                v-for="page in pageNumbers"
-                :key="'page-' + page"
-                @click="changePage(page)"
-                :class="{
-                  'bg-defaultGreen text-white': currentPage === page,
-                  'bg-gray-200 text-gray-700': currentPage !== page,
-                }"
-                class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
-              >
-                {{ page }}
-              </button>
-              <button
-                @click="changePage(currentPage + 1)"
-                :disabled="currentPage === totalPages"
-                class="px-3 py-1 bg-gray-300 text-gray-700 rounded-r-md hover:bg-gray-400 disabled:opacity-50"
-              >
-                &gt;
-              </button>
+
+            <!-- Pagination -->
+            <div class="flex justify-between items-center mt-4 text-gray-700">
+              <div>
+                Showing {{ startIndex }} to {{ endIndex }} of
+                {{ filteredAndSearchedClasses.length }} entries
+              </div>
+              <div class="flex items-center">
+                <button
+                  @click="changePage(currentPage - 1)"
+                  :disabled="currentPage === 1"
+                  class="px-3 py-1 bg-gray-300 text-gray-700 rounded-l-md hover:bg-gray-400 disabled:opacity-50"
+                >
+                  &lt;
+                </button>
+                <button
+                  v-for="page in pageNumbers"
+                  :key="'page-' + page"
+                  @click="changePage(page)"
+                  :class="{
+                    'bg-defaultGreen text-white': currentPage === page,
+                    'bg-gray-200 text-gray-700': currentPage !== page,
+                  }"
+                  class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+                >
+                  {{ page }}
+                </button>
+                <button
+                  @click="changePage(currentPage + 1)"
+                  :disabled="currentPage === totalPages"
+                  class="px-3 py-1 bg-gray-300 text-gray-700 rounded-r-md hover:bg-gray-400 disabled:opacity-50"
+                >
+                  &gt;
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Empty State -->
-      <div v-else class="bg-white border p-8 rounded-xl text-center">
-        <p class="text-gray-600">
-          No sections created for {{ activeSchoolYearName }} yet.
-        </p>
+        <!-- Empty State -->
+        <div v-else class="bg-white border p-8 rounded-xl text-center">
+          <p class="text-gray-600">
+            No sections created for {{ activeSchoolYearName }} yet.
+          </p>
+        </div>
       </div>
     </div>
 
@@ -177,7 +245,6 @@
   </div>
 
   <!-- MODAL -->
-  <!-- 🔹 Fixed modal rendering -->
   <addYearSection
     v-if="showYearSectionModal"
     :programData="userProgram || {}"
@@ -251,7 +318,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useFetchDataStore, ["activeYear", "year"]),
+    ...mapState(useFetchDataStore, ["activeYear"]),
 
     activeSchoolYearId() {
       return this.activeYear?.school_year_id || null;
@@ -283,9 +350,21 @@ export default {
     },
 
     filteredAndSearchedClasses() {
-      return this.filteredClasses.filter((cls) =>
+      const filtered = this.filteredClasses.filter((cls) =>
         cls.set_name.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
+
+      // Custom sort: year priority then section letter
+      return filtered.sort((a, b) => {
+        const yearA = this.getYearPriority(a.set_name);
+        const yearB = this.getYearPriority(b.set_name);
+
+        if (yearA !== yearB) return yearA - yearB;
+
+        const sectionA = a.set_name.split("-")[1]?.trim() || "";
+        const sectionB = b.set_name.split("-")[1]?.trim() || "";
+        return sectionA.localeCompare(sectionB);
+      });
     },
 
     totalPages() {
@@ -335,6 +414,12 @@ export default {
     },
   },
   methods: {
+    getYearPriority(setName) {
+      const match = setName.match(/^(\d+)(st|nd|rd|th) Year/i);
+      if (match) return parseInt(match[1], 10);
+      return 99;
+    },
+
     async refreshTable() {
       const store = useFetchDataStore();
       this.loading = true;

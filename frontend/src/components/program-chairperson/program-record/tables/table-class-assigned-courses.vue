@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="flex justify-between items-center mt-6 mb-2">
       <div class="text-[13px] text-gray-700">
-        Pages / Class & Assigned Courses
+        Pages / Class & Assigned Coursesssss
       </div>
       <span class="text-sm bg-defaultGreen text-white px-3 py-1 rounded-full">
         {{ filteredClasses.length }} Classes

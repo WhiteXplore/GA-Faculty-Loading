@@ -40,7 +40,7 @@
 
         <!-- Save Schedule -->
         <button
-          @click="saveScheduled"
+          @click="confirmSaveModal = true"
           class="flex items-center gap-2 px-4 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300"
         >
           <div
@@ -312,6 +312,32 @@
         </div>
       </div>
     </div>
+    <!-- Confirm Save Modal -->
+    <div
+      v-if="confirmSaveModal"
+      class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50"
+    >
+      <div class="bg-white rounded-2xl shadow-2xl p-6 w-96 text-center">
+        <h2 class="text-lg font-semibold mb-4">Confirm Save</h2>
+        <p class="text-gray-600 mb-6">
+          Are you sure you want to save this schedule?
+        </p>
+        <div class="flex justify-center gap-4">
+          <button
+            @click="saveScheduledConfirmed"
+            class="px-4 py-2 bg-defaultGreen text-white rounded-xl hover:bg-green-600 transition"
+          >
+            Yes, Save
+          </button>
+          <button
+            @click="confirmSaveModal = false"
+            class="px-4 py-2 border rounded-xl hover:bg-gray-100 transition"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -337,6 +363,7 @@ export default {
       scheduleGenerated: false,
       selectedInstituteId: "",
       selectedProgramId: "",
+      confirmSaveModal: false,
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
 
       // 8 AM to 5 PM
@@ -352,6 +379,8 @@ export default {
       currentPage: 1,
       itemsPerPage: 10,
       timeSlotHeight: 60,
+
+      schoolYears: [], // store fetched school years
     };
   },
 
@@ -410,6 +439,18 @@ export default {
         Object.keys(this.filteredGroupedSchedule).length / this.itemsPerPage
       );
     },
+
+    // Compute latest active school year dynamically
+    latestActiveSchoolYear() {
+      if (!this.schoolYears.length) return null;
+      const activeYears = this.schoolYears.filter((y) => y.is_active);
+      if (!activeYears.length) return null;
+      return activeYears.reduce((latest, current) =>
+        new Date(current.updated_at) > new Date(latest.updated_at)
+          ? current
+          : latest
+      );
+    },
   },
 
   watch: {
@@ -426,27 +467,13 @@ export default {
     async loadFetchData() {
       const store = useFetchDataStore();
       await store.fetchPrograms();
-      await store.fetchInstitutes(); // fetch institutes for dropdown
-
-      // After institutes are fetched, log matching institute names
-      this.logInstituteNames();
-    },
-
-    logInstituteNames() {
-      const store = useFetchDataStore();
-      const institutes = store.institutes || [];
-      if (!this.schedule || !institutes.length) return;
-
-      this.schedule.forEach((s) => {
-        const inst = institutes.find((i) => i.institute_id === s.institute_id);
-        if (inst);
-      });
+      await store.fetchInstitutes();
     },
 
     backToFacultyTable() {
-      this.filteredGroupedSchedule = this.groupedSchedule; // reset to all faculty
-      this.showFacultyTable = true; // show the table
-      this.currentPage = 1; // optional: go to first page
+      this.filteredGroupedSchedule = this.groupedSchedule;
+      this.showFacultyTable = true;
+      this.currentPage = 1;
     },
 
     normalizeHour(hour) {
@@ -517,28 +544,23 @@ export default {
 
     getScheduleForCell(slot, day, instructor) {
       const schedules = this.filteredGroupedSchedule[instructor] || [];
-
       return schedules.filter((item) => {
         if (item.day !== day) return false;
 
         const start = this.normalizeHour(item.start_hour);
         const end = start + Number(item.duration);
-
         return end > slot.start && start < slot.end;
       });
     },
-
+    getBlockTop() {
+      return 0;
+    },
     getBlockHeight(item) {
       return Math.max(1, Number(item.duration)) * this.timeSlotHeight - 1;
     },
 
-    getBlockTop() {
-      return 0;
-    },
-
     getTypeColor(room_type) {
       if (!room_type) return "bg-green-100 border-green-400";
-
       const normalized = room_type.toLowerCase();
       if (normalized === "laboratory" || normalized === "lab") {
         return "bg-blue-100 border-blue-400";
@@ -593,9 +615,6 @@ export default {
         this.schedule = allSchedules;
         this.groupedSchedule = this.groupByInstructor(this.schedule);
         this.filteredGroupedSchedule = this.groupedSchedule;
-
-        // log institute names after fetching schedule
-        this.logInstituteNames();
       } catch {
         this.error = "Failed to fetch schedule.";
       } finally {
@@ -628,15 +647,71 @@ export default {
       }
     },
 
-    async saveScheduled() {
-      alert("💾 Schedule saved successfully (placeholder).");
+    async fetchSchoolYears() {
+      try {
+        const res = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
+        );
+        this.schoolYears = res.data.map((y) => ({ ...y }));
+      } catch (err) {
+        console.error("Failed to fetch school years:", err);
+      }
+    },
+
+    async saveScheduledConfirmed() {
+      this.confirmSaveModal = false;
+
+      try {
+        // Always fetch latest school years before saving
+        await this.fetchSchoolYears();
+
+        const latestSchoolYear = this.latestActiveSchoolYear;
+        if (!latestSchoolYear) {
+          alert("❌ No active school year found. Cannot save schedule.");
+          return;
+        }
+
+        const payload = this.schedule.map((item) => ({
+          class_id: item.class_id,
+          course_code: item.course_code,
+          program_id: item.program_id,
+          institute_id: item.institute_id,
+          type: item.type,
+          day: item.day,
+          start_hour: item.start_hour,
+          duration: item.duration,
+          time_slot: `${this.formatTime(item.start_hour)} - ${this.formatTime(
+            item.start_hour + Number(item.duration)
+          )}`,
+          room_id: item.room_id,
+          room_name: item.room_name,
+          room_type: item.room_type,
+          room_capacity: item.room_capacity,
+          class_size: item.class_size,
+          faculty_id: item.faculty_id,
+          faculty_name: item.faculty_name,
+          school_year: latestSchoolYear.school_year_name,
+        }));
+
+        await axios.post(
+          `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/bulk`,
+          payload,
+          { withCredentials: true }
+        );
+
+        alert("💾 Schedule saved successfully!");
+      } catch (error) {
+        console.error(error);
+        alert("❌ Failed to save schedule.");
+      }
     },
   },
 
   async mounted() {
     await this.fetchUser();
-    if (this.scheduleGenerated) await this.fetchSchedule();
     this.loadFetchData();
+    if (this.scheduleGenerated) await this.fetchSchedule();
+    await this.fetchSchoolYears(); // ensure school years are loaded on mount
   },
 };
 </script>

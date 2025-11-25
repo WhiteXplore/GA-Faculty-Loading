@@ -349,7 +349,7 @@ def create_schedule(faculty_loads, rooms):
                 else:
                     print("✗ Failed")
 
-            # Schedule laboratory if needed
+          # Schedule laboratory if needed
             if lab_hours > 0:
                 # Convert lab units to contact hours (1 unit = 3 contact hours)
                 lab_contact_hours = lab_hours * 3
