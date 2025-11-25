@@ -271,6 +271,8 @@ def schedule_class_meeting(cls, course_type, hours, rooms, faculty_id,
                 
                 return {
                     "class_id": cls["class_id"],
+                    "set_name": cls["set_name"],
+                    "course_level": cls["course_level"],
                     "course_code": cls["course_code"],
                     "program_id": cls["program_id"],
                     "institute_id": institute_id,
@@ -343,9 +345,11 @@ def create_schedule(faculty_loads, rooms):
             
             # Schedule laboratory if needed
             if lab_hours > 0:
-                print(f"  Scheduling LABORATORY for {cls['course_code']} ({lab_hours}h)...", end=" ")
+                # Convert lab units to contact hours (1 unit = 3 contact hours)
+                lab_contact_hours = lab_hours * 3
+                print(f"  Scheduling LABORATORY for {cls['course_code']} ({lab_hours} unit{'s' if lab_hours != 1 else ''} = {lab_contact_hours}h)...", end=" ")
                 lab_schedule = schedule_class_meeting(
-                    cls, "Laboratory", lab_hours, rooms, faculty_id,
+                    cls, "Laboratory", lab_contact_hours, rooms, faculty_id,
                     schedule_tracker, faculty_schedule_tracker, unscheduled_meetings
                 )
                 
