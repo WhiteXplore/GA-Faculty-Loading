@@ -1,0 +1,28 @@
+<template>
+  <div class="px-2 mt-2">
+    <!-- Headers -->
+    <div class="flex justify-between items-start">
+      <h1 class="font-semibold tracking-wide text-md">Generated Schedules</h1>
+    </div>
+
+    <!-- Main Content  -->
+    <div class="mt-3">
+      <!-- Table -->
+      <tableFinalGenerated />
+    </div>
+  </div>
+</template>
+
+<script>
+import tableFinalGenerated from "./tables/table-final-generated.vue";
+export default {
+  name: "FacultyLoadingPage",
+  components: {
+    tableFinalGenerated,
+  },
+};
+</script>
+
+<style scoped>
+/* Add any required styles here */
+</style>

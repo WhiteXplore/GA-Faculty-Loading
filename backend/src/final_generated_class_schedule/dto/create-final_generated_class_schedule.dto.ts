@@ -68,4 +68,8 @@ export class CreateFinalGeneratedClassScheduleDto {
   @IsString()
   @IsOptional()
   school_year?: string;
+
+  @IsString()
+  @IsOptional()
+  semester?: string;
 }

@@ -55,4 +55,7 @@ export class FinalGeneratedClassSchedule {
 
   @Column({ type: 'varchar', length: 10, nullable: true })
   school_year: string;
+
+  @Column({ type: 'varchar', length: 10, nullable: true })
+  semester: string;
 }

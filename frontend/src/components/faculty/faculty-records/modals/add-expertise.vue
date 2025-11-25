@@ -87,7 +87,7 @@
                   >
                     <span
                       >{{ course.course_code }} -
-                      {{ course.course_description }}</span
+                      {{ course.course_title }}</span
                     >
                     <span
                       v-if="
@@ -121,7 +121,7 @@
                     class="flex justify-between items-center px-3 py-3 bg-green-50 hover:bg-gray-100 transition cursor-pointer"
                   >
                     <span class="text-gray-700 text-sm font-medium">
-                      {{ item.course_code }} - {{ item.course_description }}
+                      {{ item.course_code }} - {{ item.course_title }}
                     </span>
                     <button
                       type="button"
@@ -176,7 +176,7 @@
                   >
                     <span
                       >{{ course.course_code }} -
-                      {{ course.course_description }}</span
+                      {{ course.course_title }}</span
                     >
                     <span
                       v-if="
@@ -202,7 +202,7 @@
                     class="flex justify-between items-center px-3 py-3 bg-green-50 hover:bg-gray-100 transition cursor-pointer"
                   >
                     <span class="text-gray-700 text-sm font-medium">
-                      {{ item.course_code }} - {{ item.course_description }}
+                      {{ item.course_code }} - {{ item.course_title }}
                     </span>
                     <button
                       type="button"
@@ -275,16 +275,15 @@ export default {
           c.curriculum?.program?.institute_id ===
             this.userData?.institute?.institute_id &&
           c.curriculum?.program_id === this.userData?.program?.program_id &&
-          // ✅ Exclude courses already in Other Expertise
           !this.currentSemesterData.other_expertise.some(
             (e) => e.course_id === c.course_id
           ) &&
-          (c.course_code
-            .toLowerCase()
-            .includes(this.searchQuery.toLowerCase()) ||
-            c.course_description
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase()))
+          ((c.course_code?.toLowerCase() || "").includes(
+            this.searchQuery.toLowerCase()
+          ) ||
+            (c.course_title?.toLowerCase() || "").includes(
+              this.searchQuery.toLowerCase()
+            ))
       );
     },
     filteredOtherCourses() {
@@ -294,16 +293,15 @@ export default {
           c.course_semester === this.selectedSemester &&
           c.curriculum?.program?.institute_id ===
             this.userData?.institute?.institute_id &&
-          // exclude courses already in expertise
           !this.currentSemesterData.expertise.some(
             (e) => e.course_id === c.course_id
           ) &&
-          (c.course_code
-            .toLowerCase()
-            .includes(this.otherSearchQuery.toLowerCase()) ||
-            c.course_description
-              .toLowerCase()
-              .includes(this.otherSearchQuery.toLowerCase()))
+          ((c.course_code?.toLowerCase() || "").includes(
+            this.otherSearchQuery.toLowerCase()
+          ) ||
+            (c.course_title?.toLowerCase() || "").includes(
+              this.otherSearchQuery.toLowerCase()
+            ))
       );
     },
   },
@@ -382,7 +380,7 @@ export default {
           : {
               course_id: courseData.course_id,
               course_code: courseData.course_code,
-              course_description: courseData.course_description,
+              course_title: courseData.course_title,
               course_semester: courseData.course_semester || 1,
             };
 
@@ -400,7 +398,7 @@ export default {
           : {
               course_id: courseData.course_id,
               course_code: courseData.course_code,
-              course_description: courseData.course_description,
+              course_title: courseData.course_title,
               course_semester: courseData.course_semester || 1,
             };
 

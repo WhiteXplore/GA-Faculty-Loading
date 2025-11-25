@@ -102,7 +102,7 @@
 <script>
 import axios from "axios";
 import Profile from "./profile-setting.vue";
-import { eventBus } from "@/event-bus";
+import { eventBus } from "@/bus/event-bus";
 
 export default {
   name: "TopBarPage",
@@ -187,11 +187,23 @@ export default {
       await this.fetchSchoolYears();
     },
     autoSelectActiveYear() {
-      const active = this.schoolYears.find((y) => y.is_active);
+      // Get all active school years
+      const activeList = this.schoolYears
+        .filter((y) => y.is_active)
+        .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+      // If there are active years, pick the most recent one
+      if (activeList.length > 0) {
+        this.selectedSchoolYearId = activeList[0].school_year_id;
+        return;
+      }
+
+      // Fallback: pick most recently updated even if not active
       const fallback = [...this.schoolYears].sort(
         (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
       )[0];
-      this.selectedSchoolYearId = (active || fallback)?.school_year_id || "";
+
+      this.selectedSchoolYearId = fallback?.school_year_id || "";
     },
     getSemesterLabel(sem) {
       return sem === 1 ? "1st Semester" : sem === 2 ? "2nd Semester" : "";
@@ -201,12 +213,13 @@ export default {
     this.fetchUser();
     this.fetchSchoolYears();
 
-    // Listen to reactive event bus
-    this.stopBus = eventBus.on((newSchoolYearId) => {
+    // Reactive event bus listener
+    this.stopBus = eventBus.on(async (newSchoolYearId) => {
+      await this.fetchSchoolYears();
       this.selectedSchoolYearId = newSchoolYearId;
-      this.fetchSchoolYears();
     });
   },
+
   beforeUnmount() {
     if (this.stopBus) this.stopBus();
   },

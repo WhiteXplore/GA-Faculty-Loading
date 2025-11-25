@@ -310,7 +310,7 @@ export default {
               {
                 name: "Generated Load",
                 icon: "faculty-loading",
-                route: "/program-faculty-loads",
+                route: "/program-final-schedules",
               },
             ],
           },

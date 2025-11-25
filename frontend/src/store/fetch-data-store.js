@@ -23,6 +23,7 @@ export const useFetchDataStore = defineStore("fetchData", {
     rawusers: [],
     assignClass: [],
     faculty: [],
+    final_schedules: [],
     year: null, // currently selected year
     activeYears: [],
     activeYear: null, // latest active year for table filtering
@@ -33,6 +34,21 @@ export const useFetchDataStore = defineStore("fetchData", {
   }),
 
   actions: {
+    async fetchFinalSchedules() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL +
+            "/final-generated-class-schedule/get-all-final-schedules"
+        );
+        this.final_schedules = data;
+      } catch (err) {
+        this.error = err.message || "Failed to fetch final schedules";
+      } finally {
+        this.loading = false;
+      }
+    },
     async fetchInstructors() {
       this.loading = true;
       this.error = null;

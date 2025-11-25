@@ -25,31 +25,21 @@
           </span>
         </button>
 
-        <!-- Auto Generation -->
+        <!-- Swap Button -->
         <button
-          @click="generateSchedule"
-          class="flex items-center gap-2 px-4 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300"
+          @click="swapCourses"
+          :disabled="swapSelection.length !== 2"
+          class="group flex items-center gap-2 px-4 py-2 border border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white rounded-xl shadow-sm transition cursor-pointer"
         >
           <div
-            class="flex items-center justify-center w-5 h-5 bg-white rounded-full transition-colors duration-300"
+            class="p-1 bg-yellow-100 rounded-full flex items-center justify-center group-hover:bg-white transition"
           >
-            <icon name="arrow-path" class="w-4 h-4 text-defaultGreen" />
+            <icon
+              name="arrow-path"
+              class="w-4 h-4 text-yellow-600 group-hover:text-yellow-600"
+            />
           </div>
-          <span class="font-medium text-sm">Auto Generation</span>
-        </button>
-
-        <!-- Save Schedule -->
-        <button
-          v-if="appearSave"
-          @click="confirmSaveModal = true"
-          class="flex items-center gap-2 px-4 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300"
-        >
-          <div
-            class="flex items-center justify-center w-5 h-5 bg-white rounded-full transition-colors duration-300"
-          >
-            <icon name="circle-check" class="w-4 h-4 text-defaultGreen" />
-          </div>
-          <span class="font-medium text-sm">Save this schedule</span>
+          <span class="font-medium text-sm"> Swap </span>
         </button>
       </div>
     </div>
@@ -148,7 +138,6 @@
     <div class="flex-1 overflow-y-auto">
       <!-- Faculty Table -->
       <div v-if="showFacultyTable">
-        <!-- Table Container -->
         <div class="overflow-x-auto border p-3 rounded-xl bg-white">
           <div
             class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
@@ -264,6 +253,7 @@
               </table>
             </div>
           </div>
+
           <!-- Pagination -->
           <div class="flex justify-between items-center mt-4">
             <div class="text-gray-700 text-sm">
@@ -322,11 +312,19 @@
           class="bg-white rounded-xl border flex flex-col"
         >
           <!-- Header -->
+          <!-- Header with Edit button -->
           <div
-            class="bg-gray-700 text-white text-center py-3 font-semibold text-sm"
+            class="flex justify-between items-center bg-gray-700 text-white px-4 py-2 font-semibold text-sm"
           >
-            {{ instructor }}
+            <span>{{ instructor }}</span>
+            <button
+              @click="openEditInstructorModal(instructor)"
+              class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs transition"
+            >
+              Edit
+            </button>
           </div>
+
           <div class="overflow-x-auto overflow-y-auto flex-1">
             <table class="w-full text-left border-collapse text-[11px]">
               <thead class="sticky top-0 bg-gray-100 z-10">
@@ -368,11 +366,16 @@
                         :class="[
                           'absolute inset-x-1 border rounded-lg text-[11px] text-gray-800 shadow-sm overflow-hidden transition-all duration-200 whitespace-nowrap',
                           getTypeColor(item.type),
+                          swapSelection.includes(item)
+                            ? 'border-yellow-500 bg-yellow-100'
+                            : '',
                         ]"
+                        @click="toggleSwapSelection(item)"
                         :style="{
                           top: getBlockTop() + 'px',
                           height: getBlockHeight(item) + 'px',
                           width: 'calc(100% - 0.5rem)',
+                          cursor: 'pointer',
                         }"
                       >
                         <div class="p-2 leading-snug truncate">
@@ -382,9 +385,12 @@
                           <p class="text-gray-600 truncate">
                             {{ item.room_name }}
                           </p>
+                          <p class="text-gray-600 truncate">
+                            {{ item.class_id }}
+                          </p>
                           <button
                             v-if="item.conflict"
-                            @click="openConflictModal(item)"
+                            @click.stop="openConflictModal(item)"
                             class="mt-2 w-full text-center px-2 py-1 text-[10px] rounded bg-red-100 text-red-600 hover:bg-red-200 transition"
                           >
                             ⚠ View Conflict
@@ -400,62 +406,58 @@
         </div>
       </div>
     </div>
+  </div>
+  <!-- Edit Instructor Modal -->
+  <div
+    v-if="showEditModal"
+    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50"
+  >
+    <div class="bg-white rounded-xl p-6 w-[400px] relative">
+      <h3 class="text-lg font-semibold mb-4">Edit Instructor</h3>
 
-    <!-- Loading Overlay -->
-    <div
-      v-if="loading"
-      class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50"
-    >
-      <div class="relative flex items-center justify-center">
-        <div
-          class="absolute w-52 h-44 bg-gradient-to-r from-green-400/30 to-emerald-500/30 rounded-3xl animate-ping"
-        ></div>
-        <div
-          class="relative flex flex-col items-center justify-center bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-white/30"
-        >
-          <div class="relative mb-4">
-            <div
-              class="w-12 h-12 border-4 border-green-400 border-t-transparent rounded-full animate-spin"
-            ></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <span class="text-green-600 text-sm font-semibold"
-                >{{ Math.floor(progress) }}%</span
-              >
-            </div>
-          </div>
-          <div class="text-gray-700 font-semibold text-[15px] tracking-wide">
-            Generating Schedule...
-          </div>
-          <div class="text-xs text-gray-500 mt-1">
-            Please wait while we finalize your data.
-          </div>
-        </div>
+      <div class="flex flex-col gap-3">
+        <label class="text-sm font-medium">Instructor Name</label>
+        <input
+          v-model="editInstructorData.faculty_name"
+          type="text"
+          class="border rounded px-3 py-2 w-full"
+        />
+
+        <label class="text-sm font-medium">Email</label>
+        <input
+          v-model="editInstructorData.email"
+          type="email"
+          class="border rounded px-3 py-2 w-full"
+        />
+
+        <label class="text-sm font-medium">Institute ID</label>
+        <input
+          v-model="editInstructorData.institute_id"
+          type="text"
+          class="border rounded px-3 py-2 w-full"
+        />
+
+        <label class="text-sm font-medium">Program ID</label>
+        <input
+          v-model="editInstructorData.program_id"
+          type="text"
+          class="border rounded px-3 py-2 w-full"
+        />
       </div>
-    </div>
-    <!-- Confirm Save Modal -->
-    <div
-      v-if="confirmSaveModal"
-      class="fixed inset-0 flex items-center justify-center bg-black/30 z-50"
-    >
-      <div class="bg-white rounded-2xl shadow-2xl p-6 w-96 text-center">
-        <h2 class="text-lg font-semibold mb-4">Confirm Save</h2>
-        <p class="text-gray-600 mb-6">
-          Are you sure you want to save this schedule?
-        </p>
-        <div class="flex justify-center gap-4">
-          <button
-            @click="saveScheduledConfirmed"
-            class="px-4 py-2 bg-defaultGreen text-white rounded-xl hover:bg-green-600 transition"
-          >
-            Yes, Save
-          </button>
-          <button
-            @click="confirmSaveModal = false"
-            class="px-4 py-2 border rounded-xl hover:bg-gray-100 transition"
-          >
-            Cancel
-          </button>
-        </div>
+
+      <div class="flex justify-end gap-2 mt-4">
+        <button
+          @click="closeEditInstructorModal"
+          class="px-3 py-1 rounded border hover:bg-gray-100"
+        >
+          Cancel
+        </button>
+        <button
+          @click="saveInstructorEdit"
+          class="px-3 py-1 rounded bg-blue-500 text-white hover:bg-blue-600"
+        >
+          Save
+        </button>
       </div>
     </div>
   </div>
@@ -466,21 +468,21 @@ import axios from "axios";
 import icon from "@/assets/icon.vue";
 import { useFetchDataStore } from "@/store/fetch-data-store";
 import { toast } from "vue3-toastify";
+
 export default {
   name: "FacultySchedule",
   components: { icon },
-
   data() {
     return {
       user: {},
-      schedule: [],
+
       groupedSchedule: {},
       filteredGroupedSchedule: {},
+      finalSchedules: [],
       loading: false,
       error: null,
       showFacultyTable: false,
       selectedInstructor: null,
-      scheduleGenerated: false,
       selectedInstituteId: "",
       selectedProgramId: "",
       confirmSaveModal: false,
@@ -501,53 +503,49 @@ export default {
       timeSlotHeight: 60,
 
       schoolYears: [],
-      appearSave: false,
+      swapSelection: [],
+      showEditModal: false,
+      editInstructorData: {},
     };
   },
 
   computed: {
-    // Map institute IDs to their names
     uniqueInstitutes() {
       const store = useFetchDataStore();
       const institutes = store.institutes || [];
-      return Array.from(new Set(this.schedule.map((s) => s.institute_id))).map(
-        (id) => {
-          const inst = institutes.find((i) => i.institute_id === id);
-          return inst
-            ? { id, name: inst.institute_name }
-            : { id, name: `Institute ${id}` };
-        }
-      );
+      return Array.from(
+        new Set(this.finalSchedules.map((s) => s.institute_id))
+      ).map((id) => {
+        const inst = institutes.find((i) => i.institute_id === id);
+        return inst
+          ? { id, name: inst.institute_name }
+          : { id, name: `Institute ${id}` };
+      });
     },
-
     // Map program IDs to their names (filtered by selectedInstituteId if any)
     filteredPrograms() {
       const store = useFetchDataStore();
       const programs = store.programs || [];
-      let programIds;
 
-      if (!this.selectedInstituteId) {
-        programIds = Array.from(
-          new Set(this.schedule.map((s) => s.program_id))
-        );
-      } else {
-        programIds = Array.from(
-          new Set(
-            this.schedule
-              .filter((s) => s.institute_id == this.selectedInstituteId)
-              .map((s) => s.program_id)
-          )
-        );
-      }
+      const programIds = Array.from(
+        new Set(
+          this.finalSchedules
+            .filter((s) =>
+              this.selectedInstituteId
+                ? String(s.institute_id) === String(this.selectedInstituteId)
+                : true
+            )
+            .map((s) => s.program_id)
+        )
+      );
 
       return programIds.map((id) => {
-        const prog = programs.find((p) => p.program_id === id);
+        const prog = programs.find((p) => String(p.program_id) === String(id));
         return prog
           ? { id, name: prog.program_name }
           : { id, name: `Program ${id}` };
       });
     },
-
     // Compute latest active school year dynamically
     latestActiveSchoolYear() {
       if (!this.schoolYears.length) return null;
@@ -595,6 +593,103 @@ export default {
   },
 
   methods: {
+    openEditInstructorModal(instructor) {
+      // Get first record of that instructor to prefill data
+      const records = this.groupedSchedule[instructor] || [];
+      if (!records.length) return;
+
+      // Copy the first record for editing
+      this.editInstructorData = { ...records[0] };
+      this.showEditModal = true;
+    },
+
+    closeEditInstructorModal() {
+      this.showEditModal = false;
+      this.editInstructorData = {};
+    },
+
+    async saveInstructorEdit() {
+      try {
+        await axios.patch(
+          `${process.env.VUE_APP_API_BASE_URL}/faculty/${this.editInstructorData.faculty_id}`,
+          this.editInstructorData
+        );
+
+        // Update locally
+        const idx = this.finalSchedules.findIndex(
+          (f) => f.faculty_id === this.editInstructorData.faculty_id
+        );
+        if (idx > -1) this.finalSchedules[idx] = { ...this.editInstructorData };
+
+        this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
+        this.filterSchedules();
+
+        toast.success("Instructor updated successfully");
+        this.closeEditInstructorModal();
+      } catch (err) {
+        toast.error("Failed to update instructor");
+        console.error(err);
+      }
+    },
+    toggleSwapSelection(item) {
+      const index = this.swapSelection.indexOf(item);
+      if (index > -1) this.swapSelection.splice(index, 1);
+      else if (this.swapSelection.length < 2) this.swapSelection.push(item);
+      else toast.info("You can only swap 2 courses at a time.");
+    },
+
+    async swapCourses() {
+      if (this.swapSelection.length !== 2) {
+        toast.info("Select exactly 2 courses to swap.");
+        return;
+      }
+
+      const [courseA, courseB] = this.swapSelection;
+
+      // Swap locally
+      const tempFacultyId = courseA.faculty_id;
+      const tempFacultyName = courseA.faculty_name;
+
+      courseA.faculty_id = courseB.faculty_id;
+      courseA.faculty_name = courseB.faculty_name;
+
+      courseB.faculty_id = tempFacultyId;
+      courseB.faculty_name = tempFacultyName;
+
+      // Update backend
+      try {
+        await Promise.all([
+          axios.patch(
+            `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${courseA.id}`,
+            {
+              faculty_id: courseA.faculty_id,
+              faculty_name: courseA.faculty_name,
+            }
+          ),
+          axios.patch(
+            `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${courseB.id}`,
+            {
+              faculty_id: courseB.faculty_id,
+              faculty_name: courseB.faculty_name,
+            }
+          ),
+        ]);
+
+        // Refresh local data
+        this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
+        this.filterSchedules();
+
+        this.swapSelection = [];
+        this.loadFetchData();
+        toast.success(
+          `Courses swapped: ${courseA.course_code} ↔ ${courseB.course_code}`
+        );
+      } catch (error) {
+        toast.error("Failed to update swap in the database.");
+        console.error(error);
+      }
+    },
+
     async loadFetchData() {
       const store = useFetchDataStore();
       await store.fetchPrograms();
@@ -617,62 +712,37 @@ export default {
       return this.normalizeHour(item.start_hour) === slot.start;
     },
 
-    checkConflicts() {
-      const conflicts = [];
-      const allSchedules = this.schedule;
-
-      for (let i = 0; i < allSchedules.length; i++) {
-        for (let j = i + 1; j < allSchedules.length; j++) {
-          const a = allSchedules[i];
-          const b = allSchedules[j];
-
-          const sameDay = a.day === b.day;
-          const sameRoom = a.room_name === b.room_name;
-          const sameCourse = a.course_code === b.course_code;
-
-          const aStart = this.normalizeHour(a.start_hour);
-          const aEnd = aStart + Number(a.duration);
-
-          const bStart = this.normalizeHour(b.start_hour);
-          const bEnd = bStart + Number(b.duration);
-
-          const overlap = aEnd > bStart && aStart < bEnd;
-
-          if (sameDay && sameRoom && sameCourse && overlap) {
-            conflicts.push({ a, b });
-          }
-        }
-      }
-      return conflicts;
-    },
-
     formatTime(hour) {
       const h = hour % 12 === 0 ? 12 : hour % 12;
       const period = hour >= 12 ? "PM" : "AM";
       return `${h}:00 ${period}`;
     },
-
     filterSchedules() {
       let filtered = { ...this.groupedSchedule };
 
-      if (this.selectedInstituteId)
+      if (this.selectedInstituteId) {
         filtered = Object.fromEntries(
           Object.entries(filtered).filter(([, schedules]) =>
-            schedules.some((s) => s.institute_id == this.selectedInstituteId)
+            schedules.some(
+              (s) => String(s.institute_id) === String(this.selectedInstituteId)
+            )
           )
         );
+      }
 
-      if (this.selectedProgramId)
+      if (this.selectedProgramId) {
         filtered = Object.fromEntries(
           Object.entries(filtered).filter(([, schedules]) =>
-            schedules.some((s) => s.program_id == this.selectedProgramId)
+            schedules.some(
+              (s) => String(s.program_id) === String(this.selectedProgramId)
+            )
           )
         );
+      }
 
       this.filteredGroupedSchedule = filtered;
-      this.changePage(1);
+      this.currentPage = 1;
     },
-
     getScheduleForCell(slot, day, instructor) {
       const schedules = this.filteredGroupedSchedule[instructor] || [];
       return schedules.filter((item) => {
@@ -731,30 +801,39 @@ export default {
       }
     },
 
-    async fetchSchedule() {
+    async fetchFinalSchedules() {
       this.loading = true;
-      this.progress = 0;
-      this.progressInterval = setInterval(() => {
-        if (this.progress < 90) this.progress += Math.random() * 10;
-      }, 200);
+      this.error = null;
 
       try {
-        const res = await axios.get(
-          `${process.env.VUE_APP_API_BASE_URL}/generated-scheduled/load`
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL +
+            "/final-generated-class-schedule/get-all-final-schedules",
+          { withCredentials: true }
         );
-        const allSchedules = res.data.data.scheduled_meetings || [];
-        this.schedule = allSchedules;
-        this.groupedSchedule = this.groupByInstructor(this.schedule);
-        this.filteredGroupedSchedule = this.groupedSchedule;
-      } catch {
-        this.error = "Failed to fetch schedule.";
+
+        // Filter schedules for Program Chairperson
+        let schedules = data || [];
+        if (this.user.role === "Program Chairperson") {
+          schedules = schedules.filter(
+            (s) =>
+              s.institute_id === this.user.institute_id &&
+              s.program_id === this.user.program_id
+          );
+        }
+
+        this.finalSchedules = schedules;
+        this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
+        this.filteredGroupedSchedule = { ...this.groupedSchedule };
+        this.changePage(1);
+      } catch (err) {
+        this.error = err.message || "Failed to fetch final schedules";
+        console.error(err);
       } finally {
-        clearInterval(this.progressInterval);
-        this.progress = 100;
-        setTimeout(() => (this.loading = false), 400);
+        this.loading = false;
       }
     },
-
+    // Keep your existing groupByInstructor method
     groupByInstructor(schedules) {
       return schedules.reduce((acc, s) => {
         const instructor = s.faculty_name || "Unknown Faculty";
@@ -762,20 +841,6 @@ export default {
         acc[instructor].push(s);
         return acc;
       }, {});
-    },
-
-    async generateSchedule() {
-      await this.fetchSchedule();
-      this.scheduleGenerated = true;
-      this.showFacultyTable = false;
-      this.appearSave = true;
-      const conflicts = this.checkConflicts();
-      if (conflicts.length) {
-        console.warn("Conflicts detected:", conflicts);
-        alert(
-          `⚠️ ${conflicts.length} conflicts detected! Check console for details.`
-        );
-      }
     },
 
     async fetchSchoolYears() {
@@ -788,62 +853,12 @@ export default {
         console.error("Failed to fetch school years:", err);
       }
     },
-
-    async saveScheduledConfirmed() {
-      this.confirmSaveModal = false;
-
-      try {
-        // Always fetch latest school years before saving
-        await this.fetchSchoolYears();
-
-        const latestSchoolYear = this.latestActiveSchoolYear;
-        if (!latestSchoolYear) {
-          alert("❌ No active school year found. Cannot save schedule.");
-          return;
-        }
-
-        const payload = this.schedule.map((item) => ({
-          class_id: item.class_id,
-          course_code: item.course_code,
-          program_id: item.program_id,
-          institute_id: item.institute_id,
-          type: item.type,
-          day: item.day,
-          start_hour: item.start_hour,
-          duration: item.duration,
-          time_slot: `${this.formatTime(item.start_hour)} - ${this.formatTime(
-            item.start_hour + Number(item.duration)
-          )}`,
-          room_id: item.room_id,
-          room_name: item.room_name,
-          room_type: item.room_type,
-          room_capacity: item.room_capacity,
-          class_size: item.class_size,
-          faculty_id: item.faculty_id,
-          faculty_name: item.faculty_name,
-          school_year: latestSchoolYear.school_year_name,
-          semester: latestSchoolYear.semester,
-        }));
-
-        await axios.post(
-          `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/bulk`,
-          payload,
-          { withCredentials: true }
-        );
-
-        toast.success("Schedule saved successfully!");
-      } catch (error) {
-        console.error(error);
-        alert("❌ Failed to save schedule.");
-      }
-    },
   },
-
   async mounted() {
     await this.fetchUser();
-    this.loadFetchData();
-    if (this.scheduleGenerated) await this.fetchSchedule();
-    await this.fetchSchoolYears(); // ensure school years are loaded on mount
+    await this.loadFetchData();
+    await this.fetchSchoolYears(); // load school years
+    await this.fetchFinalSchedules(); // <--- fetch schedules from API
   },
 };
 </script>

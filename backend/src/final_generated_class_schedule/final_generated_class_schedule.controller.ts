@@ -27,7 +27,7 @@ export class FinalGeneratedClassScheduleController {
     return this.service.createMany(createDtos);
   }
 
-  @Get()
+  @Get('get-all-final-schedules')
   findAll() {
     return this.service.findAll();
   }

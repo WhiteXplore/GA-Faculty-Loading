@@ -185,7 +185,7 @@
                 class="bg-defaultGreen p-2 px-4 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
                 type="submit"
               >
-                {{ isEditMode ? "Update" : "Submit" }}
+                {{ isEditMode ? "Save Changes" : "Submit" }}
               </button>
             </div>
           </div>

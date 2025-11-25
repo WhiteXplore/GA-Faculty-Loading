@@ -4,14 +4,18 @@
     class="w-full lg:flex-1 bg-white rounded-2xl"
   >
     <!-- Header / Add Button -->
-    <div class="flex justify-end items-center mb-6">
-      <button
-        class="gap-1 flex items-center cursor-pointer border border-green-600 text-green-600 px-2 py-1 rounded-lg hover:bg-green-50 transition"
+    <div class="flex justify-end mb-2">
+      <div
         @click="$emit('add')"
+        class="w-fit flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-lg shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
       >
-        <icon :name="'circle-add'" />
-        <span>Edit Expertise</span>
-      </button>
+        <div
+          class="flex items-center justify-center w-5 h-5 bg-white rounded-full"
+        >
+          <icon :name="'circle-add'" class="w-4 h-4 text-defaultGreen" />
+        </div>
+        <span class="font-medium text-sm">Edit Expertise</span>
+      </div>
     </div>
 
     <div class="h-auto overflow-auto space-y-8">
@@ -54,7 +58,7 @@
                       {{ item.course?.course_code || "N/A" }}
                     </span>
                     <span class="text-xs text-gray-600">
-                      {{ item.course?.course_description || "No Description" }}
+                      {{ item.course?.course_title || "No Description" }}
                     </span>
                   </div>
                 </div>
@@ -94,7 +98,7 @@
                       {{ item.course?.course_code || "N/A" }}
                     </span>
                     <span class="text-xs text-gray-600">
-                      {{ item.course?.course_description || "No Description" }}
+                      {{ item.course?.course_title || "No Description" }}
                     </span>
                   </div>
                 </div>

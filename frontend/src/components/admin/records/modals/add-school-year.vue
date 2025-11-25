@@ -100,7 +100,7 @@
               type="submit"
               class="bg-defaultGreen p-2 px-3 rounded-lg text-white"
             >
-              {{ isEdit ? "Update" : "Submit" }}
+              {{ isEdit ? "Save Changes" : "Submit" }}
             </button>
           </div>
         </div>
@@ -113,7 +113,7 @@
 import icon from "@/assets/icon.vue";
 import { toast } from "vue3-toastify";
 import axios from "axios";
-import { eventBus } from "@/event-bus";
+import { eventBus } from "@/bus/event-bus";
 
 export default {
   name: "SchoolYearFormModal",
@@ -163,7 +163,7 @@ export default {
         }
 
         // Emit event to TopBar
-        eventBus.emit("schoolYearChanged", payload);
+        eventBus.emit(payload.school_year_id);
 
         this.$emit("refresh");
         this.$emit("close");

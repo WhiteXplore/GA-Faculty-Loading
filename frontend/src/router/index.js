@@ -228,7 +228,7 @@ const routes = [
         name: "program-faculty-loading",
         component: () =>
           import(
-            "@/components/program-chairperson/program-record/faculty-loads.vue"
+            "@/components/program-chairperson/program-record/FacultyLoads.vue"
           ),
         meta: { requiresAuth: true, role: "Program Chairperson" },
       },
@@ -237,7 +237,16 @@ const routes = [
         name: "faculty-expertise",
         component: () =>
           import(
-            "@/components/program-chairperson/program-record/faculty-expertise.vue"
+            "@/components/program-chairperson/program-record/FacultyExpertise.vue"
+          ),
+        meta: { requiresAuth: true, role: "Program Chairperson" },
+      },
+      {
+        path: "/program-final-schedules",
+        name: "program-final-schedules",
+        component: () =>
+          import(
+            "@/components/program-chairperson/program-record/FinalSchedules.vue"
           ),
         meta: { requiresAuth: true, role: "Program Chairperson" },
       },
