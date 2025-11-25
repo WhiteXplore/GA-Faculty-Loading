@@ -92,92 +92,79 @@
 
       <!-- Table -->
       <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-        <table
-          class="min-w-full text-sm text-gray-700 border-collapse table-fixed"
-        >
-          <!-- Dynamic Header -->
-          <thead
-            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
-          >
-            <tr v-if="activeTab !== 'Not Selected Expertise'">
-              <th class="px-4 py-3 text-left w-[2%] rounded-tl-lg">ID</th>
-              <th class="px-4 py-3 text-left w-[15%]">Faculty Name</th>
-              <th class="px-4 py-3 text-left w-[25%]">Course Description</th>
-              <th class="px-4 py-3 text-left w-[20%]">Program</th>
-              <th class="px-4 py-3 text-left w-[14%] rounded-tr-lg">Type</th>
-            </tr>
+        <div class="max-h-[65vh] overflow-y-auto">
+          <table class="min-w-full text-sm text-gray-700 border-collapse">
+            <thead
+              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+            >
+              <tr>
+                <th class="px-4 py-3 text-left w-[3%] rounded-tl-lg">No.</th>
+                <th class="px-4 py-3 text-left w-[20%]">
+                  {{
+                    activeTab !== "Not Selected Expertise"
+                      ? "Faculty Name"
+                      : "Course Code"
+                  }}
+                </th>
+                <th class="px-4 py-3 text-left w-[40%]">Course Description</th>
+                <th class="px-4 py-3 text-left w-[25%]">Program</th>
+              </tr>
+            </thead>
 
-            <tr v-else>
-              <th class="px-4 py-3 text-left w-[6%] rounded-tl-lg">#</th>
-              <th class="px-4 py-3 text-left w-[25%]">Course Code</th>
-              <th class="px-4 py-3 text-left w-[35%]">Course Description</th>
-              <th class="px-4 py-3 text-left w-[20%]">Program</th>
-              <th class="px-4 py-3 text-left w-[14%] rounded-tr-lg">Type</th>
-            </tr>
-          </thead>
+            <tbody>
+              <!-- Expertise / Other Expertise -->
+              <template v-if="activeTab !== 'Not Selected Expertise'">
+                <tr
+                  v-for="(user, index) in paginatedUsers"
+                  :key="`${user.id}-${user.course_id}-${user.type}`"
+                  class="hover:bg-green-50 transition-all border-t"
+                >
+                  <td class="px-4 py-4 text-gray-600 text-left">
+                    {{ startIndex + index }}
+                  </td>
+                  <td class="px-4 py-3 truncate">
+                    {{ user.first_name }} {{ user.last_name }}
+                  </td>
+                  <td class="px-4 py-3 truncate">
+                    {{ user.course_code }} - {{ user.course_title }}
+                  </td>
+                  <td class="px-4 py-3 truncate">
+                    {{ user.program?.program_name || "-" }}
+                  </td>
+                </tr>
+              </template>
 
-          <tbody>
-            <!-- For Expertise / Other Expertise -->
-            <template v-if="activeTab !== 'Not Selected Expertise'">
-              <tr
-                v-for="(user, index) in paginatedUsers"
-                :key="`${user.id}-${user.course_id}-${user.type}`"
-                class="hover:bg-green-50 transition-all border-t"
-              >
-                <td class="px-4 py-4 text-gray-600 text-left">
-                  {{ startIndex + index }}
-                </td>
-                <td class="px-4 py-3 truncate">
-                  {{ user.first_name }} {{ user.last_name }}
-                </td>
-                <td class="px-4 py-3 truncate">
-                  {{ user.course_code }} - {{ user.course_description }}
-                </td>
-                <td class="px-4 py-3 truncate">
-                  {{ user.program?.program_name || "-" }}
-                </td>
-                <td class="px-4 py-3 text-left font-semibold text-green-700">
-                  {{ user.type }}
+              <!-- Not Selected Expertise -->
+              <template v-else>
+                <tr
+                  v-for="(user, index) in paginatedUsers"
+                  :key="`not-selected-${user.course_id}-${index}`"
+                  class="hover:bg-green-50 transition-all border-t"
+                >
+                  <td class="px-4 py-4 text-gray-600 text-left">
+                    {{ startIndex + index }}
+                  </td>
+                  <td class="px-4 py-3 truncate">
+                    {{ user.course_code }}
+                  </td>
+                  <td class="px-4 py-3 truncate">
+                    {{ user.course_title }}
+                  </td>
+                  <td class="px-4 py-3 truncate">
+                    {{ user.curriculum?.program?.program_code || "-" }}
+                  </td>
+                </tr>
+              </template>
+
+              <!-- No Records -->
+              <tr v-if="paginatedUsers.length === 0">
+                <td colspan="4" class="text-center py-8 text-gray-400">
+                  No records found
                 </td>
               </tr>
-            </template>
-
-            <!-- For Not Selected Expertise -->
-            <template v-else>
-              <tr
-                v-for="(user, index) in paginatedUsers"
-                :key="`not-selected-${user.course_id}-${index}`"
-                class="hover:bg-green-50 transition-all border-t"
-              >
-                <td class="px-4 py-4 text-gray-600 text-center">
-                  {{ startIndex + index }}
-                </td>
-                <td class="px-4 py-3 truncate">
-                  {{ user.course_code }}
-                </td>
-                <td class="px-4 py-3 truncate">
-                  {{ user.course_description }}
-                </td>
-                <td class="px-4 py-3 truncate">
-                  {{ user.curriculum?.program?.program_code || "-" }}
-                </td>
-                <td class="px-4 py-3 font-semibold text-green-700">
-                  {{ "Not Selected" }}
-                </td>
-              </tr>
-            </template>
-
-            <!-- No Records -->
-            <tr v-if="paginatedUsers.length === 0">
-              <td
-                :colspan="activeTab !== 'Not Selected Expertise' ? 5 : 4"
-                class="text-center py-8 text-gray-400"
-              >
-                No records found
-              </td>
-            </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Pagination -->
@@ -277,7 +264,7 @@ export default {
               type: "Expertise",
               course_id: e.course.course_id,
               course_code: e.course.course_code,
-              course_description: e.course.course_description,
+              course_title: e.course.course_title,
             });
           });
         });
@@ -292,7 +279,7 @@ export default {
               type: "Other Expertise",
               course_id: e.course.course_id,
               course_code: e.course.course_code,
-              course_description: e.course.course_description,
+              course_title: e.course.course_title,
             });
           });
         });
@@ -334,7 +321,7 @@ export default {
           if (this.activeTab === "Not Selected Expertise") {
             return (
               u.course_code.toLowerCase().includes(query) ||
-              u.course_description.toLowerCase().includes(query)
+              u.course_title.toLowerCase().includes(query)
             );
           } else {
             return (

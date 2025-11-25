@@ -290,10 +290,6 @@ export default {
 
       return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
-    tableHeightClass() {
-      const count = this.paginatedData.length;
-      return count <= 10 ? "h-auto" : "h-[65vh]";
-    },
   },
   methods: {
     async loadReportCurriculums() {

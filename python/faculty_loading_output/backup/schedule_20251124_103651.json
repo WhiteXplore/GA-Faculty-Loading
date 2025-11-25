@@ -3,13 +3,7 @@
     "generated_at": "2025-11-24 10:36:51",
     "total_scheduled": 464,
     "total_unscheduled": 13,
-    "days": [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday"
-    ],
+    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
     "start_hour": 8,
     "end_hour": 21
   },

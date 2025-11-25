@@ -80,54 +80,56 @@
 
       <!-- Faculty Table -->
       <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-        <table class="min-w-full text-sm text-gray-700 border-collapse">
-          <thead
-            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
-          >
-            <tr>
-              <th class="px-4 py-3 text-left font-normal">Faculty Name</th>
-              <th class="px-4 py-3 text-left font-normal">Institute</th>
-              <th class="px-4 py-3 text-left font-normal w-[30%]">Program</th>
-              <th class="px-4 py-3 text-left font-normal w-[15%]">Role</th>
-              <th class="px-4 py-3 text-center rounded-tr-lg font-normal">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="user in paginatedData"
-              :key="user.id"
-              class="hover:bg-green-50 transition-all border-t"
+        <div class="max-h-[65vh] overflow-y-auto">
+          <table class="min-w-full text-sm text-gray-700 border-collapse">
+            <thead
+              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
-              <td class="px-4 py-3">
-                {{ user.first_name }} {{ user.last_name }}
-              </td>
-              <td class="px-4 py-3">
-                {{ user.institute?.institute_name || "N/A" }}
-              </td>
-              <td class="px-4 py-3">
-                {{ user.program?.program_name || "N/A" }}
-              </td>
-              <td class="px-4 py-3 text-left">{{ user.role }}</td>
-              <td class="px-4 py-3 items-center justify-center flex">
-                <div class="flex gap-2">
-                  <button
-                    class="px-3 py-1 h-8 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-lg flex items-center gap-1"
-                    @click="toggleView(user)"
-                  >
-                    <icon name="eye" /> View
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr v-if="paginatedData.length === 0">
-              <td colspan="6" class="text-center py-8 text-gray-400">
-                No faculty found
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              <tr>
+                <th class="px-4 py-3 text-left font-normal">Faculty Name</th>
+                <th class="px-4 py-3 text-left font-normal">Institute</th>
+                <th class="px-4 py-3 text-left font-normal w-[30%]">Program</th>
+                <th class="px-4 py-3 text-left font-normal w-[15%]">Role</th>
+                <th class="px-4 py-3 text-center rounded-tr-lg font-normal">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="user in paginatedData"
+                :key="user.id"
+                class="hover:bg-green-50 transition-all border-t"
+              >
+                <td class="px-4 py-3">
+                  {{ user.first_name }} {{ user.last_name }}
+                </td>
+                <td class="px-4 py-3">
+                  {{ user.institute?.institute_name || "N/A" }}
+                </td>
+                <td class="px-4 py-3">
+                  {{ user.program?.program_name || "N/A" }}
+                </td>
+                <td class="px-4 py-3 text-left">{{ user.role }}</td>
+                <td class="px-4 py-3 items-center justify-center flex">
+                  <div class="flex gap-2">
+                    <button
+                      class="px-3 py-1 h-8 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-lg flex items-center gap-1"
+                      @click="toggleView(user)"
+                    >
+                      <icon name="eye" /> View
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr v-if="paginatedData.length === 0">
+                <td colspan="6" class="text-center py-8 text-gray-400">
+                  No faculty found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
@@ -380,10 +382,6 @@ export default {
       }
 
       return Array.from({ length: end - start + 1 }, (_, i) => start + i);
-    },
-    tableHeightClass() {
-      const count = this.paginatedData.length;
-      return count <= 10 ? "h-auto" : "h-[65vh]";
     },
   },
 

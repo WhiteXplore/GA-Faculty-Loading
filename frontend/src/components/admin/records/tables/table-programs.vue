@@ -384,10 +384,6 @@ export default {
       const end = this.currentPage * this.itemsPerPage;
       return Math.min(end, this.filteredData.length);
     },
-    tableHeightClass() {
-      const count = this.paginatedData.length;
-      return count <= 10 ? "h-auto" : "h-[65vh]";
-    },
   },
   methods: {
     async loadPrograms() {

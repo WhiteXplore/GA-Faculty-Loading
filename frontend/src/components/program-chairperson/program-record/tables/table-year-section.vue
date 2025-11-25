@@ -50,66 +50,69 @@
         <div v-if="filteredAndSearchedClasses.length > 0">
           <!-- Table -->
           <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-            <table
-              class="min-w-full text-sm text-gray-700 border-collapse table-auto"
-            >
-              <thead
-                class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
-              >
-                <tr>
-                  <th
-                    v-if="user.role === 'Admin'"
-                    class="px-4 py-3 text-left w-[20%]"
-                  >
-                    Program
-                  </th>
-                  <th class="px-4 py-3 text-left w-[15%]">Program</th>
-                  <th class="px-4 py-3 text-left w-[15%]">Section Name</th>
-                  <th class="px-4 py-3 text-center w-[18%]">Class Size</th>
-                  <th class="px-4 py-3 text-center w-[18%]">School Year</th>
-                  <th class="px-4 py-3 text-center w-[20%]">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="cls in paginatedClasses"
-                  :key="cls.class_id"
-                  class="hover:bg-green-50 transition-all border-t"
+            <div class="max-h-[65vh] overflow-y-auto">
+              <table class="min-w-full text-sm text-gray-700 border-collapse">
+                <thead
+                  class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
                 >
-                  <td v-if="user.role === 'Admin'" class="px-4 py-3 text-left">
-                    {{ cls.program?.program_name }}
-                  </td>
-                  <td class="px-4 py-3 text-left">
-                    {{ cls.program?.program_code }}
-                  </td>
-                  <td class="px-4 py-3 font-medium text-left">
-                    {{ cls.set_name }}
-                  </td>
-                  <td class="px-4 py-3 text-center">{{ cls.class_size }}</td>
-                  <td class="px-4 py-3 text-center">
-                    {{ cls.schoolYear?.school_year_name }}
-                  </td>
-                  <td class="px-4 py-3 flex justify-center gap-2">
-                    <!-- Delete Button -->
-                    <button
-                      @click="promptDelete(cls.class_id)"
-                      class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                  <tr>
+                    <th
+                      v-if="user.role === 'Admin'"
+                      class="px-4 py-3 text-left w-[20%]"
                     >
-                      <icon name="delete" /> Delete
-                    </button>
-                  </td>
-                </tr>
-
-                <tr v-if="paginatedClasses.length === 0">
-                  <td
-                    :colspan="user.role === 'Admin' ? 6 : 5"
-                    class="text-center py-6 text-gray-400"
+                      Program
+                    </th>
+                    <th class="px-4 py-3 text-left w-[15%]">Program</th>
+                    <th class="px-4 py-3 text-left w-[15%]">Section Name</th>
+                    <th class="px-4 py-3 text-center w-[18%]">Class Size</th>
+                    <th class="px-4 py-3 text-center w-[18%]">School Year</th>
+                    <th class="px-4 py-3 text-center w-[20%]">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="cls in paginatedClasses"
+                    :key="cls.class_id"
+                    class="hover:bg-green-50 transition-all border-t"
                   >
-                    No matching sections found
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                    <td
+                      v-if="user.role === 'Admin'"
+                      class="px-4 py-3 text-left"
+                    >
+                      {{ cls.program?.program_name }}
+                    </td>
+                    <td class="px-4 py-3 text-left">
+                      {{ cls.program?.program_code }}
+                    </td>
+                    <td class="px-4 py-3 font-medium text-left">
+                      {{ cls.set_name }}
+                    </td>
+                    <td class="px-4 py-3 text-center">{{ cls.class_size }}</td>
+                    <td class="px-4 py-3 text-center">
+                      {{ cls.schoolYear?.school_year_name }}
+                    </td>
+                    <td class="px-4 py-3 flex justify-center gap-2">
+                      <!-- Delete Button -->
+                      <button
+                        @click="promptDelete(cls.class_id)"
+                        class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                      >
+                        <icon name="delete" /> Delete
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr v-if="paginatedClasses.length === 0">
+                    <td
+                      :colspan="user.role === 'Admin' ? 6 : 5"
+                      class="text-center py-6 text-gray-400"
+                    >
+                      No matching sections found
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <!-- Pagination -->

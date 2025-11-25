@@ -1,14 +1,16 @@
+from openpyxl.utils import get_column_letter
+from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+from openpyxl import Workbook
+from sqlalchemy import create_engine, Table, MetaData, select
+from copy import deepcopy
+from dataclasses import dataclass
+from typing import List, Dict, Tuple, Optional
+from datetime import datetime
 import random
 import json
 import os
-from datetime import datetime
-from typing import List, Dict, Tuple, Optional
-from dataclasses import dataclass
-from copy import deepcopy
-from sqlalchemy import create_engine, Table, MetaData, select
-from openpyxl import Workbook
-from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
-from openpyxl.utils import get_column_letter
+
+
 # =========================
 # MySQL Connection (adjust creds/host/db as needed)
 # =========================
@@ -313,10 +315,6 @@ def create_schedule(faculty_loads, rooms):
     complete_schedule = []
     unscheduled_meetings = []
 
-    print("\n" + "="*80)
-    print(" " * 25 + "STARTING SCHEDULING PROCESS")
-    print("="*80)
-
     # Process each faculty's assigned classes
     for faculty_id, faculty_info in faculty_loads.items():
         faculty_name = faculty_info["faculty_name"]
@@ -324,16 +322,12 @@ def create_schedule(faculty_loads, rooms):
         if len(faculty_info["assigned_classes"]) == 0:
             continue
 
-        print(f"\nScheduling classes for: {faculty_name} (ID: {faculty_id})")
-
         for cls in faculty_info["assigned_classes"]:
             lecture_hours = cls.get("course_lec", 0)
             lab_hours = cls.get("course_lab", 0)
 
             # Schedule lecture if needed
             if lecture_hours > 0:
-                print(
-                    f"  Scheduling LECTURE for {cls['course_code']} ({lecture_hours}h)...", end=" ")
                 lecture_schedule = schedule_class_meeting(
                     cls, "Lecture", lecture_hours, rooms, faculty_id,
                     schedule_tracker, faculty_schedule_tracker, unscheduled_meetings
@@ -343,14 +337,9 @@ def create_schedule(faculty_loads, rooms):
                     lecture_schedule["faculty_id"] = faculty_id
                     lecture_schedule["faculty_name"] = faculty_name
                     complete_schedule.append(lecture_schedule)
-                    print("✓ Scheduled")
-                else:
-                    print("✗ Failed")
 
             # Schedule laboratory if needed
             if lab_hours > 0:
-                print(
-                    f"  Scheduling LABORATORY for {cls['course_code']} ({lab_hours}h)...", end=" ")
                 lab_schedule = schedule_class_meeting(
                     cls, "Laboratory", lab_hours, rooms, faculty_id,
                     schedule_tracker, faculty_schedule_tracker, unscheduled_meetings
@@ -360,15 +349,8 @@ def create_schedule(faculty_loads, rooms):
                     lab_schedule["faculty_id"] = faculty_id
                     lab_schedule["faculty_name"] = faculty_name
                     complete_schedule.append(lab_schedule)
-                    print("✓ Scheduled")
-                else:
-                    print("✗ Failed")
 
-    print("\n" + "="*80)
-    print(f"Scheduling Complete: {len(complete_schedule)} meetings scheduled, "
-          f"{len(unscheduled_meetings)} unscheduled")
-    print("="*80)
-
+    # Return results without printing
     return complete_schedule, unscheduled_meetings
 
 
@@ -952,8 +934,8 @@ def save_faculty_load_to_json(faculty_loads: Dict, filename: str):
 # MAIN SCRIPT
 # ============================================================
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     # Load your data from database
     classes_course_table = Table(
         "classes_course", metadata, autoload_with=engine)
@@ -966,127 +948,20 @@ if __name__ == "__main__":
         faculty_expertise_courses_table)
     rooms = fetch_table_data(rooms_table)
 
-    print("\nLoaded rooms data:")
-    print(json.dumps(rooms, indent=2, default=str))
-    print("\nLoaded classes_course:")
-    # preview only
-    print(json.dumps(classes_course[:5], indent=2, default=str))
-
-    print("\nLoaded faculty_expertise:")
-    # preview only
-    print(json.dumps(faculty_expertise_courses[:5], indent=2, default=str))
-
-    # ------------------------------------------
     # APPLY FACULTY LOAD ASSIGNMENT
-    # ------------------------------------------
     faculty_load_result = assign_faculty(
         classes_course, faculty_expertise_courses)
-    print("\nLoaded faculty_expertise:")
-    print(faculty_load_result)  # preview only
-    # ==================================================================
-    # ENHANCED DEBUGGING FOR ROOM MATCHING
-    # ==================================================================
-    print("\n" + "="*80)
-    print("DEBUGGING: ROOM DATA ANALYSIS")
-    print("="*80)
-    print(f"Total rooms loaded: {len(rooms)}")
 
-    if rooms:
-        print("\n--- First 3 Rooms Sample ---")
-        for i, room in enumerate(rooms[:3]):
-            print(f"\nRoom {i+1}:")
-            for key, value in room.items():
-                print(f"  {key}: {value}")
-
-        # Analyze room types
-        room_types = {}
-        for room in rooms:
-            rt = room.get("room_type")
-            room_types[rt] = room_types.get(rt, 0) + 1
-
-        print(f"\n--- Room Types Distribution ---")
-        for rt, count in room_types.items():
-            print(f"  '{rt}': {count} rooms")
-
-        # Analyze institutes
-        room_institutes = {}
-        for room in rooms:
-            ri = room.get("institute_id")
-            room_institutes[ri] = room_institutes.get(ri, 0) + 1
-
-        print(f"\n--- Room Institute Distribution ---")
-        for ri, count in sorted(room_institutes.items()):
-            print(f"  Institute {ri}: {count} rooms")
-
-    print("\n" + "="*80)
-    print("DEBUGGING: CLASS DATA ANALYSIS")
-    print("="*80)
-
-    # ------------------------------------------
     # CREATE ROOM AND TIME SCHEDULE
-    # ------------------------------------------
-    print("\n" + "="*80)
-    print("Starting schedule generation...")
-    print("="*80)
-
     complete_schedule, unscheduled_meetings = create_schedule(
         faculty_load_result, rooms)
-    print("\nLoaded faculty_expertise:")
-    print(complete_schedule, unscheduled_meetings)
-    print("\nLoaded faculty_expertise:yyyyyyyyyyyyyyyyyyyy")
-    # preview only
-    # ------------------------------------------
-    # DISPLAY SCHEDULE SUMMARY
-    # ------------------------------------------
-    print("\n" + "="*80)
-    print(" SCHEDULE SUMMARY BY DAY")
-    print("="*80)
 
-    for day in DAYS:
-        day_schedule = [s for s in complete_schedule if s["day"] == day]
-        print(f"\n{day}: {len(day_schedule)} meetings scheduled")
+    # Output JSON for NestJS with 'scheduled_meetings' key
+    output = {
+        "scheduled_meetings": complete_schedule,
+        "unscheduled_meetings": unscheduled_meetings  # optional, can include if needed
+    }
 
-    # ------------------------------------------
-    # SAVE TO FILES
-    # ------------------------------------------
-
-    # Create output directory if it doesn't exist
-    output_dir = "faculty_loading_output"
-    os.makedirs(output_dir, exist_ok=True)
-
-    # Generate timestamp for filenames
-    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-
-    # # Save faculty loading to text file
-    # text_filename = os.path.join(output_dir, f"faculty_loading_{timestamp}.txt")
-    # save_faculty_load_to_text(faculty_load_result, text_filename)
-
-    # # Save faculty loading to JSON file
-    # json_filename = os.path.join(output_dir, f"faculty_loading_{timestamp}.json")
-    # save_faculty_load_to_json(faculty_load_result, json_filename)
-
-    # # Save schedule to text file
-    # schedule_text_filename = os.path.join(output_dir, f"schedule_{timestamp}.txt")
-    # save_schedule_to_text(complete_schedule, unscheduled_meetings, schedule_text_filename)
-
-    # # Save schedule to JSON file
-    # schedule_json_filename = os.path.join(output_dir, f"schedule_{timestamp}.json")
-    # save_schedule_to_json(complete_schedule, unscheduled_meetings, schedule_json_filename)
-
-    # Save schedule to Excel file
-    schedule_excel_filename = os.path.join(
-        output_dir, f"schedule_{timestamp}.xlsx")
-    save_schedule_to_excel(complete_schedule, unscheduled_meetings,
-                           faculty_load_result, schedule_excel_filename)
-    total_meetings = len(complete_schedule)
-    print(f"Total meetings scheduled: {total_meetings}")
-    print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
-
-    print(f"\n{'='*80}")
-    print("✓ Faculty loading and scheduling completed successfully!")
-    print(f"✓ Files saved in '{output_dir}/' directory:")
-    # print(f"  - {text_filename}")
-    # print(f"  - {json_filename}")
-    # print(f"  - {schedule_text_filename}")
-    # print(f"  - {schedule_json_filename}")
-    print(f"{'='*80}")
+    print("===JSON_START===")
+    print(json.dumps(output, indent=2, default=str))
+    print("===JSON_END===")

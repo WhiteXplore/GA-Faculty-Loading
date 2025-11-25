@@ -77,75 +77,76 @@
 
         <!-- Table -->
         <div class="w-full mt-1 rounded-xl border bg-white overflow-hidden">
-          <table class="min-w-full text-sm text-gray-700 border-collapse">
-            <!-- Table Head -->
-            <thead
-              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
-            >
-              <tr>
-                <th class="px-4 py-3 text-left font-semibold w-[2%]">ID</th>
-                <th class="px-4 py-3 text-center font-semibold w-[10%]">
-                  Year & Section
-                </th>
-                <th class="px-4 py-3 text-left font-semibold w-[20%]">
-                  Program
-                </th>
-                <th class="px-4 py-3 text-center font-semibold w-[10%]">
-                  Class Size
-                </th>
-                <th class="px-4 py-3 text-center font-semibold w-[15%]">
-                  School Year
-                </th>
-                <th class="px-4 py-3 text-center font-semibold w-[15%]">
-                  Assigned Courses
-                </th>
-              </tr>
-            </thead>
-
-            <!-- Table Body -->
-            <tbody>
-              <tr
-                v-for="(cls, index) in paginatedClasses"
-                :key="cls.class_id"
-                class="hover:bg-green-50 transition-all border-t"
+          <div class="max-h-[65vh] overflow-y-auto">
+            <table class="min-w-full text-sm text-gray-700 border-collapse">
+              <thead
+                class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
               >
-                <td class="px-4 py-3 text-gray-600">
-                  {{ classStartIndex + index }}
-                </td>
-                <td class="px-4 py-3 text-gray-800 text-center">
-                  {{ cls.set_name }}
-                </td>
-                <td class="px-4 py-3">
-                  {{ cls.program?.program_name || "N/A" }}
-                </td>
-                <td class="px-4 py-3 text-center">
-                  <span
-                    class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full"
-                  >
-                    {{ cls.class_size }} students
-                  </span>
-                </td>
-                <td class="px-4 py-3 text-center">
-                  {{ cls.schoolYear?.school_year_name || "N/A" }}
-                </td>
-                <td class="px-4 py-3 flex justify-center items-center">
-                  <button
-                    @click="showClassCourses(cls)"
-                    class="px-3 py-2 h-8 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-lg flex items-center gap-1"
-                  >
-                    <icon name="eye" /> View
-                  </button>
-                </td>
-              </tr>
+                <tr>
+                  <th class="px-4 py-3 text-left font-semibold w-[2%]">ID</th>
+                  <th class="px-4 py-3 text-center font-semibold w-[10%]">
+                    Year & Section
+                  </th>
+                  <th class="px-4 py-3 text-left font-semibold w-[20%]">
+                    Program
+                  </th>
+                  <th class="px-4 py-3 text-center font-semibold w-[10%]">
+                    Class Size
+                  </th>
+                  <th class="px-4 py-3 text-center font-semibold w-[15%]">
+                    School Year
+                  </th>
+                  <th class="px-4 py-3 text-center font-semibold w-[15%]">
+                    Assigned Courses
+                  </th>
+                </tr>
+              </thead>
 
-              <!-- Empty State -->
-              <tr v-if="filteredClasses.length === 0">
-                <td colspan="6" class="px-4 py-8 text-center text-gray-500">
-                  No classes found
-                </td>
-              </tr>
-            </tbody>
-          </table>
+              <!-- Table Body -->
+              <tbody>
+                <tr
+                  v-for="(cls, index) in paginatedClasses"
+                  :key="cls.class_id"
+                  class="hover:bg-green-50 transition-all border-t"
+                >
+                  <td class="px-4 py-3 text-gray-600">
+                    {{ classStartIndex + index }}
+                  </td>
+                  <td class="px-4 py-3 text-gray-800 text-center">
+                    {{ cls.set_name }}
+                  </td>
+                  <td class="px-4 py-3">
+                    {{ cls.program?.program_name || "N/A" }}
+                  </td>
+                  <td class="px-4 py-3 text-center">
+                    <span
+                      class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full"
+                    >
+                      {{ cls.class_size }} students
+                    </span>
+                  </td>
+                  <td class="px-4 py-3 text-center">
+                    {{ cls.schoolYear?.school_year_name || "N/A" }}
+                  </td>
+                  <td class="px-4 py-3 flex justify-center items-center">
+                    <button
+                      @click="showClassCourses(cls)"
+                      class="px-3 py-2 h-8 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-lg flex items-center gap-1"
+                    >
+                      <icon name="eye" /> View
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Empty State -->
+                <tr v-if="filteredClasses.length === 0">
+                  <td colspan="6" class="px-4 py-8 text-center text-gray-500">
+                    No classes found
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- Pagination -->
@@ -420,20 +421,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-</style>
