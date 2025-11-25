@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col gap-4 h-[87vh]">
+  <div class="flex flex-col gap-3 h-[90vh]">
     <!-- Top Controls -->
-    <div class="flex flex-wrap justify-between items-center mb-4 gap-3">
+    <div class="flex flex-wrap justify-between items-center gap-3">
       <div class="text-sm text-gray-600 mt-2 font-medium">
         Pages / Faculty Loads
       </div>
@@ -40,6 +40,7 @@
 
         <!-- Save Schedule -->
         <button
+          v-if="appearSave"
           @click="confirmSaveModal = true"
           class="flex items-center gap-2 px-4 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300"
         >
@@ -53,7 +54,7 @@
       </div>
     </div>
 
-    <div class="flex flex-wrap items-center gap-4 mb-2">
+    <div class="flex flex-wrap items-center gap-4">
       <!-- Back Button -->
       <button
         v-if="
@@ -108,79 +109,160 @@
     <!-- Scrollable Content -->
     <div class="flex-1 overflow-y-auto">
       <!-- Faculty Table -->
-      <div
-        v-if="showFacultyTable"
-        class="bg-white rounded-xl border p-5 shadow-sm h-full overflow-auto"
-      >
-        <div class="overflow-x-auto max-h-[100%]">
-          <table
-            class="min-w-full text-sm text-gray-700 border-collapse table-auto"
-          >
-            <thead class="bg-defaultGreen text-white sticky top-0 z-10">
-              <tr>
-                <th class="px-5 py-3 text-left font-semibold whitespace-nowrap">
-                  Faculty Name
-                </th>
-                <th
-                  class="px-5 py-3 text-center font-semibold w-[150px] whitespace-nowrap"
-                >
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(slots, instructor) in paginatedFaculty"
-                :key="instructor"
-                class="hover:bg-green-50 border-t transition-colors"
-              >
-                <td
-                  class="px-5 py-3 font-medium text-gray-800 whitespace-nowrap"
-                >
-                  {{ instructor }}
-                </td>
-                <td class="px-5 py-3 text-center">
-                  <button
-                    @click="viewFacultySchedule(instructor)"
-                    class="flex items-center justify-center gap-1 mx-auto px-3 py-1.5 border border-blue-400 text-blue-700 hover:bg-blue-100 rounded-lg text-sm font-medium transition"
-                  >
-                    <icon name="eye" class="w-4 h-4" /> View
-                  </button>
-                </td>
-              </tr>
-              <tr
-                v-if="!Object.keys(filteredGroupedSchedule).length"
-                class="text-center bg-gray-50"
-              >
-                <td colspan="2" class="py-5 text-gray-500">
-                  No faculty found.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- Pagination -->
+      <div v-if="showFacultyTable">
+        <!-- Table Container -->
+        <div class="overflow-x-auto border p-3 rounded-xl bg-white">
           <div
-            v-if="totalPages > 1"
-            class="flex justify-center items-center gap-3 mt-4 text-sm"
+            class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
           >
-            <button
-              @click="changePage(currentPage - 1)"
-              :disabled="currentPage === 1"
-              class="px-3 py-1.5 border rounded-lg hover:bg-gray-100 disabled:opacity-50"
-            >
-              Prev
-            </button>
-            <span class="font-medium"
-              >Page {{ currentPage }} of {{ totalPages }}</span
-            >
-            <button
-              @click="changePage(currentPage + 1)"
-              :disabled="currentPage === totalPages"
-              class="px-3 py-1.5 border rounded-lg hover:bg-gray-100 disabled:opacity-50"
-            >
-              Next
-            </button>
+            <!-- Items per page -->
+            <div class="flex items-center gap-2">
+              <div class="relative">
+                <select
+                  v-model="itemsPerPage"
+                  class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md focus:shadow-md"
+                  @change="changePage(1)"
+                >
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                </select>
+                <div
+                  class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-600"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <span class="text-sm font-medium text-gray-600">Per page</span>
+            </div>
+
+            <!-- Search -->
+            <div class="relative w-full sm:w-64 md:w-72 lg:w-80">
+              <input
+                v-model="searchQuery"
+                type="text"
+                placeholder="Search faculty..."
+                class="rounded-full border border-green-600 bg-white px-4 py-2 pl-10 text-sm shadow-sm w-full transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md focus:shadow-md"
+                @input="changePage(1)"
+              />
+              <div
+                class="absolute inset-y-0 left-3 flex items-center text-green-600 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="M21 21l-4.35-4.35" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Faculty Table -->
+          <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+            <div class="max-h-[65vh] overflow-y-auto">
+              <table class="min-w-full text-sm text-gray-700 border-collapse">
+                <thead
+                  class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+                >
+                  <tr>
+                    <th
+                      class="px-5 py-3 text-left font-semibold whitespace-nowrap"
+                    >
+                      Faculty Name
+                    </th>
+                    <th
+                      class="px-5 py-3 text-center font-semibold w-[150px] whitespace-nowrap"
+                    >
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(slots, instructor) in paginatedFaculty"
+                    :key="instructor"
+                    class="hover:bg-green-50 border-t transition-colors"
+                  >
+                    <td
+                      class="px-5 py-3 font-medium text-gray-800 whitespace-nowrap"
+                    >
+                      {{ instructor }}
+                    </td>
+                    <td class="px-5 py-3 text-center">
+                      <button
+                        @click="viewFacultySchedule(instructor)"
+                        class="flex items-center justify-center gap-1 mx-auto px-3 py-1.5 border border-blue-400 text-blue-700 hover:bg-blue-100 rounded-lg text-sm font-medium transition"
+                      >
+                        <icon name="eye" class="w-4 h-4" /> View
+                      </button>
+                    </td>
+                  </tr>
+                  <tr
+                    v-if="!Object.keys(filteredGroupedSchedule).length"
+                    class="text-center bg-gray-50"
+                  >
+                    <td colspan="2" class="py-5 text-gray-500">
+                      No faculty found.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Pagination -->
+          <div class="flex justify-between items-center mt-4">
+            <div class="text-gray-700 text-sm">
+              Showing {{ startIndex }} to {{ endIndex }} of
+              {{ Object.keys(filteredGroupedSchedule).length }} faculty
+            </div>
+
+            <div class="flex items-center">
+              <button
+                @click="changePage(currentPage - 1)"
+                :disabled="currentPage === 1"
+                class="px-3 py-1 bg-gray-300 text-gray-700 rounded-l-md hover:bg-gray-400 disabled:opacity-50"
+              >
+                &lt;
+              </button>
+
+              <span v-for="page in pageNumbers" :key="'page-' + page">
+                <button
+                  @click="changePage(page)"
+                  :class="{
+                    'bg-defaultGreen text-white': currentPage === page,
+                    'bg-gray-200 text-gray-700': currentPage !== page,
+                  }"
+                  class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+                >
+                  {{ page }}
+                </button>
+              </span>
+
+              <button
+                @click="changePage(currentPage + 1)"
+                :disabled="currentPage === totalPages"
+                class="px-3 py-1 bg-gray-300 text-gray-700 rounded-r-md hover:bg-gray-400 disabled:opacity-50"
+              >
+                &gt;
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -315,7 +397,7 @@
     <!-- Confirm Save Modal -->
     <div
       v-if="confirmSaveModal"
-      class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50"
+      class="fixed inset-0 flex items-center justify-center bg-black/30 z-50"
     >
       <div class="bg-white rounded-2xl shadow-2xl p-6 w-96 text-center">
         <h2 class="text-lg font-semibold mb-4">Confirm Save</h2>
@@ -345,7 +427,7 @@
 import axios from "axios";
 import icon from "@/assets/icon.vue";
 import { useFetchDataStore } from "@/store/fetch-data-store";
-
+import { toast } from "vue3-toastify";
 export default {
   name: "FacultySchedule",
   components: { icon },
@@ -380,7 +462,8 @@ export default {
       itemsPerPage: 10,
       timeSlotHeight: 60,
 
-      schoolYears: [], // store fetched school years
+      schoolYears: [],
+      appearSave: false,
     };
   },
 
@@ -427,19 +510,6 @@ export default {
       });
     },
 
-    paginatedFaculty() {
-      const allFaculty = Object.entries(this.filteredGroupedSchedule);
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      return Object.fromEntries(allFaculty.slice(start, end));
-    },
-
-    totalPages() {
-      return Math.ceil(
-        Object.keys(this.filteredGroupedSchedule).length / this.itemsPerPage
-      );
-    },
-
     // Compute latest active school year dynamically
     latestActiveSchoolYear() {
       if (!this.schoolYears.length) return null;
@@ -450,6 +520,29 @@ export default {
           ? current
           : latest
       );
+    },
+    startIndex() {
+      return (this.currentPage - 1) * this.itemsPerPage + 1;
+    },
+    endIndex() {
+      return Math.min(
+        this.currentPage * this.itemsPerPage,
+        Object.keys(this.filteredGroupedSchedule).length
+      );
+    },
+    totalPages() {
+      return Math.ceil(
+        Object.keys(this.filteredGroupedSchedule).length / this.itemsPerPage
+      );
+    },
+    pageNumbers() {
+      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    },
+    paginatedFaculty() {
+      const allFaculty = Object.entries(this.filteredGroupedSchedule);
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return Object.fromEntries(allFaculty.slice(start, end));
     },
   },
 
@@ -637,7 +730,7 @@ export default {
       await this.fetchSchedule();
       this.scheduleGenerated = true;
       this.showFacultyTable = false;
-
+      this.appearSave = true;
       const conflicts = this.checkConflicts();
       if (conflicts.length) {
         console.warn("Conflicts detected:", conflicts);
@@ -699,7 +792,7 @@ export default {
           { withCredentials: true }
         );
 
-        alert("💾 Schedule saved successfully!");
+        toast.success("Schedule saved successfully!");
       } catch (error) {
         console.error(error);
         alert("❌ Failed to save schedule.");
