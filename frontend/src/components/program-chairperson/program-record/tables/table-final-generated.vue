@@ -29,7 +29,7 @@
         <button
           @click="swapCourses"
           :disabled="swapSelection.length !== 2"
-          class="group flex items-center gap-2 px-4 py-2 border border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white rounded-xl shadow-sm transition cursor-pointer"
+          class="group flex items-center gap-2 px-4 py-2 border border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white rounded-xl shadow-sm transition cur"
         >
           <div
             class="p-1 bg-yellow-100 rounded-full flex items-center justify-center group-hover:bg-white transition"
@@ -40,6 +40,63 @@
             />
           </div>
           <span class="font-medium text-sm"> Swap </span>
+        </button>
+        <div
+          class="flex items-center gap-3 flex-wrap ml-auto"
+          v-if="showCompareSelection"
+        >
+          <div class="flex gap-2 items-center">
+            <select
+              v-model="compareInstructorA"
+              class="rounded-xl border border-purple-600 px-2 py-2.5 text-sm text-purple-700 shadow-sm"
+            >
+              <option value="">Select Instructor</option>
+              <option
+                v-for="instructor in Object.keys(groupedSchedule)"
+                :key="'a-' + instructor"
+                :value="instructor"
+              >
+                {{ instructor }}
+              </option>
+            </select>
+            <select
+              v-model="compareInstructorB"
+              class="rounded-xl border border-purple-600 px-2 py-2.5 text-sm text-purple-700 shadow-sm"
+            >
+              <option value="">Select Instructor</option>
+              <option
+                v-for="instructor in Object.keys(groupedSchedule)"
+                :key="'b-' + instructor"
+                :value="instructor"
+              >
+                {{ instructor }}
+              </option>
+            </select>
+
+            <button
+              @click="showCompareFacultyCards"
+              :disabled="
+                !compareInstructorA ||
+                !compareInstructorB ||
+                compareInstructorA === compareInstructorB
+              "
+              class="bg-purple-600 text-white px-4 py-2.5 rounded-xl hover:bg-purple-700 transition"
+            >
+              Compare</button
+            ><button
+              @click="backFromCompare"
+              class="flex items-center gap-2 p-1 border border-gray-400 rounded-full shadow-sm hover:bg-gray-100 transition"
+            >
+              <icon name="circle-close" class="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+        <button
+          @click="toggleShowCompareSelection"
+          v-if="!showCompareSelection"
+          class="bg-purple-600 text-white px-4 py-1 rounded-xl hover:bg-purple-700 transition"
+        >
+          Compare
         </button>
       </div>
     </div>
@@ -299,22 +356,22 @@
       <div
         v-else
         :class="[
-          'gap-6 overflow-y-auto pr-2 grid',
-          Object.keys(filteredGroupedSchedule).length === 1
+          'gap-6 grid p-2',
+          showCompareView
+            ? 'grid-cols-1 md:grid-cols-2 h-[87vh] overflow-y-auto'
+            : Object.keys(filteredGroupedSchedule).length === 1
             ? 'grid-cols-1'
-            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-[262.5vh] overflow-y-auto',
         ]"
-        style="height: 100%"
       >
         <div
           v-for="(records, instructor) in filteredGroupedSchedule"
           :key="instructor"
-          class="bg-white rounded-xl border flex flex-col"
+          class="bg-white rounded-xl border flex flex-col shadow-sm overflow-hidden"
         >
           <!-- Header -->
-          <!-- Header with Edit button -->
           <div
-            class="flex justify-between items-center bg-gray-700 text-white px-4 py-2 font-semibold text-sm"
+            class="flex justify-between items-center bg-gray-700 text-white px-4 py-3 font-semibold text-sm rounded-t-xl"
           >
             <span>{{ instructor }}</span>
             <button
@@ -325,6 +382,7 @@
             </button>
           </div>
 
+          <!-- Table wrapper -->
           <div class="overflow-x-auto overflow-y-auto flex-1">
             <table class="w-full text-left border-collapse text-[11px]">
               <thead class="sticky top-0 bg-gray-100 z-10">
@@ -408,70 +466,24 @@
     </div>
   </div>
   <!-- Edit Instructor Modal -->
-  <div
-    v-if="showEditModal"
-    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50"
-  >
-    <div class="bg-white rounded-xl p-6 w-[400px] relative">
-      <h3 class="text-lg font-semibold mb-4">Edit Instructor</h3>
-
-      <div class="flex flex-col gap-3">
-        <label class="text-sm font-medium">Instructor Name</label>
-        <input
-          v-model="editInstructorData.faculty_name"
-          type="text"
-          class="border rounded px-3 py-2 w-full"
-        />
-
-        <label class="text-sm font-medium">Email</label>
-        <input
-          v-model="editInstructorData.email"
-          type="email"
-          class="border rounded px-3 py-2 w-full"
-        />
-
-        <label class="text-sm font-medium">Institute ID</label>
-        <input
-          v-model="editInstructorData.institute_id"
-          type="text"
-          class="border rounded px-3 py-2 w-full"
-        />
-
-        <label class="text-sm font-medium">Program ID</label>
-        <input
-          v-model="editInstructorData.program_id"
-          type="text"
-          class="border rounded px-3 py-2 w-full"
-        />
-      </div>
-
-      <div class="flex justify-end gap-2 mt-4">
-        <button
-          @click="closeEditInstructorModal"
-          class="px-3 py-1 rounded border hover:bg-gray-100"
-        >
-          Cancel
-        </button>
-        <button
-          @click="saveInstructorEdit"
-          class="px-3 py-1 rounded bg-blue-500 text-white hover:bg-blue-600"
-        >
-          Save
-        </button>
-      </div>
-    </div>
-  </div>
+  <editSchedule
+    :show="showEditModal"
+    :instructorData="editInstructorData"
+    @close="showEditModal = false"
+    @saved="handleModalSaved"
+  />
 </template>
 
 <script>
 import axios from "axios";
 import icon from "@/assets/icon.vue";
 import { useFetchDataStore } from "@/store/fetch-data-store";
+import editSchedule from "../modals/edit-schedule.vue";
 import { toast } from "vue3-toastify";
 
 export default {
   name: "FacultySchedule",
-  components: { icon },
+  components: { icon, editSchedule },
   data() {
     return {
       user: {},
@@ -506,6 +518,10 @@ export default {
       swapSelection: [],
       showEditModal: false,
       editInstructorData: {},
+      compareInstructorA: "",
+      compareInstructorB: "",
+      showCompareView: false,
+      showCompareSelection: false,
     };
   },
 
@@ -593,14 +609,48 @@ export default {
   },
 
   methods: {
+    toggleShowCompareSelection() {
+      this.showCompareSelection = !this.showCompareSelection;
+    },
+    backFromCompare() {
+      this.filteredGroupedSchedule = { ...this.groupedSchedule };
+      this.compareInstructorA = "";
+      this.compareInstructorB = "";
+      this.showCompareView = false;
+      this.showFacultyTable = false;
+      this.showCompareSelection = false;
+    },
+    showCompareFacultyCards() {
+      if (!this.compareInstructorA || !this.compareInstructorB) return;
+
+      // Filter groupedSchedule to only the selected instructors
+      this.filteredGroupedSchedule = {
+        [this.compareInstructorA]:
+          this.groupedSchedule[this.compareInstructorA] || [],
+        [this.compareInstructorB]:
+          this.groupedSchedule[this.compareInstructorB] || [],
+      };
+
+      this.showFacultyTable = false; // hide table view
+      this.showCompareView = true;
+    },
     openEditInstructorModal(instructor) {
-      // Get first record of that instructor to prefill data
       const records = this.groupedSchedule[instructor] || [];
       if (!records.length) return;
-
-      // Copy the first record for editing
-      this.editInstructorData = { ...records[0] };
+      // Send all schedule records to modal
+      this.editInstructorData = [...records];
       this.showEditModal = true;
+    },
+
+    handleModalSaved(updatedData) {
+      // update the main schedule data
+      const idx = this.finalSchedules.findIndex(
+        (f) => f.faculty_id === updatedData.faculty_id
+      );
+      if (idx > -1) this.finalSchedules[idx] = { ...updatedData };
+
+      this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
+      this.filterSchedules();
     },
 
     closeEditInstructorModal() {
@@ -646,7 +696,70 @@ export default {
 
       const [courseA, courseB] = this.swapSelection;
 
-      // Swap locally
+      // Helper to get numeric start and end hours (normalized)
+      const getTimeRange = (course) => {
+        const start = this.normalizeHour(Number(course.start_hour));
+        const end = start + Number(course.duration);
+        return { start, end };
+      };
+
+      // Check if two courses overlap in time
+      const isOverlap = (c1, c2) => {
+        const { start: s1, end: e1 } = getTimeRange(c1);
+        const { start: s2, end: e2 } = getTimeRange(c2);
+        return Math.max(s1, s2) < Math.min(e1, e2);
+      };
+
+      // Check if a course conflicts with others (room or faculty)
+      const hasConflict = (course, ignoreIds = []) => {
+        return this.finalSchedules.some((s) => {
+          if (ignoreIds.includes(s.id)) return false;
+
+          // Room conflict
+          if (
+            s.room_id === course.room_id &&
+            s.day === course.day &&
+            s.course_code !== course.course_code &&
+            isOverlap(s, course)
+          ) {
+            return true;
+          }
+
+          // Faculty conflict
+          if (
+            s.faculty_id === course.faculty_id &&
+            s.day === course.day &&
+            s.course_code !== course.course_code &&
+            isOverlap(s, course)
+          ) {
+            return true;
+          }
+
+          return false;
+        });
+      };
+
+      // Check for conflicts considering the swap
+      const courseAWithBFaculty = {
+        ...courseA,
+        faculty_id: courseB.faculty_id,
+      };
+      const courseBWithAFaculty = {
+        ...courseB,
+        faculty_id: courseA.faculty_id,
+      };
+
+      if (
+        hasConflict(courseAWithBFaculty, [courseA.id, courseB.id]) ||
+        hasConflict(courseBWithAFaculty, [courseA.id, courseB.id])
+      ) {
+        toast.error(
+          "Swap cannot be done due to room or faculty conflict with existing schedules."
+        );
+        return;
+      }
+
+      // Swap faculty locally
       const tempFacultyId = courseA.faculty_id;
       const tempFacultyName = courseA.faculty_name;
 
@@ -680,6 +793,7 @@ export default {
         this.filterSchedules();
 
         this.swapSelection = [];
+        this.showCompareView = false;
         this.loadFetchData();
         toast.success(
           `Courses swapped: ${courseA.course_code} ↔ ${courseB.course_code}`
@@ -689,7 +803,6 @@ export default {
         console.error(error);
       }
     },
-
     async loadFetchData() {
       const store = useFetchDataStore();
       await store.fetchPrograms();
