@@ -361,7 +361,7 @@
             ? 'grid-cols-1 md:grid-cols-2 h-[87vh] overflow-y-auto'
             : Object.keys(filteredGroupedSchedule).length === 1
             ? 'grid-cols-1'
-            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-[262.5vh] overflow-y-auto',
+            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-[175.5vh] overflow-y-auto',
         ]"
       >
         <div
@@ -371,12 +371,13 @@
         >
           <!-- Header -->
           <div
-            class="flex justify-between items-center bg-gray-700 text-white px-4 py-3 font-semibold text-sm rounded-t-xl"
+            class="flex justify-between items-center bg-defaultGreen text-white px-4 py-3 font-semibold text-sm rounded-t-xl"
           >
-            <span>{{ instructor }}</span>
+            <span class="text-lg font-bold">{{ instructor }}</span>
+
             <button
               @click="openEditInstructorModal(instructor)"
-              class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs transition"
+              class="border border-white hover:bg-white hover:text-defaultGreen text-white px-3 py-1 rounded-full text-xs transition"
             >
               Edit
             </button>

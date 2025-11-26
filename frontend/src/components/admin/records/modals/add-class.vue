@@ -113,7 +113,7 @@
           <div class="flex justify-end gap-2 mt-4">
             <button
               type="button"
-              class="bg-red-600 p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-red-800 hover:text-red-800"
+              class="bg-gray-100 text-gray-600 p-2 px-3 rounded-lg hover:bg-white border hover:border-gray-800 hover:text-gray-800"
               @click="$emit('close')"
             >
               Cancel

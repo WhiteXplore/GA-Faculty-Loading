@@ -4,7 +4,7 @@
     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50"
   >
     <div
-      class="bg-white rounded-xl p-1.5 w-[80vw] relative max-h-[90vh] overflow-y-auto"
+      class="bg-white rounded-xl p-2 w-[80vw] relative max-h-[90vh] overflow-y-auto"
     >
       <div
         class="w-full p-5 py-3 bg-defaultGreen text-white rounded-t-lg flex justify-between items-center border-b shadow"
@@ -24,20 +24,21 @@
         <!-- EDITABLE TABLE -->
         <!-- ========================== -->
         <div
-          class="mb-6 overflow-auto max-h-full rounded-lg border border-gray-200"
+          class="mb-4 overflow-auto max-h-full rounded-t-lg border border-gray-200"
         >
           <table class="min-w-full divide-y divide-gray-200 text-sm">
             <thead class="bg-gray-100 text-gray-800">
               <tr>
-                <th class="px-4 py-3 text-left font-semibold border">
-                  Instructor
+                <th class="px-4 py-3 text-left font-semibold border w-[20%]">
+                  Room
                 </th>
-                <th class="px-4 py-3 text-left font-semibold border">Room</th>
-                <th class="px-4 py-3 text-left font-semibold border">Day</th>
-                <th class="px-4 py-3 text-left font-semibold border">
+                <th class="px-4 py-3 text-left font-semibold border w-[13%]">
+                  Day
+                </th>
+                <th class="px-4 py-3 text-left font-semibold border w-[15%]">
                   Start Hour
                 </th>
-                <th class="px-4 py-3 text-left font-semibold border">
+                <th class="px-4 py-3 text-left font-semibold border w-[15%]">
                   Duration
                 </th>
               </tr>
@@ -49,18 +50,12 @@
                 class="hover:bg-gray-50 transition-colors duration-200"
               >
                 <td class="px-2 py-2 border">
-                  <input
-                    v-model="record.faculty_name"
-                    class="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400"
-                  />
-                </td>
-                <td class="px-2 py-2 border">
                   <div class="flex flex-col space-y-2 w-full relative">
                     <input
                       v-model="record.searchRoomQuery"
                       type="text"
                       placeholder="Select room..."
-                      class="px-3 py-2 border w-full border-gray-600 rounded-md text-md text-gray-800"
+                      class="px-3 py-2 border w-full border-gray-300 rounded-md text-md text-gray-800"
                       @focus="record.showRoomDropdown = true"
                       @input="record.room_id = null"
                     />
@@ -115,18 +110,17 @@
         <div
           v-for="(records, instructor) in groupedSchedule"
           :key="instructor"
-          class="bg-white flex flex-col mb-4"
+          class="bg-white flex flex-col mb-4 border rounded-t-lg overflow-hidden"
         >
-          <div
-            class="flex items-center bg-gray-100 text-gray-800 border px-4 py-3 font-semibold text-sm rounded-t-lg"
-          >
-            <span>{{ instructor }}</span>
-          </div>
           <div class="overflow-x-auto overflow-y-auto flex-1">
-            <table class="w-full text-left border-collapse text-[11px]">
+            <table
+              class="w-full text-left border-separate border-spacing-0 text-[11px]"
+            >
               <thead class="sticky top-0 bg-gray-100 z-10">
                 <tr class="text-gray-700">
-                  <th class="px-4 py-2 border border-gray-200 w-24 text-center">
+                  <th
+                    class="px-4 py-3.5 border border-gray-200 w-24 text-center"
+                  >
                     Time
                   </th>
                   <th
@@ -238,19 +232,18 @@
           </div>
         </div>
       </div>
-
       <!-- ACTION BUTTONS -->
-      <div class="flex justify-end gap-2 mt-4 px-2 py-1">
+      <div class="flex justify-end gap-2 text-sm">
         <button
           @click="$emit('close')"
-          class="px-3 py-1 rounded border hover:bg-gray-100"
+          class="bg-gray-100 text-gray-600 p-2 px-3 rounded-lg hover:bg-white border hover:border-gray-800 hover:text-gray-800"
           :disabled="saving"
         >
           Cancel
         </button>
         <button
           @click="saveEdit"
-          class="px-3 py-1 rounded bg-blue-500 text-white hover:bg-blue-600"
+          class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800"
           :disabled="saving || !isValid"
         >
           {{ saving ? "Saving..." : "Save" }}

@@ -323,9 +323,9 @@
         >
           <!-- Header -->
           <div
-            class="bg-gray-700 text-white text-center py-3 font-semibold text-sm"
+            class="flex justify-between items-center bg-defaultGreen text-white px-4 py-3 font-semibold text-sm rounded-t-xl"
           >
-            {{ instructor }}
+            <span class="text-lg font-bold">{{ instructor }}</span>
           </div>
           <div class="overflow-x-auto overflow-y-auto flex-1">
             <table class="w-full text-left border-collapse text-[11px]">
