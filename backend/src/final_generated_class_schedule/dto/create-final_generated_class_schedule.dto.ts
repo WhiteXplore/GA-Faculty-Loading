@@ -1,75 +1,80 @@
 import { IsInt, IsString, IsOptional } from 'class-validator';
 
 export class CreateFinalGeneratedClassScheduleDto {
-  @IsInt()
   @IsOptional()
+  @IsInt()
   class_id?: number;
 
-  @IsString()
   @IsOptional()
+  @IsInt()
+  course_id?: number;
+
+  @IsOptional()
+  @IsString()
   course_code?: string;
 
-  @IsInt()
   @IsOptional()
+  @IsInt()
   program_id?: number;
 
-  @IsInt()
   @IsOptional()
+  @IsInt()
   institute_id?: number;
 
-  @IsString()
   @IsOptional()
-  type?: string; // Lecture, Lab, etc.
-
   @IsString()
-  @IsOptional()
-  day?: string; // e.g., Monday
+  type?: string; // Lecture, Laboratory, etc.
 
+  @IsOptional()
+  @IsString()
+  day?: string; // Monday, Tuesday, etc.
+
+  @IsOptional()
   @IsInt()
-  @IsOptional()
   start_hour?: number;
 
-  @IsInt()
   @IsOptional()
+  @IsInt()
   duration?: number;
 
-  @IsString()
-  @IsOptional()
-  time_slot?: string; // e.g., "8:00 AM - 11:00 AM"
+  // Optional: remove if not stored
+  // @IsOptional()
+  // @IsString()
+  // time_slot?: string;
 
-  @IsInt()
   @IsOptional()
+  @IsInt()
   room_id?: number;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   room_name?: string;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   room_type?: string;
 
-  @IsInt()
   @IsOptional()
+  @IsInt()
   room_capacity?: number;
 
-  @IsInt()
   @IsOptional()
+  @IsInt()
   class_size?: number;
 
-  @IsInt()
   @IsOptional()
+  @IsInt()
   faculty_id?: number;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   faculty_name?: string;
 
-  @IsString()
   @IsOptional()
-  school_year?: string;
+  @IsString()
+  school_year?: string; // e.g., "2025 - 2026"
 
-  @IsString()
   @IsOptional()
-  semester?: string;
+  @IsString()
+  semester?: string; // e.g., "1st"
 }

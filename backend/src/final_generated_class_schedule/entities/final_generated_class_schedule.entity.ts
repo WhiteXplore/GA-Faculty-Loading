@@ -8,6 +8,9 @@ export class FinalGeneratedClassSchedule {
   @Column({ type: 'int', nullable: true })
   class_id: number;
 
+  @Column({ type: 'int', nullable: true })
+  course_id: number;
+
   @Column({ type: 'varchar', length: 255, nullable: true })
   course_code: string;
 
@@ -26,7 +29,7 @@ export class FinalGeneratedClassSchedule {
   @Column({ type: 'int', nullable: true })
   start_hour: number; // 24-hour format
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ type: 'float', nullable: true })
   duration: number;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
@@ -53,7 +56,7 @@ export class FinalGeneratedClassSchedule {
   @Column({ type: 'varchar', length: 255, nullable: true })
   faculty_name: string;
 
-  @Column({ type: 'varchar', length: 10, nullable: true })
+  @Column({ type: 'varchar', length: 20, nullable: true })
   school_year: string;
 
   @Column({ type: 'varchar', length: 10, nullable: true })

@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Institute } from 'src/institute/entities/institute.entity';
-
+import { CollegeBranch } from 'src/college_branch/entities/college_branch.entity';
 @Entity('rooms')
 export class Room {
   @PrimaryGeneratedColumn()
@@ -16,6 +16,9 @@ export class Room {
 
   @Column({ type: 'int', nullable: true })
   institute_id: number;
+
+  @Column({ type: 'int', nullable: true })
+  college_branch_id: number;
 
   @Column({ type: 'varchar', length: 150 })
   building_name: string;
@@ -44,4 +47,11 @@ export class Room {
   })
   @JoinColumn({ name: 'institute_id' })
   institute: Institute;
+
+  @ManyToOne(() => CollegeBranch, (branch) => branch.rooms, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  @JoinColumn({ name: 'college_branch_id' })
+  collegeBranch: CollegeBranch;
 }

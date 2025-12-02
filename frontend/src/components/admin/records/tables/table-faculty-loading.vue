@@ -382,6 +382,9 @@
                           <p class="text-gray-600 truncate">
                             {{ item.room_name }}
                           </p>
+                          <p class="text-gray-600 truncate">
+                            {{ item.class_id }}
+                          </p>
                           <button
                             v-if="item.conflict"
                             @click="openConflictModal(item)"
@@ -438,17 +441,38 @@
       class="fixed inset-0 flex items-center justify-center bg-black/30 z-50"
     >
       <div class="bg-white rounded-2xl shadow-2xl p-6 w-96 text-center">
-        <h2 class="text-lg font-semibold mb-4">Confirm Save</h2>
+        <!-- Header -->
+        <div class="flex justify-between items-center border-b pb-3 mb-4">
+          <div class="flex gap-1 items-center">
+            <icon
+              name="exclamation-circle"
+              class="text-green-900 w-7 p-1 rounded-full bg-green-200"
+            />
+            <h3 class="text-lg font-semibold text-gray-800">Confirm Save</h3>
+          </div>
+
+          <button
+            @click="$emit('close')"
+            class="text-gray-400 hover:text-gray-600 transition"
+          >
+            ✕
+          </button>
+        </div>
+
+        <!-- Message -->
         <p class="text-gray-600 mb-6">
           Are you sure you want to save this schedule?
         </p>
-        <div class="flex justify-center gap-4">
+
+        <!-- Buttons -->
+        <div class="flex justify-center gap-4 text-sm">
           <button
             @click="saveScheduledConfirmed"
             class="px-4 py-2 bg-defaultGreen text-white rounded-xl hover:bg-green-600 transition"
           >
             Yes, Save
           </button>
+
           <button
             @click="confirmSaveModal = false"
             class="px-4 py-2 border rounded-xl hover:bg-gray-100 transition"
@@ -742,7 +766,310 @@ export default {
         const res = await axios.get(
           `${process.env.VUE_APP_API_BASE_URL}/generated-scheduled/load`
         );
+
         const allSchedules = res.data.data.scheduled_meetings || [];
+        // const allSchedules = [
+        //   {
+        //     class_id: 1,
+        //     set_name: "CS101-A",
+        //     course_level: "First Year",
+        //     course_code: "CS101",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 20,
+        //     room_name: "Samal Lecture Room 1",
+        //     room_type: "Lecture",
+        //     room_capacity: 35,
+        //     class_size: 40,
+        //     faculty_id: 1,
+        //     faculty_name: "Dr. John Smith",
+        //   },
+        //   {
+        //     class_id: 2,
+        //     set_name: "CS101-B",
+        //     course_level: "First Year",
+        //     course_code: "CS101",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 13,
+        //     duration: 3,
+        //     time_slot: "1:00 PM - 4:00 PM",
+        //     room_id: 4,
+        //     room_name: "Lecture Room 101",
+        //     room_type: "Lecture",
+        //     room_capacity: 30,
+        //     class_size: 35,
+        //     faculty_id: 1,
+        //     faculty_name: "Dr. John Smith",
+        //   },
+        //   {
+        //     class_id: 2,
+        //     set_name: "CS101-B",
+        //     course_level: "First Year",
+        //     course_code: "CS101",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Laboratory",
+        //     day: "Tuesday",
+        //     start_hour: 13,
+        //     duration: 6,
+        //     time_slot: "1:00 PM - 7:00 PM",
+        //     room_id: 9,
+        //     room_name: "Lab A",
+        //     room_type: "Laboratory",
+        //     room_capacity: 30,
+        //     class_size: 35,
+        //     faculty_id: 1,
+        //     faculty_name: "Dr. John Smith",
+        //   },
+        //   {
+        //     class_id: 3,
+        //     set_name: "CS201-A",
+        //     course_level: "Second Year",
+        //     course_code: "CS201",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 16,
+        //     duration: 3,
+        //     time_slot: "4:00 PM - 7:00 PM",
+        //     room_id: 6,
+        //     room_name: "Lecture Room 201",
+        //     room_type: "Lecture",
+        //     room_capacity: 25,
+        //     class_size: 30,
+        //     faculty_id: 1,
+        //     faculty_name: "Dr. John Smith",
+        //   },
+        //   {
+        //     class_id: 3,
+        //     set_name: "CS201-A",
+        //     course_level: "Second Year",
+        //     course_code: "CS201",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Laboratory",
+        //     day: "Tuesday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 11,
+        //     room_name: "Computer Lab 1",
+        //     room_type: "Laboratory",
+        //     room_capacity: 25,
+        //     class_size: 30,
+        //     faculty_id: 1,
+        //     faculty_name: "Dr. John Smith",
+        //   },
+        //   {
+        //     class_id: 4,
+        //     set_name: "CS301-A",
+        //     course_level: "Third Year",
+        //     course_code: "CS301",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Wednesday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 6,
+        //     room_name: "Lecture Room 201",
+        //     room_type: "Lecture",
+        //     room_capacity: 25,
+        //     class_size: 25,
+        //     faculty_id: 1,
+        //     faculty_name: "Dr. John Smith",
+        //   },
+        //   {
+        //     class_id: 8,
+        //     set_name: "CS401-A",
+        //     course_level: "Fourth Year",
+        //     course_code: "CS401",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 6,
+        //     room_name: "Lecture Room 201",
+        //     room_type: "Lecture",
+        //     room_capacity: 25,
+        //     class_size: 20,
+        //     faculty_id: 2,
+        //     faculty_name: "Prof. Jane Doe",
+        //   },
+        //   {
+        //     class_id: 8,
+        //     set_name: "CS401-A",
+        //     course_level: "Fourth Year",
+        //     course_code: "CS401",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Laboratory",
+        //     day: "Monday",
+        //     start_hour: 13,
+        //     duration: 6,
+        //     time_slot: "1:00 PM - 7:00 PM",
+        //     room_id: 13,
+        //     room_name: "Computer Lab 3",
+        //     room_type: "Laboratory",
+        //     room_capacity: 20,
+        //     class_size: 20,
+        //     faculty_id: 2,
+        //     faculty_name: "Prof. Jane Doe",
+        //   },
+        //   {
+        //     class_id: 9,
+        //     set_name: "CS202-A",
+        //     course_level: "Second Year",
+        //     course_code: "CS202",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Tuesday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 4,
+        //     room_name: "Lecture Room 101",
+        //     room_type: "Lecture",
+        //     room_capacity: 30,
+        //     class_size: 32,
+        //     faculty_id: 2,
+        //     faculty_name: "Prof. Jane Doe",
+        //   },
+        //   {
+        //     class_id: 9,
+        //     set_name: "CS202-A",
+        //     course_level: "Second Year",
+        //     course_code: "CS202",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Laboratory",
+        //     day: "Tuesday",
+        //     start_hour: 13,
+        //     duration: 6,
+        //     time_slot: "1:00 PM - 7:00 PM",
+        //     room_id: 10,
+        //     room_name: "Lab B",
+        //     room_type: "Laboratory",
+        //     room_capacity: 30,
+        //     class_size: 32,
+        //     faculty_id: 2,
+        //     faculty_name: "Prof. Jane Doe",
+        //   },
+        //   {
+        //     class_id: 5,
+        //     set_name: "MATH101-A",
+        //     course_level: "First Year",
+        //     course_code: "MATH101",
+        //     program_id: 2,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 1,
+        //     room_name: "Lecture Hall A",
+        //     room_type: "Lecture",
+        //     room_capacity: 50,
+        //     class_size: 50,
+        //     faculty_id: 3,
+        //     faculty_name: "Dr. Robert Johnson",
+        //   },
+        //   {
+        //     class_id: 6,
+        //     set_name: "MATH201-A",
+        //     course_level: "Second Year",
+        //     course_code: "MATH201",
+        //     program_id: 2,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 13,
+        //     duration: 3,
+        //     time_slot: "1:00 PM - 4:00 PM",
+        //     room_id: 3,
+        //     room_name: "Lecture Hall C",
+        //     room_type: "Lecture",
+        //     room_capacity: 40,
+        //     class_size: 45,
+        //     faculty_id: 3,
+        //     faculty_name: "Dr. Robert Johnson",
+        //   },
+        //   {
+        //     class_id: 10,
+        //     set_name: "MATH301-A",
+        //     course_level: "Third Year",
+        //     course_code: "MATH301",
+        //     program_id: 2,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 16,
+        //     duration: 3,
+        //     time_slot: "4:00 PM - 7:00 PM",
+        //     room_id: 4,
+        //     room_name: "Lecture Room 101",
+        //     room_type: "Lecture",
+        //     room_capacity: 30,
+        //     class_size: 35,
+        //     faculty_id: 3,
+        //     faculty_name: "Dr. Robert Johnson",
+        //   },
+        //   {
+        //     class_id: 7,
+        //     set_name: "PHYS101-A",
+        //     course_level: "First Year",
+        //     course_code: "PHYS101",
+        //     program_id: 3,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 7,
+        //     room_name: "Lecture Room 202",
+        //     room_type: "Lecture",
+        //     room_capacity: 25,
+        //     class_size: 30,
+        //     faculty_id: 5,
+        //     faculty_name: "Dr. Michael Brown",
+        //   },
+        //   {
+        //     class_id: 7,
+        //     set_name: "PHYS101-A",
+        //     course_level: "First Year",
+        //     course_code: "PHYS101",
+        //     program_id: 3,
+        //     institute_id: 1,
+        //     type: "Laboratory",
+        //     day: "Monday",
+        //     start_hour: 13,
+        //     duration: 6,
+        //     time_slot: "1:00 PM - 7:00 PM",
+        //     room_id: 11,
+        //     room_name: "Computer Lab 1",
+        //     room_type: "Laboratory",
+        //     room_capacity: 25,
+        //     class_size: 30,
+        //     faculty_id: 5,
+        //     faculty_name: "Dr. Michael Brown",
+        //   },
+        // ];
         this.schedule = allSchedules;
         this.groupedSchedule = this.groupByInstructor(this.schedule);
         this.filteredGroupedSchedule = this.groupedSchedule;

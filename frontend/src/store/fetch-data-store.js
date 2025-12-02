@@ -24,6 +24,7 @@ export const useFetchDataStore = defineStore("fetchData", {
     assignClass: [],
     faculty: [],
     final_schedules: [],
+    class_sections: [],
     year: null, // currently selected year
     activeYears: [],
     activeYear: null, // latest active year for table filtering
@@ -34,6 +35,20 @@ export const useFetchDataStore = defineStore("fetchData", {
   }),
 
   actions: {
+    async fetchClassSections() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/class/get-classes"
+        );
+        this.sections = data;
+      } catch (err) {
+        this.error = err.message || "Failed to fetch sections";
+      } finally {
+        this.loading = false;
+      }
+    },
     async fetchFinalSchedules() {
       this.loading = true;
       this.error = null;
