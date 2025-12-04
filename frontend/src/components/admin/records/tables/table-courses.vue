@@ -93,7 +93,7 @@
         <!-- Filters -->
         <div class="flex items-center gap-3 flex-wrap">
           <!-- Curriculum Filter -->
-          <div class="relative">
+          <div class="relative" v-if="user?.role === 'Admin'">
             <select
               v-model="selectedCurriculum"
               class="appearance-none rounded-full border border-green-600 bg-white px-4 py-2 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"

@@ -1073,9 +1073,11 @@ if __name__ == "__main__":
     # schedule_text_filename = os.path.join(output_dir, f"schedule_{timestamp}.txt")
     # save_schedule_to_text(complete_schedule, unscheduled_meetings, schedule_text_filename)
 
-    # # Save schedule to JSON file
-    # schedule_json_filename = os.path.join(output_dir, f"schedule_{timestamp}.json")
-    # save_schedule_to_json(complete_schedule, unscheduled_meetings, schedule_json_filename)
+    # Save schedule to JSON file
+    schedule_json_filename = os.path.join(
+        output_dir, f"schedule_{timestamp}.json")
+    save_schedule_to_json(
+        complete_schedule, unscheduled_meetings, schedule_json_filename)
 
     # Save schedule to Excel file
     schedule_excel_filename = os.path.join(

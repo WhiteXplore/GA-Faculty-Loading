@@ -11,8 +11,11 @@ export class FinalGeneratedClassSchedule {
   @Column({ type: 'int', nullable: true })
   course_id: number;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 20, nullable: true })
   course_code: string;
+
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  set_name: string;
 
   @Column({ type: 'int', nullable: true })
   program_id: number;

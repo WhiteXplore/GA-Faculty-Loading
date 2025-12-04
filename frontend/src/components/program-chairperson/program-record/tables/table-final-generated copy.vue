@@ -1,14 +1,14 @@
 FOR SWAP
 <template>
   <div class="flex flex-col gap-3 h-[90vh]">
-    <!-- Top Controls -->
+    <!-- TODO  Top Controls -->
     <div class="flex flex-wrap justify-between items-center gap-3">
       <div class="text-sm text-gray-600 mt-2 font-medium">
         Pages / Faculty Loads
       </div>
 
       <div class="flex gap-3 flex-wrap">
-        <!-- Toggle View Button -->
+        <!-- TODO  Toggle View Button -->
         <button
           @click="showFacultyTable = !showFacultyTable"
           class="group flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white rounded-xl shadow-sm transition"
@@ -26,7 +26,7 @@ FOR SWAP
           </span>
         </button>
 
-        <!-- Swap Button -->
+        <!-- TODO  Swap Button -->
         <button
           v-if="showCompareSelection"
           @click="swapCourses"
@@ -104,7 +104,7 @@ FOR SWAP
     </div>
 
     <div class="flex flex-wrap items-center gap-4">
-      <!-- Back Button -->
+      <!-- TODO  Back Button -->
       <button
         v-if="
           !showFacultyTable && Object.keys(filteredGroupedSchedule).length === 1
@@ -115,93 +115,17 @@ FOR SWAP
         <icon name="arrow-left" class="w-4 h-4" />
         <span class="font-medium text-sm">Back to Table</span>
       </button>
-
-      <!-- Filters (pushed to the end) -->
-      <div class="flex items-center gap-3 flex-wrap ml-auto">
-        <!-- Institute Filter -->
-        <div class="relative">
-          <select
-            v-model="selectedInstituteId"
-            class="appearance-none rounded-full border border-green-600 bg-white px-4 py-2 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md w-[200px]"
-          >
-            <option value="">All Institutes</option>
-            <option
-              v-for="institute in uniqueInstitutes"
-              :key="institute.id"
-              :value="institute.id"
-            >
-              {{ institute.name }}
-            </option>
-          </select>
-
-          <!-- Custom arrow -->
-          <div
-            class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
-          >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </div>
-        </div>
-
-        <!-- Program Filter -->
-        <div class="relative">
-          <select
-            v-model="selectedProgramId"
-            :disabled="!selectedInstituteId"
-            class="appearance-none rounded-full w-auto border border-green-600 bg-white px-4 py-2 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md disabled:bg-gray-100 disabled:border-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed"
-          >
-            <option value="">All Programs</option>
-            <option
-              v-for="program in filteredPrograms"
-              :key="program.id"
-              :value="program.id"
-            >
-              {{ program.name }}
-            </option>
-          </select>
-
-          <!-- Custom arrow -->
-          <div
-            class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
-          >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <!-- Scrollable Content -->
+    <!-- TODO  Scrollable Content -->
     <div class="flex-1 overflow-y-auto">
-      <!-- Faculty Table -->
+      <!-- TODO  Faculty Table -->
       <div v-if="showFacultyTable">
         <div class="overflow-x-auto border p-3 rounded-xl bg-white">
           <div
             class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
           >
-            <!-- Items per page -->
+            <!-- TODO  Items per page -->
             <div class="flex items-center gap-2">
               <div class="relative">
                 <select
@@ -234,7 +158,7 @@ FOR SWAP
               <span class="text-sm font-medium text-gray-600">Per page</span>
             </div>
 
-            <!-- Search -->
+            <!-- TODO  Search -->
             <div class="relative w-full sm:w-64 md:w-72 lg:w-80">
               <input
                 v-model="searchQuery"
@@ -260,7 +184,7 @@ FOR SWAP
             </div>
           </div>
 
-          <!-- Faculty Table -->
+          <!-- TODO  Faculty Table -->
           <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
             <div class="max-h-[65vh] overflow-y-auto">
               <table class="min-w-full text-sm text-gray-700 border-collapse">
@@ -313,7 +237,7 @@ FOR SWAP
             </div>
           </div>
 
-          <!-- Pagination -->
+          <!-- TODO  Pagination -->
           <div class="flex justify-between items-center mt-4">
             <div class="text-gray-700 text-sm">
               Showing {{ startIndex }} to {{ endIndex }} of
@@ -354,7 +278,7 @@ FOR SWAP
         </div>
       </div>
 
-      <!-- Faculty Cards -->
+      <!-- TODO  Faculty Cards -->
       <div
         v-else
         :class="[
@@ -371,7 +295,7 @@ FOR SWAP
           :key="instructor"
           class="bg-white rounded-xl border flex flex-col shadow-sm overflow-hidden"
         >
-          <!-- Header -->
+          <!-- TODO  Header -->
           <div
             class="flex justify-between items-center bg-defaultGreen text-white px-4 py-3 font-semibold text-sm rounded-t-xl"
           >
@@ -385,7 +309,7 @@ FOR SWAP
             </button>
           </div>
 
-          <!-- Table wrapper -->
+          <!-- TODO  Table wrapper -->
           <div class="overflow-x-auto overflow-y-auto flex-1">
             <table class="w-full text-left border-collapse text-[11px]">
               <thead class="sticky top-0 bg-gray-100 z-10">
@@ -468,7 +392,7 @@ FOR SWAP
       </div>
     </div>
   </div>
-  <!-- Edit Instructor Modal -->
+  <!-- TODO  Edit Instructor Modal -->
   <editSchedule
     :show="showEditModal"
     :instructorData="editInstructorData"
@@ -520,7 +444,7 @@ export default {
       schoolYears: [],
       swapSelection: [],
       showEditModal: false,
-      editInstructorData: {},
+      editInstructorData: [],
       compareInstructorA: "",
       compareInstructorB: "",
       showCompareView: false,
@@ -638,43 +562,29 @@ export default {
       this.showCompareView = true;
     },
     openEditInstructorModal(instructor) {
-      const records = this.groupedSchedule[instructor] || [];
-      if (!records.length) return;
-      // Send all schedule records to modal
-      this.editInstructorData = [...records];
+      this.editInstructorData = (this.groupedSchedule[instructor] || []).map(
+        (r) => ({ ...r })
+      );
       this.showEditModal = true;
     },
-
     handleModalSaved(updatedInstructorSchedules) {
       if (!updatedInstructorSchedules.length) return;
 
-      const facultyName = updatedInstructorSchedules[0].faculty_name;
+      // Remove this line:
+      // const facultyName = updatedInstructorSchedules[0].faculty_name;
 
-      // Find index of first schedule of this instructor
-      const idx = this.finalSchedules.findIndex(
-        (s) => s.faculty_name === facultyName
-      );
+      updatedInstructorSchedules.forEach((updated) => {
+        const index = this.finalSchedules.findIndex((s) => s.id === updated.id);
+        if (index > -1) {
+          this.finalSchedules[index] = { ...updated };
+        } else {
+          this.finalSchedules.push({ ...updated });
+        }
+      });
 
-      if (idx !== -1) {
-        // Replace old schedules in-place
-        const oldSchedulesCount = this.finalSchedules.filter(
-          (s) => s.faculty_name === facultyName
-        ).length;
-        this.finalSchedules.splice(
-          idx,
-          oldSchedulesCount,
-          ...updatedInstructorSchedules
-        );
-      } else {
-        // Instructor not found, push at end
-        this.finalSchedules.push(...updatedInstructorSchedules);
-      }
-
-      // Re-group and filter
       this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
       this.filterSchedules();
 
-      // Reset pagination
       this.currentPage = 1;
     },
     closeEditInstructorModal() {
@@ -969,7 +879,308 @@ export default {
             "/final-generated-class-schedule/get-all-final-schedules",
           { withCredentials: true }
         );
-
+        // const data = [
+        //   {
+        //     class_id: 1,
+        //     set_name: "CS101-A",
+        //     course_level: "First Year",
+        //     course_code: "CS101",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 20,
+        //     room_name: "Samal Lecture Room 1",
+        //     room_type: "Lecture",
+        //     room_capacity: 35,
+        //     class_size: 40,
+        //     faculty_id: 1,
+        //     faculty_name: "Dr. John Smith",
+        //   },
+        //   {
+        //     class_id: 2,
+        //     set_name: "CS101-B",
+        //     course_level: "First Year",
+        //     course_code: "CS101",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 13,
+        //     duration: 3,
+        //     time_slot: "1:00 PM - 4:00 PM",
+        //     room_id: 4,
+        //     room_name: "Lecture Room 101",
+        //     room_type: "Lecture",
+        //     room_capacity: 30,
+        //     class_size: 35,
+        //     faculty_id: 1,
+        //     faculty_name: "Dr. John Smith",
+        //   },
+        //   {
+        //     class_id: 2,
+        //     set_name: "CS101-B",
+        //     course_level: "First Year",
+        //     course_code: "CS101",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Laboratory",
+        //     day: "Tuesday",
+        //     start_hour: 13,
+        //     duration: 6,
+        //     time_slot: "1:00 PM - 7:00 PM",
+        //     room_id: 9,
+        //     room_name: "Lab A",
+        //     room_type: "Laboratory",
+        //     room_capacity: 30,
+        //     class_size: 35,
+        //     faculty_id: 1,
+        //     faculty_name: "Dr. John Smith",
+        //   },
+        //   {
+        //     class_id: 3,
+        //     set_name: "CS201-A",
+        //     course_level: "Second Year",
+        //     course_code: "CS201",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 16,
+        //     duration: 3,
+        //     time_slot: "4:00 PM - 7:00 PM",
+        //     room_id: 6,
+        //     room_name: "Lecture Room 201",
+        //     room_type: "Lecture",
+        //     room_capacity: 25,
+        //     class_size: 30,
+        //     faculty_id: 1,
+        //     faculty_name: "Dr. John Smith",
+        //   },
+        //   {
+        //     class_id: 3,
+        //     set_name: "CS201-A",
+        //     course_level: "Second Year",
+        //     course_code: "CS201",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Laboratory",
+        //     day: "Tuesday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 11,
+        //     room_name: "Computer Lab 1",
+        //     room_type: "Laboratory",
+        //     room_capacity: 25,
+        //     class_size: 30,
+        //     faculty_id: 1,
+        //     faculty_name: "Dr. John Smith",
+        //   },
+        //   {
+        //     class_id: 4,
+        //     set_name: "CS301-A",
+        //     course_level: "Third Year",
+        //     course_code: "CS301",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Wednesday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 6,
+        //     room_name: "Lecture Room 201",
+        //     room_type: "Lecture",
+        //     room_capacity: 25,
+        //     class_size: 25,
+        //     faculty_id: 1,
+        //     faculty_name: "Dr. John Smith",
+        //   },
+        //   {
+        //     class_id: 8,
+        //     set_name: "CS401-A",
+        //     course_level: "Fourth Year",
+        //     course_code: "CS401",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 6,
+        //     room_name: "Lecture Room 201",
+        //     room_type: "Lecture",
+        //     room_capacity: 25,
+        //     class_size: 20,
+        //     faculty_id: 2,
+        //     faculty_name: "Prof. Jane Doe",
+        //   },
+        //   {
+        //     class_id: 8,
+        //     set_name: "CS401-A",
+        //     course_level: "Fourth Year",
+        //     course_code: "CS401",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Laboratory",
+        //     day: "Monday",
+        //     start_hour: 13,
+        //     duration: 6,
+        //     time_slot: "1:00 PM - 7:00 PM",
+        //     room_id: 13,
+        //     room_name: "Computer Lab 3",
+        //     room_type: "Laboratory",
+        //     room_capacity: 20,
+        //     class_size: 20,
+        //     faculty_id: 2,
+        //     faculty_name: "Prof. Jane Doe",
+        //   },
+        //   {
+        //     class_id: 9,
+        //     set_name: "CS202-A",
+        //     course_level: "Second Year",
+        //     course_code: "CS202",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Tuesday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 4,
+        //     room_name: "Lecture Room 101",
+        //     room_type: "Lecture",
+        //     room_capacity: 30,
+        //     class_size: 32,
+        //     faculty_id: 2,
+        //     faculty_name: "Prof. Jane Doe",
+        //   },
+        //   {
+        //     class_id: 9,
+        //     set_name: "CS202-A",
+        //     course_level: "Second Year",
+        //     course_code: "CS202",
+        //     program_id: 1,
+        //     institute_id: 1,
+        //     type: "Laboratory",
+        //     day: "Tuesday",
+        //     start_hour: 13,
+        //     duration: 6,
+        //     time_slot: "1:00 PM - 7:00 PM",
+        //     room_id: 10,
+        //     room_name: "Lab B",
+        //     room_type: "Laboratory",
+        //     room_capacity: 30,
+        //     class_size: 32,
+        //     faculty_id: 2,
+        //     faculty_name: "Prof. Jane Doe",
+        //   },
+        //   {
+        //     class_id: 5,
+        //     set_name: "MATH101-A",
+        //     course_level: "First Year",
+        //     course_code: "MATH101",
+        //     program_id: 2,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 1,
+        //     room_name: "Lecture Hall A",
+        //     room_type: "Lecture",
+        //     room_capacity: 50,
+        //     class_size: 50,
+        //     faculty_id: 3,
+        //     faculty_name: "Dr. Robert Johnson",
+        //   },
+        //   {
+        //     class_id: 6,
+        //     set_name: "MATH201-A",
+        //     course_level: "Second Year",
+        //     course_code: "MATH201",
+        //     program_id: 2,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 13,
+        //     duration: 3,
+        //     time_slot: "1:00 PM - 4:00 PM",
+        //     room_id: 3,
+        //     room_name: "Lecture Hall C",
+        //     room_type: "Lecture",
+        //     room_capacity: 40,
+        //     class_size: 45,
+        //     faculty_id: 3,
+        //     faculty_name: "Dr. Robert Johnson",
+        //   },
+        //   {
+        //     class_id: 10,
+        //     set_name: "MATH301-A",
+        //     course_level: "Third Year",
+        //     course_code: "MATH301",
+        //     program_id: 2,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 16,
+        //     duration: 3,
+        //     time_slot: "4:00 PM - 7:00 PM",
+        //     room_id: 4,
+        //     room_name: "Lecture Room 101",
+        //     room_type: "Lecture",
+        //     room_capacity: 30,
+        //     class_size: 35,
+        //     faculty_id: 3,
+        //     faculty_name: "Dr. Robert Johnson",
+        //   },
+        //   {
+        //     class_id: 7,
+        //     set_name: "PHYS101-A",
+        //     course_level: "First Year",
+        //     course_code: "PHYS101",
+        //     program_id: 3,
+        //     institute_id: 1,
+        //     type: "Lecture",
+        //     day: "Monday",
+        //     start_hour: 8,
+        //     duration: 3,
+        //     time_slot: "8:00 AM - 11:00 AM",
+        //     room_id: 7,
+        //     room_name: "Lecture Room 202",
+        //     room_type: "Lecture",
+        //     room_capacity: 25,
+        //     class_size: 30,
+        //     faculty_id: 5,
+        //     faculty_name: "Dr. Michael Brown",
+        //   },
+        //   {
+        //     class_id: 7,
+        //     set_name: "PHYS101-A",
+        //     course_level: "First Year",
+        //     course_code: "PHYS101",
+        //     program_id: 3,
+        //     institute_id: 1,
+        //     type: "Laboratory",
+        //     day: "Monday",
+        //     start_hour: 13,
+        //     duration: 6,
+        //     time_slot: "1:00 PM - 7:00 PM",
+        //     room_id: 11,
+        //     room_name: "Computer Lab 1",
+        //     room_type: "Laboratory",
+        //     room_capacity: 25,
+        //     class_size: 30,
+        //     faculty_id: 5,
+        //     faculty_name: "Dr. Michael Brown",
+        //   },
+        // ];
         // Filter schedules for Program Chairperson
         let schedules = data || [];
         if (this.user.role === "Program Chairperson") {
@@ -983,6 +1194,7 @@ export default {
         this.finalSchedules = schedules;
         this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
         this.filteredGroupedSchedule = { ...this.groupedSchedule };
+
         this.changePage(1);
       } catch (err) {
         this.error = err.message || "Failed to fetch final schedules";

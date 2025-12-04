@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-col gap-3 h-[90vh]">
-    <!-- Top Controls -->
+    <!-- TODO  Top Controls -->
     <div class="flex flex-wrap justify-between items-center gap-3">
       <div class="text-sm text-gray-600 mt-2 font-medium">
         Pages / Faculty Loads
       </div>
 
       <div class="flex gap-3 flex-wrap">
-        <!-- Toggle View Button -->
+        <!-- TODO  Toggle View Button -->
         <button
           @click="showFacultyTable = !showFacultyTable"
           class="group flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white rounded-xl shadow-sm transition"
@@ -25,7 +25,7 @@
           </span>
         </button>
 
-        <!-- Auto Generation -->
+        <!-- TODO  Auto Generation -->
         <button
           @click="generateSchedule"
           class="flex items-center gap-2 px-4 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300"
@@ -38,10 +38,10 @@
           <span class="font-medium text-sm">Auto Generation</span>
         </button>
 
-        <!-- Save Schedule -->
+        <!-- TODO  Save Schedule -->
         <button
           v-if="appearSave"
-          @click="confirmSaveModal = true"
+          @click="showConfirmSaved = true"
           class="flex items-center gap-2 px-4 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300"
         >
           <div
@@ -55,7 +55,7 @@
     </div>
 
     <div class="flex flex-wrap items-center gap-4">
-      <!-- Back Button -->
+      <!-- TODO  Back Button -->
       <button
         v-if="
           !showFacultyTable && Object.keys(filteredGroupedSchedule).length === 1
@@ -67,9 +67,9 @@
         <span class="font-medium text-sm">Back to Table</span>
       </button>
 
-      <!-- Filters (pushed to the end) -->
-      <div class="flex items-center gap-3 flex-wrap ml-auto">
-        <!-- Institute Filter -->
+      <!-- TODO  Filters (pushed to the end) -->
+      <div class="flex items-center gap-3 flex-wrap ml-auto" v-if="appearSave">
+        <!-- TODO  Institute Filter -->
         <div class="relative">
           <select
             v-model="selectedInstituteId"
@@ -85,7 +85,7 @@
             </option>
           </select>
 
-          <!-- Custom arrow -->
+          <!-- TODO  Custom arrow -->
           <div
             class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
           >
@@ -105,7 +105,7 @@
           </div>
         </div>
 
-        <!-- Program Filter -->
+        <!-- TODO  Program Filter -->
         <div class="relative">
           <select
             v-model="selectedProgramId"
@@ -122,7 +122,7 @@
             </option>
           </select>
 
-          <!-- Custom arrow -->
+          <!-- TODO  Custom arrow -->
           <div
             class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
           >
@@ -144,16 +144,18 @@
       </div>
     </div>
 
-    <!-- Scrollable Content -->
+    <!-- TODO  Scrollable Content -->
     <div class="flex-1 overflow-y-auto">
-      <!-- Faculty Table -->
+      <!-- TODO  ========================= -->
+      <!-- TODO  Faculty Table View -->
+      <!-- TODO  ========================= -->
       <div v-if="showFacultyTable">
-        <!-- Table Container -->
         <div class="overflow-x-auto border p-3 rounded-xl bg-white">
+          <!-- TODO  Top Controls -->
           <div
             class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
           >
-            <!-- Items per page -->
+            <!-- TODO  Items per page -->
             <div class="flex items-center gap-2">
               <div class="relative">
                 <select
@@ -186,7 +188,7 @@
               <span class="text-sm font-medium text-gray-600">Per page</span>
             </div>
 
-            <!-- Search -->
+            <!-- TODO  Search -->
             <div class="relative w-full sm:w-64 md:w-72 lg:w-80">
               <input
                 v-model="searchQuery"
@@ -212,7 +214,7 @@
             </div>
           </div>
 
-          <!-- Faculty Table -->
+          <!-- TODO  Table -->
           <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
             <div class="max-h-[65vh] overflow-y-auto">
               <table class="min-w-full text-sm text-gray-700 border-collapse">
@@ -264,13 +266,13 @@
               </table>
             </div>
           </div>
-          <!-- Pagination -->
+
+          <!-- TODO  Pagination -->
           <div class="flex justify-between items-center mt-4">
             <div class="text-gray-700 text-sm">
               Showing {{ startIndex }} to {{ endIndex }} of
               {{ Object.keys(filteredGroupedSchedule).length }} faculty
             </div>
-
             <div class="flex items-center">
               <button
                 @click="changePage(currentPage - 1)"
@@ -305,106 +307,135 @@
         </div>
       </div>
 
-      <!-- Faculty Cards -->
-      <div
-        v-else
-        :class="[
-          'gap-6 overflow-y-auto pr-2 grid',
-          Object.keys(filteredGroupedSchedule).length === 1
-            ? 'grid-cols-1'
-            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-        ]"
-        style="height: 100%"
-      >
+      <div v-else>
+        <!-- TODO  Faculty Cards -->
         <div
-          v-for="(records, instructor) in filteredGroupedSchedule"
-          :key="instructor"
-          class="bg-white rounded-xl border flex flex-col"
+          v-if="Object.keys(filteredGroupedSchedule).length"
+          class="gap-6 overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-full"
         >
-          <!-- Header -->
           <div
-            class="flex justify-between items-center bg-defaultGreen text-white px-4 py-3 font-semibold text-sm rounded-t-xl"
+            v-for="(records, instructor) in filteredGroupedSchedule"
+            :key="instructor"
+            class="bg-white rounded-xl border flex flex-col"
           >
-            <span class="text-lg font-bold">{{ instructor }}</span>
-          </div>
-          <div class="overflow-x-auto overflow-y-auto flex-1">
-            <table class="w-full text-left border-collapse text-[11px]">
-              <thead class="sticky top-0 bg-gray-100 z-10">
-                <tr class="text-gray-700">
-                  <th class="px-4 py-2 border border-gray-200 w-24 text-center">
-                    Time
-                  </th>
-                  <th
-                    v-for="day in days"
-                    :key="day"
-                    class="px-4 py-2 border border-gray-200 text-center w-28"
-                  >
-                    {{ day }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="slot in timeSlots"
-                  :key="slot.start + slot.end"
-                  class="odd:bg-white even:bg-gray-50"
-                >
-                  <td
-                    class="px-4 py-4 border border-gray-200 font-medium text-center whitespace-nowrap"
-                  >
-                    {{ formatTime(slot.start) }} - {{ formatTime(slot.end) }}
-                  </td>
-                  <td
-                    v-for="day in days"
-                    :key="day"
-                    class="relative border border-gray-200 text-left align-top h-[60px] p-0"
-                  >
-                    <template
-                      v-for="item in getScheduleForCell(slot, day, instructor)"
-                      :key="item.course_name + item.start_hour + item.room_name"
+            <!-- TODO  Header -->
+            <div
+              class="flex justify-between items-center bg-defaultGreen text-white px-4 py-3 font-semibold text-sm rounded-t-xl"
+            >
+              <span class="text-lg font-bold">{{ instructor }}</span>
+              <div v-if="facultyTotalUnits[instructor]">
+                <p class="font-normal">
+                  Total Units:
+                  {{ facultyTotalUnits[instructor].totalUnits }}
+                </p>
+              </div>
+            </div>
+
+            <!-- TODO  Schedule Table -->
+            <div class="flex-1 overflow-auto">
+              <table class="w-full text-left border-collapse text-[11px]">
+                <thead class="sticky top-0 bg-gray-100 z-10">
+                  <tr class="text-gray-700">
+                    <th
+                      class="px-4 py-2 border border-gray-200 w-24 text-center"
                     >
-                      <div
-                        v-if="isStartingSlot(item, slot)"
-                        :class="[
-                          'absolute inset-x-1 border rounded-lg text-[11px] text-gray-800 shadow-sm overflow-hidden transition-all duration-200 whitespace-nowrap',
-                          getTypeColor(item.type),
-                        ]"
-                        :style="{
-                          top: getBlockTop() + 'px',
-                          height: getBlockHeight(item) + 'px',
-                          width: 'calc(100% - 0.5rem)',
-                        }"
+                      Time
+                    </th>
+                    <th
+                      v-for="day in days"
+                      :key="day"
+                      class="px-4 py-2 border border-gray-200 text-center w-28"
+                    >
+                      {{ day }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="slot in timeSlots"
+                    :key="slot.start + slot.end"
+                    class="odd:bg-white even:bg-gray-50"
+                  >
+                    <td
+                      class="px-4 py-4 border border-gray-200 font-medium text-center whitespace-nowrap"
+                    >
+                      {{ formatTime(slot.start) }} - {{ formatTime(slot.end) }}
+                    </td>
+                    <td
+                      v-for="day in days"
+                      :key="day"
+                      class="relative border border-gray-200 text-left align-top h-[60px] p-0"
+                    >
+                      <template
+                        v-for="item in getScheduleForCell(
+                          slot,
+                          day,
+                          instructor
+                        )"
+                        :key="
+                          item.course_name + item.start_hour + item.room_name
+                        "
                       >
-                        <div class="p-2 leading-snug truncate">
-                          <p class="font-semibold truncate">
-                            {{ item.course_code }}
-                          </p>
-                          <p class="text-gray-600 truncate">
-                            {{ item.room_name }}
-                          </p>
-                          <p class="text-gray-600 truncate">
-                            {{ item.class_id }}
-                          </p>
-                          <button
-                            v-if="item.conflict"
-                            @click="openConflictModal(item)"
-                            class="mt-2 w-full text-center px-2 py-1 text-[10px] rounded bg-red-100 text-red-600 hover:bg-red-200 transition"
-                          >
-                            ⚠ View Conflict
-                          </button>
+                        <div
+                          v-if="isStartingSlot(item, slot)"
+                          :class="[
+                            'absolute inset-x-1 border rounded-lg text-[11px] text-gray-800 shadow-sm overflow-hidden transition-all duration-200 whitespace-nowrap',
+                            getTypeColor(item.type),
+                          ]"
+                          :style="{
+                            top: getBlockTop(item, slot) + 'px',
+                            height: getBlockHeight(item) + 'px',
+                            width: 'calc(100% - 0.5rem)',
+                          }"
+                        >
+                          <div class="p-2 leading-snug truncate">
+                            <p class="font-semibold truncate">
+                              {{ item.course_code }}
+                            </p>
+                            <p class="text-gray-600 truncate">
+                              {{ item.room_name }}
+                            </p>
+                            <p class="text-gray-600 truncate">
+                              {{ item.set_name }}
+                            </p>
+                            <button
+                              v-if="item.conflict"
+                              @click="openConflictModal(item)"
+                              class="mt-2 w-full text-center px-2 py-1 text-[10px] rounded bg-red-100 text-red-600 hover:bg-red-200 transition"
+                            >
+                              ⚠ View Conflict
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    </template>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                      </template>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
+        </div>
+
+        <!-- TODO  Fallback ONLY for Faculty Cards -->
+        <div
+          v-else
+          class="flex flex-col items-center justify-center h-full text-center text-gray-500"
+        >
+          <icon
+            name="information-circle"
+            class="w-12 h-12 mb-4 text-gray-400"
+          />
+          <p class="text-lg font-semibold mb-2">No schedule data available</p>
+          <p class="text-sm text-gray-400">
+            Please click
+            <span class="font-medium text-defaultGreen">"Auto Generation"</span>
+            to generate schedule data.
+          </p>
         </div>
       </div>
     </div>
 
-    <!-- Loading Overlay -->
+    <!-- TODO  Loading Overlay -->
     <div
       v-if="loading"
       class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50"
@@ -435,13 +466,13 @@
         </div>
       </div>
     </div>
-    <!-- Confirm Save Modal -->
+    <!-- TODO  Confirm Save Modal -->
     <div
-      v-if="confirmSaveModal"
+      v-if="showConfirmSaved"
       class="fixed inset-0 flex items-center justify-center bg-black/30 z-50"
     >
-      <div class="bg-white rounded-2xl shadow-2xl p-6 w-96 text-center">
-        <!-- Header -->
+      <div class="bg-white rounded-2xl shadow-2xl p-6 w-96">
+        <!-- TODO  Header -->
         <div class="flex justify-between items-center border-b pb-3 mb-4">
           <div class="flex gap-1 items-center">
             <icon
@@ -459,25 +490,24 @@
           </button>
         </div>
 
-        <!-- Message -->
+        <!-- TODO  Message -->
         <p class="text-gray-600 mb-6">
           Are you sure you want to save this schedule?
         </p>
 
-        <!-- Buttons -->
-        <div class="flex justify-center gap-4 text-sm">
+        <!-- TODO  Buttons -->
+        <div class="flex justify-center gap-2 text-sm">
+          <button
+            @click="showConfirmSaved = false"
+            class="px-4 py-2 border rounded-xl hover:bg-gray-100 transition"
+          >
+            Cancel
+          </button>
           <button
             @click="saveScheduledConfirmed"
             class="px-4 py-2 bg-defaultGreen text-white rounded-xl hover:bg-green-600 transition"
           >
             Yes, Save
-          </button>
-
-          <button
-            @click="confirmSaveModal = false"
-            class="px-4 py-2 border rounded-xl hover:bg-gray-100 transition"
-          >
-            Cancel
           </button>
         </div>
       </div>
@@ -507,7 +537,7 @@ export default {
       scheduleGenerated: false,
       selectedInstituteId: "",
       selectedProgramId: "",
-      confirmSaveModal: false,
+      showConfirmSaved: false,
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
 
       // 8 AM to 5 PM
@@ -530,6 +560,42 @@ export default {
   },
 
   computed: {
+    coursesList() {
+      const store = useFetchDataStore();
+      return store.courses || [];
+    }, // Total units per faculty
+    facultyTotalUnits() {
+      const result = {};
+
+      Object.entries(this.filteredGroupedSchedule).forEach(
+        ([faculty, schedules]) => {
+          let totalLecture = 0;
+          let totalLab = 0;
+
+          schedules.forEach((sched) => {
+            const course = this.coursesList.find(
+              (c) => c.course_code === sched.course_code
+            );
+            if (course) {
+              // Add units per schedule slot
+              if (sched.type === "Lecture") {
+                totalLecture += Number(course.course_lec || 0);
+              } else if (sched.type === "Laboratory") {
+                totalLab += Number(course.course_lab || 0);
+              }
+            }
+          });
+
+          result[faculty] = {
+            lectureUnits: totalLecture,
+            labUnits: totalLab,
+            totalUnits: totalLecture + totalLab,
+          };
+        }
+      );
+
+      return result;
+    },
     // Map institute IDs to their names
     uniqueInstitutes() {
       const store = useFetchDataStore();
@@ -623,6 +689,7 @@ export default {
       const store = useFetchDataStore();
       await store.fetchPrograms();
       await store.fetchInstitutes();
+      await store.fetchCourses();
     },
 
     backToFacultyTable() {
@@ -1117,7 +1184,7 @@ export default {
     },
 
     async saveScheduledConfirmed() {
-      this.confirmSaveModal = false;
+      this.showConfirmSaved = false;
 
       try {
         // Always fetch latest school years before saving
@@ -1131,6 +1198,7 @@ export default {
 
         const payload = this.schedule.map((item) => ({
           class_id: item.class_id,
+          set_name: item.set_name,
           course_code: item.course_code,
           program_id: item.program_id,
           institute_id: item.institute_id,

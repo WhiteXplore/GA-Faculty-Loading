@@ -21,6 +21,9 @@ export class Course {
   @Column({ type: 'varchar', length: 100 })
   course_code: string;
 
+  @Column({ type: 'varchar', length: 100 })
+  set_name: string;
+
   @Column({ type: 'varchar', length: 255 })
   course_title: string;
 

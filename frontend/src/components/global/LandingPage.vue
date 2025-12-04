@@ -13,7 +13,7 @@
     <div class="flex justify-center items-center w-full min-h-screen relative">
       <!-- Main content container -->
       <div
-        class="flex justify-between items-center w-[90vw] h-[200px] px-8 relative z-50"
+        class="flex justify-between items-center w-[90vw] h-[200px] px-20 relative z-50"
       >
         <!-- Text on the left -->
         <div class="space-y-20 mb-20 font-poppins">
@@ -34,21 +34,23 @@
             Get Started
           </router-link>
         </div>
-
-        <!-- Logo on the right -->
-        <img
-          src="@/assets/img/landing-logo.png"
-          alt="Logo"
-          class="w-[450px] h-auto mb-28 mr-[140px]"
-        />
       </div>
 
       <!-- Background layer image (at the end, z-0) -->
-      <div class="absolute inset-0 flex justify-end items-center z-0">
+      <!-- Logo Container -->
+      <div class="relative flex justify-center items-center w-full">
+        <!-- Background layer logo -->
         <img
           src="@/assets/img/landing-logo-layer-1.png"
           alt="Layer 1 Background"
-          class="w-[600px] h-auto mb-28 mr-[193px] object-contain animate-spinSlow"
+          class="absolute w-[60%] max-w-[600px] h-auto object-contain animate-spinSlow"
+        />
+
+        <!-- Main logo -->
+        <img
+          src="@/assets/img/landing-logo.png"
+          alt="Logo"
+          class="relative w-[40%] max-w-[450px] h-auto z-50"
         />
       </div>
     </div>

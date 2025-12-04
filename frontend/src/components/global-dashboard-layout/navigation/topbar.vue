@@ -87,7 +87,9 @@
           <h1 class="text-sm font-semibold text-gray-800">
             {{ user.last_name }}, {{ user.first_name || "Guest" }}
           </h1>
-          <h2 class="text-xs text-gray-500">{{ user.role || "No Role" }}</h2>
+          <h2 class="text-xs text-gray-500">
+            {{ user.role || "No Role" }}
+          </h2>
         </div>
       </div>
     </div>

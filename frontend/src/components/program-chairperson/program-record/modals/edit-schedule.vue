@@ -43,8 +43,15 @@
                 <div
                   class="py-3 px-4 border-b bg-gray-100 flex items-center justify-between"
                 >
-                  <div class="font-semibold text-gray-800">
-                    {{ instructor }}
+                  <div class="flex flex-col">
+                    <span class="text-md font-bold">{{ instructor }}</span>
+
+                    <div v-if="facultyTotalUnits[instructor]">
+                      <p class="font-normal text-xs">
+                        Total Units:
+                        {{ facultyTotalUnits[instructor].totalUnits }}
+                      </p>
+                    </div>
                   </div>
 
                   <button
@@ -126,7 +133,7 @@
                                 {{ item.room_name }}
                               </div>
                               <div class="truncate">
-                                {{ item.class_id }}
+                                {{ item.set_name }}
                               </div>
 
                               <button
@@ -174,7 +181,7 @@
         v-if="showAddSchedulePanel"
         class="w-[40%] h-[40%] bg-white border shadow-xl transition-all duration-300 flex justify-start rounded-xl overflow-hidden"
       >
-        <div class="max-h-[95vh] overflow-y-auto border-t p-1">
+        <div class="max-h-[95vh] overflow-y-auto border-t p-0.5">
           <div
             class="flex items-center justify-between px-4 py-3 bg-defaultGreen text-white rounded-t-lg"
           >
@@ -191,6 +198,7 @@
           <table class="min-w-full divide-y divide-gray-200 text-xs">
             <thead class="bg-gray-100">
               <tr>
+                <th class="px-4 py-3 border w-[20%]">Section</th>
                 <th class="px-4 py-3 border w-[20%]">Course</th>
                 <th class="px-4 py-3 border">Room</th>
                 <th class="px-4 py-3 border">Day</th>
@@ -206,6 +214,33 @@
                 :key="record.id"
                 class="hover:bg-gray-50"
               >
+                <td class="px-2 py-2 border relative">
+                  <input
+                    v-model="record.searchSectionQuery"
+                    type="text"
+                    placeholder="Select section..."
+                    class="px-3 py-2 border w-full rounded-md text-md"
+                    @focus="record.showSectionDropdown = true"
+                    @input="record.class_id = null"
+                  />
+
+                  <div
+                    v-if="
+                      record.showSectionDropdown &&
+                      filteredSections(record).length
+                    "
+                    class="absolute z-10 w-full bg-white border rounded-md max-h-40 overflow-y-auto mt-1"
+                  >
+                    <div
+                      v-for="section in filteredSections(record)"
+                      :key="section.class_id"
+                      class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                      @mousedown.prevent="selectSection(record, section)"
+                    >
+                      {{ section.set_name }}
+                    </div>
+                  </div>
+                </td>
                 <td class="px-2 py-2 border relative">
                   <input
                     v-model="record.searchCourseQuery"
@@ -343,7 +378,7 @@
 
         <!-- TODO  Conflicts List -->
         <div class="space-y-3">
-          <div class="px-4 py-3 rounded-xl bg-red-50 text-sm">
+          <div class="px-4 py-3 rounded-xl bg-red-50 text-sm text-red-900">
             Please select another shedule.
           </div>
           <div
@@ -354,6 +389,10 @@
             <p class="text-sm text-gray-800">
               <span class="font-semibold">Faculty:</span>
               {{ conflict.faculty_name }}
+            </p>
+            <p class="text-sm text-gray-800">
+              <span class="font-semibold">Set and Section:</span>
+              {{ conflict.set_name }}
             </p>
             <p class="text-sm text-gray-800">
               <span class="font-semibold">Course:</span>
@@ -389,43 +428,48 @@
     </div>
 
     <!-- TODO CONFIRM DELETE MODAL -->
-
     <div
       v-if="showConfirmDelete"
-      class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+      class="fixed inset-0 flex items-center justify-center bg-black/30 z-50"
     >
-      <div class="bg-white rounded-xl shadow-xl w-full max-w-sm p-6">
-        <!-- Header -->
-        <h2
-          class="text-lg font-semibold text-red-600 flex items-center gap-2 mb-4"
-        >
-          <icon name="exclamation-circle" class="text-red-600 w-6 h-6" />
-          Confirm Delete
-        </h2>
+      <div class="bg-white rounded-2xl shadow-2xl p-6 w-96">
+        <!-- TODO  Header -->
+        <div class="flex justify-between items-center border-b pb-3 mb-4">
+          <div class="flex gap-1 items-center">
+            <icon
+              name="exclamation-circle"
+              class="text-red-900 w-7 p-1 rounded-full bg-red-200"
+            />
+            <h3 class="text-lg font-semibold text-gray-800">Confirm Delete</h3>
+          </div>
 
-        <!-- Message -->
-        <p class="text-gray-700 mb-6">
-          Are you sure you want to delete this scheduled course?
-          <br />
-          <span class="font-semibold text-gray-900 block mt-1">
-            This action cannot be undone.
-          </span>
+          <button
+            @click="$emit('close')"
+            class="text-gray-400 hover:text-gray-600 transition"
+          >
+            ✕
+          </button>
+        </div>
+
+        <!-- TODO  Message -->
+        <p class="text-gray-600 mb-6">
+          Are you sure you want to delete this schedule?
+          <strong>This action cannot be undone!</strong>
         </p>
 
-        <!-- Buttons -->
-        <div class="flex justify-end gap-3">
+        <!-- TODO  Buttons -->
+        <div class="flex justify-center gap-2 text-sm">
           <button
             @click="cancelDelete"
-            class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300"
+            class="px-4 py-2 border rounded-xl hover:bg-gray-100 transition"
           >
             Cancel
           </button>
-
           <button
             @click="confirmDelete"
-            class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+            class="px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition"
           >
-            Delete
+            Yes, Delete
           </button>
         </div>
       </div>
@@ -467,10 +511,47 @@ export default {
 
       showAddSchedulePanel: false,
       selectedInstructorName: "",
+
+      deletedIds: new Set(),
     };
   },
   computed: {
     ...mapState(useFetchDataStore, ["rooms"]),
+    coursesList() {
+      const store = useFetchDataStore();
+      return store.courses || [];
+    }, // Total units per faculty
+    facultyTotalUnits() {
+      const result = {};
+
+      Object.entries(this.groupedSchedule).forEach(([faculty, schedules]) => {
+        let totalLecture = 0;
+        let totalLab = 0;
+
+        schedules.forEach((sched) => {
+          const course = this.coursesList.find(
+            (c) => c.course_code === sched.course_code
+          );
+          if (course) {
+            if (sched.type === "Lecture") {
+              totalLecture += Number(course.course_lec || 0);
+            } else if (sched.type === "Laboratory") {
+              totalLab += Number(course.course_lab || 0);
+            }
+          }
+        });
+
+        const totalUnits = totalLecture + totalLab;
+
+        result[faculty] = {
+          lectureUnits: totalLecture,
+          labUnits: totalLab,
+          totalUnits,
+        };
+      });
+
+      return result;
+    },
     unscheduledCourses() {
       const scheduledCourseIds = new Set(
         this.localData.map((r) => r.course_id).filter(Boolean)
@@ -504,91 +585,187 @@ export default {
     },
 
     allData() {
-      // combine fullSchedules and localData, avoid duplicates
-      const localIds = new Set(this.localData.map((r) => r.id));
       const merged = [...this.localData];
 
+      const localKeys = new Set(this.localData.map((r) => r.id || r.tempId));
+
       (this.fullSchedules || []).forEach((r) => {
-        if (!localIds.has(r.id)) {
+        const key = r.id || r.tempId;
+        if (!localKeys.has(key)) {
           merged.push({
             ...r,
             searchRoomQuery: r.room_name || "",
             showRoomDropdown: false,
             searchCourseQuery: r.course_code || "",
             showCourseDropdown: false,
+            searchSectionQuery: r.set_name || "",
+            showSectionDropdown: false,
           });
         }
       });
 
       return merged;
     },
-    isValid() {
-      return this.localData.every(
-        (r) =>
-          r.faculty_name &&
-          r.day &&
-          r.start_hour != null &&
-          r.duration != null &&
-          !this.hasRoomConflict(r)
-      );
-    },
   },
   watch: {
+    // Watch for changes in instructorData to update localData
     instructorData: {
       immediate: true,
       handler(newVal) {
         const fetchDataStore = useFetchDataStore();
-
-        // Ensure class sections are loaded
         const sections = fetchDataStore.sections || [];
 
-        this.localData = (Array.isArray(newVal) ? [...newVal] : []).map(
-          (rec) => {
-            // --- FIND CLASS SIZE FROM class_id ---
-            let class_size = rec.class_size || null;
-            if (rec.class_id) {
-              const section = sections.find((s) => s.class_id === rec.class_id);
-              if (section) {
-                class_size = section.class_size;
-              }
-            }
+        // Create fresh reactive copy
+        this.localData = (newVal || []).map((rec) => {
+          const class_size =
+            rec.class_size ||
+            (rec.class_id
+              ? sections.find((s) => s.class_id === rec.class_id)?.class_size
+              : null);
 
-            // Ensure course_id & course_code sync
-            if (rec.course_code) {
-              const course = fetchDataStore.courses.find(
-                (c) => c.course_code === rec.course_code
-              );
-              if (course) {
-                rec.course_id = course.course_id;
-                rec.course_code = course.course_code;
-              }
-            } else if (rec.course_id) {
-              const course = fetchDataStore.courses.find(
-                (c) => c.course_id === rec.course_id
-              );
-              if (course) {
-                rec.course_code = course.course_code;
-              }
-            }
+          return {
+            ...rec,
+            class_size,
+            searchRoomQuery: rec.room_name || "",
+            showRoomDropdown: false,
+            searchCourseQuery: rec.course_code || "",
+            showCourseDropdown: false,
+            searchSectionQuery: rec.set_name || "",
+            showSectionDropdown: false,
+            program_id: rec.program_id || this.user.program_id || null,
+            institute_id: rec.institute_id || this.user.institute_id || null,
+          };
+        });
 
-            return {
-              ...rec,
-              faculty_id: rec.faculty_id || null,
-              class_size, // <-- AUTO SET HERE
-              searchRoomQuery: rec.room_name || "",
-              showRoomDropdown: false,
-              searchCourseQuery: rec.course_code || "",
-              showCourseDropdown: false,
-              program_id: rec.program_id || this.user.program_id || null,
-              institute_id: rec.institute_id || this.user.institute_id || null,
-            };
-          }
-        );
+        // Reset drag state to prevent false conflicts
+        this.draggedRecord = null;
+      },
+    },
+
+    // Watch for modal open (show = true) to refresh all data
+    show: {
+      immediate: false,
+      handler(isVisible) {
+        if (isVisible) {
+          // Refresh user info
+          this.fetchUser();
+
+          // Refresh Pinia stores
+          this.fetchRooms();
+          this.fetchClassSections();
+
+          // Reload full schedules from API
+          this.loadData();
+
+          // Refresh localData to sync with parent props
+          this.refreshInstructorData([...this.instructorData]);
+        }
       },
     },
   },
 
   methods: {
+    ...mapActions(useFetchDataStore, [
+      "fetchRooms",
+      "fetchCourses",
+      "fetchClassSections",
+    ]),
+    /* ------------------ 1. UTILITY ------------------ */
+    formatTime(h) {
+      const period = h >= 12 ? "PM" : "AM";
+      const hour = h % 12 || 12;
+      return `${hour}:00 ${period}`;
+    },
+
+    isStartingSlot(item, slot) {
+      return item.start_hour === slot.start;
+    },
+    getBlockTop(item, slotStart) {
+      return (item.start_hour - slotStart) * this.hourHeight;
+    },
+
+    getBlockHeight(item) {
+      return Math.max(1, Number(item.duration)) * this.hourHeight - 1;
+    },
+
+    getTypeColor(type) {
+      switch (type) {
+        case "Lecture":
+          return "bg-green-200 border-green-400";
+        case "Laboratory":
+          return "bg-blue-200 border-blue-400";
+        default:
+          return "bg-gray-200 border-gray-400";
+      }
+    },
+
+    /* ------------------ 2. FETCHING ------------------ */
+    async loadData() {
+      try {
+        const fetchDataStore = useFetchDataStore();
+        await fetchDataStore.fetchFinalSchedules();
+        this.fullSchedules = (fetchDataStore.final_schedules || []).map(
+          (rec) => ({
+            ...rec,
+            searchRoomQuery: rec.room_name || "",
+            showRoomDropdown: false,
+            searchCourseQuery: rec.course_code || "",
+            showCourseDropdown: false,
+            searchSectionQuery: rec.set_name || "",
+            showSectionDropdown: false,
+          })
+        );
+      } catch (error) {
+        console.error("Failed to load full schedules:", error);
+        this.fullSchedules = [];
+      }
+    },
+    async fetchUser() {
+      try {
+        const res = await axios.get(
+          `${process.env.VUE_APP_API_BASE_URL}/auth/me`,
+          {
+            withCredentials: true,
+          }
+        );
+        this.user = res.data || {};
+        await this.fetchCoursesForUser();
+      } catch {
+        this.user = {};
+      }
+    },
+    async fetchCoursesForUser() {
+      const fetchDataStore = useFetchDataStore();
+      if (!this.user.role) return;
+
+      let url = `${process.env.VUE_APP_API_BASE_URL}/courses/get-courses`;
+
+      if (this.user.role === "Program Chairperson") {
+        const params = new URLSearchParams();
+        if (this.user.institute_id)
+          params.append("institute_id", this.user.institute_id);
+        if (this.user.program_id)
+          params.append("program_id", this.user.program_id);
+        url += `?${params.toString()}`;
+      }
+
+      try {
+        const { data } = await axios.get(url);
+        fetchDataStore.courses = data;
+      } catch {
+        fetchDataStore.courses = [];
+      }
+    },
+
+    refreshInstructorData(newData) {
+      this.localData = newData.map((rec) => ({
+        ...rec,
+        searchRoomQuery: rec.room_name || "",
+        searchCourseQuery: rec.course_code || "",
+        searchSectionQuery: rec.set_name || "",
+      }));
+      this.draggedRecord = null;
+    },
     openAddSchedulePanel(instructor) {
       this.selectedInstructorName = instructor;
       this.showAddSchedulePanel = true;
@@ -596,6 +773,98 @@ export default {
     closeAddSchedulePanel() {
       this.showAddSchedulePanel = false;
     },
+
+    /* ------------------ 3. FILTERING ------------------ */
+
+    filteredRooms(record) {
+      if (!record.searchRoomQuery) return this.rooms;
+      return this.rooms.filter((r) =>
+        r.room_name.toLowerCase().includes(record.searchRoomQuery.toLowerCase())
+      );
+    },
+    filteredSections(record) {
+      const fetchDataStore = useFetchDataStore();
+      const sections = fetchDataStore.sections || [];
+
+      let filtered = sections;
+
+      // If user is Program Chairperson, filter by institute & program
+      if (this.user.role === "Program Chairperson") {
+        filtered = filtered.filter(
+          (s) =>
+            s.program?.institute?.institute_id === this.user.institute_id &&
+            s.program_id === this.user.program_id
+        );
+      }
+      const query = record.searchSectionQuery?.trim().toLowerCase();
+      if (query) {
+        filtered = filtered.filter((s) =>
+          s.set_name?.toLowerCase().includes(query)
+        );
+      }
+
+      return filtered;
+    },
+
+    filteredCourses(record) {
+      const fetchDataStore = useFetchDataStore();
+      if (!fetchDataStore.courses) return [];
+
+      let filtered = fetchDataStore.courses.filter((c) =>
+        c.course_code
+          .toLowerCase()
+          .includes(record.searchCourseQuery.toLowerCase())
+      );
+
+      // Only show courses matching user's institute & program if Program Chairperson
+      if (this.user.role === "Program Chairperson") {
+        filtered = filtered.filter(
+          (c) =>
+            c.institute_id === this.user.institute_id &&
+            c.program_id === this.user.program_id
+        );
+      }
+
+      return filtered;
+    },
+    /* ------------------ 4. SELECT ACTIONS ------------- */
+
+    selectSection(record, section) {
+      record.class_id = section.class_id;
+      record.set_name = section.set_name;
+      record.program_id = section.program?.program_id || null;
+      record.institute_id = section.program?.institute?.institute_id || null;
+
+      record.searchSectionQuery = section.set_name;
+      record.showSectionDropdown = false;
+    },
+
+    selectRoom(record, room) {
+      // Only update if room changed
+      if (record.room_id !== room.room_id) {
+        record.room_id = room.room_id;
+        record.room_name = room.room_name;
+        record.room_type = room.room_type;
+        record.room_capacity = room.room_capacity;
+      }
+      record.searchRoomQuery = room.room_name; // for display only
+      record.showRoomDropdown = false;
+    },
+    selectCourse(record, course) {
+      record.course_id = course.course_id;
+      record.course_code = course.course_code;
+      record.semester = String(course.course_semester);
+
+      const startYear = course?.curriculum?.curriculum_start_year;
+      const endYear = course?.curriculum?.curriculum_end_year;
+      record.school_year =
+        startYear && endYear ? `${startYear} - ${endYear}` : startYear || "";
+
+      record.searchCourseQuery = course.course_code;
+      record.showCourseDropdown = false;
+    },
+    /* ------------------ 5. ROW MANAGEMENT ------------- */
+
     addNewRow() {
       const first = this.instructorData[0];
       const tempId = `temp-${Date.now()}`;
@@ -642,6 +911,8 @@ export default {
         showRoomDropdown: false,
         searchCourseQuery: "",
         showCourseDropdown: false,
+        searchSectionQuery: "",
+        showSectionDropdown: false,
       });
     },
     cancelNewRow() {
@@ -665,7 +936,6 @@ export default {
       this.showConfirmDelete = false;
       this.deleteTarget = null;
     },
-
     async confirmDelete() {
       if (!this.deleteTarget) return;
 
@@ -677,11 +947,12 @@ export default {
           `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${this.deleteTarget.id}`
         );
 
-        // 🔥 Remove locally
+        // After removing locally
         this.localData = this.localData.filter(
           (item) => item.id !== this.deleteTarget.id
         );
 
+        this.$emit("deleted", this.deleteTarget.id);
         toast.success("Schedule deleted successfully.");
       } catch (error) {
         console.error(error);
@@ -697,88 +968,7 @@ export default {
         }
       }
     },
-
-    logRow(record) {
-      console.log("New schedule row:", record);
-      toast.success("Logged to console!"); // optional feedback
-    },
-    ...mapActions(useFetchDataStore, [
-      "fetchRooms",
-      "fetchCourses",
-      "fetchClassSections",
-    ]),
-    // Filter function
-    filteredRooms(record) {
-      if (!record.searchRoomQuery) return this.rooms;
-      return this.rooms.filter((r) =>
-        r.room_name.toLowerCase().includes(record.searchRoomQuery.toLowerCase())
-      );
-    },
-
-    filteredCourses(record) {
-      const fetchDataStore = useFetchDataStore();
-      if (!fetchDataStore.courses) return [];
-
-      let filtered = fetchDataStore.courses.filter((c) =>
-        c.course_code
-          .toLowerCase()
-          .includes(record.searchCourseQuery.toLowerCase())
-      );
-
-      // Only show courses matching user's institute & program if Program Chairperson
-      if (this.user.role === "Program Chairperson") {
-        filtered = filtered.filter(
-          (c) =>
-            c.institute_id === this.user.institute_id &&
-            c.program_id === this.user.program_id
-        );
-      }
-
-      return filtered;
-    },
-    // Select a room from dropdown
-    // When user selects a room from the dropdown
-
-    selectRoom(record, room) {
-      // Only update if room changed
-      if (record.room_id !== room.room_id) {
-        record.room_id = room.room_id;
-        record.room_name = room.room_name;
-        record.room_type = room.room_type;
-        record.room_capacity = room.room_capacity;
-      }
-      record.searchRoomQuery = room.room_name; // for display only
-      record.showRoomDropdown = false;
-    },
-    selectCourse(record, course) {
-      record.course_id = course.course_id;
-      record.course_code = course.course_code;
-      record.semester = String(course.course_semester); // <-- convert to string
-
-      const startYear = course?.curriculum?.curriculum_start_year;
-      const endYear = course?.curriculum?.curriculum_end_year;
-      record.school_year =
-        startYear && endYear ? `${startYear} - ${endYear}` : startYear || "";
-
-      record.searchCourseQuery = course.course_code;
-      record.showCourseDropdown = false;
-    },
-    selectSection(record, section) {
-      record.class_id = section.class_id;
-      record.class_size = section.class_size; // auto update
-    },
-    openConflictModal(record) {
-      const conflicts = this.getConflictingRecords(record);
-      if (!conflicts.length) return;
-
-      this.conflictRecords = conflicts;
-      this.conflictModalVisible = true;
-    },
-
-    closeConflictModal() {
-      this.conflictModalVisible = false;
-      this.conflictRecords = [];
-    },
+    /* ------------------ 6. SCHEDULE GRID -------------- */
     getConflictsInCell(slot, day, instructor) {
       const cellRecords = this.getScheduleForCell(slot, day, instructor);
       return cellRecords
@@ -786,43 +976,62 @@ export default {
         .flat()
         .filter((r) => r.faculty_name !== instructor);
     },
-
-    async loadData() {
-      try {
-        const fetchDataStore = useFetchDataStore();
-        await fetchDataStore.fetchFinalSchedules();
-        this.fullSchedules = Array.isArray(fetchDataStore.final_schedules)
-          ? fetchDataStore.final_schedules
-          : [];
-      } catch (error) {
-        console.error("Failed to load full schedules:", error);
-        this.fullSchedules = [];
-      }
-    },
     getConflictingRecords(record) {
-      return this.allData.filter((r) => {
-        if (r.id === record.id) return false;
+      const recordStart = Number(record.start_hour);
+      const recordEnd = recordStart + Number(record.duration);
 
-        // ✅ Only compare schedules on the same day
+      return this.allData.filter((r) => {
+        // Ignore self
+        const sameId = r.id && record.id && r.id === record.id;
+        const sameTemp =
+          r.tempId && record.tempId && r.tempId === record.tempId;
+        if (sameId || sameTemp) return false;
+
+        // Ignore dragged record itself
+        if (this.draggedRecord) {
+          const draggedSame =
+            (r.id && r.id === this.draggedRecord.id) ||
+            (r.tempId && r.tempId === this.draggedRecord.tempId);
+          if (draggedSame) return false;
+        }
+
+        // Only same day
         if (r.day !== record.day) return false;
 
-        // Convert to numeric hours
+        // Time overlap check
         const rStart = Number(r.start_hour);
         const rEnd = rStart + Number(r.duration);
-        const newStart = Number(record.start_hour);
-        const newEnd = newStart + Number(record.duration);
+        if (Math.max(rStart, recordStart) >= Math.min(rEnd, recordEnd))
+          return false;
 
-        // Check time overlap
-        const overlaps = Math.max(rStart, newStart) < Math.min(rEnd, newEnd);
-        if (!overlaps) return false;
-
-        // Room or Faculty conflict
-        const roomConflict = r.room_id === record.room_id;
+        // Room or faculty conflict
+        const roomConflict =
+          r.room_id && record.room_id && r.room_id === record.room_id;
         const facultyConflict = r.faculty_name === record.faculty_name;
 
         return roomConflict || facultyConflict;
       });
     },
+    openConflictModal(record) {
+      const conflicts = this.getConflictingRecords(record);
+
+      // Only show conflicts with OTHER instructors, not the record itself
+      const otherConflicts = conflicts.filter(
+        (r) => r.faculty_name !== record.faculty_name || r.id !== record.id // also ignore exact same record by ID
+      );
+
+      if (!otherConflicts.length) return;
+
+      this.conflictRecords = otherConflicts;
+      this.conflictModalVisible = true;
+    },
+    closeConflictModal() {
+      this.conflictModalVisible = false;
+      this.conflictRecords = [];
+    },
+
+    /* ------------------ 7. CONFLICT LOGIC ------------- */
+
     hasRoomConflict(record) {
       return this.getConflictingRecords(record).length > 0;
     },
@@ -838,12 +1047,6 @@ export default {
         .join("\n");
     },
 
-    formatTime(h) {
-      const period = h >= 12 ? "PM" : "AM";
-      const hour = h % 12 || 12;
-      return `${hour}:00 ${period}`;
-    },
-
     getScheduleForCell(slot, day, instructor) {
       return (this.localData || []).filter(
         (r) =>
@@ -855,28 +1058,18 @@ export default {
           r.start_hour + r.duration > slot.start
       );
     },
+    isValid() {
+      return this.localData.every(
+        (r) =>
+          r.faculty_name &&
+          r.day &&
+          r.start_hour != null &&
+          r.duration != null &&
+          !this.hasRoomConflict(r)
+      );
+    },
 
-    isStartingSlot(item, slot) {
-      return item.start_hour === slot.start;
-    },
-    getBlockTop(item, slotStart) {
-      return (item.start_hour - slotStart) * this.hourHeight;
-    },
-
-    getBlockHeight(item) {
-      return Math.max(1, Number(item.duration)) * this.hourHeight - 1;
-    },
-
-    getTypeColor(type) {
-      switch (type) {
-        case "Lecture":
-          return "bg-green-200 border-green-400";
-        case "Laboratory":
-          return "bg-blue-200 border-blue-400";
-        default:
-          return "bg-gray-200 border-gray-400";
-      }
-    },
+    /* ------------------ 8. DRAG & DROP ---------------- */
 
     onDragStart(event, record) {
       this.draggedRecord = record;
@@ -937,6 +1130,8 @@ export default {
             delete payload.showRoomDropdown;
             delete payload.searchCourseQuery;
             delete payload.showCourseDropdown;
+            delete payload.searchSectionQuery;
+            delete payload.showSectionDropdown;
 
             const id = rec.id || rec.schedule_id || rec.final_generated_id;
             if (!id)
@@ -963,13 +1158,15 @@ export default {
         delete payload.showRoomDropdown;
         delete payload.searchCourseQuery;
         delete payload.showCourseDropdown;
+        delete payload.searchSectionQuery;
+        delete payload.showSectionDropdown;
 
         const id =
           this.draggedRecord.id ||
           this.draggedRecord.schedule_id ||
           this.draggedRecord.final_generated_id;
         if (!id) {
-          toast.error("Cannot update unsaved schedule. Please save first.");
+          // toast.error("Cannot update unsaved schedule. Please save first.");
           this.draggedRecord = null;
           return;
         }
@@ -984,7 +1181,21 @@ export default {
 
       this.draggedRecord = null;
     },
+    /* ------------------ 9. SAVING TO DATABASE  ---------------- */
     async saveEdit() {
+      // ✅ Check for faculty overload before saving
+      const overloadedFaculty = Object.entries(this.facultyTotalUnits)
+        .filter(([, units]) => units.totalUnits > 18)
+        .map(([facultyName]) => facultyName);
+
+      if (overloadedFaculty.length) {
+        const names = overloadedFaculty.join(", ");
+        const proceed = confirm(
+          `Warning: The following faculty member(s) have more than 18 units: ${names}. Do you want to proceed anyway?`
+        );
+        if (!proceed) return; // stop save if user cancels
+      }
+
       this.saving = true;
       try {
         const fetchDataStore = useFetchDataStore();
@@ -1025,6 +1236,8 @@ export default {
           delete payload.showRoomDropdown;
           delete payload.searchCourseQuery;
           delete payload.showCourseDropdown;
+          delete payload.searchSectionQuery;
+          delete payload.showSectionDropdown;
 
           const existingId =
             record.id || record.schedule_id || record.final_generated_id;
@@ -1066,6 +1279,8 @@ export default {
             showRoomDropdown: false,
             searchCourseQuery: rec.course_code || "",
             showCourseDropdown: false,
+            searchSectionQuery: rec.set_name || "",
+            showSectionDropdown: false,
           })
         );
 
@@ -1082,40 +1297,6 @@ export default {
         toast.error("Failed to save schedules. Check console.");
       } finally {
         this.saving = false;
-      }
-    },
-    async fetchUser() {
-      try {
-        const res = await axios.get(
-          `${process.env.VUE_APP_API_BASE_URL}/auth/me`,
-          { withCredentials: true }
-        );
-        this.user = res.data || {};
-        await this.fetchCoursesForUser();
-      } catch {
-        this.user = {};
-      }
-    },
-    async fetchCoursesForUser() {
-      const fetchDataStore = useFetchDataStore();
-      if (!this.user.role) return;
-
-      let url = `${process.env.VUE_APP_API_BASE_URL}/courses/get-courses`;
-
-      if (this.user.role === "Program Chairperson") {
-        const params = new URLSearchParams();
-        if (this.user.institute_id)
-          params.append("institute_id", this.user.institute_id);
-        if (this.user.program_id)
-          params.append("program_id", this.user.program_id);
-        url += `?${params.toString()}`;
-      }
-
-      try {
-        const { data } = await axios.get(url);
-        fetchDataStore.courses = data;
-      } catch {
-        fetchDataStore.courses = [];
       }
     },
   },

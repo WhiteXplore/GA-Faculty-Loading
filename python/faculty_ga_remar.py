@@ -259,7 +259,7 @@ def schedule_class_meeting(cls, course_type, hours, rooms, faculty_id,
                     "start_hour": start_hour,
                     "duration": hours,
                     "class_id": cls["class_id"],
-                    "course_code": cls["course_code"]
+                    "course_code": cls["course_code"],
                 })
 
                 # Add to faculty schedule tracker
@@ -272,12 +272,13 @@ def schedule_class_meeting(cls, course_type, hours, rooms, faculty_id,
                     "start_hour": start_hour,
                     "duration": hours,
                     "class_id": cls["class_id"],
-                    "course_code": cls["course_code"]
+                    "course_code": cls["course_code"],
                 })
 
                 return {
-                    "class_id": cls["class_id"],
+                    "class_id": cls["class_id"],   "set_name": cls["set_name"],
                     "course_code": cls["course_code"],
+
                     "program_id": cls["program_id"],
                     "institute_id": institute_id,
                     "type": course_type,
