@@ -14,7 +14,7 @@
     </div>
 
     <!-- Right: Dropdown + Profile -->
-    <div class="flex items-center gap-5">
+    <div class="flex items-center gap-2">
       <!-- Dropdown -->
       <div
         v-if="activeYears.length > 1"

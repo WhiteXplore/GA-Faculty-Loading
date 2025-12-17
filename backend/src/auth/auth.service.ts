@@ -14,7 +14,7 @@ import { Program } from 'src/programs/entities/program.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserExpertise } from 'src/user/entities/user_expertise.entity';
 import { UserOtherExpertise } from 'src/user/entities/user_other_expertise.entity';
-
+import { SchoolYear } from 'src/school_year/entities/school_year.entity';
 @Injectable()
 export class AuthService {
   constructor(
@@ -211,7 +211,13 @@ export class AuthService {
   ): Promise<Partial<User_Accounts>> {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['institute', 'program', 'expertise', 'other_expertise'],
+      relations: [
+        'institute',
+        'program',
+        'school_year',
+        'expertise',
+        'other_expertise',
+      ],
     });
 
     if (!user) {
@@ -249,7 +255,20 @@ export class AuthService {
       user.program = program;
     }
 
-    // ✅ Handle expertise updates
+    // ✅ Handle school year relation
+    if (updates.school_year_id) {
+      const schoolYear = await this.userRepository.manager.findOne(SchoolYear, {
+        where: { school_year_id: updates.school_year_id },
+      });
+      if (!schoolYear) {
+        throw new BadRequestException(
+          `School Year with ID ${updates.school_year_id} not found`,
+        );
+      }
+      user.school_year = schoolYear;
+    }
+
+    // Handle expertise updates
     if (updates.expertise) {
       await this.userRepository.manager.delete(UserExpertise, {
         user: { id: user.id },
@@ -263,7 +282,7 @@ export class AuthService {
       );
     }
 
-    // ✅ Handle other_expertise updates
+    // Handle other_expertise updates
     if (updates.other_expertise) {
       await this.userRepository.manager.delete(UserOtherExpertise, {
         user: { id: user.id },
@@ -278,8 +297,14 @@ export class AuthService {
     }
 
     // Assign the rest of the fields
-    const { institute_id, program_id, expertise, other_expertise, ...rest } =
-      updates;
+    const {
+      institute_id,
+      program_id,
+      school_year_id,
+      expertise,
+      other_expertise,
+      ...rest
+    } = updates;
     Object.assign(user, rest);
 
     const savedUser = await this.userRepository.save(user);

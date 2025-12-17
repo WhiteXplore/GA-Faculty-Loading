@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="currentUser"
-    class="p-6 text-gray-800 w-full min-h-screen bg-[#F4F6F8] rounded-t-xl"
+    class="p-6 text-gray-800 w-full min-h-[70vh] bg-[#F4F6F8] rounded-t-xl"
   >
     <!-- Header -->
     <div class="flex justify-between items-center pr-5">
@@ -97,7 +97,7 @@ import addInstructor from "@/components/faculty/faculty-records/modals/add-users
 import addExpertise from "@/components/faculty/faculty-records/modals/add-expertise.vue";
 import personalInformation from "./personal-information.vue";
 import preferenceSection from "./preference-section.vue";
-import { useFetchDataStore } from "../../../../store/fetch-data-store";
+import { useFetchDataStore } from "@/store/fetch-data-store";
 import { mapState, mapActions } from "pinia";
 
 export default {
