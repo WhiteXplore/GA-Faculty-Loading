@@ -217,8 +217,8 @@
                 <th class="px-4 py-3 border w-[15%]">Course</th>
                 <th class="px-4 py-3 border w-[13%]">Room</th>
                 <th class="px-4 py-3 border w-[10%]">Day</th>
-                <th class="px-4 py-3 border w-[9%]">Start</th>
-                <th class="px-4 py-3 border w-[9%]">Hours</th>
+                <th class="px-4 py-3 border w-[10%]">Start</th>
+                <th class="px-4 py-3 border w-[10%]">Hours</th>
                 <th class="px-4 py-3 border">Set Up</th>
                 <th class="px-4 py-3 border text-center">Action</th>
               </tr>
@@ -447,6 +447,9 @@
             </p>
             <p class="text-sm text-gray-800">
               <span class="font-semibold">Day:</span> {{ conflict.mode }}
+            </p>
+            <p class="text-sm text-gray-800" v-if="conflict.reason">
+              <span class="font-semibold">Reason:</span> {{ conflict.reason }}
             </p>
           </div>
         </div>
@@ -1101,46 +1104,51 @@ export default {
       const recordStart = this.normalizeHour(record.start_hour);
       const recordEnd = recordStart + Number(record.duration);
 
-      return this.allData.filter((r) => {
-        // 1️⃣ Ignore self
-        if (
-          (r.id && record.id && r.id === record.id) ||
-          (r.tempId && record.tempId && r.tempId === record.tempId)
-        ) {
-          return false;
-        }
+      return this.allData
+        .map((r) => {
+          // Ignore self
+          if (
+            (r.id && record.id && r.id === record.id) ||
+            (r.tempId && record.tempId && r.tempId === record.tempId)
+          )
+            return null;
 
-        // 2️⃣ Same day
-        if (r.day !== record.day) return false;
+          // Same day only
+          if (r.day !== record.day) return null;
 
-        // 3️⃣ Time overlap
-        const rStart = this.normalizeHour(r.start_hour);
-        const rEnd = rStart + Number(r.duration);
-        const overlap =
-          Math.max(rStart, recordStart) < Math.min(rEnd, recordEnd);
-        if (!overlap) return false;
+          const rStart = this.normalizeHour(r.start_hour);
+          const rEnd = rStart + Number(r.duration);
 
-        // 🔴 RULE A: Same CLASS (block always)
-        const sameClassConflict =
-          r.class_id && record.class_id && r.class_id === record.class_id;
+          // No time overlap
+          if (Math.max(rStart, recordStart) >= Math.min(rEnd, recordEnd))
+            return null;
 
-        // 🔴 RULE B: Same ROOM (Face-to-Face only)
-        const sameRoomConflict =
-          record.mode === "face to face" &&
-          r.mode === "face to face" &&
-          r.room_id &&
-          record.room_id &&
-          r.room_id === record.room_id;
+          // Determine conflict reason
+          let reason = [];
+          if (r.class_id && record.class_id && r.class_id === record.class_id)
+            reason.push("Same Class");
+          if (
+            record.mode === "face to face" &&
+            r.mode === "face to face" &&
+            r.room_id &&
+            record.room_id &&
+            r.room_id === record.room_id
+          )
+            reason.push("Same Room");
+          if (
+            r.faculty_id === record.faculty_id &&
+            (r.mode || "").toLowerCase() === (record.mode || "").toLowerCase()
+          )
+            reason.push("Same Faculty + Same Mode");
 
-        // 🔴 RULE C: Same FACULTY + SAME MODE
-        const sameFacultySameModeConflict =
-          r.faculty_id === record.faculty_id &&
-          (r.mode || "").toLowerCase() === (record.mode || "").toLowerCase();
+          if (!reason.length) return null;
 
-        return (
-          sameClassConflict || sameRoomConflict || sameFacultySameModeConflict
-        );
-      });
+          return {
+            ...r,
+            reason: reason.join(", "),
+          };
+        })
+        .filter(Boolean);
     },
     openConflictModal(record) {
       const conflicts = this.getConflictingRecords(record);

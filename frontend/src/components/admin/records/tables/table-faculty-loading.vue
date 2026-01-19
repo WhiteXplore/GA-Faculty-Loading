@@ -311,7 +311,7 @@
         <!-- TODO  Faculty Cards -->
         <div
           v-if="Object.keys(filteredGroupedSchedule).length"
-          class="gap-6 overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-full"
+          class="gap-2 overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-full"
         >
           <div
             v-for="(records, instructor) in filteredGroupedSchedule"
@@ -378,16 +378,44 @@
                       >
                         <div
                           v-if="isStartingSlot(item, slot)"
+                          draggable="true"
+                          @dragstart="onDragStart($event, item)"
+                          @click="highlightRow(item)"
                           :class="[
-                            'absolute inset-x-1 border rounded-lg text-[11px] text-gray-800 shadow-sm overflow-hidden transition-all duration-200 whitespace-nowrap',
-                            getTypeColor(item.type),
+                            'absolute inset-x-1 border rounded-lg text-[11px] p-1 shadow-sm truncate transition cursor-pointer hover:bg-yellow-100 hover:defaultGreen',
+                            item.id?.toString().startsWith('temp-')
+                              ? 'bg-purple-200 border-purple-400 text-purple-900'
+                              : getTypeColor(item.type),
+                            hasRoomConflict(item)
+                              ? 'bg-red-300 border-red-500 text-red-900'
+                              : '',
                           ]"
                           :style="{
-                            top: getBlockTop(item, slot) + 'px',
+                            top: getBlockTop(item, slot.start) + 'px',
                             height: getBlockHeight(item) + 'px',
                             width: 'calc(100% - 0.5rem)',
+                            zIndex: 10,
                           }"
                         >
+                          <!-- MODE BADGE -->
+                          <span
+                            v-if="item.schedule_type"
+                            :class="[
+                              'absolute top-2 right-2 w-auto h-4 px-1 rounded-full text-[10px] font-bold flex items-center justify-center text-white',
+                              item.schedule_type === 'face to face'
+                                ? 'bg-orange-500'
+                                : '',
+                              item.schedule_type === 'online'
+                                ? 'bg-purple-500'
+                                : '',
+                            ]"
+                          >
+                            {{
+                              item.schedule_type === "face to face"
+                                ? "F2F"
+                                : "Online"
+                            }}
+                          </span>
                           <div class="p-2 leading-snug truncate">
                             <p class="font-semibold truncate">
                               {{ item.course_code }}
@@ -399,11 +427,11 @@
                               {{ item.set_name }}
                             </p>
                             <button
-                              v-if="item.conflict"
-                              @click="openConflictModal(item)"
-                              class="mt-2 w-full text-center px-2 py-1 text-[10px] rounded bg-red-100 text-red-600 hover:bg-red-200 transition"
+                              v-if="hasRoomConflict(item)"
+                              @click.stop="openConflictModal(item)"
+                              class="mt-1 w-full text-[10px] bg-red-100 text-red-600 rounded"
                             >
-                              ⚠ View Conflict
+                              ⚠ View
                             </button>
                           </div>
                         </div>
@@ -463,6 +491,84 @@
           <div class="text-xs text-gray-500 mt-1">
             Please wait while we finalize your data.
           </div>
+        </div>
+      </div>
+    </div>
+    <div
+      v-if="conflictModalVisible"
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50"
+    >
+      <div
+        class="bg-white rounded-xl shadow-lg w-full max-w-lg relative max-h-[80vh] overflow-y-auto p-6"
+      >
+        <!-- TODO  Header -->
+        <div class="flex justify-between items-center border-b pb-3 mb-4">
+          <div class="flex gap-1">
+            <icon
+              name="exclamation-circle"
+              class="text-red-900 w-7 p-1 rounded-full bg-red-200"
+            />
+            <h3 class="text-lg font-semibold text-gray-800">
+              Schedule Conflicts
+            </h3>
+          </div>
+
+          <button
+            @click="closeConflictModal"
+            class="text-gray-400 hover:text-gray-600 transition"
+          >
+            ✕
+          </button>
+        </div>
+
+        <!-- TODO  Conflicts List -->
+        <div class="space-y-3">
+          <div class="px-4 py-3 rounded-xl bg-red-50 text-sm text-red-900">
+            Please select another shedule.
+          </div>
+          <div
+            v-for="conflict in conflictRecords"
+            :key="conflict.id"
+            class="p-3 rounded-md shadow-sm space-y-2"
+          >
+            <p class="text-sm text-gray-800">
+              <span class="font-semibold">Faculty:</span>
+              {{ conflict.faculty_name }}
+            </p>
+            <p class="text-sm text-gray-800">
+              <span class="font-semibold">Set and Section:</span>
+              {{ conflict.set_name }}
+            </p>
+            <p class="text-sm text-gray-800">
+              <span class="font-semibold">Course:</span>
+              {{ conflict.course_code }}
+            </p>
+            <p class="text-sm text-gray-800">
+              <span class="font-semibold">Room:</span> {{ conflict.room_name }}
+            </p>
+            <p class="text-sm text-gray-800">
+              <span class="font-semibold">Day:</span> {{ conflict.day }}
+            </p>
+            <p class="text-sm text-gray-800">
+              <span class="font-semibold">Time:</span>
+              {{ formatTime(conflict.start_hour) }} -
+              {{ formatTime(conflict.start_hour + conflict.duration) }}
+            </p>
+
+            <p class="text-sm text-gray-800" v-if="conflict.reason">
+              <span class="font-semibold">Reason:</span> {{ conflict.reason }}
+            </p>
+          </div>
+        </div>
+
+        <!-- TODO  Footer -->
+        <div class="flex justify-end mt-5">
+          <button
+            @click="closeConflictModal"
+            class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition text-sm"
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>
@@ -542,7 +648,7 @@ export default {
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
 
       // 8 AM to 5 PM
-      timeSlots: Array.from({ length: 12 }, (_, i) => ({
+      timeSlots: Array.from({ length: 13 }, (_, i) => ({
         start: 8 + i,
         end: 9 + i,
       })),
@@ -557,6 +663,7 @@ export default {
 
       schoolYears: [],
       appearSave: false,
+      conflictModalVisible: false,
     };
   },
 
@@ -704,17 +811,112 @@ export default {
       this.showFacultyTable = true;
       this.currentPage = 1;
     },
+    highlightRow(item) {
+      this.highlightedRecordId = item.id || item.tempId;
+      // optional: scroll to the row
+      this.$nextTick(() => {
+        const el = document.getElementById(`row-${this.highlightedRecordId}`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    },
 
+    // Normalize hour to 24h format
     normalizeHour(hour) {
       hour = Number(hour);
       if (Number.isNaN(hour)) return hour;
       return hour <= 7 ? hour + 12 : hour;
     },
 
-    isStartingSlot(item, slot) {
-      const start = this.normalizeHour(item.start_hour);
-      return start >= slot.start && start < slot.end;
+    // Get all conflicting records for a given schedule item
+    getConflictingRecords(record) {
+      const allSchedules = this.schedule || [];
+      const recordStart = this.normalizeHour(record.start_hour);
+      const recordEnd = recordStart + Number(record.duration);
+
+      return allSchedules
+        .map((r) => {
+          const rId = r.id?.toString() || r.tempId;
+          const recId = record.id?.toString() || record.tempId;
+
+          // Skip the same record
+          if (r.faculty_id === record.faculty_id && rId === recId) return null;
+
+          // Must be on the same day
+          if (r.day !== record.day) return null;
+
+          // Check for time overlap
+          const rStart = this.normalizeHour(r.start_hour);
+          const rEnd = rStart + Number(r.duration);
+          if (Math.max(rStart, recordStart) >= Math.min(rEnd, recordEnd))
+            return null;
+
+          // Determine conflict reasons
+          let reason = [];
+          if (r.class_id && record.class_id && r.class_id === record.class_id)
+            reason.push("Same class section in the same Day and Time");
+          if (
+            record.schedule_type === "face to face" &&
+            r.schedule_type === "face to face" &&
+            r.room_id === record.room_id
+          )
+            reason.push("Same Room");
+          if (
+            r.faculty_id === record.faculty_id &&
+            (r.mode || "").toLowerCase() === (record.mode || "").toLowerCase()
+          )
+            reason.push("Same Faculty + Same Mode");
+
+          if (!reason.length) return null;
+
+          return { ...r, reason: reason.join(", ") };
+        })
+        .filter(Boolean);
     },
+
+    // Check if a record has any room/faculty conflicts
+    hasRoomConflict(record) {
+      return this.getConflictingRecords(record).length > 0;
+    },
+
+    // Open the conflict modal for a record
+    openConflictModal(record) {
+      const conflicts = this.getConflictingRecords(record);
+
+      // Only show conflicts with OTHER instructors/records
+      const otherConflicts = conflicts.filter(
+        (r) =>
+          r.faculty_name !== record.faculty_name ||
+          (r.id?.toString() || r.tempId) !==
+            (record.id?.toString() || record.tempId),
+      );
+
+      if (!otherConflicts.length) return;
+
+      this.conflictRecords = otherConflicts;
+      this.conflictModalVisible = true;
+    },
+
+    closeConflictModal() {
+      this.conflictModalVisible = false;
+      this.conflictRecords = [];
+    },
+
+    isStartingSlot(item, slot) {
+      return item.start_hour >= slot.start && item.start_hour < slot.end;
+    },
+    getBlockTop(item, slotStart) {
+      if (!item || item.start_hour == null) return 0;
+
+      const start = this.normalizeHour(Number(item.start_hour));
+      return (start - slotStart) * this.timeSlotHeight;
+    },
+
+    getBlockHeight(item) {
+      if (!item || !item.duration) return this.timeSlotHeight;
+
+      return Number(item.duration) * this.timeSlotHeight - 1;
+    },
+
     checkConflicts() {
       const conflicts = [];
       const allSchedules = this.schedule;
@@ -781,16 +983,6 @@ export default {
         return end > slot.start && start < slot.end;
       });
     },
-    getBlockTop(item, slot) {
-      const itemStart = this.normalizeHour(item.start_hour);
-      const slotStart = slot.start;
-
-      const offsetHours = itemStart - slotStart;
-      return offsetHours * this.timeSlotHeight;
-    },
-    getBlockHeight(item) {
-      return Math.max(1, Number(item.duration)) * this.timeSlotHeight - 1;
-    },
 
     getTypeColor(room_type) {
       if (!room_type) return "bg-green-100 border-green-400";
@@ -810,15 +1002,6 @@ export default {
 
     changePage(page) {
       if (page >= 1 && page <= this.totalPages) this.currentPage = page;
-    },
-
-    openConflictModal(item) {
-      this.selectedConflict = item;
-      this.showConflictModal = true;
-    },
-    closeConflictModal() {
-      this.showConflictModal = false;
-      this.selectedConflict = {};
     },
 
     async fetchUser() {
