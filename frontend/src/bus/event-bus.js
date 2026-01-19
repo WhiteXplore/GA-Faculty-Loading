@@ -11,7 +11,7 @@ export const eventBus = reactive({
       () => this.value,
       (newVal) => {
         if (newVal != null) callback(newVal);
-      }
+      },
     );
   },
 });

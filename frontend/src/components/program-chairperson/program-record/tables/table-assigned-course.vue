@@ -139,7 +139,7 @@
                       <tr
                         v-for="course in getCoursesByYear(
                           selectedGroup.courses,
-                          year
+                          year,
                         )"
                         :key="course.id"
                         class="border-b hover:bg-gray-50 transition"
@@ -285,17 +285,17 @@ export default {
         process.env.VUE_APP_API_BASE_URL + "/auth/me",
         {
           withCredentials: true,
-        }
+        },
       );
       this.user = data;
     },
     async loadUserProgram() {
       if (this.user?.role !== "Program Chairperson") return;
       const { data } = await axios.get(
-        process.env.VUE_APP_API_BASE_URL + "/programs/get-programs"
+        process.env.VUE_APP_API_BASE_URL + "/programs/get-programs",
       );
       this.userProgram = data.find(
-        (p) => String(p.program_id) === String(this.user.program_id)
+        (p) => String(p.program_id) === String(this.user.program_id),
       );
     },
     async loadAssignedCourses() {
@@ -316,7 +316,7 @@ export default {
     },
     async loadSchoolYears() {
       const { data } = await axios.get(
-        process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
+        process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years",
       );
       const active = data.find((s) => s.is_active);
       if (active) this.activeSchoolYearId = active.school_year_id;

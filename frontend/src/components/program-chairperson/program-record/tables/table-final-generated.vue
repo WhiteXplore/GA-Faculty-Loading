@@ -339,6 +339,7 @@
                   v-for="slot in timeSlots"
                   :key="slot.start + slot.end"
                   class="odd:bg-white even:bg-gray-50"
+                  :style="{ height: timeSlotHeight + 'px' }"
                 >
                   <td
                     class="px-4 py-4 border border-gray-200 font-medium text-center whitespace-nowrap"
@@ -348,7 +349,8 @@
                   <td
                     v-for="day in days"
                     :key="day"
-                    class="relative border border-gray-200 text-left align-top h-[60px] p-0"
+                    class="relative border border-gray-200 text-left align-top p-0 overflow-visible"
+                    :style="{ height: timeSlotHeight + 'px' }"
                   >
                     <template
                       v-for="item in getScheduleForCell(slot, day, instructor)"
@@ -365,10 +367,9 @@
                         ]"
                         @click="toggleSwapSelection(item)"
                         :style="{
-                          top: getBlockTop() + 'px',
+                          top: getBlockTop(item, slot.start) + 'px',
                           height: getBlockHeight(item) + 'px',
                           width: 'calc(100% - 0.5rem)',
-                          cursor: 'pointer',
                         }"
                       >
                         <div class="p-2 leading-snug truncate">
@@ -416,7 +417,8 @@ import icon from "@/assets/icon.vue";
 import { useFetchDataStore } from "@/store/fetch-data-store";
 import editSchedule from "../modals/edit-schedule.vue";
 import { toast } from "vue3-toastify";
-
+import { eventBus } from "@/bus/event-bus";
+import { mapState } from "pinia";
 export default {
   name: "FacultySchedule",
   components: { icon, editSchedule },
@@ -436,8 +438,8 @@ export default {
       confirmSaveModal: false,
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
 
-      // 8 AM to 5 PM
-      timeSlots: Array.from({ length: 12 }, (_, i) => ({
+      // 8 AM to 8 PM
+      timeSlots: Array.from({ length: 13 }, (_, i) => ({
         start: 8 + i,
         end: 9 + i,
       })),
@@ -458,10 +460,14 @@ export default {
       compareInstructorB: "",
       showCompareView: false,
       showCompareSelection: false,
+      activeSchoolYear: null,
+      stopEventBus: null,
     };
   },
 
   computed: {
+    ...mapState(useFetchDataStore, ["activeYear"]),
+
     coursesList() {
       const store = useFetchDataStore();
       return store.courses || [];
@@ -476,15 +482,21 @@ export default {
 
           schedules.forEach((sched) => {
             const course = this.coursesList.find(
-              (c) => c.course_code === sched.course_code
+              (c) => c.course_code === sched.course_code,
             );
-            if (course) {
-              // Add units per schedule slot
-              if (sched.type === "Lecture") {
-                totalLecture += Number(course.course_lec || 0);
-              } else if (sched.type === "Laboratory") {
-                totalLab += Number(course.course_lab || 0);
-              }
+            if (!course) return;
+
+            const duration = Number(sched.duration || 0); // e.g., 1.5
+            if (sched.type === "Lecture") {
+              // Standard lecture assumed 3 hours
+              const unitsPerSlot =
+                (duration / 3) * Number(course.course_lec || 0);
+              totalLecture += unitsPerSlot;
+            } else if (sched.type === "Laboratory") {
+              // Standard lab assumed 3 hours
+              const unitsPerSlot =
+                (duration / 3) * Number(course.course_lab || 0);
+              totalLab += unitsPerSlot;
             }
           });
 
@@ -493,7 +505,7 @@ export default {
             labUnits: totalLab,
             totalUnits: totalLecture + totalLab,
           };
-        }
+        },
       );
 
       return result;
@@ -503,7 +515,7 @@ export default {
       const store = useFetchDataStore();
       const institutes = store.institutes || [];
       return Array.from(
-        new Set(this.finalSchedules.map((s) => s.institute_id))
+        new Set(this.finalSchedules.map((s) => s.institute_id)),
       ).map((id) => {
         const inst = institutes.find((i) => i.institute_id === id);
         return inst
@@ -522,10 +534,10 @@ export default {
             .filter((s) =>
               this.selectedInstituteId
                 ? String(s.institute_id) === String(this.selectedInstituteId)
-                : true
+                : true,
             )
-            .map((s) => s.program_id)
-        )
+            .map((s) => s.program_id),
+        ),
       );
 
       return programIds.map((id) => {
@@ -543,7 +555,7 @@ export default {
       return activeYears.reduce((latest, current) =>
         new Date(current.updated_at) > new Date(latest.updated_at)
           ? current
-          : latest
+          : latest,
       );
     },
     startIndex() {
@@ -552,12 +564,12 @@ export default {
     endIndex() {
       return Math.min(
         this.currentPage * this.itemsPerPage,
-        Object.keys(this.filteredGroupedSchedule).length
+        Object.keys(this.filteredGroupedSchedule).length,
       );
     },
     totalPages() {
       return Math.ceil(
-        Object.keys(this.filteredGroupedSchedule).length / this.itemsPerPage
+        Object.keys(this.filteredGroupedSchedule).length / this.itemsPerPage,
       );
     },
     pageNumbers() {
@@ -574,8 +586,8 @@ export default {
       const query = this.searchQuery.toLowerCase();
       return Object.fromEntries(
         Object.entries(this.filteredGroupedSchedule).filter(([name]) =>
-          name.toLowerCase().includes(query)
-        )
+          name.toLowerCase().includes(query),
+        ),
       );
     },
   },
@@ -619,7 +631,7 @@ export default {
     openEditInstructorModal(instructor) {
       // Send fresh copies of schedules to modal
       this.editInstructorData = (this.groupedSchedule[instructor] || []).map(
-        (r) => ({ ...r })
+        (r) => ({ ...r }),
       );
       this.showEditModal = true;
     },
@@ -646,7 +658,7 @@ export default {
       // If modal is open, update its data with fresh copies
       if (this.showEditModal) {
         const instructorsInModal = Array.from(
-          new Set(this.editInstructorData.map((item) => item.faculty_name))
+          new Set(this.editInstructorData.map((item) => item.faculty_name)),
         );
 
         this.$nextTick(() => {
@@ -660,7 +672,7 @@ export default {
     },
     handleDeletedSchedule(deletedId) {
       this.finalSchedules = this.finalSchedules.filter(
-        (s) => s.id !== deletedId
+        (s) => s.id !== deletedId,
       );
       this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
       this.filterSchedules();
@@ -703,12 +715,12 @@ export default {
             s.id !== course.id &&
             s.course_code === course.course_code &&
             s.day === course.day &&
-            isOverlap(s, course)
+            isOverlap(s, course),
         );
 
       if (hasSameCourseConflict(courseA) || hasSameCourseConflict(courseB)) {
         toast.error(
-          "Cannot swap: a schedule already exists for the same course at the same time and day."
+          "Cannot swap: a schedule already exists for the same course at the same time and day.",
         );
         return;
       }
@@ -744,7 +756,7 @@ export default {
         hasConflict(courseBWithAFaculty, [courseA.id, courseB.id])
       ) {
         toast.error(
-          "Swap cannot be done due to room or faculty conflict with existing schedules."
+          "Swap cannot be done due to room or faculty conflict with existing schedules.",
         );
         return;
       }
@@ -779,7 +791,7 @@ export default {
       // 🔹 Update edit modal data if it’s open
       if (this.showEditModal) {
         const instructorsInModal = Array.from(
-          new Set(this.editInstructorData.map((item) => item.faculty_name))
+          new Set(this.editInstructorData.map((item) => item.faculty_name)),
         );
 
         // Refresh modal data using $nextTick to ensure reactivity
@@ -800,14 +812,14 @@ export default {
             {
               faculty_id: courseA.faculty_id,
               faculty_name: courseA.faculty_name,
-            }
+            },
           ),
           axios.patch(
             `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${courseB.id}`,
             {
               faculty_id: courseB.faculty_id,
               faculty_name: courseB.faculty_name,
-            }
+            },
           ),
         ]);
 
@@ -823,7 +835,7 @@ export default {
         });
 
         toast.success(
-          `Courses swapped: ${courseA.course_code} ↔ ${courseB.course_code}`
+          `Courses swapped: ${courseA.course_code} ↔ ${courseB.course_code}`,
         );
       } catch (error) {
         toast.error("Failed to update swap in the database.");
@@ -846,18 +858,35 @@ export default {
     normalizeHour(hour) {
       hour = Number(hour);
       if (Number.isNaN(hour)) return hour;
+      // If you are using 1–7 as PM and 8–24 as actual hours
       return hour <= 7 ? hour + 12 : hour;
     },
 
+    formatTime(h) {
+      if (h == null) return "";
+      const hour = Math.floor(h); // integer hour
+      const minutes = Math.round((h - hour) * 60); // decimal -> minutes
+      const period = hour >= 12 ? "PM" : "AM";
+      const hour12 = hour % 12 || 12;
+      const minutesStr = minutes.toString().padStart(2, "0");
+      return `${hour12}:${minutesStr} ${period}`;
+    },
     isStartingSlot(item, slot) {
-      return this.normalizeHour(item.start_hour) === slot.start;
+      return item.start_hour >= slot.start && item.start_hour < slot.end;
+    },
+    getBlockTop(item, slotStart) {
+      if (!item || item.start_hour == null) return 0;
+
+      const start = this.normalizeHour(Number(item.start_hour));
+      return (start - slotStart) * this.timeSlotHeight;
     },
 
-    formatTime(hour) {
-      const h = hour % 12 === 0 ? 12 : hour % 12;
-      const period = hour >= 12 ? "PM" : "AM";
-      return `${h}:00 ${period}`;
+    getBlockHeight(item) {
+      if (!item || !item.duration) return this.timeSlotHeight;
+
+      return Number(item.duration) * this.timeSlotHeight - 1;
     },
+
     filterSchedules() {
       let filtered = { ...this.groupedSchedule };
 
@@ -865,9 +894,10 @@ export default {
         filtered = Object.fromEntries(
           Object.entries(filtered).filter(([, schedules]) =>
             schedules.some(
-              (s) => String(s.institute_id) === String(this.selectedInstituteId)
-            )
-          )
+              (s) =>
+                String(s.institute_id) === String(this.selectedInstituteId),
+            ),
+          ),
         );
       }
 
@@ -875,9 +905,9 @@ export default {
         filtered = Object.fromEntries(
           Object.entries(filtered).filter(([, schedules]) =>
             schedules.some(
-              (s) => String(s.program_id) === String(this.selectedProgramId)
-            )
-          )
+              (s) => String(s.program_id) === String(this.selectedProgramId),
+            ),
+          ),
         );
       }
 
@@ -893,12 +923,6 @@ export default {
         const end = start + Number(item.duration);
         return end > slot.start && start < slot.end;
       });
-    },
-    getBlockTop() {
-      return 0;
-    },
-    getBlockHeight(item) {
-      return Math.max(1, Number(item.duration)) * this.timeSlotHeight - 1;
     },
 
     getTypeColor(room_type) {
@@ -934,7 +958,7 @@ export default {
       try {
         const res = await axios.get(
           `${process.env.VUE_APP_API_BASE_URL}/auth/me`,
-          { withCredentials: true }
+          { withCredentials: true },
         );
         this.user = res.data || {};
       } catch {
@@ -950,18 +974,40 @@ export default {
         const { data } = await axios.get(
           process.env.VUE_APP_API_BASE_URL +
             "/final-generated-class-schedule/get-all-final-schedules",
-          { withCredentials: true }
+          { withCredentials: true },
         );
 
         let schedules = data || [];
+
+        // Filter for Program Chairperson
         if (this.user.role === "Program Chairperson") {
           schedules = schedules.filter(
             (s) =>
               s.institute_id === this.user.institute_id &&
-              s.program_id === this.user.program_id
+              s.program_id === this.user.program_id,
           );
         }
 
+        // Inside fetchFinalSchedules()
+        if (this.activeSchoolYear) {
+          const startYear = String(this.activeSchoolYear.start_year).trim();
+          const endYear = String(this.activeSchoolYear.end_year).trim();
+          const semester = String(this.activeSchoolYear.semester).trim(); // NEW
+
+          schedules = schedules.filter((s) => {
+            if (!s.school_year || !s.semester) return false; // safety check
+            const [sStart, sEnd] = s.school_year
+              .split("-")
+              .map((v) => v.trim());
+            return (
+              sStart === startYear &&
+              sEnd === endYear &&
+              String(s.semester).trim() === semester
+            );
+          });
+        }
+
+        // Save final schedules and group by instructor
         this.finalSchedules = schedules;
         this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
         this.filteredGroupedSchedule = { ...this.groupedSchedule };
@@ -987,7 +1033,7 @@ export default {
     async fetchSchoolYears() {
       try {
         const res = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years",
         );
         this.schoolYears = res.data.map((y) => ({ ...y }));
       } catch (err) {
@@ -1000,6 +1046,21 @@ export default {
     await this.loadFetchData();
     await this.fetchSchoolYears();
     await this.fetchFinalSchedules();
+
+    // Listen for active school year changes
+    this.stopEventBus = eventBus.on(async (newYear) => {
+      if (!newYear) return;
+
+      // newYear is expected to be an object: { start_year, end_year, semester, ... }
+      this.activeSchoolYear = newYear;
+      this.currentPage = 1;
+
+      // Refetch and filter schedules automatically
+      await this.fetchFinalSchedules();
+    });
+  },
+  beforeUnmount() {
+    this.stopEventBus?.(); // clean up event listener
   },
 };
 </script>

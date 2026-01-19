@@ -520,7 +520,6 @@ import axios from "axios";
 import icon from "@/assets/icon.vue";
 import { useFetchDataStore } from "@/store/fetch-data-store";
 import { toast } from "vue3-toastify";
-// import sample_schedule from "./sample_schedule.json";
 export default {
   name: "FacultySchedule",
   components: { icon },
@@ -859,24 +858,7 @@ export default {
       }
     },
 
-    //     async fetchSchedule() {
-    //   this.loading = true;
-
-    //   try {
-    //     // JSON content is already available
-    //     const allSchedules = sample_schedule.scheduled_meetings || [];
-
-    //     this.schedule = allSchedules;
-    //     this.groupedSchedule = this.groupByInstructor(this.schedule);
-    //     this.filteredGroupedSchedule = this.groupedSchedule;
-    //   } catch (err) {
-    //     this.error = "Failed to load schedule.";
-    //   } finally {
-    //     this.loading = false;
-    //   }
-    // },
-
-    groupByInstructor(schedules) {
+    async groupByInstructor(schedules) {
       return schedules.reduce((acc, s) => {
         const instructor = s.faculty_name || "Unknown Faculty";
         if (!acc[instructor]) acc[instructor] = [];

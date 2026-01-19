@@ -40,7 +40,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/class/get-classes"
+          process.env.VUE_APP_API_BASE_URL + "/class/get-classes",
         );
         this.sections = data;
       } catch (err) {
@@ -55,7 +55,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       try {
         const { data } = await axios.get(
           process.env.VUE_APP_API_BASE_URL +
-            "/final-generated-class-schedule/get-all-final-schedules"
+            "/final-generated-class-schedule/get-all-final-schedules",
         );
         this.final_schedules = data;
       } catch (err) {
@@ -69,7 +69,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/instructors/get-instructors"
+          process.env.VUE_APP_API_BASE_URL + "/instructors/get-instructors",
         );
         this.instructors = data;
       } catch (err) {
@@ -84,7 +84,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/courses/get-courses"
+          process.env.VUE_APP_API_BASE_URL + "/courses/get-courses",
         );
         this.courses = data;
       } catch (err) {
@@ -99,7 +99,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/curriculums/get-curriculums"
+          process.env.VUE_APP_API_BASE_URL + "/curriculums/get-curriculums",
         );
         this.curriculums = data;
       } catch (err) {
@@ -114,7 +114,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/programs/get-programs"
+          process.env.VUE_APP_API_BASE_URL + "/programs/get-programs",
         );
         this.programs = data;
       } catch (err) {
@@ -129,7 +129,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/sections/get-sections"
+          process.env.VUE_APP_API_BASE_URL + "/sections/get-sections",
         );
         this.sections = data;
       } catch (err) {
@@ -144,7 +144,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/rooms/get-rooms"
+          process.env.VUE_APP_API_BASE_URL + "/rooms/get-rooms",
         );
         this.rooms = data;
       } catch (err) {
@@ -159,7 +159,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/time/get-time"
+          process.env.VUE_APP_API_BASE_URL + "/time/get-time",
         );
         this.time = data;
       } catch (err) {
@@ -175,7 +175,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       try {
         const { data } = await axios.get(
           process.env.VUE_APP_API_BASE_URL +
-            "/class-schedules/get-class-schedules"
+            "/class-schedules/get-class-schedules",
         );
         this.schedulers = data;
       } catch (err) {
@@ -190,7 +190,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/projected/get-projected"
+          process.env.VUE_APP_API_BASE_URL + "/projected/get-projected",
         );
         this.projects = data;
       } catch (err) {
@@ -205,7 +205,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/institute/get-institutes"
+          process.env.VUE_APP_API_BASE_URL + "/institute/get-institutes",
         );
         this.institutes = data;
       } catch (err) {
@@ -221,7 +221,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       try {
         const { data } = await axios.get(
           process.env.VUE_APP_API_BASE_URL +
-            "/courses/get-report-curriculum-offer"
+            "/courses/get-report-curriculum-offer",
         );
         this.detailedReportCurriculum = data;
       } catch (err) {
@@ -236,7 +236,8 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/calendar/get-all-calendar-events"
+          process.env.VUE_APP_API_BASE_URL +
+            "/calendar/get-all-calendar-events",
         );
         this.calendarEvents = data;
       } catch (err) {
@@ -251,7 +252,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/auth/all-raw"
+          process.env.VUE_APP_API_BASE_URL + "/auth/all-raw",
         );
         this.users = data;
       } catch (err) {
@@ -266,7 +267,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/users/get-users"
+          process.env.VUE_APP_API_BASE_URL + "/users/get-users",
         );
         this.rawusers = data;
       } catch (err) {
@@ -281,7 +282,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/assign-class/get-assign-class"
+          process.env.VUE_APP_API_BASE_URL + "/assign-class/get-assign-class",
         );
         this.assignClass = data;
       } catch (err) {
@@ -296,7 +297,7 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.error = null;
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/instructors/raw"
+          process.env.VUE_APP_API_BASE_URL + "/instructors/raw",
         );
         this.faculty = data;
       } catch (err) {
@@ -310,7 +311,7 @@ export const useFetchDataStore = defineStore("fetchData", {
     async fetchActiveYears() {
       try {
         const { data } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/school-year/latest-active"
+          process.env.VUE_APP_API_BASE_URL + "/school-year/latest-active",
         );
 
         // Ensure array
@@ -337,25 +338,6 @@ export const useFetchDataStore = defineStore("fetchData", {
         this.activeYear = null;
         this.lastUpdatedAt = null;
         return false;
-      }
-    },
-
-    // 🔹 Start polling active years every interval
-    startActiveYearPolling(intervalMs = 10000) {
-      if (this.activeYearInterval) clearInterval(this.activeYearInterval);
-
-      this.activeYearInterval = setInterval(async () => {
-        const changed = await this.fetchActiveYears();
-        if (changed) {
-          console.log("✅ Active year changed:", this.activeYear);
-        }
-      }, intervalMs);
-    },
-
-    stopActiveYearPolling() {
-      if (this.activeYearInterval) {
-        clearInterval(this.activeYearInterval);
-        this.activeYearInterval = null;
       }
     },
   },

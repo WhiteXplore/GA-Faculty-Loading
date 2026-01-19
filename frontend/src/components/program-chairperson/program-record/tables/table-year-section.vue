@@ -5,20 +5,6 @@
       <div class="text-[13px] text-text mt-4">Pages / Year & Section</div>
 
       <div class="flex items-center gap-2">
-        <div
-          @click="refreshTable"
-          class="flex items-center gap-2 px-3 py-2 bg-blue-800 text-white rounded-xl shadow-sm hover:shadow-md border border-blue-800 hover:bg-white hover:text-blue-800 transition-all duration-300 cursor-pointer"
-        >
-          <div
-            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-white transition-colors duration-300"
-          >
-            <icon
-              :name="'refresh'"
-              class="w-5 h-5 text-blue-800 transition-colors duration-300 group-hover:text-blue-600"
-            />
-          </div>
-          <span class="font-medium text-sm">Refresh</span>
-        </div>
         <button
           @click="openYearSectionModal"
           class="flex items-center gap-2 px-4 py-2 text-green-600 bg-white border border-green-500 rounded-xl shadow-sm hover:bg-green-600 hover:text-white transition-all duration-300"
@@ -43,13 +29,13 @@
         <h2 class="text-lg font-bold text-gray-800">
           {{ userProgram.program_name }}
         </h2>
-        <p class="text-sm text-gray-600" v-if="userProgram.institute">
+        <p class="text-sm text-gray-600 mb-2" v-if="userProgram.institute">
           Institute: {{ userProgram.institute.institute_name }}
         </p>
 
         <!-- SECTIONS TABLE -->
         <div v-if="filteredAndSearchedClasses.length > 0">
-          <div class="overflow-x-auto border p-3 rounded-tr-xl bg-white">
+          <div class="overflow-x-auto border p-3 rounded-xl bg-white">
             <!-- Controls -->
             <div
               class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
@@ -131,6 +117,7 @@
                       <th class="px-4 py-3 text-left w-[15%]">Section Name</th>
                       <th class="px-4 py-3 text-center w-[18%]">Class Size</th>
                       <th class="px-4 py-3 text-center w-[18%]">School Year</th>
+                      <th class="px-4 py-3 text-center w-[18%]">Semester</th>
                       <th class="px-4 py-3 text-center w-[20%]">Action</th>
                     </tr>
                   </thead>
@@ -157,6 +144,9 @@
                       </td>
                       <td class="px-4 py-3 text-center">
                         {{ cls.schoolYear?.school_year_name }}
+                      </td>
+                      <td class="px-4 py-3 text-center">
+                        {{ formatSemester(cls.schoolYear?.semester) }}
                       </td>
                       <td class="px-4 py-3 flex justify-center gap-2">
                         <!-- Delete Button -->
@@ -223,7 +213,8 @@
         <!-- Empty State -->
         <div v-else class="bg-white border p-8 rounded-xl text-center">
           <p class="text-gray-600">
-            No sections created for {{ activeSchoolYearName }} yet.
+            No sections created for {{ activeSchoolYearName }} -
+            {{ formatSemester(activeSemesterYear) }} yet.
           </p>
         </div>
       </div>
@@ -298,7 +289,7 @@ import addYearSection from "@/components/program-chairperson/program-record/moda
 import axios from "axios";
 import { mapState } from "pinia";
 import { useFetchDataStore } from "@/store/fetch-data-store";
-
+import { eventBus } from "@/bus/event-bus";
 export default {
   name: "YearSectionManagement",
   components: { icon, addYearSection },
@@ -315,43 +306,56 @@ export default {
       showDeleteModal: false,
       deleteTargetId: null,
       loading: true,
+
+      stopEventBus: null,
+      activeSchoolYear: null,
     };
   },
   computed: {
     ...mapState(useFetchDataStore, ["activeYear"]),
 
-    activeSchoolYearId() {
-      return this.activeYear?.school_year_id || null;
-    },
-
-    activeSchoolYearName() {
-      return this.activeYear?.school_year_name || "Current School Year";
-    },
-
     filteredClasses() {
-      if (!this.activeSchoolYearId) return [];
+      const active = this.activeSchoolYear || this.activeYear;
+      if (!active?.school_year_id) return [];
 
-      if (this.user?.role === "Admin") {
-        return this.classes.filter(
-          (cls) =>
-            String(cls.school_year_id) === String(this.activeSchoolYearId)
-        );
-      }
+      let result = this.classes.filter(
+        (cls) => String(cls.school_year_id) === String(active.school_year_id),
+      );
 
+      // Admin → see all programs
+      if (this.user?.role === "Admin") return result;
+
+      // Program Chairperson → only their program
       if (this.userProgram) {
-        return this.classes.filter(
+        return result.filter(
           (cls) =>
-            String(cls.program_id) === String(this.userProgram.program_id) &&
-            String(cls.school_year_id) === String(this.activeSchoolYearId)
+            String(cls.program_id) === String(this.userProgram.program_id),
         );
       }
 
       return [];
     },
 
+    activeSchoolYearId() {
+      return (this.activeSchoolYear || this.activeYear)?.school_year_id || null;
+    },
+
+    activeSchoolYearName() {
+      return (
+        (this.activeSchoolYear || this.activeYear)?.school_year_name ||
+        "Current School Year"
+      );
+    },
+    activeSemesterYear() {
+      return (
+        (this.activeSchoolYear || this.activeYear)?.semester ||
+        "Current semester Year"
+      );
+    },
+
     filteredAndSearchedClasses() {
       const filtered = this.filteredClasses.filter((cls) =>
-        cls.set_name.toLowerCase().includes(this.searchQuery.toLowerCase())
+        cls.set_name.toLowerCase().includes(this.searchQuery.toLowerCase()),
       );
 
       // Custom sort: year priority then section letter
@@ -369,7 +373,7 @@ export default {
 
     totalPages() {
       return Math.ceil(
-        this.filteredAndSearchedClasses.length / this.itemsPerPage
+        this.filteredAndSearchedClasses.length / this.itemsPerPage,
       );
     },
 
@@ -382,7 +386,7 @@ export default {
     endIndex() {
       return Math.min(
         this.startIndex + this.itemsPerPage - 1,
-        this.filteredAndSearchedClasses.length
+        this.filteredAndSearchedClasses.length,
       );
     },
 
@@ -390,7 +394,7 @@ export default {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       return this.filteredAndSearchedClasses.slice(
         start,
-        start + this.itemsPerPage
+        start + this.itemsPerPage,
       );
     },
 
@@ -414,30 +418,15 @@ export default {
     },
   },
   methods: {
+    formatSemester(value) {
+      if (value === 1 || value === "1") return "First Semester";
+      if (value === 2 || value === "2") return "Second Semester";
+      return value; // fallback if unexpected
+    },
     getYearPriority(setName) {
       const match = setName.match(/^(\d+)(st|nd|rd|th) Year/i);
       if (match) return parseInt(match[1], 10);
       return 99;
-    },
-
-    async refreshTable() {
-      const store = useFetchDataStore();
-      this.loading = true;
-
-      try {
-        await this.fetchUser();
-        await store.fetchActiveYears();
-        await this.loadClasses();
-        await this.loadPrograms();
-        await this.loadUserProgram();
-        this.currentPage = 1;
-        toast.success("Table refreshed successfully");
-      } catch (error) {
-        console.error("Error refreshing table:", error);
-        toast.error("Failed to refresh table");
-      } finally {
-        this.loading = false;
-      }
     },
 
     async fetchUser() {
@@ -445,14 +434,14 @@ export default {
         process.env.VUE_APP_API_BASE_URL + "/auth/me",
         {
           withCredentials: true,
-        }
+        },
       );
       this.user = data;
     },
 
     async loadPrograms() {
       const { data } = await axios.get(
-        process.env.VUE_APP_API_BASE_URL + "/programs/get-programs"
+        process.env.VUE_APP_API_BASE_URL + "/programs/get-programs",
       );
       this.programs = data;
     },
@@ -460,14 +449,14 @@ export default {
     async loadUserProgram() {
       if (this.user?.role === "Program Chairperson") {
         this.userProgram = this.programs.find(
-          (p) => String(p.program_id) === String(this.user.program_id)
+          (p) => String(p.program_id) === String(this.user.program_id),
         );
       }
     },
 
     async loadClasses() {
       const { data } = await axios.get(
-        process.env.VUE_APP_API_BASE_URL + "/class/get-classes"
+        process.env.VUE_APP_API_BASE_URL + "/class/get-classes",
       );
       this.classes = data;
     },
@@ -484,7 +473,7 @@ export default {
         await axios.delete(
           process.env.VUE_APP_API_BASE_URL +
             `/class/delete-id/${this.deleteTargetId}`,
-          { withCredentials: true }
+          { withCredentials: true },
         );
         await this.loadClasses();
         toast.success("Record deleted successfully");
@@ -510,16 +499,6 @@ export default {
     },
   },
 
-  watch: {
-    activeYear: {
-      async handler() {
-        this.currentPage = 1;
-        await this.loadClasses();
-      },
-      immediate: true,
-    },
-  },
-
   async mounted() {
     await this.fetchUser();
     const store = useFetchDataStore();
@@ -528,6 +507,27 @@ export default {
     await this.loadPrograms();
     await this.loadUserProgram();
     this.loading = false;
+
+    // Listen to eventBus for new year
+    this.stopEventBus = eventBus.on(async (newYear) => {
+      if (!newYear) return;
+
+      // 1️⃣ Update local activeSchoolYear
+      this.activeSchoolYear = newYear;
+
+      // 2️⃣ Reset pagination
+      this.currentPage = 1;
+
+      // 3️⃣ Wait for reactivity
+      await this.$nextTick();
+
+      // 4️⃣ Reload table
+      await this.loadClasses();
+    });
+  },
+
+  beforeUnmount() {
+    this.stopEventBus?.();
   },
 };
 </script>

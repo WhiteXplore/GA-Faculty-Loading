@@ -1,4 +1,3 @@
-FOR SWAP
 <template>
   <div class="flex flex-col gap-3 h-[90vh]">
     <!-- TODO  Top Controls -->
@@ -295,11 +294,20 @@ FOR SWAP
           :key="instructor"
           class="bg-white rounded-xl border flex flex-col shadow-sm overflow-hidden"
         >
-          <!-- TODO  Header -->
+          <!-- Header -->
           <div
             class="flex justify-between items-center bg-defaultGreen text-white px-4 py-3 font-semibold text-sm rounded-t-xl"
           >
-            <span class="text-lg font-bold">{{ instructor }}</span>
+            <div class="flex flex-col">
+              <span class="text-lg font-bold">{{ instructor }}</span>
+
+              <div v-if="facultyTotalUnits[instructor]">
+                <p class="font-normal">
+                  Total Units:
+                  {{ facultyTotalUnits[instructor].totalUnits }}
+                </p>
+              </div>
+            </div>
 
             <button
               @click="openEditInstructorModal(instructor)"
@@ -309,7 +317,7 @@ FOR SWAP
             </button>
           </div>
 
-          <!-- TODO  Table wrapper -->
+          <!-- Table wrapper -->
           <div class="overflow-x-auto overflow-y-auto flex-1">
             <table class="w-full text-left border-collapse text-[11px]">
               <thead class="sticky top-0 bg-gray-100 z-10">
@@ -331,6 +339,7 @@ FOR SWAP
                   v-for="slot in timeSlots"
                   :key="slot.start + slot.end"
                   class="odd:bg-white even:bg-gray-50"
+                  :style="{ height: timeSlotHeight + 'px' }"
                 >
                   <td
                     class="px-4 py-4 border border-gray-200 font-medium text-center whitespace-nowrap"
@@ -340,7 +349,8 @@ FOR SWAP
                   <td
                     v-for="day in days"
                     :key="day"
-                    class="relative border border-gray-200 text-left align-top h-[60px] p-0"
+                    class="relative border border-gray-200 text-left align-top p-0 overflow-visible"
+                    :style="{ height: timeSlotHeight + 'px' }"
                   >
                     <template
                       v-for="item in getScheduleForCell(slot, day, instructor)"
@@ -357,10 +367,9 @@ FOR SWAP
                         ]"
                         @click="toggleSwapSelection(item)"
                         :style="{
-                          top: getBlockTop() + 'px',
+                          top: getBlockTop(item, slot.start) + 'px',
                           height: getBlockHeight(item) + 'px',
                           width: 'calc(100% - 0.5rem)',
-                          cursor: 'pointer',
                         }"
                       >
                         <div class="p-2 leading-snug truncate">
@@ -371,7 +380,7 @@ FOR SWAP
                             {{ item.room_name }}
                           </p>
                           <p class="text-gray-600 truncate">
-                            {{ item.class_id }}
+                            {{ item.set_name }}
                           </p>
                           <button
                             v-if="item.conflict"
@@ -398,6 +407,7 @@ FOR SWAP
     :instructorData="editInstructorData"
     @close="showEditModal = false"
     @saved="handleModalSaved"
+    @deleted="handleDeletedSchedule"
   />
 </template>
 
@@ -427,8 +437,8 @@ export default {
       confirmSaveModal: false,
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
 
-      // 8 AM to 5 PM
-      timeSlots: Array.from({ length: 12 }, (_, i) => ({
+      // 8 AM to 8 PM
+      timeSlots: Array.from({ length: 13 }, (_, i) => ({
         start: 8 + i,
         end: 9 + i,
       })),
@@ -453,11 +463,54 @@ export default {
   },
 
   computed: {
+    coursesList() {
+      const store = useFetchDataStore();
+      return store.courses || [];
+    }, // Total units per faculty
+    facultyTotalUnits() {
+      const result = {};
+
+      Object.entries(this.filteredGroupedSchedule).forEach(
+        ([faculty, schedules]) => {
+          let totalLecture = 0;
+          let totalLab = 0;
+
+          schedules.forEach((sched) => {
+            const course = this.coursesList.find(
+              (c) => c.course_code === sched.course_code,
+            );
+            if (!course) return;
+
+            const duration = Number(sched.duration || 0); // e.g., 1.5
+            if (sched.type === "Lecture") {
+              // Standard lecture assumed 3 hours
+              const unitsPerSlot =
+                (duration / 3) * Number(course.course_lec || 0);
+              totalLecture += unitsPerSlot;
+            } else if (sched.type === "Laboratory") {
+              // Standard lab assumed 3 hours
+              const unitsPerSlot =
+                (duration / 3) * Number(course.course_lab || 0);
+              totalLab += unitsPerSlot;
+            }
+          });
+
+          result[faculty] = {
+            lectureUnits: totalLecture,
+            labUnits: totalLab,
+            totalUnits: totalLecture + totalLab,
+          };
+        },
+      );
+
+      return result;
+    },
+
     uniqueInstitutes() {
       const store = useFetchDataStore();
       const institutes = store.institutes || [];
       return Array.from(
-        new Set(this.finalSchedules.map((s) => s.institute_id))
+        new Set(this.finalSchedules.map((s) => s.institute_id)),
       ).map((id) => {
         const inst = institutes.find((i) => i.institute_id === id);
         return inst
@@ -476,10 +529,10 @@ export default {
             .filter((s) =>
               this.selectedInstituteId
                 ? String(s.institute_id) === String(this.selectedInstituteId)
-                : true
+                : true,
             )
-            .map((s) => s.program_id)
-        )
+            .map((s) => s.program_id),
+        ),
       );
 
       return programIds.map((id) => {
@@ -497,7 +550,7 @@ export default {
       return activeYears.reduce((latest, current) =>
         new Date(current.updated_at) > new Date(latest.updated_at)
           ? current
-          : latest
+          : latest,
       );
     },
     startIndex() {
@@ -506,12 +559,12 @@ export default {
     endIndex() {
       return Math.min(
         this.currentPage * this.itemsPerPage,
-        Object.keys(this.filteredGroupedSchedule).length
+        Object.keys(this.filteredGroupedSchedule).length,
       );
     },
     totalPages() {
       return Math.ceil(
-        Object.keys(this.filteredGroupedSchedule).length / this.itemsPerPage
+        Object.keys(this.filteredGroupedSchedule).length / this.itemsPerPage,
       );
     },
     pageNumbers() {
@@ -522,6 +575,15 @@ export default {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
       return Object.fromEntries(allFaculty.slice(start, end));
+    },
+    searchedFaculty() {
+      if (!this.searchQuery) return this.filteredGroupedSchedule;
+      const query = this.searchQuery.toLowerCase();
+      return Object.fromEntries(
+        Object.entries(this.filteredGroupedSchedule).filter(([name]) =>
+          name.toLowerCase().includes(query),
+        ),
+      );
     },
   },
 
@@ -562,59 +624,59 @@ export default {
       this.showCompareView = true;
     },
     openEditInstructorModal(instructor) {
+      // Send fresh copies of schedules to modal
       this.editInstructorData = (this.groupedSchedule[instructor] || []).map(
-        (r) => ({ ...r })
+        (r) => ({ ...r }),
       );
       this.showEditModal = true;
     },
     handleModalSaved(updatedInstructorSchedules) {
       if (!updatedInstructorSchedules.length) return;
 
-      // Remove this line:
-      // const facultyName = updatedInstructorSchedules[0].faculty_name;
-
+      // Merge updates into finalSchedules
       updatedInstructorSchedules.forEach((updated) => {
         const index = this.finalSchedules.findIndex((s) => s.id === updated.id);
         if (index > -1) {
-          this.finalSchedules[index] = { ...updated };
+          this.finalSchedules[index] = { ...updated }; // fresh copy
         } else {
           this.finalSchedules.push({ ...updated });
         }
       });
 
+      // Refresh grouped and filtered schedules
+      this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
+      this.filteredGroupedSchedule = { ...this.groupedSchedule };
+
+      // Reset pagination
+      this.currentPage = 1;
+
+      // If modal is open, update its data with fresh copies
+      if (this.showEditModal) {
+        const instructorsInModal = Array.from(
+          new Set(this.editInstructorData.map((item) => item.faculty_name)),
+        );
+
+        this.$nextTick(() => {
+          this.editInstructorData = instructorsInModal.flatMap((instructor) => {
+            return (this.groupedSchedule[instructor] || []).map((r) => ({
+              ...r,
+            }));
+          });
+        });
+      }
+    },
+    handleDeletedSchedule(deletedId) {
+      this.finalSchedules = this.finalSchedules.filter(
+        (s) => s.id !== deletedId,
+      );
       this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
       this.filterSchedules();
-
-      this.currentPage = 1;
     },
     closeEditInstructorModal() {
       this.showEditModal = false;
       this.editInstructorData = {};
     },
 
-    async saveInstructorEdit() {
-      try {
-        await axios.patch(
-          `${process.env.VUE_APP_API_BASE_URL}/faculty/${this.editInstructorData.faculty_id}`,
-          this.editInstructorData
-        );
-
-        // Update locally
-        const idx = this.finalSchedules.findIndex(
-          (f) => f.faculty_id === this.editInstructorData.faculty_id
-        );
-        if (idx > -1) this.finalSchedules[idx] = { ...this.editInstructorData };
-
-        this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
-        this.filterSchedules();
-
-        toast.success("Instructor updated successfully");
-        this.closeEditInstructorModal();
-      } catch (err) {
-        toast.error("Failed to update instructor");
-        console.error(err);
-      }
-    },
     toggleSwapSelection(item) {
       const index = this.swapSelection.indexOf(item);
       if (index > -1) this.swapSelection.splice(index, 1);
@@ -630,77 +692,71 @@ export default {
 
       let [courseA, courseB] = this.swapSelection;
 
-      // Validate IDs
-      const courseAId = Number(courseA.id);
-      const courseBId = Number(courseB.id);
-
-      if (isNaN(courseAId) || isNaN(courseBId)) {
-        toast.error("Invalid course IDs. Cannot swap.");
-        return;
-      }
-
-      // Helper: get numeric start/end hours
       const getTimeRange = (course) => {
         const start = this.normalizeHour(Number(course.start_hour));
         const end = start + Number(course.duration);
         return { start, end };
       };
 
-      // Check if two time ranges overlap
       const isOverlap = (c1, c2) => {
         const { start: s1, end: e1 } = getTimeRange(c1);
         const { start: s2, end: e2 } = getTimeRange(c2);
         return Math.max(s1, s2) < Math.min(e1, e2);
       };
 
-      // Check if a course conflicts with existing schedules
-      const hasConflict = (course, ignoreIds = []) => {
-        return this.finalSchedules.some((s) => {
-          if (ignoreIds.includes(s.id)) return false;
-
-          // Room conflict
-          if (
-            s.room_id === course.room_id &&
+      const hasSameCourseConflict = (course) =>
+        this.finalSchedules.some(
+          (s) =>
+            s.id !== course.id &&
+            s.course_code === course.course_code &&
             s.day === course.day &&
-            s.course_code !== course.course_code &&
-            isOverlap(s, course)
-          )
-            return true;
+            isOverlap(s, course),
+        );
 
-          // Faculty conflict
-          if (
-            s.faculty_id === course.faculty_id &&
-            s.day === course.day &&
-            s.course_code !== course.course_code &&
-            isOverlap(s, course)
-          )
-            return true;
-
-          return false;
-        });
-      };
-
-      // Prepare swapped objects for conflict check
-      const courseAWithBFaculty = {
-        ...courseA,
-        faculty_id: courseB.faculty_id,
-      };
-      const courseBWithAFaculty = {
-        ...courseB,
-        faculty_id: courseA.faculty_id,
-      };
-
-      if (
-        hasConflict(courseAWithBFaculty, [courseAId, courseBId]) ||
-        hasConflict(courseBWithAFaculty, [courseAId, courseBId])
-      ) {
+      if (hasSameCourseConflict(courseA) || hasSameCourseConflict(courseB)) {
         toast.error(
-          "Swap cannot be done due to room or faculty conflict with existing schedules."
+          "Cannot swap: a schedule already exists for the same course at the same time and day.",
         );
         return;
       }
 
-      // Swap faculty locally
+      const hasConflict = (course, ignoreIds = []) =>
+        this.finalSchedules.some((s) => {
+          if (ignoreIds.includes(s.id)) return false;
+          if (
+            (s.room_id === course.room_id ||
+              s.faculty_id === course.faculty_id) &&
+            s.day === course.day &&
+            s.course_code !== course.course_code &&
+            isOverlap(s, course)
+          )
+            return true;
+          return false;
+        });
+
+      // Prepare swapped course objects
+      const courseAWithBFaculty = {
+        ...courseA,
+        faculty_id: courseB.faculty_id,
+        faculty_name: courseB.faculty_name,
+      };
+      const courseBWithAFaculty = {
+        ...courseB,
+        faculty_id: courseA.faculty_id,
+        faculty_name: courseA.faculty_name,
+      };
+
+      if (
+        hasConflict(courseAWithBFaculty, [courseA.id, courseB.id]) ||
+        hasConflict(courseBWithAFaculty, [courseA.id, courseB.id])
+      ) {
+        toast.error(
+          "Swap cannot be done due to room or faculty conflict with existing schedules.",
+        );
+        return;
+      }
+
+      // Swap locally
       const tempFacultyId = courseA.faculty_id;
       const tempFacultyName = courseA.faculty_name;
 
@@ -710,48 +766,71 @@ export default {
       courseB.faculty_id = tempFacultyId;
       courseB.faculty_name = tempFacultyName;
 
-      try {
-        // Update backend
-        await Promise.all([
-          axios.patch(
-            `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${courseAId}`,
-            {
-              faculty_id: courseA.faculty_id,
-              faculty_name: courseA.faculty_name,
-            }
-          ),
-          axios.patch(
-            `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${courseBId}`,
-            {
-              faculty_id: courseB.faculty_id,
-              faculty_name: courseB.faculty_name,
-            }
-          ),
-        ]);
+      this.finalSchedules = this.finalSchedules.map((s) => {
+        if (s.id === courseA.id) return { ...courseA };
+        if (s.id === courseB.id) return { ...courseB };
+        return s;
+      });
 
-        // Refresh local grouped schedules
-        this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
-
-        // Keep compare view with same two instructors if active
-        if (this.showCompareView) {
-          this.filteredGroupedSchedule = {
+      // Update grouped schedules for UI
+      this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
+      this.filteredGroupedSchedule = this.showCompareView
+        ? {
             [this.compareInstructorA]:
               this.groupedSchedule[this.compareInstructorA] || [],
             [this.compareInstructorB]:
               this.groupedSchedule[this.compareInstructorB] || [],
-          };
-        } else {
-          this.filteredGroupedSchedule = { ...this.groupedSchedule };
-        }
+          }
+        : { ...this.groupedSchedule };
 
-        // Reset swap selection
+      // 🔹 Update edit modal data if it’s open
+      if (this.showEditModal) {
+        const instructorsInModal = Array.from(
+          new Set(this.editInstructorData.map((item) => item.faculty_name)),
+        );
+
+        // Refresh modal data using $nextTick to ensure reactivity
+        this.$nextTick(() => {
+          this.editInstructorData = instructorsInModal.flatMap((instructor) => {
+            return (this.groupedSchedule[instructor] || []).map((r) => ({
+              ...r,
+            }));
+          });
+        });
+      }
+
+      // Update backend
+      try {
+        await Promise.all([
+          axios.patch(
+            `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${courseA.id}`,
+            {
+              faculty_id: courseA.faculty_id,
+              faculty_name: courseA.faculty_name,
+            },
+          ),
+          axios.patch(
+            `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${courseB.id}`,
+            {
+              faculty_id: courseB.faculty_id,
+              faculty_name: courseB.faculty_name,
+            },
+          ),
+        ]);
+
+        // Clear selection and refresh UI
         this.swapSelection = [];
-
         this.showFacultyTable = false;
         this.showCompareView = true;
 
+        // Force reactive update for tables and cards
+        this.$nextTick(() => {
+          this.groupedSchedule = { ...this.groupedSchedule };
+          this.filteredGroupedSchedule = { ...this.filteredGroupedSchedule };
+        });
+
         toast.success(
-          `Courses swapped: ${courseA.course_code} ↔ ${courseB.course_code}`
+          `Courses swapped: ${courseA.course_code} ↔ ${courseB.course_code}`,
         );
       } catch (error) {
         toast.error("Failed to update swap in the database.");
@@ -762,6 +841,7 @@ export default {
       const store = useFetchDataStore();
       await store.fetchPrograms();
       await store.fetchInstitutes();
+      await store.fetchCourses();
     },
 
     backToFacultyTable() {
@@ -773,18 +853,35 @@ export default {
     normalizeHour(hour) {
       hour = Number(hour);
       if (Number.isNaN(hour)) return hour;
+      // If you are using 1–7 as PM and 8–24 as actual hours
       return hour <= 7 ? hour + 12 : hour;
     },
 
+    formatTime(h) {
+      if (h == null) return "";
+      const hour = Math.floor(h); // integer hour
+      const minutes = Math.round((h - hour) * 60); // decimal -> minutes
+      const period = hour >= 12 ? "PM" : "AM";
+      const hour12 = hour % 12 || 12;
+      const minutesStr = minutes.toString().padStart(2, "0");
+      return `${hour12}:${minutesStr} ${period}`;
+    },
     isStartingSlot(item, slot) {
-      return this.normalizeHour(item.start_hour) === slot.start;
+      return item.start_hour >= slot.start && item.start_hour < slot.end;
+    },
+    getBlockTop(item, slotStart) {
+      if (!item || item.start_hour == null) return 0;
+
+      const start = this.normalizeHour(Number(item.start_hour));
+      return (start - slotStart) * this.timeSlotHeight;
     },
 
-    formatTime(hour) {
-      const h = hour % 12 === 0 ? 12 : hour % 12;
-      const period = hour >= 12 ? "PM" : "AM";
-      return `${h}:00 ${period}`;
+    getBlockHeight(item) {
+      if (!item || !item.duration) return this.timeSlotHeight;
+
+      return Number(item.duration) * this.timeSlotHeight - 1;
     },
+
     filterSchedules() {
       let filtered = { ...this.groupedSchedule };
 
@@ -792,9 +889,10 @@ export default {
         filtered = Object.fromEntries(
           Object.entries(filtered).filter(([, schedules]) =>
             schedules.some(
-              (s) => String(s.institute_id) === String(this.selectedInstituteId)
-            )
-          )
+              (s) =>
+                String(s.institute_id) === String(this.selectedInstituteId),
+            ),
+          ),
         );
       }
 
@@ -802,9 +900,9 @@ export default {
         filtered = Object.fromEntries(
           Object.entries(filtered).filter(([, schedules]) =>
             schedules.some(
-              (s) => String(s.program_id) === String(this.selectedProgramId)
-            )
-          )
+              (s) => String(s.program_id) === String(this.selectedProgramId),
+            ),
+          ),
         );
       }
 
@@ -820,12 +918,6 @@ export default {
         const end = start + Number(item.duration);
         return end > slot.start && start < slot.end;
       });
-    },
-    getBlockTop() {
-      return 0;
-    },
-    getBlockHeight(item) {
-      return Math.max(1, Number(item.duration)) * this.timeSlotHeight - 1;
     },
 
     getTypeColor(room_type) {
@@ -861,7 +953,7 @@ export default {
       try {
         const res = await axios.get(
           `${process.env.VUE_APP_API_BASE_URL}/auth/me`,
-          { withCredentials: true }
+          { withCredentials: true },
         );
         this.user = res.data || {};
       } catch {
@@ -877,317 +969,15 @@ export default {
         const { data } = await axios.get(
           process.env.VUE_APP_API_BASE_URL +
             "/final-generated-class-schedule/get-all-final-schedules",
-          { withCredentials: true }
+          { withCredentials: true },
         );
-        // const data = [
-        //   {
-        //     class_id: 1,
-        //     set_name: "CS101-A",
-        //     course_level: "First Year",
-        //     course_code: "CS101",
-        //     program_id: 1,
-        //     institute_id: 1,
-        //     type: "Lecture",
-        //     day: "Monday",
-        //     start_hour: 8,
-        //     duration: 3,
-        //     time_slot: "8:00 AM - 11:00 AM",
-        //     room_id: 20,
-        //     room_name: "Samal Lecture Room 1",
-        //     room_type: "Lecture",
-        //     room_capacity: 35,
-        //     class_size: 40,
-        //     faculty_id: 1,
-        //     faculty_name: "Dr. John Smith",
-        //   },
-        //   {
-        //     class_id: 2,
-        //     set_name: "CS101-B",
-        //     course_level: "First Year",
-        //     course_code: "CS101",
-        //     program_id: 1,
-        //     institute_id: 1,
-        //     type: "Lecture",
-        //     day: "Monday",
-        //     start_hour: 13,
-        //     duration: 3,
-        //     time_slot: "1:00 PM - 4:00 PM",
-        //     room_id: 4,
-        //     room_name: "Lecture Room 101",
-        //     room_type: "Lecture",
-        //     room_capacity: 30,
-        //     class_size: 35,
-        //     faculty_id: 1,
-        //     faculty_name: "Dr. John Smith",
-        //   },
-        //   {
-        //     class_id: 2,
-        //     set_name: "CS101-B",
-        //     course_level: "First Year",
-        //     course_code: "CS101",
-        //     program_id: 1,
-        //     institute_id: 1,
-        //     type: "Laboratory",
-        //     day: "Tuesday",
-        //     start_hour: 13,
-        //     duration: 6,
-        //     time_slot: "1:00 PM - 7:00 PM",
-        //     room_id: 9,
-        //     room_name: "Lab A",
-        //     room_type: "Laboratory",
-        //     room_capacity: 30,
-        //     class_size: 35,
-        //     faculty_id: 1,
-        //     faculty_name: "Dr. John Smith",
-        //   },
-        //   {
-        //     class_id: 3,
-        //     set_name: "CS201-A",
-        //     course_level: "Second Year",
-        //     course_code: "CS201",
-        //     program_id: 1,
-        //     institute_id: 1,
-        //     type: "Lecture",
-        //     day: "Monday",
-        //     start_hour: 16,
-        //     duration: 3,
-        //     time_slot: "4:00 PM - 7:00 PM",
-        //     room_id: 6,
-        //     room_name: "Lecture Room 201",
-        //     room_type: "Lecture",
-        //     room_capacity: 25,
-        //     class_size: 30,
-        //     faculty_id: 1,
-        //     faculty_name: "Dr. John Smith",
-        //   },
-        //   {
-        //     class_id: 3,
-        //     set_name: "CS201-A",
-        //     course_level: "Second Year",
-        //     course_code: "CS201",
-        //     program_id: 1,
-        //     institute_id: 1,
-        //     type: "Laboratory",
-        //     day: "Tuesday",
-        //     start_hour: 8,
-        //     duration: 3,
-        //     time_slot: "8:00 AM - 11:00 AM",
-        //     room_id: 11,
-        //     room_name: "Computer Lab 1",
-        //     room_type: "Laboratory",
-        //     room_capacity: 25,
-        //     class_size: 30,
-        //     faculty_id: 1,
-        //     faculty_name: "Dr. John Smith",
-        //   },
-        //   {
-        //     class_id: 4,
-        //     set_name: "CS301-A",
-        //     course_level: "Third Year",
-        //     course_code: "CS301",
-        //     program_id: 1,
-        //     institute_id: 1,
-        //     type: "Lecture",
-        //     day: "Wednesday",
-        //     start_hour: 8,
-        //     duration: 3,
-        //     time_slot: "8:00 AM - 11:00 AM",
-        //     room_id: 6,
-        //     room_name: "Lecture Room 201",
-        //     room_type: "Lecture",
-        //     room_capacity: 25,
-        //     class_size: 25,
-        //     faculty_id: 1,
-        //     faculty_name: "Dr. John Smith",
-        //   },
-        //   {
-        //     class_id: 8,
-        //     set_name: "CS401-A",
-        //     course_level: "Fourth Year",
-        //     course_code: "CS401",
-        //     program_id: 1,
-        //     institute_id: 1,
-        //     type: "Lecture",
-        //     day: "Monday",
-        //     start_hour: 8,
-        //     duration: 3,
-        //     time_slot: "8:00 AM - 11:00 AM",
-        //     room_id: 6,
-        //     room_name: "Lecture Room 201",
-        //     room_type: "Lecture",
-        //     room_capacity: 25,
-        //     class_size: 20,
-        //     faculty_id: 2,
-        //     faculty_name: "Prof. Jane Doe",
-        //   },
-        //   {
-        //     class_id: 8,
-        //     set_name: "CS401-A",
-        //     course_level: "Fourth Year",
-        //     course_code: "CS401",
-        //     program_id: 1,
-        //     institute_id: 1,
-        //     type: "Laboratory",
-        //     day: "Monday",
-        //     start_hour: 13,
-        //     duration: 6,
-        //     time_slot: "1:00 PM - 7:00 PM",
-        //     room_id: 13,
-        //     room_name: "Computer Lab 3",
-        //     room_type: "Laboratory",
-        //     room_capacity: 20,
-        //     class_size: 20,
-        //     faculty_id: 2,
-        //     faculty_name: "Prof. Jane Doe",
-        //   },
-        //   {
-        //     class_id: 9,
-        //     set_name: "CS202-A",
-        //     course_level: "Second Year",
-        //     course_code: "CS202",
-        //     program_id: 1,
-        //     institute_id: 1,
-        //     type: "Lecture",
-        //     day: "Tuesday",
-        //     start_hour: 8,
-        //     duration: 3,
-        //     time_slot: "8:00 AM - 11:00 AM",
-        //     room_id: 4,
-        //     room_name: "Lecture Room 101",
-        //     room_type: "Lecture",
-        //     room_capacity: 30,
-        //     class_size: 32,
-        //     faculty_id: 2,
-        //     faculty_name: "Prof. Jane Doe",
-        //   },
-        //   {
-        //     class_id: 9,
-        //     set_name: "CS202-A",
-        //     course_level: "Second Year",
-        //     course_code: "CS202",
-        //     program_id: 1,
-        //     institute_id: 1,
-        //     type: "Laboratory",
-        //     day: "Tuesday",
-        //     start_hour: 13,
-        //     duration: 6,
-        //     time_slot: "1:00 PM - 7:00 PM",
-        //     room_id: 10,
-        //     room_name: "Lab B",
-        //     room_type: "Laboratory",
-        //     room_capacity: 30,
-        //     class_size: 32,
-        //     faculty_id: 2,
-        //     faculty_name: "Prof. Jane Doe",
-        //   },
-        //   {
-        //     class_id: 5,
-        //     set_name: "MATH101-A",
-        //     course_level: "First Year",
-        //     course_code: "MATH101",
-        //     program_id: 2,
-        //     institute_id: 1,
-        //     type: "Lecture",
-        //     day: "Monday",
-        //     start_hour: 8,
-        //     duration: 3,
-        //     time_slot: "8:00 AM - 11:00 AM",
-        //     room_id: 1,
-        //     room_name: "Lecture Hall A",
-        //     room_type: "Lecture",
-        //     room_capacity: 50,
-        //     class_size: 50,
-        //     faculty_id: 3,
-        //     faculty_name: "Dr. Robert Johnson",
-        //   },
-        //   {
-        //     class_id: 6,
-        //     set_name: "MATH201-A",
-        //     course_level: "Second Year",
-        //     course_code: "MATH201",
-        //     program_id: 2,
-        //     institute_id: 1,
-        //     type: "Lecture",
-        //     day: "Monday",
-        //     start_hour: 13,
-        //     duration: 3,
-        //     time_slot: "1:00 PM - 4:00 PM",
-        //     room_id: 3,
-        //     room_name: "Lecture Hall C",
-        //     room_type: "Lecture",
-        //     room_capacity: 40,
-        //     class_size: 45,
-        //     faculty_id: 3,
-        //     faculty_name: "Dr. Robert Johnson",
-        //   },
-        //   {
-        //     class_id: 10,
-        //     set_name: "MATH301-A",
-        //     course_level: "Third Year",
-        //     course_code: "MATH301",
-        //     program_id: 2,
-        //     institute_id: 1,
-        //     type: "Lecture",
-        //     day: "Monday",
-        //     start_hour: 16,
-        //     duration: 3,
-        //     time_slot: "4:00 PM - 7:00 PM",
-        //     room_id: 4,
-        //     room_name: "Lecture Room 101",
-        //     room_type: "Lecture",
-        //     room_capacity: 30,
-        //     class_size: 35,
-        //     faculty_id: 3,
-        //     faculty_name: "Dr. Robert Johnson",
-        //   },
-        //   {
-        //     class_id: 7,
-        //     set_name: "PHYS101-A",
-        //     course_level: "First Year",
-        //     course_code: "PHYS101",
-        //     program_id: 3,
-        //     institute_id: 1,
-        //     type: "Lecture",
-        //     day: "Monday",
-        //     start_hour: 8,
-        //     duration: 3,
-        //     time_slot: "8:00 AM - 11:00 AM",
-        //     room_id: 7,
-        //     room_name: "Lecture Room 202",
-        //     room_type: "Lecture",
-        //     room_capacity: 25,
-        //     class_size: 30,
-        //     faculty_id: 5,
-        //     faculty_name: "Dr. Michael Brown",
-        //   },
-        //   {
-        //     class_id: 7,
-        //     set_name: "PHYS101-A",
-        //     course_level: "First Year",
-        //     course_code: "PHYS101",
-        //     program_id: 3,
-        //     institute_id: 1,
-        //     type: "Laboratory",
-        //     day: "Monday",
-        //     start_hour: 13,
-        //     duration: 6,
-        //     time_slot: "1:00 PM - 7:00 PM",
-        //     room_id: 11,
-        //     room_name: "Computer Lab 1",
-        //     room_type: "Laboratory",
-        //     room_capacity: 25,
-        //     class_size: 30,
-        //     faculty_id: 5,
-        //     faculty_name: "Dr. Michael Brown",
-        //   },
-        // ];
-        // Filter schedules for Program Chairperson
+
         let schedules = data || [];
         if (this.user.role === "Program Chairperson") {
           schedules = schedules.filter(
             (s) =>
               s.institute_id === this.user.institute_id &&
-              s.program_id === this.user.program_id
+              s.program_id === this.user.program_id,
           );
         }
 
@@ -1216,7 +1006,7 @@ export default {
     async fetchSchoolYears() {
       try {
         const res = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years",
         );
         this.schoolYears = res.data.map((y) => ({ ...y }));
       } catch (err) {
@@ -1227,8 +1017,8 @@ export default {
   async mounted() {
     await this.fetchUser();
     await this.loadFetchData();
-    await this.fetchSchoolYears(); // load school years
-    await this.fetchFinalSchedules(); // <--- fetch schedules from API
+    await this.fetchSchoolYears();
+    await this.fetchFinalSchedules();
   },
 };
 </script>

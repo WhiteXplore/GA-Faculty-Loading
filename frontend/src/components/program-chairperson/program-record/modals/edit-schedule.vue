@@ -102,7 +102,7 @@
                             v-for="item in getScheduleForCell(
                               slot,
                               day,
-                              instructor
+                              instructor,
                             )"
                             :key="item.id"
                           >
@@ -110,6 +110,7 @@
                               v-if="isStartingSlot(item, slot)"
                               draggable="true"
                               @dragstart="onDragStart($event, item)"
+                              @click="highlightRow(item)"
                               :class="[
                                 'absolute inset-x-1 border rounded-lg text-[11px] p-1 shadow-sm truncate transition cursor-pointer hover:bg-yellow-100 hover:defaultGreen',
                                 item.id?.toString().startsWith('temp-')
@@ -126,15 +127,29 @@
                                 zIndex: 10,
                               }"
                             >
+                              <!-- MODE BADGE -->
+                              <span
+                                v-if="item.mode"
+                                :class="[
+                                  'absolute top-2 right-2 w-auto h-4 px-1 rounded-full text-[10px] font-bold flex items-center justify-center text-white',
+                                  item.mode === 'face to face'
+                                    ? 'bg-orange-500'
+                                    : '',
+                                  item.mode === 'online' ? 'bg-purple-500' : '',
+                                ]"
+                              >
+                                {{
+                                  item.mode === "face to face"
+                                    ? "F2F"
+                                    : "Online"
+                                }}
+                              </span>
+
                               <div class="truncate font-semibold">
                                 {{ item.course_code }}
                               </div>
-                              <div class="truncate">
-                                {{ item.room_name }}
-                              </div>
-                              <div class="truncate">
-                                {{ item.set_name }}
-                              </div>
+                              <div class="truncate">{{ item.room_name }}</div>
+                              <div class="truncate">{{ item.set_name }}</div>
 
                               <button
                                 v-if="hasRoomConflict(item)"
@@ -179,7 +194,7 @@
       <!-- RIGHT: SLIDING ADD PANEL -->
       <div
         v-if="showAddSchedulePanel"
-        class="w-[40%] h-[40%] bg-white border shadow-xl transition-all duration-300 flex justify-start rounded-xl overflow-hidden"
+        class="w-[50%] h-[40%] bg-white border shadow-xl transition-all duration-300 flex justify-start rounded-xl overflow-hidden"
       >
         <div class="max-h-[95vh] overflow-y-auto border-t p-0.5">
           <div
@@ -198,21 +213,28 @@
           <table class="min-w-full divide-y divide-gray-200 text-xs">
             <thead class="bg-gray-100">
               <tr>
-                <th class="px-4 py-3 border w-[20%]">Section</th>
-                <th class="px-4 py-3 border w-[20%]">Course</th>
-                <th class="px-4 py-3 border">Room</th>
-                <th class="px-4 py-3 border">Day</th>
-                <th class="px-4 py-3 border">Start</th>
-                <th class="px-4 py-3 border">Hours</th>
+                <th class="px-4 py-3 border w-[15%]">Section</th>
+                <th class="px-4 py-3 border w-[15%]">Course</th>
+                <th class="px-4 py-3 border w-[13%]">Room</th>
+                <th class="px-4 py-3 border w-[10%]">Day</th>
+                <th class="px-4 py-3 border w-[9%]">Start</th>
+                <th class="px-4 py-3 border w-[9%]">Hours</th>
+                <th class="px-4 py-3 border">Set Up</th>
                 <th class="px-4 py-3 border text-center">Action</th>
               </tr>
             </thead>
 
             <tbody>
               <tr
-                v-for="record in localData"
-                :key="record.id"
-                class="hover:bg-gray-50"
+                v-for="record in sortedLocalData"
+                :key="record.id || record.tempId"
+                :id="'row-' + (record.id || record.tempId)"
+                :class="[
+                  'hover:bg-gray-50',
+                  highlightedRecordId === (record.id || record.tempId)
+                    ? 'bg-blue-100'
+                    : '',
+                ]"
               >
                 <td class="px-2 py-2 border relative">
                   <input
@@ -299,24 +321,38 @@
                 <td class="px-2 py-2 border">
                   <input
                     v-model="record.day"
-                    class="w-full px-3 py-2 border rounded-md"
+                    class="w-full px-3 py-2 border rounded-md text-center"
                   />
                 </td>
 
-                <td class="px-2 py-2 border">
+                <td class="px-2 py-2 border text-center">
                   <input
                     v-model.number="record.start_hour"
                     type="number"
-                    class="w-full px-3 py-2 border rounded-md"
+                    step="0.5"
+                    min="8"
+                    max="20"
+                    class="w-full px-3 py-2 border rounded-md text-center"
                   />
                 </td>
 
-                <td class="px-2 py-2 border">
+                <td class="px-2 py-2 border text-center">
                   <input
                     v-model.number="record.duration"
                     type="number"
-                    class="w-full px-3 py-2 border rounded-md"
+                    class="w-full px-3 py-2 border rounded-md text-center"
                   />
+                </td>
+                <td class="px-2 py-2 border">
+                  <select
+                    v-model="record.mode"
+                    @change="onModeChange(record)"
+                    class="w-full border rounded px-2 py-1 text-sm"
+                  >
+                    <option value="" disabled selected>Select mode</option>
+                    <option value="face to face">Face to face</option>
+                    <option value="online">Online</option>
+                  </select>
                 </td>
 
                 <td class="px-2 py-3 border text-center">
@@ -406,11 +442,11 @@
             </p>
             <p class="text-sm text-gray-800">
               <span class="font-semibold">Time:</span>
-              {{ conflict.time_slot }}
+              {{ formatTime(conflict.start_hour) }} -
+              {{ formatTime(conflict.start_hour + conflict.duration) }}
             </p>
             <p class="text-sm text-gray-800">
-              <span class="font-semibold">Time:</span>
-              {{ conflict.class_id }}
+              <span class="font-semibold">Day:</span> {{ conflict.mode }}
             </p>
           </div>
         </div>
@@ -495,10 +531,12 @@ export default {
       localData: [],
       saving: false,
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      timeSlots: Array.from({ length: 12 }, (_, i) => ({
-        start: i + 8,
-        end: i + 9,
+      // 8 AM to 8 PM
+      timeSlots: Array.from({ length: 13 }, (_, i) => ({
+        start: 8 + i,
+        end: 9 + i,
       })),
+
       draggedRecord: null,
       hourHeight: 60,
       fullSchedules: [],
@@ -513,10 +551,39 @@ export default {
       selectedInstructorName: "",
 
       deletedIds: new Set(),
+      highlightedRecordId: null,
     };
   },
   computed: {
     ...mapState(useFetchDataStore, ["rooms"]),
+    sortedLocalData() {
+      const dayOrder = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ];
+
+      return [...this.localData].sort((a, b) => {
+        const dayA = dayOrder.indexOf(a.day);
+        const dayB = dayOrder.indexOf(b.day);
+
+        // Unknown days go last
+        if (dayA === -1 && dayB === -1) return 0;
+        if (dayA === -1) return 1;
+        if (dayB === -1) return -1;
+
+        // Sort by day first
+        if (dayA !== dayB) return dayA - dayB;
+
+        // Then sort by start time
+        return (a.start_hour ?? 0) - (b.start_hour ?? 0);
+      });
+    },
+
     coursesList() {
       const store = useFetchDataStore();
       return store.courses || [];
@@ -530,7 +597,7 @@ export default {
 
         schedules.forEach((sched) => {
           const course = this.coursesList.find(
-            (c) => c.course_code === sched.course_code
+            (c) => c.course_code === sched.course_code,
           );
           if (course) {
             if (sched.type === "Lecture") {
@@ -554,13 +621,13 @@ export default {
     },
     unscheduledCourses() {
       const scheduledCourseIds = new Set(
-        this.localData.map((r) => r.course_id).filter(Boolean)
+        this.localData.map((r) => r.course_id).filter(Boolean),
       );
 
       const fetchDataStore = useFetchDataStore();
 
       let courses = fetchDataStore.courses.filter(
-        (c) => !scheduledCourseIds.has(c.course_id)
+        (c) => !scheduledCourseIds.has(c.course_id),
       );
 
       // Only show courses matching user's institute & program if Program Chairperson
@@ -568,7 +635,7 @@ export default {
         courses = courses.filter(
           (c) =>
             c.institute_id === this.user.institute_id &&
-            c.program_id === this.user.program_id
+            c.program_id === this.user.program_id,
         );
       }
 
@@ -670,15 +737,44 @@ export default {
       "fetchCourses",
       "fetchClassSections",
     ]),
-    /* ------------------ 1. UTILITY ------------------ */
-    formatTime(h) {
-      const period = h >= 12 ? "PM" : "AM";
-      const hour = h % 12 || 12;
-      return `${hour}:00 ${period}`;
+    /* ------------------ 1. UTILITY ------------------ */ // called whenever mode changes
+    highlightRow(item) {
+      this.highlightedRecordId = item.id || item.tempId;
+      // optional: scroll to the row
+      this.$nextTick(() => {
+        const el = document.getElementById(`row-${this.highlightedRecordId}`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
     },
-
+    onModeChange(record) {
+      if ((record.mode || "").toLowerCase() === "online") {
+        record.room_id = null;
+        record.room_name = "None";
+        record.room_type = null;
+        record.room_capacity = null;
+        record.searchRoomQuery = "None";
+      } else {
+        record.room_name = "";
+        record.searchRoomQuery = "";
+      }
+    },
+    normalizeHour(hour) {
+      hour = Number(hour);
+      if (Number.isNaN(hour)) return hour;
+      // If you are using 1–7 as PM and 8–24 as actual hours
+      return hour <= 7 ? hour + 12 : hour;
+    },
+    formatTime(h) {
+      if (h == null) return "";
+      const hour = Math.floor(h); // integer hour
+      const minutes = Math.round((h - hour) * 60); // decimal -> minutes
+      const period = hour >= 12 ? "PM" : "AM";
+      const hour12 = hour % 12 || 12;
+      const minutesStr = minutes.toString().padStart(2, "0");
+      return `${hour12}:${minutesStr} ${period}`;
+    },
     isStartingSlot(item, slot) {
-      return item.start_hour === slot.start;
+      return item.start_hour >= slot.start && item.start_hour < slot.end;
     },
     getBlockTop(item, slotStart) {
       return (item.start_hour - slotStart) * this.hourHeight;
@@ -705,28 +801,37 @@ export default {
         const fetchDataStore = useFetchDataStore();
         await fetchDataStore.fetchFinalSchedules();
         this.fullSchedules = (fetchDataStore.final_schedules || []).map(
-          (rec) => ({
-            ...rec,
-            searchRoomQuery: rec.room_name || "",
-            showRoomDropdown: false,
-            searchCourseQuery: rec.course_code || "",
-            showCourseDropdown: false,
-            searchSectionQuery: rec.set_name || "",
-            showSectionDropdown: false,
-          })
+          (rec) => {
+            const cloned = JSON.parse(JSON.stringify(rec)); // deep clone
+            if (!cloned.id && !cloned.tempId) {
+              cloned.tempId = `temp-${Date.now()}-${Math.floor(
+                Math.random() * 1000,
+              )}`;
+            }
+            return {
+              ...cloned,
+              searchRoomQuery: cloned.room_name || "",
+              showRoomDropdown: false,
+              searchCourseQuery: cloned.course_code || "",
+              showCourseDropdown: false,
+              searchSectionQuery: cloned.set_name || "",
+              showSectionDropdown: false,
+            };
+          },
         );
       } catch (error) {
         console.error("Failed to load full schedules:", error);
         this.fullSchedules = [];
       }
     },
+
     async fetchUser() {
       try {
         const res = await axios.get(
           `${process.env.VUE_APP_API_BASE_URL}/auth/me`,
           {
             withCredentials: true,
-          }
+          },
         );
         this.user = res.data || {};
         await this.fetchCoursesForUser();
@@ -756,16 +861,29 @@ export default {
         fetchDataStore.courses = [];
       }
     },
-
     refreshInstructorData(newData) {
-      this.localData = newData.map((rec) => ({
-        ...rec,
-        searchRoomQuery: rec.room_name || "",
-        searchCourseQuery: rec.course_code || "",
-        searchSectionQuery: rec.set_name || "",
-      }));
+      this.localData = (newData || []).map((rec) => {
+        const cloned = JSON.parse(JSON.stringify(rec)); // deep clone
+        if (!cloned.id && !cloned.tempId) {
+          cloned.tempId = `temp-${Date.now()}-${Math.floor(
+            Math.random() * 1000,
+          )}`;
+        }
+        return {
+          ...cloned,
+          searchRoomQuery: cloned.room_name || "",
+          showRoomDropdown: false,
+          searchCourseQuery: cloned.course_code || "",
+          showCourseDropdown: false,
+          searchSectionQuery: cloned.set_name || "",
+          showSectionDropdown: false,
+        };
+      });
+
+      // Reset drag state
       this.draggedRecord = null;
     },
+
     openAddSchedulePanel(instructor) {
       this.selectedInstructorName = instructor;
       this.showAddSchedulePanel = true;
@@ -779,7 +897,9 @@ export default {
     filteredRooms(record) {
       if (!record.searchRoomQuery) return this.rooms;
       return this.rooms.filter((r) =>
-        r.room_name.toLowerCase().includes(record.searchRoomQuery.toLowerCase())
+        r.room_name
+          .toLowerCase()
+          .includes(record.searchRoomQuery.toLowerCase()),
       );
     },
     filteredSections(record) {
@@ -793,13 +913,13 @@ export default {
         filtered = filtered.filter(
           (s) =>
             s.program?.institute?.institute_id === this.user.institute_id &&
-            s.program_id === this.user.program_id
+            s.program_id === this.user.program_id,
         );
       }
       const query = record.searchSectionQuery?.trim().toLowerCase();
       if (query) {
         filtered = filtered.filter((s) =>
-          s.set_name?.toLowerCase().includes(query)
+          s.set_name?.toLowerCase().includes(query),
         );
       }
 
@@ -813,7 +933,7 @@ export default {
       let filtered = fetchDataStore.courses.filter((c) =>
         c.course_code
           .toLowerCase()
-          .includes(record.searchCourseQuery.toLowerCase())
+          .includes(record.searchCourseQuery.toLowerCase()),
       );
 
       // Only show courses matching user's institute & program if Program Chairperson
@@ -821,7 +941,7 @@ export default {
         filtered = filtered.filter(
           (c) =>
             c.institute_id === this.user.institute_id &&
-            c.program_id === this.user.program_id
+            c.program_id === this.user.program_id,
         );
       }
 
@@ -882,17 +1002,18 @@ export default {
 
       this.localData.push({
         tempId,
+        isNew: true, // <-- mark as new
         faculty_name: first?.faculty_name || "TBD",
         faculty_id: first?.faculty_id || null,
         class_id,
         class_size,
-
+        mode: "face to face",
         day: "Monday",
         start_hour: startHour,
-        duration: duration,
+        duration: Math.floor(duration),
         time_slot: `${formatTime(startHour)} - ${formatTime(
-          startHour + duration
-        )}`, // <-- ADD TIME SLOT
+          startHour + duration,
+        )}`,
 
         room_id: null,
         room_name: "",
@@ -944,12 +1065,12 @@ export default {
 
         // 🔥 CALL API DELETE ENDPOINT
         await axios.delete(
-          `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${this.deleteTarget.id}`
+          `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${this.deleteTarget.id}`,
         );
 
         // After removing locally
         this.localData = this.localData.filter(
-          (item) => item.id !== this.deleteTarget.id
+          (item) => item.id !== this.deleteTarget.id,
         );
 
         this.$emit("deleted", this.deleteTarget.id);
@@ -977,39 +1098,48 @@ export default {
         .filter((r) => r.faculty_name !== instructor);
     },
     getConflictingRecords(record) {
-      const recordStart = Number(record.start_hour);
+      const recordStart = this.normalizeHour(record.start_hour);
       const recordEnd = recordStart + Number(record.duration);
 
       return this.allData.filter((r) => {
-        // Ignore self
-        const sameId = r.id && record.id && r.id === record.id;
-        const sameTemp =
-          r.tempId && record.tempId && r.tempId === record.tempId;
-        if (sameId || sameTemp) return false;
-
-        // Ignore dragged record itself
-        if (this.draggedRecord) {
-          const draggedSame =
-            (r.id && r.id === this.draggedRecord.id) ||
-            (r.tempId && r.tempId === this.draggedRecord.tempId);
-          if (draggedSame) return false;
+        // 1️⃣ Ignore self
+        if (
+          (r.id && record.id && r.id === record.id) ||
+          (r.tempId && record.tempId && r.tempId === record.tempId)
+        ) {
+          return false;
         }
 
-        // Only same day
+        // 2️⃣ Same day
         if (r.day !== record.day) return false;
 
-        // Time overlap check
-        const rStart = Number(r.start_hour);
+        // 3️⃣ Time overlap
+        const rStart = this.normalizeHour(r.start_hour);
         const rEnd = rStart + Number(r.duration);
-        if (Math.max(rStart, recordStart) >= Math.min(rEnd, recordEnd))
-          return false;
+        const overlap =
+          Math.max(rStart, recordStart) < Math.min(rEnd, recordEnd);
+        if (!overlap) return false;
 
-        // Room or faculty conflict
-        const roomConflict =
-          r.room_id && record.room_id && r.room_id === record.room_id;
-        const facultyConflict = r.faculty_name === record.faculty_name;
+        // 🔴 RULE A: Same CLASS (block always)
+        const sameClassConflict =
+          r.class_id && record.class_id && r.class_id === record.class_id;
 
-        return roomConflict || facultyConflict;
+        // 🔴 RULE B: Same ROOM (Face-to-Face only)
+        const sameRoomConflict =
+          record.mode === "face to face" &&
+          r.mode === "face to face" &&
+          r.room_id &&
+          record.room_id &&
+          r.room_id === record.room_id;
+
+        // 🔴 RULE C: Same FACULTY + SAME MODE
+        const sameFacultySameModeConflict =
+          r.faculty_id === record.faculty_id &&
+          (r.mode || "").toLowerCase() === (record.mode || "").toLowerCase();
+
+        return (
+          sameClassConflict || sameRoomConflict || sameFacultySameModeConflict
+        );
       });
     },
     openConflictModal(record) {
@@ -1017,7 +1147,7 @@ export default {
 
       // Only show conflicts with OTHER instructors, not the record itself
       const otherConflicts = conflicts.filter(
-        (r) => r.faculty_name !== record.faculty_name || r.id !== record.id // also ignore exact same record by ID
+        (r) => r.faculty_name !== record.faculty_name || r.id !== record.id, // also ignore exact same record by ID
       );
 
       if (!otherConflicts.length) return;
@@ -1042,7 +1172,7 @@ export default {
       return conflicts
         .map(
           (c) =>
-            `Conflict with: ${c.faculty_name} (${c.course_code}) in ${c.room_name}`
+            `Conflict with: ${c.faculty_name} (${c.course_code}) in ${c.room_name}`,
         )
         .join("\n");
     },
@@ -1055,7 +1185,7 @@ export default {
           r.start_hour != null &&
           r.duration != null &&
           r.start_hour < slot.end &&
-          r.start_hour + r.duration > slot.start
+          r.start_hour + r.duration > slot.start,
       );
     },
     isValid() {
@@ -1065,7 +1195,7 @@ export default {
           r.day &&
           r.start_hour != null &&
           r.duration != null &&
-          !this.hasRoomConflict(r)
+          !this.hasRoomConflict(r),
       );
     },
 
@@ -1079,35 +1209,34 @@ export default {
     async onDrop(event, targetInstructor, targetDay, targetStartHour) {
       if (!this.draggedRecord) return;
 
-      // Create a temporary record representing the new position
+      // Create temporary record for new position
       const tempRecord = {
         ...this.draggedRecord,
         faculty_name: targetInstructor,
         day: targetDay,
         start_hour: targetStartHour,
+        mode: this.draggedRecord.mode,
       };
 
       // Check for conflicts
       const conflicts = this.getConflictingRecords(tempRecord);
-
       if (conflicts.length) {
-        // Show conflict modal with details
         this.conflictRecords = conflicts;
         this.conflictModalVisible = true;
         this.draggedRecord = null;
-        return; // do not move or PATCH
+        return; // do not move
       }
 
-      // Find existing record in target cell (for swapping)
+      // Check if target cell has a record to swap
       const targetRecord = this.localData.find(
         (r) =>
           r.faculty_name === targetInstructor &&
           r.day === targetDay &&
-          r.start_hour === targetStartHour
+          r.start_hour === targetStartHour,
       );
 
       if (targetRecord) {
-        // Swap records safely
+        // Swap records
         const temp = {
           day: targetRecord.day,
           start_hour: targetRecord.start_hour,
@@ -1118,6 +1247,7 @@ export default {
           day: this.draggedRecord.day,
           start_hour: this.draggedRecord.start_hour,
           faculty_name: this.draggedRecord.faculty_name,
+          mode: this.draggedRecord.mode || "face to face",
         });
 
         Object.assign(this.draggedRecord, temp);
@@ -1134,23 +1264,25 @@ export default {
             delete payload.showSectionDropdown;
 
             const id = rec.id || rec.schedule_id || rec.final_generated_id;
-            if (!id)
-              throw new Error("Cannot update unsaved schedule. Save first.");
+            if (!id) return;
 
-            await axios.patch(
-              `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${id}`,
-              payload
-            );
-          })
+            try {
+              await axios.patch(
+                `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${id}`,
+                payload,
+              );
+            } catch (error) {
+              console.error("Failed to update schedule:", error);
+              toast.error("Failed to update schedule.");
+            }
+          }),
         );
-
-        toast.success("Schedules swapped successfully!");
       } else {
-        // No existing record, just move dragged record
+        // Move dragged record to empty cell
         Object.assign(this.draggedRecord, {
+          faculty_name: targetInstructor,
           day: targetDay,
           start_hour: targetStartHour,
-          faculty_name: targetInstructor,
         });
 
         const payload = { ...this.draggedRecord };
@@ -1165,73 +1297,49 @@ export default {
           this.draggedRecord.id ||
           this.draggedRecord.schedule_id ||
           this.draggedRecord.final_generated_id;
-        if (!id) {
-          // toast.error("Cannot update unsaved schedule. Please save first.");
-          this.draggedRecord = null;
-          return;
+        if (id) {
+          try {
+            await axios.patch(
+              `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${id}`,
+              payload,
+            );
+          } catch (error) {
+            console.error("Failed to update schedule:", error);
+            toast.error("Failed to update schedule.");
+          }
         }
-
-        await axios.patch(
-          `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${id}`,
-          payload
-        );
-
-        // toast.success("Schedule moved successfully!");
       }
 
-      this.draggedRecord = null;
+      this.draggedRecord = null; // reset drag state
     },
     /* ------------------ 9. SAVING TO DATABASE  ---------------- */
     async saveEdit() {
-      // ✅ Check for faculty overload before saving
-      const overloadedFaculty = Object.entries(this.facultyTotalUnits)
-        .filter(([, units]) => units.totalUnits > 18)
-        .map(([facultyName]) => facultyName);
-
-      if (overloadedFaculty.length) {
-        const names = overloadedFaculty.join(", ");
-        const proceed = confirm(
-          `Warning: The following faculty member(s) have more than 18 units: ${names}. Do you want to proceed anyway?`
-        );
-        if (!proceed) return; // stop save if user cancels
-      }
-
       this.saving = true;
-      try {
-        const fetchDataStore = useFetchDataStore();
 
-        // 1️⃣ Remove duplicates locally
+      try {
+        // Remove duplicates
         const seen = new Set();
         this.localData = this.localData.filter((record) => {
-          const key = `${record.course_code}|${record.room_name}|${record.class_id}`;
+          const key =
+            record.id ||
+            record.tempId ||
+            `${record.course_code}|${record.room_name}|${record.class_id}|${record.mode}|${record.day}|${record.start_hour}|${record.faculty_name}`;
           if (seen.has(key)) return false;
           seen.add(key);
           return true;
         });
 
-        // 2️⃣ Prepare payloads
-        const payloads = this.localData.map((record) => {
-          const start = Number(record.start_hour) || 0;
-          const duration = Number(record.duration) || 0;
-          const formatTime = (h) => {
-            const hour = h % 12 || 12;
-            const period = h >= 12 ? "PM" : "AM";
-            return `${hour}:00 ${period}`;
-          };
-          return {
-            ...record,
-            start_hour: start,
-            duration,
-            time_slot: `${formatTime(start)} - ${formatTime(start + duration)}`,
-          };
-        });
-
-        // 3️⃣ Separate new vs existing rows
         const newRows = [];
         const existingRows = [];
 
-        this.localData.forEach((record, index) => {
-          const payload = { ...payloads[index] };
+        this.localData.forEach((record) => {
+          const payload = { ...record };
+
+          // Before sending to backend
+          payload.mode =
+            record.mode?.toLowerCase() === "online" ? "online" : "face to face";
+
+          // Remove UI-only props
           delete payload.searchRoomQuery;
           delete payload.showRoomDropdown;
           delete payload.searchCourseQuery;
@@ -1241,6 +1349,7 @@ export default {
 
           const existingId =
             record.id || record.schedule_id || record.final_generated_id;
+
           if (existingId) {
             existingRows.push({ id: existingId, payload });
           } else {
@@ -1248,53 +1357,45 @@ export default {
           }
         });
 
-        // 4️⃣ Save new rows
+        // Save new rows
         if (newRows.length) {
           await axios.post(
             `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/bulk`,
-            newRows
+            newRows,
           );
         }
 
-        // 5️⃣ Update existing rows
+        // Update existing rows
         if (existingRows.length) {
           await Promise.all(
-            existingRows.map(({ id, payload }) =>
-              axios.patch(
+            existingRows.map(async ({ id, payload }) => {
+              await axios.patch(
                 `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${id}`,
-                payload
-              )
-            )
+                payload,
+              );
+            }),
           );
         }
 
-        // 6️⃣ Refresh Pinia store
+        // Refresh localData from store
+        const fetchDataStore = useFetchDataStore();
         await fetchDataStore.fetchFinalSchedules();
-
-        // 7️⃣ Map to fresh objects for reactivity
-        const updatedSchedules = (fetchDataStore.final_schedules || []).map(
-          (rec) => ({
-            ...rec,
-            searchRoomQuery: rec.room_name || "",
-            showRoomDropdown: false,
-            searchCourseQuery: rec.course_code || "",
-            showCourseDropdown: false,
-            searchSectionQuery: rec.set_name || "",
-            showSectionDropdown: false,
-          })
-        );
-
-        this.localData = updatedSchedules; // update child
-        this.$emit(
-          "saved",
-          updatedSchedules.map((r) => ({ ...r }))
-        ); // emit fresh copies to parent
+        this.localData = (fetchDataStore.final_schedules || []).map((rec) => ({
+          ...rec,
+          searchRoomQuery: rec.room_name || "",
+          showRoomDropdown: false,
+          searchCourseQuery: rec.course_code || "",
+          showCourseDropdown: false,
+          searchSectionQuery: rec.set_name || "",
+          showSectionDropdown: false,
+        }));
 
         toast.success("Schedules saved successfully!");
+        this.$emit("saved", this.localData);
         this.$emit("close");
       } catch (err) {
-        console.error("Failed to save schedules:", err);
-        toast.error("Failed to save schedules. Check console.");
+        console.error("Failed to save schedules:", err.response?.data || err);
+        toast.error("Failed to save schedules. Check console for details.");
       } finally {
         this.saving = false;
       }

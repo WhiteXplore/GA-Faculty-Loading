@@ -13,6 +13,19 @@ export class SchoolYearService {
   ) {}
 
   async create(createSchoolYearDto: CreateSchoolYearDto): Promise<SchoolYear> {
+    const exists = await this.schoolYearRepository.findOne({
+      where: {
+        school_year_name: createSchoolYearDto.school_year_name,
+        semester: createSchoolYearDto.semester,
+      },
+    });
+
+    if (exists) {
+      throw new Error(
+        `School year ${createSchoolYearDto.school_year_name} for semester ${createSchoolYearDto.semester} already exists`,
+      );
+    }
+
     const schoolYear = this.schoolYearRepository.create(createSchoolYearDto);
     return await this.schoolYearRepository.save(schoolYear);
   }

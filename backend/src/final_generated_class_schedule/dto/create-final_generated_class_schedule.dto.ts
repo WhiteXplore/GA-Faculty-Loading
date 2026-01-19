@@ -1,4 +1,4 @@
-import { IsInt, IsString, IsOptional } from 'class-validator';
+import { IsInt, IsString, IsOptional, IsNumber } from 'class-validator';
 
 export class CreateFinalGeneratedClassScheduleDto {
   @IsOptional()
@@ -30,11 +30,11 @@ export class CreateFinalGeneratedClassScheduleDto {
   day?: string; // Monday, Tuesday, etc.
 
   @IsOptional()
-  @IsInt()
+  @IsNumber({ maxDecimalPlaces: 2 })
   start_hour?: number;
 
   @IsOptional()
-  @IsInt()
+  @IsNumber()
   duration?: number;
 
   // Optional: remove if not stored
@@ -77,4 +77,8 @@ export class CreateFinalGeneratedClassScheduleDto {
   @IsOptional()
   @IsString()
   semester?: string; // e.g., "1st"
+
+  @IsOptional()
+  @IsString()
+  mode?: string;
 }

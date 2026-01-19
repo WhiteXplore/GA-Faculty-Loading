@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="flex justify-between items-center mt-6 mb-2">
       <div class="text-[13px] text-gray-700">
-        Pages / Class & Assigned Coursesssss
+        Pages / Class & Assigned Courses
       </div>
       <span class="text-sm bg-defaultGreen text-white px-3 py-1 rounded-full">
         {{ filteredClasses.length }} Classes
@@ -285,13 +285,13 @@ export default {
       if (this.classSearch) {
         const query = this.classSearch.toLowerCase();
         result = result.filter((c) =>
-          c.set_name?.toLowerCase().includes(query)
+          c.set_name?.toLowerCase().includes(query),
         );
       }
 
       if (this.selectedProgram) {
         result = result.filter(
-          (c) => c.program?.program_name === this.selectedProgram
+          (c) => c.program?.program_name === this.selectedProgram,
         );
       }
 
@@ -349,7 +349,7 @@ export default {
           process.env.VUE_APP_API_BASE_URL + "/auth/me",
           {
             withCredentials: true,
-          }
+          },
         );
         this.user = res.data;
       } catch (err) {
@@ -359,7 +359,7 @@ export default {
     async loadClasses() {
       try {
         const response = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/class/get-classes"
+          process.env.VUE_APP_API_BASE_URL + "/class/get-classes",
         );
         this.classes = response.data;
       } catch (error) {
@@ -377,16 +377,26 @@ export default {
             "/program-year-courses/get-by-program-and-school-year",
           {
             params: {
-              program_id: cls.program_id,
+              program_id: cls.program_id, // courses for this program
               school_year_id: cls.school_year_id,
             },
-          }
+          },
         );
 
         const yearLevel = this.extractYearLevel(cls.set_name);
-        this.classCourses = yearLevel
-          ? response.data.filter((c) => c.year_level === yearLevel)
-          : response.data;
+
+        // Filter by year level (ignore section)
+        let courses = response.data.filter((c) => c.year_level === yearLevel);
+
+        // Deduplicate by course_id
+        const uniqueCoursesMap = new Map();
+        courses.forEach((c) => {
+          if (!uniqueCoursesMap.has(c.course.course_id)) {
+            uniqueCoursesMap.set(c.course.course_id, c);
+          }
+        });
+
+        this.classCourses = Array.from(uniqueCoursesMap.values());
       } catch (error) {
         console.error("Failed to load class courses:", error);
         this.classCourses = [];

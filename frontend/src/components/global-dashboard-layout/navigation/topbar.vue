@@ -14,7 +14,7 @@
     </div>
 
     <!-- Right: Dropdown + Profile -->
-    <div class="flex items-center gap-5">
+    <div class="flex items-center gap-2">
       <!-- Dropdown -->
       <div
         v-if="activeYears.length > 1"
@@ -145,25 +145,27 @@ export default {
     toggleOpenProfile() {
       this.isOpenProfile = !this.isOpenProfile;
     },
+
     async fetchUser() {
       try {
         const res = await axios.get(
           process.env.VUE_APP_API_BASE_URL + "/auth/me",
-          { withCredentials: true }
+          { withCredentials: true },
         );
         this.user = res.data || {};
       } catch {
         this.$router.push("/");
       }
     },
+
     async fetchSchoolYears() {
       try {
         const res = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years",
         );
         this.schoolYears = res.data.map((y) => ({ ...y }));
 
-        // auto-select if no selection
+        // Auto-select the most recent active year if nothing is selected
         if (!this.selectedSchoolYearId) {
           this.autoSelectActiveYear();
         }
@@ -171,54 +173,60 @@ export default {
         console.error(err);
       }
     },
-    async updateSchoolYear() {
-      const selectedSY = this.schoolYears.find(
-        (y) => y.school_year_id === this.selectedSchoolYearId
-      );
-      if (!selectedSY) return;
 
-      await axios.patch(
-        process.env.VUE_APP_API_BASE_URL +
-          `/school-year/update-timestamp/${selectedSY.school_year_id}`
-      );
-
-      // emit change to event bus
-      eventBus.emit(selectedSY.school_year_id);
-
-      // optionally refetch updated school years
-      await this.fetchSchoolYears();
-    },
     autoSelectActiveYear() {
-      // Get all active school years
-      const activeList = this.schoolYears
-        .filter((y) => y.is_active)
-        .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+      const activeList = this.activeYears.sort(
+        (a, b) => new Date(b.updated_at) - new Date(a.updated_at),
+      );
 
-      // If there are active years, pick the most recent one
       if (activeList.length > 0) {
         this.selectedSchoolYearId = activeList[0].school_year_id;
-        return;
+
+        // Emit full object to eventBus
+        eventBus.emit(activeList[0]);
       }
-
-      // Fallback: pick most recently updated even if not active
-      const fallback = [...this.schoolYears].sort(
-        (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
-      )[0];
-
-      this.selectedSchoolYearId = fallback?.school_year_id || "";
     },
+
     getSemesterLabel(sem) {
       return sem === 1 ? "1st Semester" : sem === 2 ? "2nd Semester" : "";
     },
+
+    async updateSchoolYear() {
+      const selectedSY = this.schoolYears.find(
+        (y) => y.school_year_id === this.selectedSchoolYearId,
+      );
+      if (!selectedSY) return;
+
+      try {
+        // Update timestamp (backend)
+        await axios.patch(
+          process.env.VUE_APP_API_BASE_URL +
+            `/school-year/update-timestamp/${selectedSY.school_year_id}`,
+        );
+
+        // Emit the full school year object to eventBus for reactive listeners
+        eventBus.emit(selectedSY);
+      } catch (err) {
+        console.error("Failed to update school year:", err);
+      }
+    },
   },
+
   mounted() {
     this.fetchUser();
     this.fetchSchoolYears();
 
-    // Reactive event bus listener
-    this.stopBus = eventBus.on(async (newSchoolYearId) => {
+    // Listen to eventBus for updates
+    this.stopBus = eventBus.on(async (newSY) => {
+      if (!newSY) return;
+
+      // Refetch school years to get updated is_active status
       await this.fetchSchoolYears();
-      this.selectedSchoolYearId = newSchoolYearId;
+
+      // Select the new active year if it’s active
+      if (newSY.is_active) {
+        this.selectedSchoolYearId = newSY.school_year_id;
+      }
     });
   },
 

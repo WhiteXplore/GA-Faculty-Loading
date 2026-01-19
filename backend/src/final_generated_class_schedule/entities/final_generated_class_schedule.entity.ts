@@ -29,8 +29,8 @@ export class FinalGeneratedClassSchedule {
   @Column({ type: 'varchar', length: 50, nullable: true })
   day: string; // e.g., Monday
 
-  @Column({ type: 'int', nullable: true })
-  start_hour: number; // 24-hour format
+  @Column({ type: 'float', nullable: true })
+  start_hour: number; // allows 16.5, 14.25, etc.
 
   @Column({ type: 'float', nullable: true })
   duration: number;
@@ -64,4 +64,12 @@ export class FinalGeneratedClassSchedule {
 
   @Column({ type: 'varchar', length: 10, nullable: true })
   semester: string;
+
+  @Column({
+    type: 'varchar',
+    length: 50,
+    nullable: true,
+    default: 'face to face',
+  })
+  mode: string;
 }

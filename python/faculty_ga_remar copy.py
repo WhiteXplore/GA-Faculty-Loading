@@ -17,7 +17,6 @@ DB_PASS = "admin12345.."
 DB_HOST = "127.0.0.2"
 DB_PORT = 3306
 DB_NAME = "dnsc_class_scheduler"
-
 engine = create_engine(
     f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}",
     pool_pre_ping=True,

@@ -151,19 +151,30 @@ export default {
           await axios.patch(
             process.env.VUE_APP_API_BASE_URL +
               `/school-year/update-school-year/${this.schoolYearData.school_year_id}`,
-            payload
+            payload,
           );
           toast.success("School Year updated successfully!");
         } else {
           await axios.post(
             process.env.VUE_APP_API_BASE_URL + "/school-year/add-school-year",
-            payload
+            payload,
           );
           toast.success("School Year added successfully!");
         }
 
-        // Emit event to TopBar
-        eventBus.emit(payload.school_year_id);
+        // inside submitData()
+        if (this.form.is_active) {
+          // Only emit if this is now the active school year
+          eventBus.emit({
+            school_year_id: this.form.school_year_id,
+            isActive: true,
+          });
+        } else {
+          eventBus.emit({
+            school_year_id: this.form.school_year_id,
+            isActive: false,
+          });
+        }
 
         this.$emit("refresh");
         this.$emit("close");
@@ -171,7 +182,7 @@ export default {
         toast.error(
           this.isEdit
             ? "Failed to update school year."
-            : "Failed to add school year."
+            : "Failed to add school year.",
         );
       }
     },

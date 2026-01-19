@@ -6,15 +6,11 @@
     <!-- Header / Add Button -->
     <div class="flex justify-end mb-2">
       <div
+        class="gap-1 flex cursor-pointer border border-green-600 text-green-600 px-2 py-1 rounded-lg hover:bg-green-50 transition"
         @click="$emit('add')"
-        class="w-fit flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-lg shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
       >
-        <div
-          class="flex items-center justify-center w-5 h-5 bg-white rounded-full"
-        >
-          <icon :name="'circle-add'" class="w-4 h-4 text-defaultGreen" />
-        </div>
-        <span class="font-medium text-sm">Edit Expertise</span>
+        <icon :name="'edit'" />
+        <button>Edit Expertise</button>
       </div>
     </div>
 

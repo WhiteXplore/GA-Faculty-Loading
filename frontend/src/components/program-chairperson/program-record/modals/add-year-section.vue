@@ -18,7 +18,7 @@
           <div class="flex gap-2 items-center">
             <icon :name="'add-students'" class="size-5" />
             <h1 class="font-semibold tracking-wide text-lg">
-              Add Year/Section – {{ programData.program_name }}
+              Add Year/Section – {{ programData.program_name }}sss
             </h1>
           </div>
           <icon
@@ -81,9 +81,18 @@
                 class="px-4 py-2 hover:bg-green-50 cursor-pointer transition-colors"
                 @mousedown="selectSchoolYear(sy)"
               >
-                {{ sy.school_year_name }}
+                {{ sy.school_year_name }} - {{ formatSemester(sy.semester) }}
               </div>
             </div>
+          </div>
+          <!-- Selected School Year Badge -->
+          <div v-if="selectedSchoolYear" class="mt-2">
+            <span
+              class="inline-flex items-center bg-green-100 text-green-900 text-sm font-semibold px-4 py-1.5 rounded-full border border-green-300 shadow-sm"
+            >
+              {{ selectedSchoolYear.school_year_name }} –
+              {{ formatSemester(selectedSchoolYear.semester) }}
+            </span>
           </div>
 
           <!-- Year/Section Configuration -->
@@ -272,6 +281,7 @@ export default {
   data() {
     return {
       selectedSchoolYearId: null,
+      selectedSchoolYear: null,
       searchSchoolYearQuery: "",
       showSchoolYearDropdown: false,
       schoolYears: [],
@@ -288,21 +298,26 @@ export default {
       if (!this.searchSchoolYearQuery) return this.schoolYears;
       const q = this.searchSchoolYearQuery.toLowerCase();
       return this.schoolYears.filter((sy) =>
-        sy.school_year_name?.toLowerCase().includes(q)
+        sy.school_year_name?.toLowerCase().includes(q),
       );
     },
     totalSections() {
       return this.yearLevels.reduce(
         (sum, year) => sum + (year.numSections || 0),
-        0
+        0,
       );
     },
   },
   methods: {
+    formatSemester(value) {
+      if (value === 1 || value === "1") return "First Semester";
+      if (value === 2 || value === "2") return "Second Semester";
+      return value; // fallback if unexpected
+    },
     async fetchSchoolYears() {
       try {
         const response = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years",
         );
         this.schoolYears = response.data;
       } catch (error) {
@@ -312,6 +327,7 @@ export default {
     selectSchoolYear(sy) {
       this.selectedSchoolYearId = sy.school_year_id;
       this.searchSchoolYearQuery = sy.school_year_name;
+      this.selectedSchoolYear = sy;
       this.showSchoolYearDropdown = false;
     },
     getSectionLetter(index) {
@@ -374,14 +390,14 @@ export default {
         const promises = classesToCreate.map((classData) =>
           axios.post(
             process.env.VUE_APP_API_BASE_URL + "/class/add-class",
-            classData
-          )
+            classData,
+          ),
         );
 
         await Promise.all(promises);
 
         toast.success(
-          `Successfully created ${classesToCreate.length} section(s)!`
+          `Successfully created ${classesToCreate.length} section(s)!`,
         );
 
         this.$emit("refresh");

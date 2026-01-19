@@ -494,7 +494,7 @@ export default {
       const ids = new Set(
         this.schedule
           .map((s) => s.institute_id)
-          .filter((id) => id !== null && id !== undefined)
+          .filter((id) => id !== null && id !== undefined),
       );
       return Array.from(ids);
     },
@@ -505,7 +505,7 @@ export default {
         const allPrograms = new Set(
           this.schedule
             .map((s) => s.program_id)
-            .filter((id) => id !== null && id !== undefined)
+            .filter((id) => id !== null && id !== undefined),
         );
         return Array.from(allPrograms);
       }
@@ -514,7 +514,7 @@ export default {
         this.schedule
           .filter((s) => s.institute_id == this.selectedInstituteId)
           .map((s) => s.program_id)
-          .filter((id) => id !== null && id !== undefined)
+          .filter((id) => id !== null && id !== undefined),
       );
       return Array.from(programs);
     },
@@ -530,7 +530,7 @@ export default {
     // 🔹 Compute total number of pages
     totalPages() {
       return Math.ceil(
-        Object.keys(this.filteredGroupedSchedule).length / this.itemsPerPage
+        Object.keys(this.filteredGroupedSchedule).length / this.itemsPerPage,
       );
     },
   },
@@ -566,7 +566,7 @@ export default {
           process.env.VUE_APP_API_BASE_URL + "/auth/me",
           {
             withCredentials: true,
-          }
+          },
         );
         if (res.data) {
           this.user = res.data;
@@ -590,12 +590,12 @@ export default {
 
       try {
         const response = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/generated-scheduled/load"
+          process.env.VUE_APP_API_BASE_URL + "/generated-scheduled/load",
         );
 
         if (response.data.success && response.data.data) {
           const allSchedules = Object.values(response.data.data).flatMap(
-            (set) => set.best_schedule || []
+            (set) => set.best_schedule || [],
           );
 
           const deduped = this.deduplicateSchedules(allSchedules);
@@ -603,7 +603,7 @@ export default {
           const filtered = deduped.filter(
             (s) =>
               !this.user.institute_id ||
-              s.institute_id === this.user.institute_id
+              s.institute_id === this.user.institute_id,
           );
 
           this.schedule = filtered;
@@ -661,8 +661,8 @@ export default {
       if (this.selectedInstituteId) {
         filtered = Object.fromEntries(
           Object.entries(filtered).filter(([, schedules]) =>
-            schedules.some((s) => s.institute_id == this.selectedInstituteId)
-          )
+            schedules.some((s) => s.institute_id == this.selectedInstituteId),
+          ),
         );
       }
 
@@ -670,8 +670,8 @@ export default {
       if (this.selectedProgramId) {
         filtered = Object.fromEntries(
           Object.entries(filtered).filter(([, schedules]) =>
-            schedules.some((s) => s.program_id == this.selectedProgramId)
-          )
+            schedules.some((s) => s.program_id == this.selectedProgramId),
+          ),
         );
       }
 
@@ -686,7 +686,7 @@ export default {
         (item) =>
           item.day === day &&
           Number(item.start_hour) < slot.end &&
-          Number(item.end_hour) > slot.start
+          Number(item.end_hour) > slot.start,
       );
     },
     getBlockHeight(item) {
@@ -741,7 +741,7 @@ export default {
       ];
       const index =
         Math.abs(
-          instructor.split("").reduce((sum, c) => sum + c.charCodeAt(0), 0)
+          instructor.split("").reduce((sum, c) => sum + c.charCodeAt(0), 0),
         ) % colors.length;
       return colors[index];
     },

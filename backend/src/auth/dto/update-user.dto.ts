@@ -35,6 +35,10 @@ export class UpdateUserDto {
   @IsNumber()
   program_id?: number;
 
+  @IsOptional()
+  @IsNumber()
+  school_year_id?: number;
+
   // ✅ Allow array of course IDs for expertise
   @IsOptional()
   @IsArray()
