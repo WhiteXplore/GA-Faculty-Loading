@@ -388,20 +388,24 @@
                         >
                           {{ item.mode === "face to face" ? "F2F" : "Online" }}
                         </span>
-
-                        <div class="truncate font-semibold">
-                          {{ item.course_code }}
+                        <div class="p-2 leading-snug truncate">
+                          <p class="font-semibold truncate">
+                            {{ item.course_code }}
+                          </p>
+                          <p class="text-gray-600 truncate">
+                            {{ item.room_name }}
+                          </p>
+                          <p class="text-gray-600 truncate">
+                            {{ item.set_name }}
+                          </p>
+                          <button
+                            v-if="hasRoomConflict(item)"
+                            @click.stop="openConflictModal(item)"
+                            class="mt-1 w-full text-[10px] bg-red-100 text-red-600 rounded"
+                          >
+                            ⚠ View
+                          </button>
                         </div>
-                        <div class="truncate">{{ item.room_name }}</div>
-                        <div class="truncate">{{ item.set_name }}</div>
-
-                        <button
-                          v-if="hasRoomConflict(item)"
-                          @click.stop="openConflictModal(item)"
-                          class="mt-1 w-full text-[10px] bg-red-100 text-red-600 rounded"
-                        >
-                          ⚠ View Conflict
-                        </button>
                       </div>
                     </template>
                   </td>
@@ -473,9 +477,7 @@
             {{ formatTime(conflict.start_hour) }} -
             {{ formatTime(conflict.start_hour + conflict.duration) }}
           </p>
-          <p class="text-sm text-gray-800">
-            <span class="font-semibold">Day:</span> {{ conflict.mode }}
-          </p>
+
           <p class="text-sm text-gray-800" v-if="conflict.reason">
             <span class="font-semibold">Reason:</span> {{ conflict.reason }}
           </p>
@@ -555,6 +557,7 @@ export default {
       activeSchoolYear: null,
       stopEventBus: null,
       conflictModalVisible: false,
+      activeTooltipId: null,
     };
   },
 
