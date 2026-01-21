@@ -94,7 +94,18 @@
                         <td
                           v-for="day in days"
                           :key="day"
-                          class="relative border h-[60px] p-0"
+                          class="relative border p-0 overflow-visible transition-colors"
+                          :class="{
+                            'bg-red-100':
+                              draggedRecord &&
+                              getConflictsForDrag(
+                                draggedRecord,
+                                instructor,
+                                day,
+                                slot.start,
+                              ).length,
+                          }"
+                          :style="{ height: timeSlotHeight + 'px' }"
                           @dragover.prevent
                           @drop="onDrop($event, instructor, day, slot.start)"
                         >
@@ -150,14 +161,15 @@
                               </div>
                               <div class="truncate">{{ item.room_name }}</div>
                               <div class="truncate">{{ item.set_name }}</div>
-
-                              <button
-                                v-if="hasRoomConflict(item)"
-                                @click.stop="openConflictModal(item)"
-                                class="mt-1 w-full text-[10px] bg-red-100 text-red-600 rounded"
-                              >
-                                ⚠ View Conflict
-                              </button>
+                              <div class="w-full flex justify-center">
+                                <button
+                                  v-if="hasRoomConflict(item)"
+                                  @click.stop="openConflictModal(item)"
+                                  class="mt-1 px-2 h-5 text-[10px] bg-red-100 text-red-600 rounded"
+                                >
+                                  ⚠ View
+                                </button>
+                              </div>
                             </div>
                           </template>
                         </td>
@@ -230,7 +242,7 @@
                 :key="record.id || record.tempId"
                 :id="'row-' + (record.id || record.tempId)"
                 :class="[
-                  'hover:bg-gray-50',
+                  'hover:bg-green-200',
                   highlightedRecordId === (record.id || record.tempId)
                     ? 'bg-blue-100'
                     : '',
@@ -445,9 +457,22 @@
               {{ formatTime(conflict.start_hour) }} -
               {{ formatTime(conflict.start_hour + conflict.duration) }}
             </p>
-            <p class="text-sm text-gray-800">
-              <span class="font-semibold">Day:</span> {{ conflict.mode }}
+            <p class="text-sm text-gray-800 flex items-center gap-1">
+              <span class="font-semibold">Mode:</span>
+              <span
+                v-if="conflict.mode"
+                :class="[
+                  'w-auto h-4 px-2 rounded-full text-[10px] font-bold flex items-center justify-center text-white',
+                  conflict.mode === 'face to face' ? 'bg-orange-500' : '',
+                  conflict.mode === 'online' ? 'bg-purple-500' : '',
+                ]"
+              >
+                {{
+                  conflict.mode === "face to face" ? "Face to Face" : "Online"
+                }}
+              </span>
             </p>
+
             <p class="text-sm text-gray-800" v-if="conflict.reason">
               <span class="font-semibold">Reason:</span> {{ conflict.reason }}
             </p>
@@ -741,6 +766,38 @@ export default {
       "fetchClassSections",
     ]),
     /* ------------------ 1. UTILITY ------------------ */ // called whenever mode changes
+
+    sanitizePayload(record) {
+      const allowed = [
+        "class_id",
+        "course_id",
+        "program_id",
+        "institute_id",
+        "type",
+        "day",
+        "start_hour",
+        "duration",
+
+        "room_id",
+        "room_type",
+        "room_capacity",
+        "class_size",
+        "faculty_id",
+        "school_year",
+        "semester",
+        "mode",
+      ];
+
+      const payload = {};
+
+      allowed.forEach((key) => {
+        if (record[key] !== undefined) {
+          payload[key] = record[key];
+        }
+      });
+
+      return payload;
+    },
     highlightRow(item) {
       this.highlightedRecordId = item.id || item.tempId;
       // optional: scroll to the row
@@ -1126,7 +1183,7 @@ export default {
           // Determine conflict reason
           let reason = [];
           if (r.class_id && record.class_id && r.class_id === record.class_id)
-            reason.push("Same Class");
+            reason.push("Same set and section in the same day and time!");
           if (
             record.mode === "face to face" &&
             r.mode === "face to face" &&
@@ -1139,7 +1196,7 @@ export default {
             r.faculty_id === record.faculty_id &&
             (r.mode || "").toLowerCase() === (record.mode || "").toLowerCase()
           )
-            reason.push("Same Faculty + Same Mode");
+            reason.push("Same Faculty and Same Mode");
 
           if (!reason.length) return null;
 
@@ -1208,7 +1265,25 @@ export default {
     },
 
     /* ------------------ 8. DRAG & DROP ---------------- */
+    getConflictsForDrag(record, targetInstructor, targetDay, targetStartHour) {
+      const clonedRecord = { ...record };
+      clonedRecord.faculty_name = targetInstructor;
+      clonedRecord.day = targetDay;
+      clonedRecord.start_hour = targetStartHour;
 
+      return this.getConflictingRecords(clonedRecord);
+    },
+    onDragOver(event, instructor, day, slotStart) {
+      if (!this.draggedRecord) return;
+      this.previewX = event.clientX + 12;
+      this.previewY = event.clientY + 12;
+      this.conflictPreview = this.getConflictsForDrag(
+        this.draggedRecord,
+        instructor,
+        day,
+        slotStart,
+      );
+    },
     onDragStart(event, record) {
       this.draggedRecord = record;
       event.dataTransfer.effectAllowed = "move";
@@ -1263,17 +1338,15 @@ export default {
         // PATCH both records
         await Promise.all(
           [targetRecord, this.draggedRecord].map(async (rec) => {
-            const payload = { ...rec };
+            const payload = this.sanitizePayload(rec);
             delete payload.searchRoomQuery;
             delete payload.showRoomDropdown;
             delete payload.searchCourseQuery;
             delete payload.showCourseDropdown;
             delete payload.searchSectionQuery;
             delete payload.showSectionDropdown;
-
             const id = rec.id || rec.schedule_id || rec.final_generated_id;
             if (!id) return;
-
             try {
               await axios.patch(
                 `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${id}`,
@@ -1293,7 +1366,7 @@ export default {
           start_hour: targetStartHour,
         });
 
-        const payload = { ...this.draggedRecord };
+        const payload = this.sanitizePayload(this.draggedRecord);
         delete payload.searchRoomQuery;
         delete payload.showRoomDropdown;
         delete payload.searchCourseQuery;
@@ -1331,7 +1404,7 @@ export default {
           const key =
             record.id ||
             record.tempId ||
-            `${record.course_code}|${record.room_name}|${record.class_id}|${record.mode}|${record.day}|${record.start_hour}|${record.faculty_name}`;
+            `${record.course_id}|${record.room_id}|${record.class_id}|${record.mode}|${record.day}|${record.start_hour}|${record.faculty_id}`;
           if (seen.has(key)) return false;
           seen.add(key);
           return true;
@@ -1341,19 +1414,14 @@ export default {
         const existingRows = [];
 
         this.localData.forEach((record) => {
-          const payload = { ...record };
-
-          // Before sending to backend
-          payload.mode =
-            record.mode?.toLowerCase() === "online" ? "online" : "face to face";
-
-          // Remove UI-only props
-          delete payload.searchRoomQuery;
-          delete payload.showRoomDropdown;
-          delete payload.searchCourseQuery;
-          delete payload.showCourseDropdown;
-          delete payload.searchSectionQuery;
-          delete payload.showSectionDropdown;
+          // 🔒 SANITIZE PAYLOAD HERE
+          const payload = this.sanitizePayload({
+            ...record,
+            mode:
+              record.mode?.toLowerCase() === "online"
+                ? "online"
+                : "face to face",
+          });
 
           const existingId =
             record.id || record.schedule_id || record.final_generated_id;
@@ -1365,7 +1433,7 @@ export default {
           }
         });
 
-        // Save new rows
+        // ➕ Create new schedules
         if (newRows.length) {
           await axios.post(
             `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/bulk`,
@@ -1373,21 +1441,22 @@ export default {
           );
         }
 
-        // Update existing rows
+        // ✏️ Update existing schedules
         if (existingRows.length) {
           await Promise.all(
-            existingRows.map(async ({ id, payload }) => {
-              await axios.patch(
+            existingRows.map(({ id, payload }) =>
+              axios.patch(
                 `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${id}`,
                 payload,
-              );
-            }),
+              ),
+            ),
           );
         }
 
-        // Refresh localData from store
+        // 🔄 Refresh schedules
         const fetchDataStore = useFetchDataStore();
         await fetchDataStore.fetchFinalSchedules();
+
         this.localData = (fetchDataStore.final_schedules || []).map((rec) => ({
           ...rec,
           searchRoomQuery: rec.room_name || "",

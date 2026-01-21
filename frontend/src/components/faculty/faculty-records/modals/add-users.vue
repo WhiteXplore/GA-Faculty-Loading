@@ -112,8 +112,8 @@
                 class="w-full border px-2 py-3.5 border-gray-600 rounded-md text-md text-gray-800"
               >
                 <option disabled value="">Select type</option>
-                <option value="Full Time">Full Time</option>
-                <option value="Part Time">Part Time</option>
+                <option value="full time">Full Time</option>
+                <option value="part time">Part Time</option>
               </select>
             </div>
 
@@ -337,7 +337,7 @@ export default {
         .filter(
           (program) =>
             program.program_name.toLowerCase().includes(query) &&
-            program.institute_id === this.form.institute_id
+            program.institute_id === this.form.institute_id,
         )
         .sort((a, b) => a.program_name.localeCompare(b.program_name));
     },
@@ -345,7 +345,7 @@ export default {
       const query = this.searchInstituteQuery?.toLowerCase() || "";
       return [...this.institutes]
         .filter((institute) =>
-          institute.institute_name.toLowerCase().includes(query)
+          institute.institute_name.toLowerCase().includes(query),
         )
         .sort((a, b) => a.institute_name.localeCompare(b.institute_name));
     },
@@ -354,7 +354,7 @@ export default {
       const query = this.searchSchoolYearQuery?.toLowerCase() || "";
       return [...this.activeYears]
         .filter((schoolyear) =>
-          schoolyear.school_year_name.toLowerCase().includes(query)
+          schoolyear.school_year_name.toLowerCase().includes(query),
         )
         .sort((a, b) => a.school_year_name.localeCompare(b.school_year_name));
     },
@@ -427,7 +427,7 @@ export default {
           await axios.patch(
             process.env.VUE_APP_API_BASE_URL + `/auth/update/${userId}`,
             updateData,
-            { withCredentials: true }
+            { withCredentials: true },
           );
           toast.success("User updated successfully!");
           this.$emit("updated");
@@ -437,7 +437,7 @@ export default {
             this.form,
             {
               withCredentials: true,
-            }
+            },
           );
           toast.success("User registered successfully!");
           const audio = new Audio(require("@/assets/add.mp3"));
@@ -456,7 +456,7 @@ export default {
           process.env.VUE_APP_API_BASE_URL + "/auth/me",
           {
             withCredentials: true,
-          }
+          },
         );
 
         if (response.data) {
@@ -502,7 +502,7 @@ export default {
       } else if (this.userData.institute_id) {
         this.form.institute_id = this.userData.institute_id;
         const institute = this.institutes.find(
-          (inst) => inst.institute_id === this.userData.institute_id
+          (inst) => inst.institute_id === this.userData.institute_id,
         );
         if (institute) this.searchInstituteQuery = institute.institute_name;
       }
@@ -514,7 +514,7 @@ export default {
       } else if (this.userData.program_id) {
         this.form.program_id = this.userData.program_id;
         const program = this.programs.find(
-          (prog) => prog.program_id === this.userData.program_id
+          (prog) => prog.program_id === this.userData.program_id,
         );
         if (program) this.searchProgramQuery = program.program_name;
       }
@@ -526,7 +526,7 @@ export default {
       } else if (this.isEditMode && this.userData.school_year_id) {
         this.form.school_year_id = this.userData.school_year_id;
         const year = this.activeYears.find(
-          (y) => y.school_year_id === this.userData.school_year_id
+          (y) => y.school_year_id === this.userData.school_year_id,
         );
         if (year) this.searchSchoolYearQuery = year.school_year_name;
       }

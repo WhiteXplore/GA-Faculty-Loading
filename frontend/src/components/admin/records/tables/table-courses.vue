@@ -74,43 +74,48 @@
           </div>
           <span class="text-sm font-medium text-gray-600">Per page</span>
         </div>
-
-        <!-- Curriculum filter -->
-        <div class="relative" v-if="user?.role === 'Admin'">
-          <select
-            v-model="selectedCurriculum"
-            @change="currentPage = 1"
-            class="rounded-full border border-green-600 px-4 py-2 text-green-900 text-sm font-semibold shadow-sm cursor-pointer"
-          >
-            <option value="">All Curriculums</option>
-            <option v-for="curr in uniqueCurriculums" :key="curr" :value="curr">
-              {{ curr }}
-            </option>
-          </select>
-        </div>
-
-        <!-- Search input -->
-        <div class="relative w-full sm:w-[280px]">
-          <input
-            v-model="searchQuery"
-            @input="currentPage = 1"
-            type="text"
-            placeholder="Search courses..."
-            class="rounded-full border border-green-600 px-4 py-2 pl-10 text-sm shadow-sm w-full"
-          />
-          <div
-            class="absolute inset-y-0 left-3 flex items-center text-green-700 pointer-events-none"
-          >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
+        <div class="flex gap-2">
+          <!-- Curriculum filter -->
+          <div class="relative" v-if="user?.role === 'Admin'">
+            <select
+              v-model="selectedCurriculum"
+              @change="currentPage = 1"
+              class="rounded-full border border-green-600 px-4 py-2 text-green-900 text-sm font-semibold shadow-sm cursor-pointer"
             >
-              <circle cx="11" cy="11" r="8" />
-              <path d="M21 21l-4.35-4.35" />
-            </svg>
+              <option value="">All Curriculums</option>
+              <option
+                v-for="curr in uniqueCurriculums"
+                :key="curr"
+                :value="curr"
+              >
+                {{ curr }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Search input -->
+          <div class="relative w-full sm:w-[280px]">
+            <input
+              v-model="searchQuery"
+              @input="currentPage = 1"
+              type="text"
+              placeholder="Search courses..."
+              class="rounded-full border border-green-600 px-4 py-2 pl-10 text-sm shadow-sm w-full"
+            />
+            <div
+              class="absolute inset-y-0 left-3 flex items-center text-green-700 pointer-events-none"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="M21 21l-4.35-4.35" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>

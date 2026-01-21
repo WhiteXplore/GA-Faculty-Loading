@@ -74,6 +74,23 @@
             </button>
           </div>
 
+          <!-- Swap Button -->
+          <button
+            @click="swapCourses"
+            :disabled="swapSelection.length !== 2"
+            class="group flex items-center gap-2 px-4 py-2 border border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white rounded-xl shadow-sm transition"
+          >
+            <div
+              class="p-1 bg-yellow-100 rounded-full flex items-center justify-center group-hover:bg-white transition"
+            >
+              <icon
+                name="arrow-path"
+                class="w-4 h-4 text-yellow-600 group-hover:text-yellow-600"
+              />
+            </div>
+            <span class="font-medium text-sm">Swap</span>
+          </button>
+
           <!-- Close Compare -->
           <button
             @click="backFromCompare"
@@ -343,17 +360,7 @@
                   <td
                     v-for="day in days"
                     :key="day"
-                    class="relative border p-0 overflow-visible transition-colors"
-                    :class="{
-                      'bg-red-100':
-                        draggedRecord &&
-                        getConflictsForDrag(
-                          draggedRecord,
-                          instructor,
-                          day,
-                          slot.start,
-                        ).length,
-                    }"
+                    class="relative border p-0 overflow-visible"
                     :style="{ height: timeSlotHeight + 'px' }"
                     @dragover.prevent
                     @drop="onDrop($event, instructor, day, slot.start)"
@@ -562,9 +569,9 @@
               {{ conflict.mode === "face to face" ? "Face to Face" : "Online" }}
             </span>
           </p>
-          <!-- <p class="text-sm text-gray-800" v-if="conflict.reason">
+          <p class="text-sm text-gray-800" v-if="conflict.reason">
             <span class="font-semibold">Reason:</span> {{ conflict.reason }}
-          </p> -->
+          </p>
         </div>
       </div>
 
@@ -782,14 +789,6 @@ export default {
   },
 
   methods: {
-    getConflictsForDrag(record, targetInstructor, targetDay, targetStartHour) {
-      const clonedRecord = { ...record };
-      clonedRecord.faculty_name = targetInstructor;
-      clonedRecord.day = targetDay;
-      clonedRecord.start_hour = targetStartHour;
-
-      return this.getConflictingRecords(clonedRecord);
-    },
     showScheduleTooltip(event, item) {
       const rect = event.currentTarget.getBoundingClientRect();
 
@@ -817,62 +816,32 @@ export default {
       const recordStart = this.normalizeHour(record.start_hour);
       const recordEnd = recordStart + Number(record.duration);
 
-      return this.finalSchedules
-        .filter((r) => {
-          if (r.id === record.id) return false;
-          if (r.day !== record.day) return false;
+      return this.finalSchedules.filter((r) => {
+        if (r.id === record.id) return false;
+        if (r.day !== record.day) return false;
 
-          const rStart = this.normalizeHour(r.start_hour);
-          const rEnd = rStart + Number(r.duration);
+        const rStart = this.normalizeHour(r.start_hour);
+        const rEnd = rStart + Number(r.duration);
+        const overlap =
+          Math.max(rStart, recordStart) < Math.min(rEnd, recordEnd);
+        if (!overlap) return false;
 
-          // time overlap check
-          return Math.max(rStart, recordStart) < Math.min(rEnd, recordEnd);
-        })
-        .map((r) => {
-          let reason = "";
+        // Conflicts
+        const sameClass =
+          r.class_id && record.class_id && r.class_id === record.class_id;
+        const sameRoom =
+          record.mode === "face to face" &&
+          r.mode === "face to face" &&
+          r.room_id &&
+          record.room_id &&
+          r.room_id === record.room_id;
+        const sameFacultyMode =
+          r.faculty_id === record.faculty_id &&
+          (r.mode || "").toLowerCase() === (record.mode || "").toLowerCase();
 
-          // 🔴 SAME ROOM + SAME DAY + OVERLAPPING TIME
-          if (
-            r.room_id &&
-            record.room_id &&
-            r.room_id === record.room_id &&
-            r.day === record.day &&
-            record.mode === "face to face" &&
-            r.mode === "face to face"
-          ) {
-            reason =
-              "Conflict detected due to: SAME ROOM, SAME DAY, and OVERLAPPING TIME";
-          }
-
-          // 🔴 SAME CLASS / SECTION + SAME DAY + OVERLAPPING TIME
-          else if (
-            r.class_id &&
-            record.class_id &&
-            r.class_id === record.class_id &&
-            r.day === record.day
-          ) {
-            reason =
-              "Conflict detected due to: SAME CLASS / SECTION, SAME DAY, and OVERLAPPING TIME";
-          }
-
-          // 🔴 SAME FACULTY + SAME MODE + SAME DAY + OVERLAPPING TIME
-          else if (
-            r.faculty_id === record.faculty_id &&
-            r.day === record.day &&
-            (r.mode || "").toLowerCase() === (record.mode || "").toLowerCase()
-          ) {
-            reason =
-              "Conflict detected due to: SAME FACULTY, SAME MODE, SAME DAY, and OVERLAPPING TIME";
-          }
-
-          return {
-            ...r,
-            reason,
-          };
-        })
-        .filter((r) => r.reason); // only keep real conflicts
+        return sameClass || sameRoom || sameFacultyMode;
+      });
     },
-
     hasRoomConflict(record) {
       return this.getConflictingRecords(record).length > 0;
     }, // Open the conflict modal for a record
@@ -932,39 +901,24 @@ export default {
     handleModalSaved(updatedInstructorSchedules) {
       if (!updatedInstructorSchedules.length) return;
 
-      // 1️⃣ Merge updates into finalSchedules
+      // Merge updates into finalSchedules
       updatedInstructorSchedules.forEach((updated) => {
         const index = this.finalSchedules.findIndex((s) => s.id === updated.id);
         if (index > -1) {
-          this.finalSchedules[index] = { ...updated };
+          this.finalSchedules[index] = { ...updated }; // fresh copy
         } else {
           this.finalSchedules.push({ ...updated });
         }
       });
 
-      // 2️⃣ Rebuild grouped schedules
+      // Refresh grouped and filtered schedules
       this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
+      this.filteredGroupedSchedule = { ...this.groupedSchedule };
 
-      // 3️⃣ ✅ PRESERVE COMPARE VIEW
-      if (
-        this.showCompareView &&
-        this.compareInstructorA &&
-        this.compareInstructorB
-      ) {
-        this.filteredGroupedSchedule = {
-          [this.compareInstructorA]:
-            this.groupedSchedule[this.compareInstructorA] || [],
-          [this.compareInstructorB]:
-            this.groupedSchedule[this.compareInstructorB] || [],
-        };
-      } else {
-        this.filteredGroupedSchedule = { ...this.groupedSchedule };
-      }
-
-      // 4️⃣ Reset pagination
+      // Reset pagination
       this.currentPage = 1;
 
-      // 5️⃣ Keep modal data in sync (no view reset)
+      // If modal is open, update its data with fresh copies
       if (this.showEditModal) {
         const instructorsInModal = Array.from(
           new Set(this.editInstructorData.map((item) => item.faculty_name)),
@@ -1001,16 +955,176 @@ export default {
         toast.info("You can only swap 2 courses at a time.");
       }
     },
-    onDragOver(event, instructor, day, slotStart) {
-      if (!this.draggedRecord) return;
-      this.previewX = event.clientX + 12;
-      this.previewY = event.clientY + 12;
-      this.conflictPreview = this.getConflictsForDrag(
-        this.draggedRecord,
-        instructor,
-        day,
-        slotStart,
-      );
+
+    async swapCourses() {
+      if (this.swapSelection.length !== 2) {
+        toast.info("Select exactly 2 courses to swap.");
+        return;
+      }
+
+      let [courseA, courseB] = this.swapSelection;
+
+      // -------------------------
+      // Helpers
+      // -------------------------
+      const getTimeRange = (course) => {
+        const start = this.normalizeHour(Number(course.start_hour));
+        const end = start + Number(course.duration);
+        return { start, end };
+      };
+
+      const isOverlap = (c1, c2) => {
+        const { start: s1, end: e1 } = getTimeRange(c1);
+        const { start: s2, end: e2 } = getTimeRange(c2);
+        return Math.max(s1, s2) < Math.min(e1, e2);
+      };
+
+      const hasConflict = (testCourse, ignoreIds = []) =>
+        this.finalSchedules.some((s) => {
+          if (ignoreIds.includes(s.id)) return false;
+          if (s.day !== testCourse.day) return false;
+
+          const overlap = isOverlap(s, testCourse);
+          if (!overlap) return false;
+
+          const sameRoom =
+            s.room_id &&
+            testCourse.room_id &&
+            s.room_id === testCourse.room_id &&
+            s.mode === "face to face";
+
+          const sameFaculty = s.faculty_id === testCourse.faculty_id;
+
+          return sameRoom || sameFaculty;
+        });
+
+      // -------------------------
+      // Simulate FULL SLOT SWAP
+      // -------------------------
+      const swapFields = [
+        "faculty_id",
+        "faculty_name",
+        "day",
+        "start_hour",
+        "duration",
+        "room_id",
+        "room_name",
+        "mode",
+        "type",
+      ];
+
+      const simulatedA = { ...courseA };
+      const simulatedB = { ...courseB };
+
+      swapFields.forEach((field) => {
+        const temp = simulatedA[field];
+        simulatedA[field] = simulatedB[field];
+        simulatedB[field] = temp;
+      });
+
+      // -------------------------
+      // Conflict check AFTER swap
+      // -------------------------
+      if (
+        hasConflict(simulatedA, [courseA.id, courseB.id]) ||
+        hasConflict(simulatedB, [courseA.id, courseB.id])
+      ) {
+        toast.error(
+          "Swap cannot be done due to room or faculty conflict after swapping.",
+        );
+        return;
+      }
+
+      // -------------------------
+      // APPLY SWAP (LOCAL)
+      // -------------------------
+      swapFields.forEach((field) => {
+        const temp = courseA[field];
+        courseA[field] = courseB[field];
+        courseB[field] = temp;
+      });
+
+      this.finalSchedules = this.finalSchedules.map((s) => {
+        if (s.id === courseA.id) return { ...courseA };
+        if (s.id === courseB.id) return { ...courseB };
+        return s;
+      });
+
+      // -------------------------
+      // UPDATE UI GROUPINGS
+      // -------------------------
+      this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
+      this.filteredGroupedSchedule = this.showCompareView
+        ? {
+            [this.compareInstructorA]:
+              this.groupedSchedule[this.compareInstructorA] || [],
+            [this.compareInstructorB]:
+              this.groupedSchedule[this.compareInstructorB] || [],
+          }
+        : { ...this.groupedSchedule };
+
+      // -------------------------
+      // UPDATE MODAL (if open)
+      // -------------------------
+      if (this.showEditModal) {
+        const instructorsInModal = Array.from(
+          new Set(this.editInstructorData.map((i) => i.faculty_name)),
+        );
+
+        this.$nextTick(() => {
+          this.editInstructorData = instructorsInModal.flatMap((name) =>
+            (this.groupedSchedule[name] || []).map((r) => ({ ...r })),
+          );
+        });
+      }
+
+      // -------------------------
+      // BACKEND UPDATE (FULL PAYLOAD)
+      // -------------------------
+      const allowedFields = [
+        "faculty_id",
+        "day",
+        "start_hour",
+        "duration",
+        "room_id",
+        "mode",
+        "type",
+      ];
+
+      const payloadA = {};
+      allowedFields.forEach((f) => (payloadA[f] = courseA[f]));
+
+      const payloadB = {};
+      allowedFields.forEach((f) => (payloadB[f] = courseB[f]));
+
+      try {
+        await Promise.all([
+          axios.patch(
+            `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${courseA.id}`,
+            payloadA,
+          ),
+          axios.patch(
+            `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${courseB.id}`,
+            payloadB,
+          ),
+        ]);
+
+        this.swapSelection = [];
+        this.showFacultyTable = false;
+        this.showCompareView = true;
+
+        this.$nextTick(() => {
+          this.groupedSchedule = { ...this.groupedSchedule };
+          this.filteredGroupedSchedule = { ...this.filteredGroupedSchedule };
+        });
+
+        toast.success(
+          `Schedules swapped successfully: ${courseA.course_code} ↔ ${courseB.course_code}`,
+        );
+      } catch (error) {
+        toast.error("Failed to update swap in the database.");
+        console.error(error);
+      }
     },
     onDragStart(event, record) {
       this.draggedRecord = { ...record }; // make a copy to prevent direct mutation
@@ -1080,15 +1194,6 @@ export default {
           payload,
         );
         toast.success("Schedule moved successfully!");
-        await this.fetchFinalSchedules(); // ✅ Preserve compare view if active
-        if (this.showCompareView) {
-          this.filteredGroupedSchedule = {
-            [this.compareInstructorA]:
-              this.groupedSchedule[this.compareInstructorA] || [],
-            [this.compareInstructorB]:
-              this.groupedSchedule[this.compareInstructorB] || [],
-          };
-        }
       } catch (error) {
         console.error(error);
         toast.error("Failed to save schedule.");

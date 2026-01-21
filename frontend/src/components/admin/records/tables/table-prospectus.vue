@@ -118,7 +118,16 @@
               <td class="px-4 py-2 text-left">
                 <div class="flex gap-2">
                   <router-link
-                    :to="`/view-curriculum-offers/${reportCurriculum_data.institute_id}`"
+                    :to="{
+                      path: `/view-curriculum-offers/${reportCurriculum_data.institute_id}`,
+                      query: activeSchoolYear
+                        ? {
+                            sy_start: activeSchoolYear.start_year,
+                            sy_end: activeSchoolYear.end_year,
+                            semester: activeSchoolYear.semester,
+                          }
+                        : {},
+                    }"
                     class="px-3 py-1 h-8 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-lg flex items-center gap-1"
                   >
                     <icon name="eye" /> View
@@ -220,16 +229,18 @@
 
 <script>
 import icon from "@/assets/icon.vue";
-
 import { toast } from "vue3-toastify";
 import { useFetchDataStore } from "../../../../store/fetch-data-store";
 import { mapState } from "pinia";
 import axios from "axios";
+import { eventBus } from "@/bus/event-bus";
+
 export default {
   name: "TablePrograms",
   components: {
     icon,
   },
+
   data() {
     return {
       currentPage: 1,
@@ -243,35 +254,52 @@ export default {
       recordToDelete: null,
       selectedPrograms: null,
       showEditModal: false,
+
+      // ✅ SAME AS TableCourses
+      activeSchoolYear: null,
+      stopEventBus: null,
     };
   },
-  computed: {
-    ...mapState(useFetchDataStore, ["detailedReportCurriculum"]),
 
+  computed: {
+    ...mapState(useFetchDataStore, ["detailedReportCurriculum", "courses"]),
+
+    /**
+     * 🔹 Filter institutes list by search
+     */
     filteredData() {
-      const query = this.searchQuery.toLowerCase();
+      const q = this.searchQuery.toLowerCase();
+
       return this.detailedReportCurriculum.filter((item) =>
-        `${item.first_name} ${item.middle_name} ${item.last_name}`
-          .toLowerCase()
-          .includes(query)
+        item.institute_name?.toLowerCase().includes(q),
       );
     },
+
+    /**
+     * 🔹 PAGINATION
+     */
     totalPages() {
       return Math.ceil(this.filteredData.length / this.itemsPerPage) || 1;
     },
+
     paginatedData() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       return this.filteredData.slice(start, start + this.itemsPerPage);
     },
+
     startIndex() {
       return this.filteredData.length === 0
         ? 0
         : (this.currentPage - 1) * this.itemsPerPage + 1;
     },
+
     endIndex() {
-      const end = this.currentPage * this.itemsPerPage;
-      return end > this.filteredData.length ? this.filteredData.length : end;
+      return Math.min(
+        this.currentPage * this.itemsPerPage,
+        this.filteredData.length,
+      );
     },
+
     pageNumbers() {
       const total = this.totalPages;
       if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
@@ -290,80 +318,94 @@ export default {
 
       return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
+
+    /**
+     * 🔹 MAP: institute_id → programs → curriculum years
+     */
+    curriculumYearsByInstitute() {
+      const map = {};
+
+      this.courses.forEach((c) => {
+        const instituteId = c.curriculum?.program?.institute?.institute_id;
+        const programId = c.curriculum?.program_id;
+
+        if (!instituteId || !programId) return;
+
+        const key = `${instituteId}-${programId}`;
+
+        if (!map[key]) {
+          map[key] = {
+            institute_id: instituteId,
+            program_id: programId,
+            program_name: c.curriculum?.program?.program_name,
+            start_year: c.curriculum?.curriculum_start_year,
+            end_year: c.curriculum?.curriculum_end_year,
+          };
+        }
+      });
+
+      return Object.values(map);
+    },
   },
+
   methods: {
     async loadReportCurriculums() {
       const store = useFetchDataStore();
       await store.fetchReportCurriculum();
     },
-    toggleUploadData() {
-      this.isUploadData = true;
-      this.isTable = true;
-    },
+
     toggleAdd() {
       this.isAdd = true;
       this.isTable = true;
     },
 
-    toggleEdit(item) {
-      this.selectedPrograms = item;
-      this.showEditModal = true;
-    },
     toggleDelete(item) {
       this.recordToDelete = item;
       this.showDeleteModal = true;
     },
-    confirmDelete() {
-      if (!this.recordToDelete || isNaN(this.recordToDelete.program_id)) {
-        toast.error("Invalid program ID.");
-        return;
-      }
 
-      const programId = this.recordToDelete.program_id;
+    confirmDelete() {
+      if (!this.recordToDelete) return;
 
       axios
         .delete(
-          process.env.VUE_APP_API_BASE_URL + `/programs/delete-id/${programId}`
+          process.env.VUE_APP_API_BASE_URL +
+            `/programs/delete-id/${this.recordToDelete.program_id}`,
         )
         .then(() => {
-          this.recordToDelete = null;
           this.showDeleteModal = false;
-          // Play sound after successful delete
-          const audio = new Audio(require("@/assets/delete.mp3"));
-          audio.play();
-
+          this.recordToDelete = null;
           this.loadReportCurriculums();
           toast.success("Record deleted successfully");
         })
-        .catch((error) => {
-          console.error("Delete failed:", error);
+        .catch(() => {
           toast.error("Failed to delete record.");
         });
     },
+
     changePage(page) {
       this.currentPage = Math.max(1, Math.min(page, this.totalPages));
     },
-    closeView() {
-      this.isAdd = false;
-      this.isUploadData = false;
-    },
-    closeModal() {
-      this.showEditModal = false;
-      this.selectedPrograms = null;
-    },
-    handleBackToTable() {
-      this.isEdit = false;
-      this.isAdd = false;
-      this.isUploadData = false;
-      this.isTable = true;
-    },
-    handleView(item) {
-      const store = useFetchDataStore();
-      store.setSelectedCurriculum(item);
-    },
   },
-  mounted() {
-    this.loadReportCurriculums();
+
+  async mounted() {
+    const store = useFetchDataStore();
+
+    await this.loadReportCurriculums();
+
+    if (!this.courses.length) {
+      await store.fetchCourses();
+    }
+
+    // ✅ SAME ACTIVE YEAR LISTENER AS TableCourses
+    this.stopEventBus = eventBus.on((newYear) => {
+      if (!newYear) return;
+      this.activeSchoolYear = newYear;
+    });
+  },
+
+  beforeUnmount() {
+    this.stopEventBus?.();
   },
 };
 </script>

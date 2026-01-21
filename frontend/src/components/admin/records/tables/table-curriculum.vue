@@ -364,7 +364,7 @@ export default {
       axios
         .delete(
           process.env.VUE_APP_API_BASE_URL +
-            `/curriculums/delete-id/${curriculumId}`
+            `/curriculums/delete-id/${curriculumId}`,
         )
         .then(() => {
           this.recordToDelete = null;

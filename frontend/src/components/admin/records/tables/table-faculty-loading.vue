@@ -3,7 +3,7 @@
     <!-- TODO  Top Controls -->
     <div class="flex flex-wrap justify-between items-center gap-3">
       <div class="text-sm text-gray-600 mt-2 font-medium">
-        Pages / Faculty Loads
+        Pages / Faculty Loadsss
       </div>
 
       <div class="flex gap-3 flex-wrap">
@@ -316,7 +316,7 @@
           <div
             v-for="(records, instructor) in filteredGroupedSchedule"
             :key="instructor"
-            class="bg-white rounded-xl border flex flex-col"
+            class="bg-white rounded-xl border flex flex-col relative"
           >
             <!-- TODO  Header -->
             <div
@@ -380,9 +380,11 @@
                           v-if="isStartingSlot(item, slot)"
                           draggable="true"
                           @dragstart="onDragStart($event, item)"
+                          @mouseenter="showScheduleTooltip($event, item)"
+                          @mouseleave="hideScheduleTooltip"
                           @click="highlightRow(item)"
                           :class="[
-                            'absolute inset-x-1 border rounded-lg text-[11px] p-1 shadow-sm truncate transition cursor-pointer hover:bg-yellow-100 hover:defaultGreen',
+                            'absolute inset-x-1 border rounded-lg text-[11px] p-1 shadow-sm truncate cursor-pointer',
                             item.id?.toString().startsWith('temp-')
                               ? 'bg-purple-200 border-purple-400 text-purple-900'
                               : getTypeColor(item.type),
@@ -394,7 +396,7 @@
                             top: getBlockTop(item, slot.start) + 'px',
                             height: getBlockHeight(item) + 'px',
                             width: 'calc(100% - 0.5rem)',
-                            zIndex: 10,
+                            zIndex: 20,
                           }"
                         >
                           <!-- MODE BADGE -->
@@ -413,7 +415,7 @@
                             {{
                               item.schedule_type === "face to face"
                                 ? "F2F"
-                                : "Online"
+                                : "OL"
                             }}
                           </span>
                           <div class="p-2 leading-snug truncate">
@@ -440,6 +442,60 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <!-- 🔍 Schedule Tooltip -->
+            <div
+              v-if="scheduleTooltipVisible && tooltipItem"
+              class="fixed z-[9999] pointer-events-none"
+              :style="{ top: tooltipY + 'px', left: tooltipX + 'px' }"
+            >
+              <div
+                class="bg-white border border-gray-300 rounded-xl p-3 scale-125 origin-top-left"
+              >
+                <div
+                  class="flex items-center justify-between gap-2 mb-2 w-full"
+                >
+                  <!-- Course Code -->
+                  <div class="text-sm font-bold text-defaultGreen leading-none">
+                    {{ tooltipItem.course_code }}
+                  </div>
+
+                  <!-- Schedule Type Badge -->
+                  <span
+                    v-if="tooltipItem.schedule_type"
+                    class="inline-flex items-center justify-center px-2 py-1 text-[8px] leading-none rounded-full text-white"
+                    :class="
+                      tooltipItem.schedule_type === 'face to face'
+                        ? 'bg-orange-500'
+                        : 'bg-purple-500'
+                    "
+                  >
+                    {{
+                      tooltipItem.schedule_type === "face to face"
+                        ? "Face to Face"
+                        : "Online"
+                    }}
+                  </span>
+                </div>
+
+                <div class="text-xs text-gray-700 space-y-0.5">
+                  <p>
+                    <strong>Faculty:</strong> {{ tooltipItem.faculty_name }}
+                  </p>
+                  <p><strong>Room:</strong> {{ tooltipItem.room_name }}</p>
+                  <p><strong>Day:</strong> {{ tooltipItem.day }}</p>
+                  <p>
+                    <strong>Time:</strong>
+                    {{ formatTime(tooltipItem.start_hour) }} –
+                    {{
+                      formatTime(
+                        tooltipItem.start_hour + Number(tooltipItem.duration),
+                      )
+                    }}
+                  </p>
+                  <p><strong>Type:</strong> {{ tooltipItem.type }}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -554,7 +610,25 @@
               {{ formatTime(conflict.start_hour) }} -
               {{ formatTime(conflict.start_hour + conflict.duration) }}
             </p>
-
+            <p class="text-sm text-gray-800 flex items-center gap-1">
+              <span class="font-semibold">Mode:</span>
+              <span
+                v-if="conflict.schedule_type"
+                :class="[
+                  'w-auto h-4 px-2 rounded-full text-[10px] font-bold flex items-center justify-center text-white',
+                  conflict.schedule_type === 'face to face'
+                    ? 'bg-orange-500'
+                    : '',
+                  conflict.schedule_type === 'online' ? 'bg-purple-500' : '',
+                ]"
+              >
+                {{
+                  conflict.schedule_type === "face to face"
+                    ? "Face to Face"
+                    : "Online"
+                }}
+              </span>
+            </p>
             <p class="text-sm text-gray-800" v-if="conflict.reason">
               <span class="font-semibold">Reason:</span> {{ conflict.reason }}
             </p>
@@ -664,6 +738,10 @@ export default {
       schoolYears: [],
       appearSave: false,
       conflictModalVisible: false,
+      scheduleTooltipVisible: false,
+      tooltipItem: null,
+      tooltipX: 0,
+      tooltipY: 0,
     };
   },
 
@@ -804,6 +882,21 @@ export default {
       await store.fetchPrograms();
       await store.fetchInstitutes();
       await store.fetchCourses();
+    },
+    showScheduleTooltip(event, item) {
+      const rect = event.currentTarget.getBoundingClientRect();
+
+      this.tooltipItem = item;
+      this.scheduleTooltipVisible = true;
+
+      // 👉 fixed position: right side of block
+      this.tooltipX = rect.right + 12;
+      this.tooltipY = rect.top;
+    },
+
+    hideScheduleTooltip() {
+      this.scheduleTooltipVisible = false;
+      this.tooltipItem = null;
     },
 
     backToFacultyTable() {
@@ -946,10 +1039,14 @@ export default {
       return conflicts;
     },
 
-    formatTime(hour) {
-      const h = hour % 12 === 0 ? 12 : hour % 12;
+    formatTime(h) {
+      if (h == null) return "";
+      const hour = Math.floor(h); // integer hour
+      const minutes = Math.round((h - hour) * 60); // decimal -> minutes
       const period = hour >= 12 ? "PM" : "AM";
-      return `${h}:00 ${period}`;
+      const hour12 = hour % 12 || 12;
+      const minutesStr = minutes.toString().padStart(2, "0");
+      return `${hour12}:${minutesStr} ${period}`;
     },
 
     filterSchedules() {
@@ -1073,13 +1170,13 @@ export default {
       this.scheduleGenerated = true;
       this.showFacultyTable = false;
       this.appearSave = true;
-      const conflicts = this.checkConflicts();
-      if (conflicts.length) {
-        console.warn("Conflicts detected:", conflicts);
-        alert(
-          `⚠️ ${conflicts.length} conflicts detected! Check console for details.`,
-        );
-      }
+      // const conflicts = this.checkConflicts();
+      // if (conflicts.length) {
+      //   console.warn("Conflicts detected:", conflicts);
+      //   alert(
+      //     `⚠️ ${conflicts.length} conflicts detected! Check console for details.`,
+      //   );
+      // }
     },
 
     async fetchSchoolYears() {
@@ -1128,6 +1225,7 @@ export default {
           faculty_name: item.faculty_name,
           school_year: latestSchoolYear.school_year_name,
           semester: latestSchoolYear.semester,
+          mode: item.schedule_type,
         }));
 
         await axios.post(

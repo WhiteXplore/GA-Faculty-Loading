@@ -181,7 +181,7 @@
                     group.courses.reduce(
                       (sum, course) =>
                         sum + course.course_lec + course.course_lab,
-                      0
+                      0,
                     )
                   }}
                 </td>
@@ -212,54 +212,87 @@
 import icon from "@/assets/icon.vue";
 import { mapState } from "pinia";
 import { useFetchDataStore } from "@/store/fetch-data-store";
+import { eventBus } from "@/bus/event-bus";
 
 export default {
   name: "ViewReportCurriculumPage",
   components: {
     icon,
   },
+
   data() {
     return {
       selectedProgram: "",
       selectedCurriculum: null,
       instituteId: null,
+
+      // ✅ SAME AS TableCourses
+      activeSchoolYear: null,
+      stopEventBus: null,
     };
   },
+
   computed: {
     ...mapState(useFetchDataStore, ["detailedReportCurriculum", "courses"]),
 
     currentInstituteName() {
       const match = this.detailedReportCurriculum.find(
-        (item) => item.institute_id === this.instituteId
+        (item) => item.institute_id === this.instituteId,
       );
       return match?.institute_name || "No institute name found";
     },
 
     uniquePrograms() {
       if (!this.instituteId || !this.courses.length) return [];
+
       const programs = this.courses
         .filter(
           (course) =>
-            course.curriculum?.program?.institute?.institute_id ===
-            this.instituteId
+            String(course.curriculum?.program?.institute?.institute_id) ===
+            String(this.instituteId),
         )
         .map((course) => course.curriculum?.program?.program_name)
         .filter(Boolean);
+
       return [...new Set(programs)];
     },
 
     filteredCourses() {
       if (!this.selectedProgram || !this.instituteId) return [];
-      return this.courses.filter(
-        (course) =>
-          course.curriculum?.program?.program_name === this.selectedProgram &&
-          course.curriculum?.program?.institute?.institute_id ===
-            this.instituteId
+
+      let result = this.courses || [];
+
+      // Institute filter
+      result = result.filter(
+        (c) =>
+          String(c.curriculum?.program?.institute?.institute_id) ===
+          String(this.instituteId),
       );
+
+      // Program filter
+      result = result.filter(
+        (c) => c.curriculum?.program?.program_name === this.selectedProgram,
+      );
+
+      // ✅ SAME ACTIVE YEAR FILTER AS TableCourses
+      if (this.activeSchoolYear) {
+        result = result.filter(
+          (c) =>
+            String(c.curriculum?.curriculum_start_year) ===
+              String(this.activeSchoolYear.start_year) &&
+            String(c.curriculum?.curriculum_end_year) ===
+              String(this.activeSchoolYear.end_year) &&
+            Number(c.course_semester) ===
+              Number(this.activeSchoolYear.semester),
+        );
+      }
+
+      return result;
     },
 
     groupedCourses() {
       const groups = {};
+
       this.filteredCourses.forEach((course) => {
         const key = `${course.course_level}-${course.course_semester}`;
         if (!groups[key]) {
@@ -279,6 +312,21 @@ export default {
     },
   },
 
+  watch: {
+    selectedProgram(newProgram) {
+      if (!newProgram || !this.instituteId) return;
+
+      const curriculum = this.detailedReportCurriculum.find(
+        (curr) =>
+          curr.program?.program_name === newProgram &&
+          String(curr.program?.institute?.institute_id) ===
+            String(this.instituteId),
+      );
+
+      this.selectedCurriculum = curriculum || null;
+    },
+  },
+
   methods: {
     formatYearLevel(level) {
       switch (level) {
@@ -294,6 +342,7 @@ export default {
           return `Year ${level}`;
       }
     },
+
     formatSemester(sem) {
       return sem === 1
         ? "First Semester"
@@ -301,30 +350,30 @@ export default {
         ? "Second Semester"
         : `Semester ${sem}`;
     },
+
     toggleGenerate() {
       console.log("Generate Report clicked!");
-      // Add your logic here
-    },
-  },
-
-  watch: {
-    selectedProgram(newProgram) {
-      if (!newProgram || !this.instituteId) return;
-      const curriculum = this.detailedReportCurriculum.find(
-        (curr) =>
-          curr.program?.program_name === newProgram &&
-          curr.program?.institute?.institute_id === this.instituteId
-      );
-      this.selectedCurriculum = curriculum || null;
     },
   },
 
   async mounted() {
     const store = useFetchDataStore();
     this.instituteId = parseInt(this.$route.params.institute_id);
+
     if (!this.instituteId) {
       console.error("No institute_id provided in the route.");
       return;
+    }
+
+    // ✅ READ YEAR FROM ROUTE QUERY (IF PRESENT)
+    const { sy_start, sy_end, semester } = this.$route.query;
+
+    if (sy_start && sy_end && semester) {
+      this.activeSchoolYear = {
+        start_year: sy_start,
+        end_year: sy_end,
+        semester: Number(semester),
+      };
     }
 
     if (!this.detailedReportCurriculum.length) {
@@ -334,6 +383,15 @@ export default {
     if (!this.courses.length) {
       await store.fetchCourses();
     }
+
+    this.stopEventBus = eventBus.on((newYear) => {
+      if (!newYear) return;
+      this.activeSchoolYear = newYear;
+    });
+  },
+
+  beforeUnmount() {
+    this.stopEventBus?.();
   },
 };
 </script>
