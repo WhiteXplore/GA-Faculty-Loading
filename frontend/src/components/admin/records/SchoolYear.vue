@@ -2,7 +2,7 @@
   <div class="px-2 mt-2">
     <!-- Headers -->
     <div class="flex justify-between items-start">
-      <h1 class="font-semibold tracking-wide text-md">School Years</h1>
+      <h1 class="font-semibold tracking-wide text-md px-1">School Years</h1>
     </div>
 
     <!-- Main Content  -->
@@ -26,4 +26,3 @@ export default {
 <style scoped>
 /* Add any required styles here */
 </style>
-

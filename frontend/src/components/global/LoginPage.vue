@@ -95,7 +95,7 @@
               <!-- Submit Button -->
               <button
                 type="submit"
-                class="w-full text-[16px] bg-defaultGreen text-white py-3 rounded-md hover:bg-green-700 transition"
+                class="w-full text-[16px] bg-defaultGreen text-white py-3 rounded-md hover:bg-defaultGreen transition"
               >
                 Sign in
               </button>
@@ -118,6 +118,11 @@
                   src="@/assets/img/iso.jpg"
                   alt="DNSC ISO"
                   class="w-12 h-auto"
+                />
+                <img
+                  src="@/assets/img/dpo.png"
+                  alt="DNSC Logo"
+                  class="w-[25px] h-auto"
                 />
               </div>
             </form>

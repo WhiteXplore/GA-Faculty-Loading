@@ -14,7 +14,7 @@
         >
           <div class="flex items-center gap-2">
             <icon name="edit" />
-            <h1 class="text-lg font-bold">Edit Schedule</h1>
+            <h1 class="text-lg font-bold">Edit Schedules</h1>
           </div>
 
           <icon
@@ -160,7 +160,10 @@
                                 {{ item.course_code }}
                               </div>
                               <div class="truncate">{{ item.room_name }}</div>
-                              <div class="truncate">{{ item.set_name }}</div>
+                              <div class="truncate">
+                                {{ item.program_name }}-{{ item.set_name }}
+                              </div>
+
                               <div class="w-full flex justify-center">
                                 <button
                                   v-if="hasRoomConflict(item)"
@@ -196,7 +199,7 @@
 
           <button
             @click="saveEdit"
-            class="bg-defaultGreen text-white px-4 py-2 rounded-lg hover:bg-green-700"
+            class="bg-defaultGreen text-white px-4 py-2 rounded-lg hover:bg-defaultGreen"
             :disabled="saving || !isValid"
           >
             {{ saving ? "Saving..." : "Save" }}
@@ -399,91 +402,181 @@
     </div>
     <div
       v-if="conflictModalVisible"
-      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50"
+      class="fixed inset-0 z-50 bg-black/40 flex items-center justify-center"
     >
-      <div
-        class="bg-white rounded-xl shadow-lg w-full max-w-lg relative max-h-[80vh] overflow-y-auto p-6"
-      >
-        <!-- TODO  Header -->
-        <div class="flex justify-between items-center border-b pb-3 mb-4">
-          <div class="flex gap-1">
-            <icon
-              name="exclamation-circle"
-              class="text-red-900 w-7 p-1 rounded-full bg-red-200"
-            />
-            <h3 class="text-lg font-semibold text-gray-800">
-              Schedule Conflicts
-            </h3>
-          </div>
-
+      <div class="bg-white w-[900px] rounded-2xl p-6 shadow-xl">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-4 border-b pb-2">
+          <h3 class="text-lg font-semibold text-red-700">
+            Schedule Conflict Detected
+          </h3>
           <button
             @click="closeConflictModal"
-            class="text-gray-400 hover:text-gray-600 transition"
+            class="text-gray-400 hover:text-gray-600"
           >
             ✕
           </button>
         </div>
 
-        <!-- TODO  Conflicts List -->
-        <div class="space-y-3">
-          <div class="px-4 py-3 rounded-xl bg-red-50 text-sm text-red-900">
-            Please select another shedule.
-          </div>
-          <div
-            v-for="conflict in conflictRecords"
-            :key="conflict.id"
-            class="p-3 rounded-md shadow-sm space-y-2"
-          >
-            <p class="text-sm text-gray-800">
-              <span class="font-semibold">Faculty:</span>
-              {{ conflict.faculty_name }}
-            </p>
-            <p class="text-sm text-gray-800">
-              <span class="font-semibold">Set and Section:</span>
-              {{ conflict.set_name }}
-            </p>
-            <p class="text-sm text-gray-800">
-              <span class="font-semibold">Course:</span>
-              {{ conflict.course_code }}
-            </p>
-            <p class="text-sm text-gray-800">
-              <span class="font-semibold">Room:</span> {{ conflict.room_name }}
-            </p>
-            <p class="text-sm text-gray-800">
-              <span class="font-semibold">Day:</span> {{ conflict.day }}
-            </p>
-            <p class="text-sm text-gray-800">
-              <span class="font-semibold">Time:</span>
-              {{ formatTime(conflict.start_hour) }} -
-              {{ formatTime(conflict.start_hour + conflict.duration) }}
-            </p>
-            <p class="text-sm text-gray-800 flex items-center gap-1">
-              <span class="font-semibold">Mode:</span>
-              <span
-                v-if="conflict.mode"
-                :class="[
-                  'w-auto h-4 px-2 rounded-full text-[10px] font-bold flex items-center justify-center text-white',
-                  conflict.mode === 'face to face' ? 'bg-orange-500' : '',
-                  conflict.mode === 'online' ? 'bg-purple-500' : '',
-                ]"
-              >
-                {{
-                  conflict.mode === "face to face" ? "Face to Face" : "Online"
-                }}
-              </span>
-            </p>
+        <!-- Body -->
+        <div class="grid grid-cols-2 gap-6 mt-6">
+          <!-- LEFT: Selected Schedule -->
+          <div class="relative bg-white rounded-2xl p-5 border">
+            <span
+              class="absolute -top-3 left-4 bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow"
+            >
+              Selected Schedule
+            </span>
 
-            <p class="text-sm text-gray-800" v-if="conflict.reason">
-              <span class="font-semibold">Reason:</span> {{ conflict.reason }}
-            </p>
+            <div class="mt-3 space-y-3 text-sm text-gray-800">
+              <div class="flex justify-between items-center">
+                <h4 class="font-semibold text-base">
+                  {{ selectedSchedule.course_code || "No Course Selected" }}
+                </h4>
+                <span
+                  class="text-xs px-2 py-1 rounded-full font-medium"
+                  :class="{
+                    'bg-orange-500 text-white':
+                      selectedSchedule.mode === 'face to face',
+                    'bg-purple-700 text-white':
+                      selectedSchedule.mode === 'online',
+                  }"
+                >
+                  {{
+                    selectedSchedule.mode === "face to face"
+                      ? "Face to Face"
+                      : "Online"
+                  }}
+                </span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <p class="text-xs text-gray-500">Faculty</p>
+                  <p class="font-medium">{{ selectedSchedule.faculty_name }}</p>
+                </div>
+
+                <div>
+                  <p class="text-xs text-gray-500">Section</p>
+                  <p class="font-medium">
+                    {{ selectedSchedule.program_name }}-{{
+                      selectedSchedule.set_name
+                    }}
+                  </p>
+                </div>
+
+                <div>
+                  <p class="text-xs text-gray-500">Room</p>
+                  <p class="font-medium">{{ selectedSchedule.room_name }}</p>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-500">Type</p>
+                  <p class="font-medium">{{ selectedSchedule.room_type }}</p>
+                </div>
+
+                <div>
+                  <p class="text-xs text-gray-500">Time</p>
+                  <p class="font-medium">
+                    {{ formatTime(selectedSchedule.time_start) }} –
+                    {{ formatTime(selectedSchedule.time_end) }}
+                  </p>
+                </div>
+
+                <div>
+                  <p class="text-xs text-gray-500">Day</p>
+                  <p class="font-medium">{{ selectedSchedule.day }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Conflicts -->
+          <div class="relative bg-white rounded-2xl p-5 border">
+            <span
+              class="absolute -top-3 left-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full shadow"
+            >
+              Conflicting Schedules
+            </span>
+
+            <div class="mt-3 space-y-4 max-h-[420px] overflow-y-auto pr-2">
+              <div
+                v-for="conflict in conflictRecords"
+                :key="conflict.id"
+                class="bg-white rounded-xl p-4 ring-1 ring-red-200"
+              >
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between items-center">
+                    <h5 class="font-semibold">{{ conflict.course_code }}</h5>
+                    <span
+                      class="text-xs px-2 py-1 rounded-full font-medium"
+                      :class="{
+                        'bg-orange-500 text-white':
+                          conflict.mode === 'face to face',
+                        'bg-purple-700 text-white': conflict.mode === 'online',
+                      }"
+                    >
+                      {{
+                        conflict.mode === "face to face"
+                          ? "Face to Face"
+                          : "Online"
+                      }}
+                    </span>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-2">
+                    <div>
+                      <p class="text-xs text-gray-500">Faculty</p>
+                      <p class="font-medium">{{ conflict.faculty_name }}</p>
+                    </div>
+
+                    <div>
+                      <p class="text-xs text-gray-500">Section</p>
+                      <p class="font-medium">
+                        {{ conflict.program_name }}-{{ conflict.set_name }}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p class="text-xs text-gray-500">Room</p>
+                      <p class="font-medium">{{ conflict.room_name }}</p>
+                    </div>
+                    <div>
+                      <p class="text-xs text-gray-500">Type</p>
+                      <p class="font-medium">{{ conflict.room_type }}</p>
+                    </div>
+
+                    <div>
+                      <p class="text-xs text-gray-500">Time</p>
+                      <p class="font-medium">
+                        {{ formatTime(conflict.start_hour) }} –
+                        {{
+                          formatTime(conflict.start_hour + conflict.duration)
+                        }}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p class="text-xs text-gray-500">Day</p>
+                      <p class="font-medium">{{ conflict.day }}</p>
+                    </div>
+                  </div>
+
+                  <div
+                    class="mt-2 p-2 rounded-lg bg-red-50 text-xs text-red-700 flex gap-2"
+                  >
+                    ⚠ {{ conflict.reason || "Schedule overlap detected" }}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- TODO  Footer -->
+        <!-- Footer -->
         <div class="flex justify-end mt-5">
           <button
             @click="closeConflictModal"
-            class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition text-sm"
+            class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm"
           >
             Close
           </button>
@@ -564,7 +657,7 @@ export default {
         start: 8 + i,
         end: 9 + i,
       })),
-
+      selectedSchedule: {},
       draggedRecord: null,
       hourHeight: 60,
       fullSchedules: [],
@@ -819,10 +912,9 @@ export default {
       }
     },
     normalizeHour(hour) {
-      hour = Number(hour);
-      if (Number.isNaN(hour)) return hour;
-      // If you are using 1–7 as PM and 8–24 as actual hours
-      return hour <= 7 ? hour + 12 : hour;
+      const h = Number(hour);
+      if (Number.isNaN(h)) return null;
+      return h; // ✅ already 24-hour based
     },
     formatTime(h) {
       if (h == null) return "";
@@ -1208,16 +1300,19 @@ export default {
         .filter(Boolean);
     },
     openConflictModal(record) {
-      const conflicts = this.getConflictingRecords(record);
+      this.selectedSchedule = {
+        ...record,
+        time_start: record.start_hour ?? 0,
+        time_end: (record.start_hour ?? 0) + (record.duration ?? 0),
+        course_code: record.course_code || "N/A",
+        faculty_name: record.faculty_name || "TBD",
+        set_name: record.set_name || "TBD",
+        room_name: record.room_name || "TBD",
+        day: record.day || "TBD",
+        mode: record.mode || "face to face",
+      };
 
-      // Only show conflicts with OTHER instructors, not the record itself
-      const otherConflicts = conflicts.filter(
-        (r) => r.faculty_name !== record.faculty_name || r.id !== record.id, // also ignore exact same record by ID
-      );
-
-      if (!otherConflicts.length) return;
-
-      this.conflictRecords = otherConflicts;
+      this.conflictRecords = this.getConflictingRecords(record);
       this.conflictModalVisible = true;
     },
     closeConflictModal() {
@@ -1304,6 +1399,19 @@ export default {
       // Check for conflicts
       const conflicts = this.getConflictingRecords(tempRecord);
       if (conflicts.length) {
+        // ✅ Set the dragged record as the selected schedule in conflict modal
+        this.selectedSchedule = {
+          ...tempRecord,
+          time_start: tempRecord.start_hour ?? 0,
+          time_end: (tempRecord.start_hour ?? 0) + (tempRecord.duration ?? 0),
+          course_code: tempRecord.course_code || "N/A",
+          faculty_name: tempRecord.faculty_name || "TBD",
+          set_name: tempRecord.set_name || "TBD",
+          room_name: tempRecord.room_name || "TBD",
+          day: tempRecord.day || "TBD",
+          mode: tempRecord.mode || "face to face",
+        };
+
         this.conflictRecords = conflicts;
         this.conflictModalVisible = true;
         this.draggedRecord = null;

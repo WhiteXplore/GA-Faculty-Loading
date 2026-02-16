@@ -82,7 +82,7 @@
               <input
                 type="checkbox"
                 v-model="form.is_active"
-                class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                class="w-4 h-4 text-defaultGreen border-gray-300 rounded focus:ring-green-500"
               />
               Set as Active School Year
             </label>

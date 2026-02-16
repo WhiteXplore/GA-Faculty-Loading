@@ -155,7 +155,7 @@
 
                     <!-- Class Size Input -->
                     <div class="flex items-center gap-2 mt-2">
-                      <icon name="users" class="size-4 text-green-600" />
+                      <icon name="users" class="size-4 text-defaultGreen" />
                       <input
                         v-model.number="section.classSize"
                         type="number"
@@ -288,13 +288,13 @@ export default {
       if (!this.searchSchoolYearQuery) return this.schoolYears;
       const q = this.searchSchoolYearQuery.toLowerCase();
       return this.schoolYears.filter((sy) =>
-        sy.school_year_name?.toLowerCase().includes(q)
+        sy.school_year_name?.toLowerCase().includes(q),
       );
     },
     totalSections() {
       return this.yearLevels.reduce(
         (sum, year) => sum + (year.numSections || 0),
-        0
+        0,
       );
     },
   },
@@ -302,7 +302,7 @@ export default {
     async fetchSchoolYears() {
       try {
         const response = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years",
         );
         this.schoolYears = response.data;
       } catch (error) {
@@ -374,14 +374,14 @@ export default {
         const promises = classesToCreate.map((classData) =>
           axios.post(
             process.env.VUE_APP_API_BASE_URL + "/class/add-class",
-            classData
-          )
+            classData,
+          ),
         );
 
         await Promise.all(promises);
 
         toast.success(
-          `Successfully created ${classesToCreate.length} section(s)!`
+          `Successfully created ${classesToCreate.length} section(s)!`,
         );
 
         this.$emit("refresh");

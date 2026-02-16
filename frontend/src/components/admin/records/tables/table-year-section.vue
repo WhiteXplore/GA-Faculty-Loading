@@ -1,17 +1,20 @@
 <template>
   <div>
     <!-- Header -->
-    <div class="flex justify-between items-center mt-6 mb-2">
-      <div class="text-[13px] text-gray-700">
-        Pages / Class & Assigned Coursesssss
+
+    <div class="text-sm flex justify-between px-1">
+      <div class="text-[13px] text-text mt-4 font-regular">
+        Pages / Class & Assigned Courses
       </div>
-      <span class="text-sm bg-defaultGreen text-white px-3 py-1 rounded-full">
+      <span
+        class="text-sm bg-defaultGreen text-white px-4 py-1 rounded-full flex text-center items-center"
+      >
         {{ filteredClasses.length }} Classes
       </span>
     </div>
 
     <!-- Classes with Courses Section -->
-    <div class="overflow-x-auto border p-3 rounded-xl bg-white">
+    <div class="overflow-x-auto border p-3 mt-4 rounded-xl bg-white">
       <!-- Controls -->
       <div
         class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
@@ -77,7 +80,7 @@
 
         <!-- Table -->
         <div class="w-full mt-1 rounded-xl border bg-white overflow-hidden">
-          <div class="max-h-[65vh] overflow-y-auto">
+          <div class="max-h-[69vh] overflow-y-auto">
             <table class="min-w-full text-sm text-gray-700 border-collapse">
               <thead
                 class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
@@ -151,35 +154,37 @@
 
         <!-- Pagination -->
         <div class="flex justify-between items-center mt-4 w-full">
-          <div class="text-gray-700">
+          <div class="text-gray-700 text-sm">
             Showing {{ classStartIndex }} to {{ classEndIndex }} of
             {{ filteredClasses.length }} entries
           </div>
 
-          <div class="flex items-center">
+          <div class="flex items-center gap-1">
             <button
               @click="changePage(classPage - 1)"
               :disabled="classPage === 1"
-              class="px-3 py-1 bg-gray-300 text-gray-700 rounded-l-md hover:bg-gray-400 disabled:opacity-50"
+              class="px-3 py-1 bg-gray-300 rounded-l-md hover:bg-gray-400 disabled:opacity-50"
             >
               &lt;
             </button>
+
             <button
-              v-for="page in classTotalPages"
-              :key="page"
+              v-for="page in pageNumbers"
+              :key="'page-' + page"
               @click="changePage(page)"
               :class="{
                 'bg-defaultGreen text-white': classPage === page,
                 'bg-gray-200 text-gray-700': classPage !== page,
               }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+              class="px-3 py-1 rounded-md hover:bg-green-300"
             >
               {{ page }}
             </button>
+
             <button
               @click="changePage(classPage + 1)"
-              :disabled="classPage === classTotalPages"
-              class="px-3 py-1 bg-gray-300 text-gray-700 rounded-r-md hover:bg-gray-400 disabled:opacity-50"
+              :disabled="classPage === totalPages"
+              class="px-3 py-1 bg-gray-300 rounded-r-md hover:bg-gray-400 disabled:opacity-50"
             >
               &gt;
             </button>
@@ -286,13 +291,13 @@ export default {
       if (this.classSearch) {
         const query = this.classSearch.toLowerCase();
         result = result.filter((c) =>
-          c.set_name?.toLowerCase().includes(query)
+          c.set_name?.toLowerCase().includes(query),
         );
       }
 
       if (this.selectedProgram) {
         result = result.filter(
-          (c) => c.program?.program_name === this.selectedProgram
+          (c) => c.program?.program_name === this.selectedProgram,
         );
       }
 
@@ -320,18 +325,41 @@ export default {
       const start = (this.classPage - 1) * this.itemsPerPage;
       return this.filteredClasses.slice(start, start + this.itemsPerPage);
     },
-    classTotalPages() {
-      return Math.ceil(this.filteredClasses.length / this.itemsPerPage) || 1;
+
+    totalPages() {
+      return Math.max(
+        1,
+        Math.ceil(this.filteredClasses.length / this.itemsPerPage),
+      );
+    },
+    pageNumbers() {
+      const total = this.totalPages;
+
+      if (total <= 3) {
+        return Array.from({ length: total }, (_, i) => i + 1);
+      }
+
+      let start = this.classPage - 1;
+      let end = this.classPage + 1;
+
+      if (start < 1) start = 1;
+      if (end > total) end = total;
+
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
     classStartIndex() {
       return this.filteredClasses.length === 0
         ? 0
         : (this.classPage - 1) * this.itemsPerPage + 1;
     },
+
     classEndIndex() {
-      const end = this.classPage * this.itemsPerPage;
-      return Math.min(end, this.filteredClasses.length);
+      return Math.min(
+        this.classPage * this.itemsPerPage,
+        this.filteredClasses.length,
+      );
     },
+
     uniquePrograms() {
       const programs = this.classes
         .map((c) => c.program?.program_name)
@@ -341,7 +369,7 @@ export default {
   },
   methods: {
     changePage(page) {
-      if (page < 1 || page > this.classTotalPages) return;
+      if (page < 1 || page > this.totalPages) return;
       this.classPage = page;
     },
     async fetchUser() {
@@ -350,7 +378,7 @@ export default {
           process.env.VUE_APP_API_BASE_URL + "/auth/me",
           {
             withCredentials: true,
-          }
+          },
         );
         this.user = res.data;
       } catch (err) {
@@ -360,7 +388,7 @@ export default {
     async loadClasses() {
       try {
         const response = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/class/get-classes"
+          process.env.VUE_APP_API_BASE_URL + "/class/get-classes",
         );
         this.classes = response.data;
       } catch (error) {
@@ -381,7 +409,7 @@ export default {
               program_id: cls.program_id,
               school_year_id: cls.school_year_id,
             },
-          }
+          },
         );
 
         const yearLevel = this.extractYearLevel(cls.set_name);

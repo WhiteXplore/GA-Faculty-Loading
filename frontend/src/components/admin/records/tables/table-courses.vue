@@ -1,44 +1,40 @@
 <template>
   <div v-if="isTable">
     <!-- Header -->
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4">Pages / Courses</div>
       <div class="flex items-center gap-2">
         <!-- Upload & Add -->
         <div
           @click="isUploadModal = true"
-          class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
+          class="flex items-center gap-2 px-3 py-2 border text-blue-600 border-blue-600 rounded-xl hover:bg-blue-700 hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
         >
           <div
-            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+            class="p-1 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center"
           >
-            <icon
-              name="upload"
-              class="w-5 h-5 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
-            />
+            <icon name="uploads" />
           </div>
           <span class="font-medium text-sm">Upload Course</span>
         </div>
 
         <div
           @click="toggleAdd"
-          class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
+          class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
         >
           <div
-            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+            class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
           >
-            <icon
-              name="circle-add"
-              class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
-            />
+            <icon name="circle-add" />
           </div>
+
           <span class="font-medium text-sm">Add Course</span>
         </div>
       </div>
     </div>
 
-    <!-- Controls -->
+    <!-- Table -->
     <div class="mt-4 overflow-x-auto border p-3 rounded-xl bg-white">
+      <!-- Top Controls -->
       <div
         class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
       >
@@ -55,7 +51,7 @@
               <option value="20">20</option>
             </select>
             <div
-              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-600"
+              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-defaultGreen"
             >
               <svg
                 class="w-4 h-4"
@@ -80,7 +76,7 @@
             <select
               v-model="selectedCurriculum"
               @change="currentPage = 1"
-              class="rounded-full border border-green-600 px-4 py-2 text-green-900 text-sm font-semibold shadow-sm cursor-pointer"
+              class="rounded-full border border-green-600 px-4 py-1.5 text-green-900 text-sm font-semibold shadow-sm cursor-pointer"
             >
               <option value="">All Curriculums</option>
               <option
@@ -122,21 +118,23 @@
 
       <!-- Table -->
       <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-        <div class="max-h-[65vh] overflow-y-auto">
+        <div class="max-h-[69vh] overflow-y-auto">
           <table class="min-w-full text-sm text-gray-700 border-collapse">
             <thead
               class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
               <tr>
-                <th class="px-4 py-3 text-left">Course Code</th>
-                <th class="px-4 py-3 text-left">Course Title</th>
-                <th class="px-4 py-3 text-center">Semester</th>
-                <th class="px-4 py-3 text-center">Year Level</th>
-                <th class="px-4 py-3 text-center">Lecture</th>
-                <th class="px-4 py-3 text-center">Lab</th>
-                <th class="px-4 py-3 text-center">Units</th>
-                <th class="px-4 py-3 text-center">Pre-requisite</th>
-                <th class="px-4 py-3 text-center rounded-tr-lg">Actions</th>
+                <th class="px-4 py-3 text-left font-normal">Course Code</th>
+                <th class="px-4 py-3 text-left font-normal">Course Title</th>
+                <th class="px-4 py-3 text-center font-normal">Semester</th>
+                <th class="px-4 py-3 text-center font-normal">Year Level</th>
+                <th class="px-4 py-3 text-center font-normal">Lecture</th>
+                <th class="px-4 py-3 text-center font-normal">Lab</th>
+                <th class="px-4 py-3 text-center font-normal">Units</th>
+                <th class="px-4 py-3 text-center font-normal">Pre-requisite</th>
+                <th class="px-4 py-3 text-center rounded-tr-lg font-normal">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -157,19 +155,21 @@
                 <td class="px-4 py-3 text-center">
                   {{ c.course_requisite || "-" }}
                 </td>
-                <td class="px-4 py-3 flex justify-center gap-2">
-                  <button
-                    class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
-                    @click="toggleEdit(c)"
-                  >
-                    <icon name="edit" /> Edit
-                  </button>
-                  <button
-                    class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                    @click="toggleDelete(c)"
-                  >
-                    <icon name="delete" /> Delete
-                  </button>
+                <td class="px-4 py-3 flex justify-center">
+                  <div class="flex gap-2">
+                    <button
+                      class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
+                      @click="toggleEdit(c)"
+                    >
+                      <icon name="edit" /> Edit
+                    </button>
+                    <button
+                      class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                      @click="toggleDelete(c)"
+                    >
+                      <icon name="delete" /> Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
               <tr v-if="paginatedData.length === 0">
@@ -184,11 +184,11 @@
 
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
+        <div class="text-gray-700 text-sm">
           Showing {{ startIndex }} to {{ endIndex }} of
           {{ filteredCourses.length }} entries
         </div>
-        <div class="flex items-center gap-1">
+        <div class="flex items-center gap-1 text-sm">
           <button
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
@@ -221,9 +221,9 @@
   </div>
 
   <!-- Add/Edit/Upload Modals -->
-  <addCourses v-if="isAddCourses" @close="closeView" @refresh="loadCourses" />
+
   <addCourses
-    v-if="showEditModal && selectedCourse"
+    v-if="(showEditModal && selectedCourse) || isAddCourses"
     :courseData="selectedCourse"
     @close="closeModal"
     @refresh="loadCourses"
@@ -371,19 +371,20 @@ export default {
     },
 
     toggleAdd() {
+      this.selectedCourse = null;
+      this.showEditModal = false;
       this.isAddCourses = true;
     },
-
     toggleEdit(course) {
+      this.isAddCourses = false;
       this.selectedCourse = course;
       this.showEditModal = true;
     },
-
     closeModal() {
+      this.isAddCourses = false;
       this.showEditModal = false;
       this.selectedCourse = null;
     },
-
     changePage(page) {
       this.currentPage = Math.max(1, Math.min(page, this.totalPages));
     },

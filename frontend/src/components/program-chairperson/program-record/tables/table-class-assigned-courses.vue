@@ -77,7 +77,7 @@
 
         <!-- Table -->
         <div class="w-full mt-1 rounded-xl border bg-white overflow-hidden">
-          <div class="max-h-[65vh] overflow-y-auto">
+          <div class="max-h-[69vh] overflow-y-auto">
             <table class="min-w-full text-sm text-gray-700 border-collapse">
               <thead
                 class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
@@ -171,7 +171,7 @@
                 'bg-defaultGreen text-white': classPage === page,
                 'bg-gray-200 text-gray-700': classPage !== page,
               }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+              class="px-3 py-1 rounded-md hover:bg-green-300"
             >
               {{ page }}
             </button>

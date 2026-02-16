@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-defaultGreen w-screen h-screen flex animate-scaleUp">
+  <div class="bg-defaultGreen h-screen flex animate-scaleUp">
     <!-- Sidebar -->
     <div
       :class="{ 'w-16': !isExpanded, 'w-64': isExpanded }"
@@ -152,13 +152,13 @@
     <!-- Main Content -->
     <div
       :class="{
-        'ml-[55px]': !isExpanded,
-        'ml-[247px]': isExpanded,
+        'ml-16': !isExpanded,
+        'ml-64': isExpanded,
       }"
-      class="flex-grow transition-all pt-2 min-h-screen rounded-t-xl overflow-y-auto z-50"
+      class="flex-grow transition-all max-h-screen rounded-t-xl overflow-y-auto z-50 mt-2"
     >
       <slot>
-        <div class="bg-white w-auto min-h-screen shadow mr-2 rounded-t-xl">
+        <div class="bg-white w-auto shadow mr-2 rounded-t-xl h-full">
           <adminTopbar />
           <div class="">
             <router-view></router-view>
@@ -381,7 +381,7 @@ export default {
         const response = await axios.post(
           process.env.VUE_APP_API_BASE_URL +
             "/program-year-courses/sync-from-classes",
-          { withCredentials: true }
+          { withCredentials: true },
         );
         console.log("Sync successful:", response.data);
         this.$router.push(route);
@@ -389,8 +389,15 @@ export default {
         console.error("Failed to sync:", error);
       }
     },
+    closeDropdown() {
+      this.isDropdownOpen = null;
+    },
+
     toggleSidebar() {
       this.isExpanded = !this.isExpanded;
+      if (!this.isExpanded) {
+        this.isDropdownOpen = null;
+      }
     },
     toggleDropdown(name) {
       this.isExpanded = true;
@@ -404,7 +411,7 @@ export default {
       for (const item of allDropdownItems) {
         if (item.children) {
           const match = item.children.find((child) =>
-            path.startsWith(child.route)
+            path.startsWith(child.route),
           );
           if (match || path.startsWith(item.route)) {
             this.isExpanded = true;
@@ -420,7 +427,7 @@ export default {
           process.env.VUE_APP_API_BASE_URL + "/auth/me",
           {
             withCredentials: true,
-          }
+          },
         );
         if (response.data) {
           this.user = response.data;

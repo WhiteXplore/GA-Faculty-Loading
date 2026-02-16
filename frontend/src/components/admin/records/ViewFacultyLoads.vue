@@ -24,7 +24,7 @@
                   'px-4 py-2 rounded-lg text-sm font-medium transition',
                   selectedSemester === 2
                     ? 'bg-green-600 text-white'
-                    : 'bg-white text-green-600 border border-green-600 hover:bg-green-600 hover:text-white',
+                    : 'bg-white text-defaultGreen border border-green-600 hover:bg-green-600 hover:text-white',
                 ]"
               >
                 Second Semester

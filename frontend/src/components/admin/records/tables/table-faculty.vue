@@ -1,7 +1,7 @@
 <template>
   <div v-if="isTable">
     <!-- Header -->
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages /
         <span class="font-semibold text-green-900">
@@ -32,7 +32,7 @@
               <option value="20">20</option>
             </select>
             <div
-              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-600"
+              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-defaultGreen"
             >
               <svg
                 class="w-4 h-4"
@@ -62,7 +62,7 @@
             @input="changePage(1)"
           />
           <div
-            class="absolute inset-y-0 left-3 flex items-center text-green-600 pointer-events-none"
+            class="absolute inset-y-0 left-3 flex items-center text-defaultGreen pointer-events-none"
           >
             <svg
               class="w-4 h-4"
@@ -80,16 +80,25 @@
 
       <!-- Faculty Table -->
       <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-        <div class="max-h-[65vh] overflow-y-auto">
+        <div class="max-h-[69vh] overflow-y-auto">
           <table class="min-w-full text-sm text-gray-700 border-collapse">
             <thead
               class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
               <tr>
-                <th class="px-4 py-3 text-left font-normal">Faculty Name</th>
-                <th class="px-4 py-3 text-left font-normal">Institute</th>
+                <th class="px-4 py-3 text-left font-normal w-[18%]">
+                  Faculty Name
+                </th>
+                <th class="px-4 py-3 text-left font-normal w-[10%]">
+                  Institute
+                </th>
                 <th class="px-4 py-3 text-left font-normal w-[30%]">Program</th>
-                <th class="px-4 py-3 text-left font-normal w-[15%]">Role</th>
+                <th class="px-4 py-3 text-center font-normal w-[16%]">
+                  Employment Status
+                </th>
+                <th class="px-4 py-3 text-center font-normal w-[16%]">
+                  Designation
+                </th>
                 <th class="px-4 py-3 text-center rounded-tr-lg font-normal">
                   Actions
                 </th>
@@ -105,12 +114,29 @@
                   {{ user.first_name }} {{ user.last_name }}
                 </td>
                 <td class="px-4 py-3">
-                  {{ user.institute?.institute_name || "N/A" }}
+                  {{ user.institute?.institute_code || "-" }}
                 </td>
                 <td class="px-4 py-3">
-                  {{ user.program?.program_name || "N/A" }}
+                  {{ user.program?.program_name || "-" }}
                 </td>
-                <td class="px-4 py-3 text-left">{{ user.role }}</td>
+                <td class="px-4 py-3 text-center">
+                  <span
+                    :class="{
+                      'bg-green-100 text-green-800':
+                        user.employment_type === 'Full Time',
+                      'bg-orange-100 text-orange-800':
+                        user.employment_type === 'Part Time',
+                      'text-gray-400 ': !user.employment_type,
+                    }"
+                    class="px-2 py-1 rounded-full text-xs font-semibold"
+                  >
+                    {{ user.employment_type || "-" }}
+                  </span>
+                </td>
+
+                <td class="px-4 py-3 text-center">
+                  {{ user.designation || "-" }}
+                </td>
                 <td class="px-4 py-3 items-center justify-center flex">
                   <div class="flex gap-2">
                     <button
@@ -133,11 +159,11 @@
       </div>
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
+        <div class="text-gray-700 text-sm">
           Showing {{ startIndex }} to {{ endIndex }} of
           {{ filteredData.length }} faculty
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-1 text-sm">
           <button
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
@@ -152,7 +178,7 @@
                 ' bg-defaultGreen text-white': currentPage === page,
                 'bg-gray-200 text-gray-700': currentPage !== page,
               }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+              class="px-3 py-1 rounded-md hover:bg-green-300"
             >
               {{ page }}
             </button>
@@ -181,7 +207,7 @@
       <div class="flex justify-between items-center border-b pb-3 mb-4">
         <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
           <svg
-            class="w-6 h-6 text-green-600"
+            class="w-6 h-6 text-defaultGreen"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -275,7 +301,7 @@
       <div class="flex justify-end mt-6">
         <button
           @click="showViewModal = false"
-          class="px-5 py-3 rounded-lg bg-[#147452] text-white font-medium hover:bg-green-700 transition"
+          class="px-5 py-3 rounded-lg bg-[#147452] text-white font-medium hover:bg-defaultGreen transition"
         >
           Close
         </button>
@@ -322,7 +348,7 @@ export default {
       // Admin → All faculty and PC
       if (currentUser.role === "Admin") {
         list = this.rawusers.filter(
-          (u) => u.role === "Program Chairperson" || u.role === "Faculty"
+          (u) => u.role === "Program Chairperson" || u.role === "Faculty",
         );
       }
       // Program Chairperson → Faculty only in same institute + program
@@ -331,7 +357,7 @@ export default {
           (u) =>
             u.role === "Faculty" &&
             u.institute?.institute_id === currentUser.institute_id &&
-            u.program?.program_id === currentUser.program_id
+            u.program?.program_id === currentUser.program_id,
         );
       }
 
@@ -345,7 +371,7 @@ export default {
         ]
           .join(" ")
           .toLowerCase()
-          .includes(query)
+          .includes(query),
       );
     },
 
@@ -403,7 +429,7 @@ export default {
           process.env.VUE_APP_API_BASE_URL + "/auth/me",
           {
             withCredentials: true,
-          }
+          },
         );
         if (response.data) {
           this.user = response.data;

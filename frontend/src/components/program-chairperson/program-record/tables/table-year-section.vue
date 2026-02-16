@@ -1,13 +1,13 @@
 <template>
   <div class="space-y-6 text-[13px]">
     <!-- HEADER -->
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4">Pages / Year & Section</div>
 
       <div class="flex items-center gap-2">
         <button
           @click="openYearSectionModal"
-          class="flex items-center gap-2 px-4 py-2 text-green-600 bg-white border border-green-500 rounded-xl shadow-sm hover:bg-green-600 hover:text-white transition-all duration-300"
+          class="flex items-center gap-2 px-4 py-2 text-defaultGreen bg-white border border-green-500 rounded-xl shadow-sm hover:bg-green-600 hover:text-white transition-all duration-300"
         >
           <div
             class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full"
@@ -101,7 +101,7 @@
 
             <!-- Table -->
             <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-              <div class="max-h-[65vh] overflow-y-auto">
+              <div class="max-h-[69vh] overflow-y-auto">
                 <table class="min-w-full text-sm text-gray-700 border-collapse">
                   <thead
                     class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
@@ -194,7 +194,7 @@
                     'bg-defaultGreen text-white': currentPage === page,
                     'bg-gray-200 text-gray-700': currentPage !== page,
                   }"
-                  class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+                  class="px-3 py-1 rounded-md hover:bg-green-300"
                 >
                   {{ page }}
                 </button>

@@ -1,23 +1,21 @@
 <template>
   <div v-if="isTable">
     <!-- Header & Add Button -->
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / Institute
       </div>
       <div
         @click="toggleAdd"
-        class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
+        class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
       >
         <div
-          class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+          class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
         >
-          <icon
-            :name="'circle-add'"
-            class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
-          />
+          <icon name="circle-add" />
         </div>
-        <span class="font-medium text-sm">Add Institute </span>
+
+        <span class="font-medium text-sm">Add Institute</span>
       </div>
     </div>
 
@@ -91,7 +89,7 @@
       <!-- Data Table -->
       <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
         <!-- Scrollable body wrapper -->
-        <div class="max-h-[65vh] overflow-y-auto">
+        <div class="max-h-[69vh] overflow-y-auto">
           <table class="min-w-full text-sm text-gray-700 border-collapse">
             <thead
               class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
@@ -100,7 +98,7 @@
                 <th class="px-4 py-3 text-left font-normal">Institute Code</th>
                 <th class="px-4 py-3 text-left font-normal">Institute Title</th>
                 <th class="px-4 py-3 text-left font-normal">Program Code</th>
-                <th class="px-4 py-3 text-left font-normal w-[25%]">
+                <th class="px-4 py-3 text-left font-normal w-[30%]">
                   Program Title
                 </th>
                 <th
@@ -162,11 +160,11 @@
 
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
+        <div class="text-gray-700 text-sm">
           Showing {{ startIndex }} to {{ endIndex }} of
           {{ filteredData.length }} entries
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-1 text-sm">
           <button
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
@@ -181,7 +179,7 @@
                 'bg-defaultGreen text-white': currentPage === page,
                 'bg-gray-200 text-gray-700': currentPage !== page,
               }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+              class="px-3 py-1 rounded-md hover:bg-green-300"
             >
               {{ page }}
             </button>
@@ -284,7 +282,7 @@ export default {
       const filtered = this.programs.filter((item) =>
         `${item.institute?.institute_name} ${item.institute?.institute_code} ${item.program_code} ${item.program_name}`
           .toLowerCase()
-          .includes(query)
+          .includes(query),
       );
 
       // Step 2: Remove duplicates based on all 4 fields
@@ -369,7 +367,7 @@ export default {
       axios
         .delete(
           process.env.VUE_APP_API_BASE_URL +
-            `/programs/delete-id/${this.recordToDelete.program_id}`
+            `/programs/delete-id/${this.recordToDelete.program_id}`,
         )
         .then(() => {
           this.recordToDelete = null;

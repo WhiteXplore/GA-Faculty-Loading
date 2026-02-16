@@ -6,7 +6,7 @@
     <!-- Header / Add Button -->
     <div class="flex justify-end mb-2">
       <div
-        class="gap-1 flex cursor-pointer border border-green-600 text-green-600 px-2 py-1 rounded-lg hover:bg-green-50 transition"
+        class="gap-1 flex cursor-pointer border border-green-600 text-defaultGreen px-2 py-1 rounded-lg hover:bg-green-50 transition"
         @click="$emit('add')"
       >
         <icon :name="'edit'" />
@@ -133,13 +133,13 @@ export default {
     filteredExpertiseBySemester(sem) {
       if (!this.user?.expertise) return [];
       return this.user.expertise.filter(
-        (e) => e.course?.course_semester === sem
+        (e) => e.course?.course_semester === sem,
       );
     },
     filteredOtherBySemester(sem) {
       if (!this.user?.other_expertise) return [];
       return this.user.other_expertise.filter(
-        (e) => e.course?.course_semester === sem
+        (e) => e.course?.course_semester === sem,
       );
     },
   },

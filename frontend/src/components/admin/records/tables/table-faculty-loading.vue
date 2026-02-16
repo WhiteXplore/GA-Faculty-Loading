@@ -1,56 +1,217 @@
 <template>
-  <div class="flex flex-col gap-3 h-[90vh]">
-    <!-- TODO  Top Controls -->
-    <div class="flex flex-wrap justify-between items-center gap-3">
-      <div class="text-sm text-gray-600 mt-2 font-medium">
-        Pages / Faculty Loadsss
+  <!-- TODO  Loading Overlay -->
+  <div
+    v-if="loading"
+    class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50"
+  >
+    <div class="relative flex items-center justify-center">
+      <div
+        class="absolute w-52 h-44 bg-gradient-to-r from-green-400/30 to-emerald-500/30 rounded-3xl animate-ping"
+      ></div>
+      <div
+        class="relative flex flex-col items-center justify-center bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-white/30"
+      >
+        <div class="relative mb-4">
+          <div
+            class="w-12 h-12 border-4 border-green-400 border-t-transparent rounded-full animate-spin"
+          ></div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="text-defaultGreen text-sm font-semibold"
+              >{{ Math.floor(progress) }}%</span
+            >
+          </div>
+        </div>
+        <div class="text-gray-700 font-semibold text-[15px] tracking-wide">
+          Generating Schedule...
+        </div>
+        <div class="text-xs text-gray-500 mt-1">
+          Please wait while we finalize your data.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TODO  Confirm Save Modal -->
+  <div
+    v-if="showConfirmSaved"
+    class="fixed inset-0 flex items-center justify-center bg-black/30 z-50"
+  >
+    <div class="bg-white rounded-2xl shadow-2xl p-6 w-96">
+      <!-- TODO  Header -->
+      <div class="flex items-center justify-between border-b pb-3 mb-4">
+        <!-- Left: Icon + Title -->
+        <div class="flex items-center gap-2">
+          <icon
+            name="exclamation-circle"
+            class="w-7 h-7 p-1 rounded-full bg-green-200 text-green-900 flex items-center justify-center"
+          />
+          <h3 class="text-lg font-semibold text-gray-800 leading-none">
+            Confirm Save
+          </h3>
+        </div>
+
+        <!-- Right: Close Button -->
+        <button
+          @click="showConfirmSaved = false"
+          class="text-gray-400 hover:text-gray-600 transition leading-none"
+        >
+          ✕
+        </button>
       </div>
 
-      <div class="flex gap-3 flex-wrap">
-        <!-- TODO  Toggle View Button -->
+      <!-- TODO  Message -->
+      <p class="text-gray-600 mb-6">
+        Are you sure you want to save this schedule?
+      </p>
+
+      <!-- TODO  Buttons -->
+      <div class="flex justify-center gap-2 text-sm">
         <button
+          @click="showConfirmSaved = false"
+          class="bg-gray-200 p-2 px-3 rounded-lg text-gray-700 hover:bg-white border hover:border-gray-800 hover:text-gray-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
+        >
+          Cancel
+        </button>
+        <button
+          @click="saveScheduledConfirmed"
+          class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
+        >
+          Yes, Save
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col space-y-4 h-[88vh]">
+    <!-- TODO  Top Controls -->
+    <div class="flex flex-wrap justify-between items-center gap-3 px-1">
+      <div class="text-[13px] mt-4 font-regular">Pages / Faculty Loading</div>
+
+      <div class="flex gap-3 flex-wrap">
+        <!-- TODO  Filters (pushed to the end) -->
+        <div
+          class="flex items-center gap-3 flex-wrap ml-auto"
+          v-if="appearSave"
+        >
+          <!-- TODO  Institute Filter -->
+          <div class="relative">
+            <select
+              v-model="selectedInstituteId"
+              class="appearance-none rounded-xl border border-green-600 bg-white px-4 py-2 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md w-[200px]"
+            >
+              <option value="">All Institutes</option>
+              <option
+                v-for="institute in uniqueInstitutes"
+                :key="institute.id"
+                :value="institute.id"
+              >
+                {{ institute.name }}
+              </option>
+            </select>
+
+            <!-- TODO  Custom arrow -->
+            <div
+              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <!-- TODO  Program Filter -->
+          <div class="relative">
+            <select
+              v-model="selectedProgramId"
+              :disabled="!selectedInstituteId"
+              class="appearance-none rounded-xl w-auto border border-green-600 bg-white px-4 py-2 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md disabled:bg-gray-100 disabled:border-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed"
+            >
+              <option value="">All Programs</option>
+              <option
+                v-for="program in filteredPrograms"
+                :key="program.id"
+                :value="program.id"
+              >
+                {{ program.name }}
+              </option>
+            </select>
+
+            <!-- TODO  Custom arrow -->
+            <div
+              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!-- TODO  Toggle View Button -->
+
+        <div
           @click="showFacultyTable = !showFacultyTable"
-          class="group flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white rounded-xl shadow-sm transition"
+          class="flex items-center gap-2 px-3 py-2 border text-blue-600 border-blue-600 rounded-xl hover:bg-blue-700 hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
         >
           <div
-            class="p-1 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-white transition"
+            class="p-1 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center"
           >
-            <icon
-              name="users"
-              class="w-4 h-4 text-blue-600 group-hover:text-blue-600"
-            />
+            <icon name="users" />
           </div>
           <span class="font-medium text-sm">
             {{ showFacultyTable ? "View Cards" : "View Faculty" }}
           </span>
-        </button>
+        </div>
 
         <!-- TODO  Auto Generation -->
-        <button
+
+        <div
           @click="generateSchedule"
-          class="flex items-center gap-2 px-4 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300"
+          class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
         >
           <div
-            class="flex items-center justify-center w-5 h-5 bg-white rounded-full transition-colors duration-300"
+            class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
           >
-            <icon name="arrow-path" class="w-4 h-4 text-defaultGreen" />
+            <icon name="arrow-path" />
           </div>
+
           <span class="font-medium text-sm">Auto Generation</span>
-        </button>
+        </div>
 
         <!-- TODO  Save Schedule -->
-        <button
+
+        <div
           v-if="appearSave"
           @click="showConfirmSaved = true"
-          class="flex items-center gap-2 px-4 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300"
+          class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
         >
           <div
-            class="flex items-center justify-center w-5 h-5 bg-white rounded-full transition-colors duration-300"
+            class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
           >
-            <icon name="circle-check" class="w-4 h-4 text-defaultGreen" />
+            <icon name="circle-check" />
           </div>
-          <span class="font-medium text-sm">Save this schedule</span>
-        </button>
+
+          <span class="font-medium text-sm">Save this Schedule</span>
+        </div>
       </div>
     </div>
 
@@ -66,89 +227,10 @@
         <icon name="arrow-left" class="w-4 h-4" />
         <span class="font-medium text-sm">Back to Table</span>
       </button>
-
-      <!-- TODO  Filters (pushed to the end) -->
-      <div class="flex items-center gap-3 flex-wrap ml-auto" v-if="appearSave">
-        <!-- TODO  Institute Filter -->
-        <div class="relative">
-          <select
-            v-model="selectedInstituteId"
-            class="appearance-none rounded-full border border-green-600 bg-white px-4 py-2 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md w-[200px]"
-          >
-            <option value="">All Institutes</option>
-            <option
-              v-for="institute in uniqueInstitutes"
-              :key="institute.id"
-              :value="institute.id"
-            >
-              {{ institute.name }}
-            </option>
-          </select>
-
-          <!-- TODO  Custom arrow -->
-          <div
-            class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
-          >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </div>
-        </div>
-
-        <!-- TODO  Program Filter -->
-        <div class="relative">
-          <select
-            v-model="selectedProgramId"
-            :disabled="!selectedInstituteId"
-            class="appearance-none rounded-full w-auto border border-green-600 bg-white px-4 py-2 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md disabled:bg-gray-100 disabled:border-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed"
-          >
-            <option value="">All Programs</option>
-            <option
-              v-for="program in filteredPrograms"
-              :key="program.id"
-              :value="program.id"
-            >
-              {{ program.name }}
-            </option>
-          </select>
-
-          <!-- TODO  Custom arrow -->
-          <div
-            class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
-          >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- TODO  Scrollable Content -->
     <div class="flex-1 overflow-y-auto">
-      <!-- TODO  ========================= -->
-      <!-- TODO  Faculty Table View -->
-      <!-- TODO  ========================= -->
       <div v-if="showFacultyTable">
         <div class="overflow-x-auto border p-3 rounded-xl bg-white">
           <!-- TODO  Top Controls -->
@@ -159,7 +241,7 @@
             <div class="flex items-center gap-2">
               <div class="relative">
                 <select
-                  v-model="itemsPerPage"
+                  v-schedule_typel="itemsPerPage"
                   class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md focus:shadow-md"
                   @change="changePage(1)"
                 >
@@ -168,7 +250,7 @@
                   <option value="20">20</option>
                 </select>
                 <div
-                  class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-600"
+                  class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-defaultGreen"
                 >
                   <svg
                     class="w-4 h-4"
@@ -197,8 +279,9 @@
                 class="rounded-full border border-green-600 bg-white px-4 py-2 pl-10 text-sm shadow-sm w-full transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md focus:shadow-md"
                 @input="changePage(1)"
               />
+
               <div
-                class="absolute inset-y-0 left-3 flex items-center text-green-600 pointer-events-none"
+                class="absolute inset-y-0 left-3 flex items-center text-defaultGreen pointer-events-none"
               >
                 <svg
                   class="w-4 h-4"
@@ -216,7 +299,7 @@
 
           <!-- TODO  Table -->
           <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-            <div class="max-h-[65vh] overflow-y-auto">
+            <div class="max-h-[69vh] overflow-y-auto">
               <table class="min-w-full text-sm text-gray-700 border-collapse">
                 <thead
                   class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
@@ -268,12 +351,18 @@
           </div>
 
           <!-- TODO  Pagination -->
-          <div class="flex justify-between items-center mt-4">
+          <div
+            class="flex flex-col sm:flex-row justify-between items-center mt-4 gap-2"
+          >
+            <!-- Info Text -->
             <div class="text-gray-700 text-sm">
               Showing {{ startIndex }} to {{ endIndex }} of
               {{ Object.keys(filteredGroupedSchedule).length }} faculty
             </div>
-            <div class="flex items-center">
+
+            <!-- Pagination Controls -->
+            <div class="flex items-center gap-1">
+              <!-- Previous Button -->
               <button
                 @click="changePage(currentPage - 1)"
                 :disabled="currentPage === 1"
@@ -282,6 +371,7 @@
                 &lt;
               </button>
 
+              <!-- Page Numbers -->
               <span v-for="page in pageNumbers" :key="'page-' + page">
                 <button
                   @click="changePage(page)"
@@ -289,12 +379,13 @@
                     'bg-defaultGreen text-white': currentPage === page,
                     'bg-gray-200 text-gray-700': currentPage !== page,
                   }"
-                  class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+                  class="px-3 py-1 rounded-md hover:bg-green-300"
                 >
                   {{ page }}
                 </button>
               </span>
 
+              <!-- Next Button -->
               <button
                 @click="changePage(currentPage + 1)"
                 :disabled="currentPage === totalPages"
@@ -311,10 +402,10 @@
         <!-- TODO  Faculty Cards -->
         <div
           v-if="Object.keys(filteredGroupedSchedule).length"
-          class="gap-2 overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-full"
+          class="gap-2 overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 h-full"
         >
           <div
-            v-for="(records, instructor) in filteredGroupedSchedule"
+            v-for="[instructor] in visibleFacultyCards"
             :key="instructor"
             class="bg-white rounded-xl border flex flex-col relative"
           >
@@ -379,7 +470,6 @@
                         <div
                           v-if="isStartingSlot(item, slot)"
                           draggable="true"
-                          @dragstart="onDragStart($event, item)"
                           @mouseenter="showScheduleTooltip($event, item)"
                           @mouseleave="hideScheduleTooltip"
                           @click="highlightRow(item)"
@@ -399,7 +489,7 @@
                             zIndex: 20,
                           }"
                         >
-                          <!-- MODE BADGE -->
+                          <!-- schedule_type BADGE -->
                           <span
                             v-if="item.schedule_type"
                             :class="[
@@ -426,7 +516,7 @@
                               {{ item.room_name }}
                             </p>
                             <p class="text-gray-600 truncate">
-                              {{ item.set_name }}
+                              {{ item.program_name }}-{{ item.set_name }}
                             </p>
                             <button
                               v-if="hasRoomConflict(item)"
@@ -478,9 +568,13 @@
                   </span>
                 </div>
 
-                <div class="text-xs text-gray-700 space-y-0.5">
+                <div class="text-[10px] text-gray-700 space-y-0.5">
                   <p>
                     <strong>Faculty:</strong> {{ tooltipItem.faculty_name }}
+                  </p>
+                  <p>
+                    <strong>Year & Section:</strong>
+                    {{ tooltipItem.program_name }}-{{ tooltipItem.set_name }}
                   </p>
                   <p><strong>Room:</strong> {{ tooltipItem.room_name }}</p>
                   <p><strong>Day:</strong> {{ tooltipItem.day }}</p>
@@ -516,178 +610,210 @@
             to generate schedule data.
           </p>
         </div>
-      </div>
-    </div>
-
-    <!-- TODO  Loading Overlay -->
-    <div
-      v-if="loading"
-      class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50"
-    >
-      <div class="relative flex items-center justify-center">
         <div
-          class="absolute w-52 h-44 bg-gradient-to-r from-green-400/30 to-emerald-500/30 rounded-3xl animate-ping"
-        ></div>
-        <div
-          class="relative flex flex-col items-center justify-center bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-white/30"
+          v-if="totalCardPages > 1"
+          class="flex justify-center items-center gap-3 mt-4"
         >
-          <div class="relative mb-4">
-            <div
-              class="w-12 h-12 border-4 border-green-400 border-t-transparent rounded-full animate-spin"
-            ></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <span class="text-green-600 text-sm font-semibold"
-                >{{ Math.floor(progress) }}%</span
-              >
-            </div>
-          </div>
-          <div class="text-gray-700 font-semibold text-[15px] tracking-wide">
-            Generating Schedule...
-          </div>
-          <div class="text-xs text-gray-500 mt-1">
-            Please wait while we finalize your data.
-          </div>
+          <button
+            @click="cardPage--"
+            :disabled="cardPage === 1"
+            class="px-3 py-1 rounded-lg bg-gray-200 disabled:opacity-50"
+          >
+            &lt;
+          </button>
+
+          <span class="text-sm font-medium text-gray-600">
+            Page {{ cardPage }} of {{ totalCardPages }}
+          </span>
+
+          <button
+            @click="cardPage++"
+            :disabled="cardPage === totalCardPages"
+            class="px-3 py-1 rounded-lg bg-gray-200 disabled:opacity-50"
+          >
+            &gt;
+          </button>
         </div>
       </div>
     </div>
+
     <div
       v-if="conflictModalVisible"
-      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50"
+      class="fixed inset-0 z-50 bg-black/40 flex items-center justify-center"
     >
-      <div
-        class="bg-white rounded-xl shadow-lg w-full max-w-lg relative max-h-[80vh] overflow-y-auto p-6"
-      >
-        <!-- TODO  Header -->
-        <div class="flex justify-between items-center border-b pb-3 mb-4">
-          <div class="flex gap-1">
-            <icon
-              name="exclamation-circle"
-              class="text-red-900 w-7 p-1 rounded-full bg-red-200"
-            />
-            <h3 class="text-lg font-semibold text-gray-800">
-              Schedule Conflicts
-            </h3>
-          </div>
-
+      <div class="bg-white w-[900px] rounded-2xl p-6 shadow-xl">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-4 border-b pb-2">
+          <h3 class="text-lg font-semibold text-red-700">
+            Schedule Conflict Detected
+          </h3>
           <button
             @click="closeConflictModal"
-            class="text-gray-400 hover:text-gray-600 transition"
+            class="text-gray-400 hover:text-gray-600"
           >
             ✕
           </button>
         </div>
 
-        <!-- TODO  Conflicts List -->
-        <div class="space-y-3">
-          <div class="px-4 py-3 rounded-xl bg-red-50 text-sm text-red-900">
-            Please select another shedule.
+        <!-- Body -->
+        <div class="grid grid-cols-2 gap-6 mt-6">
+          <!-- LEFT: Selected Schedule -->
+          <div class="relative bg-white rounded-2xl p-5 border">
+            <!-- Badge -->
+            <span
+              class="absolute -top-3 left-4 bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow"
+            >
+              Selected Schedule
+            </span>
+
+            <div class="mt-3 space-y-3 text-sm text-gray-800">
+              <div class="flex justify-between items-center">
+                <h4 class="font-semibold text-base">
+                  {{ selectedSchedule.course_code }}
+                </h4>
+                <span
+                  class="text-xs px-2 py-1 rounded-full font-medium"
+                  :class="{
+                    'bg-orange-5s00 text-white':
+                      selectedSchedule.mode === 'face to face',
+                    'bg-purple-700 text-white':
+                      selectedSchedule.mode === 'online',
+                  }"
+                >
+                  {{
+                    selectedSchedule.mode === "face to face"
+                      ? "Face to Face"
+                      : "Online"
+                  }}
+                </span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <p class="text-xs text-gray-500">Faculty</p>
+                  <p class="font-medium">{{ selectedSchedule.faculty_name }}</p>
+                </div>
+
+                <div>
+                  <p class="text-xs text-gray-500">Section</p>
+                  <p class="font-medium">{{ selectedSchedule.set_name }}</p>
+                </div>
+
+                <div>
+                  <p class="text-xs text-gray-500">Room</p>
+                  <p class="font-medium">{{ selectedSchedule.room_name }}</p>
+                </div>
+
+                <div>
+                  <p class="text-xs text-gray-500">Time</p>
+                  <p class="font-medium">
+                    {{ formatTime(selectedSchedule.start_hour) }} –
+                    {{
+                      formatTime(
+                        selectedSchedule.start_hour + selectedSchedule.duration,
+                      )
+                    }}
+                  </p>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-500">Day</p>
+                  <p class="font-medium">{{ selectedSchedule.day }}</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div
-            v-for="conflict in conflictRecords"
-            :key="conflict.id"
-            class="p-3 rounded-md shadow-sm space-y-2"
-          >
-            <p class="text-sm text-gray-800">
-              <span class="font-semibold">Faculty:</span>
-              {{ conflict.faculty_name }}
-            </p>
-            <p class="text-sm text-gray-800">
-              <span class="font-semibold">Set and Section:</span>
-              {{ conflict.set_name }}
-            </p>
-            <p class="text-sm text-gray-800">
-              <span class="font-semibold">Course:</span>
-              {{ conflict.course_code }}
-            </p>
-            <p class="text-sm text-gray-800">
-              <span class="font-semibold">Room:</span> {{ conflict.room_name }}
-            </p>
-            <p class="text-sm text-gray-800">
-              <span class="font-semibold">Day:</span> {{ conflict.day }}
-            </p>
-            <p class="text-sm text-gray-800">
-              <span class="font-semibold">Time:</span>
-              {{ formatTime(conflict.start_hour) }} -
-              {{ formatTime(conflict.start_hour + conflict.duration) }}
-            </p>
-            <p class="text-sm text-gray-800 flex items-center gap-1">
-              <span class="font-semibold">Mode:</span>
-              <span
-                v-if="conflict.schedule_type"
-                :class="[
-                  'w-auto h-4 px-2 rounded-full text-[10px] font-bold flex items-center justify-center text-white',
-                  conflict.schedule_type === 'face to face'
-                    ? 'bg-orange-500'
-                    : '',
-                  conflict.schedule_type === 'online' ? 'bg-purple-500' : '',
-                ]"
+
+          <!-- RIGHT: Conflict Schedules -->
+          <div class="relative bg-white rounded-2xl p-5 border">
+            <!-- Badge -->
+            <span
+              class="absolute -top-3 left-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full shadow"
+            >
+              Conflicting Schedules
+            </span>
+
+            <!-- Scrollable list -->
+            <div class="mt-3 space-y-4 max-h-[420px] overflow-y-auto pr-2 p-2">
+              <div
+                v-for="conflict in conflictRecords"
+                :key="conflict.id"
+                class="relative bg-white rounded-xl p-4 ring-1 ring-red-200"
               >
-                {{
-                  conflict.schedule_type === "face to face"
-                    ? "Face to Face"
-                    : "Online"
-                }}
-              </span>
-            </p>
-            <p class="text-sm text-gray-800" v-if="conflict.reason">
-              <span class="font-semibold">Reason:</span> {{ conflict.reason }}
-            </p>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between items-center">
+                    <h5 class="font-semibold text-gray-800">
+                      {{ conflict.course_code }}
+                    </h5>
+                    <span
+                      class="text-xs px-2 py-1 rounded-full font-medium"
+                      :class="{
+                        'bg-orange-5s00 text-white':
+                          selectedSchedule.schedule_type === 'face to face',
+                        'bg-purple-700 text-white':
+                          selectedSchedule.schedule_type === 'online',
+                      }"
+                    >
+                      {{
+                        selectedSchedule.schedule_type === "face to face"
+                          ? "Face to Face"
+                          : "Online"
+                      }}
+                    </span>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-2 text-gray-700">
+                    <div>
+                      <p class="text-xs text-gray-500">Faculty</p>
+                      <p class="font-medium">{{ conflict.faculty_name }}</p>
+                    </div>
+
+                    <div>
+                      <p class="text-xs text-gray-500">Section</p>
+                      <p class="font-medium">{{ conflict.set_name }}</p>
+                    </div>
+
+                    <div>
+                      <p class="text-xs text-gray-500">Room</p>
+                      <p class="font-medium">{{ conflict.room_name }}</p>
+                    </div>
+
+                    <div>
+                      <p class="text-xs text-gray-500">Time</p>
+                      <p class="font-medium">
+                        {{ formatTime(conflict.start_hour) }} –
+                        {{
+                          formatTime(conflict.start_hour + conflict.duration)
+                        }}
+                      </p>
+                    </div>
+                    <div>
+                      <p class="text-xs text-gray-500">Day</p>
+                      <p class="font-medium">{{ selectedSchedule.day }}</p>
+                    </div>
+                  </div>
+
+                  <!-- Reason -->
+                  <div
+                    class="flex items-start gap-2 mt-2 p-2 rounded-lg bg-red-50 text-xs text-red-700"
+                  >
+                    <span>⚠</span>
+                    <span>
+                      {{ conflict.reason || "Schedule overlap detected" }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- TODO  Footer -->
+        <!-- Footer -->
         <div class="flex justify-end mt-5">
           <button
             @click="closeConflictModal"
-            class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition text-sm"
+            class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm"
           >
             Close
-          </button>
-        </div>
-      </div>
-    </div>
-    <!-- TODO  Confirm Save Modal -->
-    <div
-      v-if="showConfirmSaved"
-      class="fixed inset-0 flex items-center justify-center bg-black/30 z-50"
-    >
-      <div class="bg-white rounded-2xl shadow-2xl p-6 w-96">
-        <!-- TODO  Header -->
-        <div class="flex justify-between items-center border-b pb-3 mb-4">
-          <div class="flex gap-1 items-center">
-            <icon
-              name="exclamation-circle"
-              class="text-green-900 w-7 p-1 rounded-full bg-green-200"
-            />
-            <h3 class="text-lg font-semibold text-gray-800">Confirm Save</h3>
-          </div>
-
-          <button
-            @click="$emit('close')"
-            class="text-gray-400 hover:text-gray-600 transition"
-          >
-            ✕
-          </button>
-        </div>
-
-        <!-- TODO  Message -->
-        <p class="text-gray-600 mb-6">
-          Are you sure you want to save this schedule?
-        </p>
-
-        <!-- TODO  Buttons -->
-        <div class="flex justify-center gap-2 text-sm">
-          <button
-            @click="showConfirmSaved = false"
-            class="px-4 py-2 border rounded-xl hover:bg-gray-100 transition"
-          >
-            Cancel
-          </button>
-          <button
-            @click="saveScheduledConfirmed"
-            class="px-4 py-2 bg-defaultGreen text-white rounded-xl hover:bg-green-600 transition"
-          >
-            Yes, Save
           </button>
         </div>
       </div>
@@ -719,12 +845,19 @@ export default {
       selectedInstituteId: "",
       selectedProgramId: "",
       showConfirmSaved: false,
-      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      days: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
 
-      // 8 AM to 5 PM
-      timeSlots: Array.from({ length: 13 }, (_, i) => ({
-        start: 8 + i,
-        end: 9 + i,
+      timeSlots: Array.from({ length: 14 }, (_, i) => ({
+        start: 7 + i, // 7, 8, 9 ... 20
+        end: 8 + i, // 8, 9, 10 ... 21
       })),
 
       progress: 0,
@@ -742,10 +875,27 @@ export default {
       tooltipItem: null,
       tooltipX: 0,
       tooltipY: 0,
+      cardPage: 1,
+      cardsPerPage: 6,
+      pageWindow: 3,
+      searchQuery: "",
     };
   },
 
   computed: {
+    visibleFacultyCards() {
+      const entries = Object.entries(this.filteredGroupedSchedule);
+      const start = (this.cardPage - 1) * this.cardsPerPage;
+      const end = start + this.cardsPerPage;
+      return entries.slice(start, end);
+    },
+
+    totalCardPages() {
+      return Math.ceil(
+        Object.keys(this.filteredGroupedSchedule).length / this.cardsPerPage,
+      );
+    },
+
     coursesList() {
       const store = useFetchDataStore();
       return store.courses || [];
@@ -844,25 +994,48 @@ export default {
     startIndex() {
       return (this.currentPage - 1) * this.itemsPerPage + 1;
     },
+
     endIndex() {
       return Math.min(
         this.currentPage * this.itemsPerPage,
         Object.keys(this.filteredGroupedSchedule).length,
       );
     },
+
     totalPages() {
       return Math.ceil(
         Object.keys(this.filteredGroupedSchedule).length / this.itemsPerPage,
       );
     },
+
+    // --------------------------
+    // Updated pageNumbers for windowed pagination
+    // --------------------------
     pageNumbers() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      const halfWindow = Math.floor(this.pageWindow / 2);
+      let start = Math.max(1, this.currentPage - halfWindow);
+      let end = Math.min(this.totalPages, start + this.pageWindow - 1);
+
+      start = Math.max(1, end - this.pageWindow + 1);
+
+      const pages = [];
+      for (let i = start; i <= end; i++) pages.push(i);
+      return pages;
     },
+
     paginatedFaculty() {
-      const allFaculty = Object.entries(this.filteredGroupedSchedule);
+      let entries = Object.entries(this.filteredGroupedSchedule);
+
+      if (this.searchQuery) {
+        const q = this.searchQuery.toLowerCase();
+        entries = entries.filter(([faculty]) =>
+          faculty.toLowerCase().includes(q),
+        );
+      }
+
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return Object.fromEntries(allFaculty.slice(start, end));
+      return Object.fromEntries(entries.slice(start, end));
     },
   },
 
@@ -870,9 +1043,11 @@ export default {
     selectedInstituteId() {
       this.filterSchedules();
       this.selectedProgramId = "";
+      this.cardPage = 1;
     },
     selectedProgramId() {
       this.filterSchedules();
+      this.cardPage = 1;
     },
   },
 
@@ -915,9 +1090,9 @@ export default {
 
     // Normalize hour to 24h format
     normalizeHour(hour) {
-      hour = Number(hour);
-      if (Number.isNaN(hour)) return hour;
-      return hour <= 7 ? hour + 12 : hour;
+      const h = Number(hour);
+      if (Number.isNaN(h)) return null;
+      return h; // ✅ already 24-hour based
     },
 
     // Get all conflicting records for a given schedule item
@@ -955,9 +1130,10 @@ export default {
             reason.push("Same Room");
           if (
             r.faculty_id === record.faculty_id &&
-            (r.mode || "").toLowerCase() === (record.mode || "").toLowerCase()
+            (r.schedule_type || "").toLowerCase() ===
+              (record.schedule_type || "").toLowerCase()
           )
-            reason.push("Same Faculty + Same Mode");
+            reason.push("Same Faculty + Same schedule_type");
 
           if (!reason.length) return null;
 
@@ -975,23 +1151,17 @@ export default {
     openConflictModal(record) {
       const conflicts = this.getConflictingRecords(record);
 
-      // Only show conflicts with OTHER instructors/records
-      const otherConflicts = conflicts.filter(
-        (r) =>
-          r.faculty_name !== record.faculty_name ||
-          (r.id?.toString() || r.tempId) !==
-            (record.id?.toString() || record.tempId),
-      );
+      if (!conflicts.length) return;
 
-      if (!otherConflicts.length) return;
-
-      this.conflictRecords = otherConflicts;
+      this.selectedSchedule = record; // 👈 LEFT SIDE
+      this.conflictRecords = conflicts; // 👉 RIGHT SIDE
       this.conflictModalVisible = true;
     },
 
     closeConflictModal() {
       this.conflictModalVisible = false;
       this.conflictRecords = [];
+      this.selectedSchedule = null;
     },
 
     isStartingSlot(item, slot) {
@@ -1049,6 +1219,12 @@ export default {
       return `${hour12}:${minutesStr} ${period}`;
     },
 
+    changePage(page) {
+      if (page < 1) page = 1;
+      if (page > this.totalPages) page = this.totalPages;
+      this.currentPage = page;
+    },
+
     filterSchedules() {
       let filtered = { ...this.groupedSchedule };
 
@@ -1067,9 +1243,9 @@ export default {
         );
 
       this.filteredGroupedSchedule = filtered;
+      this.cardPage = 1;
       this.changePage(1);
     },
-
     getScheduleForCell(slot, day, instructor) {
       const schedules = this.filteredGroupedSchedule[instructor] || [];
       return schedules.filter((item) => {
@@ -1095,10 +1271,6 @@ export default {
         [instructor]: this.groupedSchedule[instructor],
       };
       this.showFacultyTable = false;
-    },
-
-    changePage(page) {
-      if (page >= 1 && page <= this.totalPages) this.currentPage = page;
     },
 
     async fetchUser() {
@@ -1208,6 +1380,7 @@ export default {
           set_name: item.set_name,
           course_code: item.course_code,
           program_id: item.program_id,
+          program_name: item.program_name,
           institute_id: item.institute_id,
           type: item.type,
           day: item.day,

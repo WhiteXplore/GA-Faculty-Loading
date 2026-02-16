@@ -1,36 +1,31 @@
 <template>
   <div v-if="isTable" class=" ">
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / Rooms Availability
       </div>
       <div class="flex gap-2">
         <div
           @click="isUploadModal = true"
-          class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
+          class="flex items-center gap-2 px-3 py-2 border text-blue-600 border-blue-600 rounded-xl hover:bg-blue-700 hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
         >
           <div
-            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+            class="p-1 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center"
           >
-            <icon
-              :name="'upload'"
-              class="w-5 h-5 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
-            />
+            <icon name="uploads" />
           </div>
           <span class="font-medium text-sm">Upload Room</span>
         </div>
         <div
           @click="toggleAdd"
-          class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
+          class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
         >
           <div
-            class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+            class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
           >
-            <icon
-              :name="'circle-add'"
-              class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
-            />
+            <icon name="circle-add" />
           </div>
+
           <span class="font-medium text-sm">Add Room</span>
         </div>
       </div>
@@ -47,7 +42,7 @@
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md focus:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md focus:shadow-md"
               @change="changePage(1)"
             >
               <option value="10">10</option>
@@ -56,7 +51,7 @@
             </select>
             <!-- Custom arrow -->
             <div
-              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-600 transition-colors"
+              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-defaultGreen transition-colors"
             >
               <svg
                 class="w-4 h-4"
@@ -87,7 +82,7 @@
           />
           <!-- Search icon -->
           <div
-            class="absolute inset-y-0 left-3 flex items-center text-green-600 pointer-events-none transition-colors"
+            class="absolute inset-y-0 left-3 flex items-center text-defaultGreen pointer-events-none transition-colors"
           >
             <svg
               class="w-4 h-4"
@@ -105,90 +100,96 @@
 
       <!-- Table -->
       <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-        <table class="min-w-full text-sm text-gray-700 border-collapse">
-          <thead
-            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
-          >
-            <tr>
-              <th class="px-4 py-3 text-left font-normal w-[18%]">Institute</th>
-              <th class="px-4 py-3 text-left font-normal w-[15%]">
-                Building Name
-              </th>
-              <th class="px-4 py-3 text-center font-normal w-[10%]">
-                Level / Floor
-              </th>
-              <th class="px-4 py-3 text-left font-normal w-[15%]">Room Name</th>
-
-              <th class="px-4 py-3 text-left font-normal w-[10%]">Room Type</th>
-              <th class="px-4 py-3 text-center font-normal w-[10%]">
-                Room Capacity
-              </th>
-              <th
-                class="px-4 py-3 text-center rounded-tr-lg font-normal w-[20%]"
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="rooms_data in paginatedData"
-              :key="rooms_data.rooms_id"
-              class="hover:bg-green-50 transition-all border-t"
+        <div class="max-h-[69vh] overflow-y-auto">
+          <table class="min-w-full text-sm text-gray-700 border-collapse">
+            <thead
+              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
-              <td class="px-4 py-3 text-left">
-                {{ rooms_data.institute?.institute_name }}
-              </td>
-              <td class="px-4 py-3 text-left">
-                {{ rooms_data.building_name }}
-              </td>
-              <td class="px-4 py-3 text-center">
-                {{ rooms_data.level }}
-              </td>
-              <td class="px-4 py-3 text-left">
-                {{ rooms_data.room_name }}
-              </td>
+              <tr>
+                <th class="px-4 py-3 text-left font-normal w-[18%]">
+                  Institute
+                </th>
+                <th class="px-4 py-3 text-left font-normal w-[15%]">
+                  Building Name
+                </th>
+                <th class="px-4 py-3 text-center font-normal w-[10%]">
+                  Level / Floor
+                </th>
+                <th class="px-4 py-3 text-left font-normal w-[15%]">
+                  Room Name
+                </th>
 
-              <td class="px-4 py-3 text-left">
-                {{ rooms_data.room_type }}
-              </td>
-              <td class="px-4 py-3 text-center">
-                {{ rooms_data.room_capacity }}
-              </td>
-              <td class="px-4 py-3 flex justify-center">
-                <div class="flex gap-2">
-                  <button
-                    class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1"
-                    @click="toggleEdit(rooms_data)"
-                  >
-                    <icon name="edit" /> Edit
-                  </button>
-                  <button
-                    class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                    @click="toggleDelete(rooms_data)"
-                  >
-                    <icon name="delete" /> Delete
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr v-if="paginatedData.length === 0">
-              <td colspan="6" class="text-left py-6 text-gray-400">
-                No records found
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                <th class="px-4 py-3 text-left font-normal w-[10%]">
+                  Room Type
+                </th>
+                <th class="px-4 py-3 text-center font-normal w-[10%]">
+                  Room Capacity
+                </th>
+                <th
+                  class="px-4 py-3 text-center rounded-tr-lg font-normal w-[20%]"
+                >
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="rooms_data in paginatedData"
+                :key="rooms_data.rooms_id"
+                class="hover:bg-green-50 transition-all border-t"
+              >
+                <td class="px-4 py-3 text-left">
+                  {{ rooms_data.institute?.institute_code }}
+                </td>
+                <td class="px-4 py-3 text-left">
+                  {{ rooms_data.building_name }}
+                </td>
+                <td class="px-4 py-3 text-center">
+                  {{ rooms_data.level }}
+                </td>
+                <td class="px-4 py-3 text-left">
+                  {{ rooms_data.room_name }}
+                </td>
+
+                <td class="px-4 py-3 text-left">
+                  {{ rooms_data.room_type }}
+                </td>
+                <td class="px-4 py-3 text-center">
+                  {{ rooms_data.room_capacity }}
+                </td>
+                <td class="px-4 py-3 flex justify-center">
+                  <div class="flex gap-2">
+                    <button
+                      class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1"
+                      @click="toggleEdit(rooms_data)"
+                    >
+                      <icon name="edit" /> Edit
+                    </button>
+                    <button
+                      class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                      @click="toggleDelete(rooms_data)"
+                    >
+                      <icon name="delete" /> Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr v-if="paginatedData.length === 0">
+                <td colspan="6" class="text-left py-6 text-gray-400">
+                  No records found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
-          <span>
-            Showing {{ startIndex }} to {{ endIndex }} of
-            {{ filteredData.length }} entries
-          </span>
+        <div class="text-gray-700 text-sm">
+          Showing {{ startIndex }} to {{ endIndex }} of
+          {{ filteredData.length }} entries
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-1 text-sm">
           <button
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
@@ -203,7 +204,7 @@
                 ' bg-defaultGreen text-white': currentPage === page,
                 'bg-gray-200 text-gray-700': currentPage !== page,
               }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+              class="px-3 py-1 rounded-md hover:bg-green-300"
             >
               {{ page }}
             </button>
@@ -323,7 +324,7 @@ export default {
         ]
           .join(" ")
           .toLowerCase()
-          .includes(query)
+          .includes(query),
       );
     },
 

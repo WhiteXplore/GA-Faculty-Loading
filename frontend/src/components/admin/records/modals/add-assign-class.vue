@@ -185,7 +185,7 @@
           <!-- Buttons -->
           <div class="tracking-wide flex justify-end gap-2 mt-4">
             <button
-              class="bg-red-600 p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
+              class="bg-gray-200 p-2 px-3 rounded-lg text-gray-700 hover:bg-white border hover:border-gray-800 hover:text-gray-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
               @click="$emit('close')"
               type="button"
             >
@@ -329,7 +329,7 @@ export default {
           (inst) =>
             inst.institute_id === this.user.institute_id &&
             !seen.has(inst.institute_id) &&
-            seen.add(inst.institute_id)
+            seen.add(inst.institute_id),
         );
       }
 
@@ -357,7 +357,7 @@ export default {
         list = list.filter((p) =>
           p.program_name
             .toLowerCase()
-            .includes(this.searchProgramQuery.toLowerCase())
+            .includes(this.searchProgramQuery.toLowerCase()),
         );
       }
 
@@ -369,13 +369,13 @@ export default {
 
       if (this.selectedInstitute) {
         list = list.filter(
-          (c) => c.curriculum?.program?.institute_id === this.selectedInstitute
+          (c) => c.curriculum?.program?.institute_id === this.selectedInstitute,
         );
       }
 
       if (this.form.program_id) {
         list = list.filter(
-          (c) => c.curriculum?.program_id === this.form.program_id
+          (c) => c.curriculum?.program_id === this.form.program_id,
         );
       }
 
@@ -392,7 +392,7 @@ export default {
         list = list.filter(
           (c) =>
             c.course_code.toLowerCase().includes(query) ||
-            c.course_description.toLowerCase().includes(query)
+            c.course_description.toLowerCase().includes(query),
         );
       }
 
@@ -436,7 +436,7 @@ export default {
           process.env.VUE_APP_API_BASE_URL + "/auth/me",
           {
             withCredentials: true,
-          }
+          },
         );
         if (response.data) {
           this.user = response.data;
@@ -458,7 +458,7 @@ export default {
 
       try {
         const { data: existing } = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/assign-class/get-assign-class"
+          process.env.VUE_APP_API_BASE_URL + "/assign-class/get-assign-class",
         );
 
         const conflict = existing.find(
@@ -467,7 +467,7 @@ export default {
             cls.course_id === this.form.course_id &&
             cls.set === this.form.set &&
             (!this.isEditMode ||
-              cls.assign_class_id !== this.assignClassData.assign_class_id)
+              cls.assign_class_id !== this.assignClassData.assign_class_id),
         );
 
         if (conflict) {
@@ -479,13 +479,13 @@ export default {
           await axios.patch(
             process.env.VUE_APP_API_BASE_URL +
               `/assign-class/update-id/${this.assignClassData.assign_class_id}`,
-            this.form
+            this.form,
           );
           toast.success("Class updated successfully!");
         } else {
           await axios.post(
             process.env.VUE_APP_API_BASE_URL + "/assign-class/add-assign-class",
-            this.form
+            this.form,
           );
           toast.success("Class added successfully!");
         }
@@ -497,7 +497,7 @@ export default {
         this.$emit("close");
       } catch (error) {
         toast.error(
-          this.isEditMode ? "Failed to update class" : "Failed to add class"
+          this.isEditMode ? "Failed to update class" : "Failed to add class",
         );
       }
     },

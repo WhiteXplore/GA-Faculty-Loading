@@ -131,7 +131,7 @@
           <!-- Buttons -->
           <div class="tracking-wide flex justify-end gap-2 mt-4">
             <button
-              class="bg-red-600 p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
+              class="bg-gray-200 p-2 px-3 rounded-lg text-gray-700 hover:bg-white border hover:border-gray-800 hover:text-gray-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
               @click="$emit('close')"
             >
               Cancel
@@ -174,7 +174,7 @@ export default {
       return this.institutes.filter((institute) =>
         institute.institute_name
           .toLowerCase()
-          .includes(this.searchInstituteQuery.toLowerCase())
+          .includes(this.searchInstituteQuery.toLowerCase()),
       );
     },
     isEditMode() {
@@ -215,7 +215,7 @@ export default {
           await axios.patch(
             process.env.VUE_APP_API_BASE_URL +
               `/rooms/update-room/${this.roomData.room_id}`,
-            this.form
+            this.form,
           );
           toast.success("Room updated successfully!");
           const audio = new Audio(require("@/assets/add.mp3"));
@@ -224,7 +224,7 @@ export default {
           // ADD new room
           await axios.post(
             process.env.VUE_APP_API_BASE_URL + "/rooms/add-rooms",
-            this.form
+            this.form,
           );
           toast.success("Room added successfully!");
           const audio = new Audio(require("@/assets/add.mp3"));
@@ -235,7 +235,7 @@ export default {
         this.$emit("close");
       } catch (error) {
         toast.error(
-          this.isEditMode ? "Failed to update room" : "Failed to add room"
+          this.isEditMode ? "Failed to update room" : "Failed to add room",
         );
       }
     },

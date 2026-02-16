@@ -1,12 +1,12 @@
 <template>
   <div class="space-y-6 text-[13px]">
     <!-- HEADER -->
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4">Pages / Assigned Course</div>
       <button
         v-if="user?.role !== 'Admin'"
         @click="openAssignCoursesModal"
-        class="flex items-center gap-2 px-4 py-2 text-green-600 bg-white border border-green-500 rounded-xl shadow-sm hover:bg-green-600 hover:text-white transition-all duration-300"
+        class="flex items-center gap-2 px-4 py-2 text-defaultGreen bg-white border border-green-500 rounded-xl shadow-sm hover:bg-green-600 hover:text-white transition-all duration-300"
       >
         <div
           class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full"
@@ -138,7 +138,7 @@
                       <tr
                         v-for="course in getCoursesByYear(
                           selectedGroup.courses,
-                          year
+                          year,
                         )"
                         :key="course.id"
                         class="border-b hover:bg-gray-50 transition"
@@ -305,17 +305,17 @@ export default {
         process.env.VUE_APP_API_BASE_URL + "/auth/me",
         {
           withCredentials: true,
-        }
+        },
       );
       this.user = data;
     },
     async loadUserProgram() {
       if (this.user?.role !== "Program Chairperson") return;
       const { data } = await axios.get(
-        process.env.VUE_APP_API_BASE_URL + "/programs/get-programs"
+        process.env.VUE_APP_API_BASE_URL + "/programs/get-programs",
       );
       this.userProgram = data.find(
-        (p) => String(p.program_id) === String(this.user.program_id)
+        (p) => String(p.program_id) === String(this.user.program_id),
       );
     },
     async loadAssignedCourses() {
@@ -336,7 +336,7 @@ export default {
     },
     async loadSchoolYears() {
       const { data } = await axios.get(
-        process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
+        process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years",
       );
       const active = data.find((s) => s.is_active);
       if (active) this.activeSchoolYearId = active.school_year_id;

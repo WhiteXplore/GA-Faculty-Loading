@@ -2,7 +2,7 @@
   <div class="px-2 mt-2">
     <!-- Header -->
     <div class="flex justify-between items-start mb-4">
-      <h1 class="font-semibold tracking-wide text-md">System Overview</h1>
+      <h1 class="font-semibold tracking-wide text-md px-1">System Overview</h1>
     </div>
 
     <!-- Faculty with Expertise Section -->
@@ -112,7 +112,7 @@
                   <div v-if="getFacultyAssignments(fac).length > 0">
                     <button
                       @click="showFacultyCourses(fac)"
-                      class="px-3 py-1 bg-green-600 text-white text-xs rounded-lg hover:bg-green-700 transition-colors"
+                      class="px-3 py-1 bg-green-600 text-white text-xs rounded-lg hover:bg-defaultGreen transition-colors"
                     >
                       View Courses ({{ getFacultyAssignments(fac).length }})
                     </button>
@@ -546,9 +546,7 @@
                       </div>
                       <div>
                         <strong>Duration:</strong>
-                        {{
-                          assignment.end_hour - assignment.start_hour
-                        }}
+                        {{ assignment.end_hour - assignment.start_hour }}
                         hour(s)
                       </div>
                     </div>
@@ -623,7 +621,7 @@ export default {
 
       if (this.selectedInstitute) {
         result = result.filter(
-          (f) => f.institute?.institute_name === this.selectedInstitute
+          (f) => f.institute?.institute_name === this.selectedInstitute,
         );
       }
 
@@ -658,7 +656,7 @@ export default {
 
       const query = this.roomSearch.toLowerCase();
       return this.rooms.filter((r) =>
-        r.room_name?.toLowerCase().includes(query)
+        r.room_name?.toLowerCase().includes(query),
       );
     },
 
@@ -669,13 +667,13 @@ export default {
       if (this.classSearch) {
         const query = this.classSearch.toLowerCase();
         result = result.filter((c) =>
-          c.set_name?.toLowerCase().includes(query)
+          c.set_name?.toLowerCase().includes(query),
         );
       }
 
       if (this.selectedProgram) {
         result = result.filter(
-          (c) => c.program?.program_name === this.selectedProgram
+          (c) => c.program?.program_name === this.selectedProgram,
         );
       }
 
@@ -708,7 +706,7 @@ export default {
     async loadFaculty() {
       try {
         const response = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/users/get-users"
+          process.env.VUE_APP_API_BASE_URL + "/users/get-users",
         );
         // Filter only users with role 'faculty'
         this.faculty = response.data.filter((user) => user.role === "Faculty");
@@ -720,7 +718,7 @@ export default {
     async loadRooms() {
       try {
         const response = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/rooms/get-rooms"
+          process.env.VUE_APP_API_BASE_URL + "/rooms/get-rooms",
         );
         this.rooms = response.data;
       } catch (error) {
@@ -731,7 +729,7 @@ export default {
     async loadClasses() {
       try {
         const response = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/class/get-classes"
+          process.env.VUE_APP_API_BASE_URL + "/class/get-classes",
         );
         this.classes = response.data;
       } catch (error) {
@@ -742,13 +740,13 @@ export default {
     async loadGeneratedSchedule() {
       try {
         const response = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/generated-scheduled/load"
+          process.env.VUE_APP_API_BASE_URL + "/generated-scheduled/load",
         );
 
         if (response.data.success && response.data.data) {
           // Extract all schedules from the response
           const allSchedules = Object.values(response.data.data).flatMap(
-            (set) => set.best_schedule || []
+            (set) => set.best_schedule || [],
           );
           this.generatedSchedule = allSchedules;
         }
@@ -771,14 +769,14 @@ export default {
               program_id: cls.program_id,
               school_year_id: cls.school_year_id,
             },
-          }
+          },
         );
 
         // Filter by year level extracted from set_name
         const yearLevel = this.extractYearLevel(cls.set_name);
         if (yearLevel) {
           this.classCourses = response.data.filter(
-            (c) => c.year_level === yearLevel
+            (c) => c.year_level === yearLevel,
           );
         } else {
           this.classCourses = response.data;
@@ -802,7 +800,7 @@ export default {
 
       // Filter schedule by faculty name
       const assignments = this.generatedSchedule.filter(
-        (item) => item.faculty_name === facultyFullName
+        (item) => item.faculty_name === facultyFullName,
       );
 
       return assignments;

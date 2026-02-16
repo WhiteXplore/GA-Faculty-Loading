@@ -29,7 +29,7 @@
             class="absolute inset-y-0 right-3 flex items-center pointer-events-none"
           >
             <svg
-              class="w-4 h-4 text-green-600"
+              class="w-4 h-4 text-defaultGreen"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
@@ -47,14 +47,14 @@
         <!-- Generate report button -->
         <div
           @click="toggleGenerate"
-          class="flex items-center gap-2 px-3 py-2 bg-white text-green-600 rounded-xl shadow-sm hover:shadow-md border border-green-500 hover:bg-green-600 hover:text-white transition-all duration-300 cursor-pointer"
+          class="flex items-center gap-2 px-3 py-2 bg-white text-defaultGreen rounded-xl shadow-sm hover:shadow-md border border-green-500 hover:bg-green-600 hover:text-white transition-all duration-300 cursor-pointer"
         >
           <div
             class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
           >
             <icon
               :name="'circle-add'"
-              class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
+              class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-defaultGreen"
             />
           </div>
           <span class="font-medium text-sm">Generate Report</span>

@@ -13,7 +13,6 @@ import { InstituteModule } from './institute/institute.module';
 import { CalendarModule } from './calendar/calendar.module';
 import { AssignClassModule } from './assign_class/assign_class.module';
 import { GeneratedScheduledModule } from './generated_scheduled/generated_scheduled.module';
-import { ActiveYearModule } from './active_year/active_year.module';
 import { SchoolYearModule } from './school_year/school_year.module';
 import { ClassModule } from './class/class.module';
 
@@ -52,7 +51,6 @@ import { CollegeBranchModule } from './college_branch/college_branch.module';
     CalendarModule,
     AssignClassModule,
     GeneratedScheduledModule,
-    ActiveYearModule,
     SchoolYearModule,
     ClassModule,
     ProgramYearCoursesModule,

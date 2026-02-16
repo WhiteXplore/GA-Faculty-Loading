@@ -92,7 +92,7 @@
 
       <!-- Table -->
       <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-        <div class="max-h-[65vh] overflow-y-auto">
+        <div class="max-h-[69vh] overflow-y-auto">
           <table class="min-w-full text-sm text-gray-700 border-collapse">
             <thead
               class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
@@ -169,11 +169,11 @@
 
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
+        <div class="text-gray-700 text-sm">
           Showing {{ startIndex }} to {{ endIndex }} of
           {{ filteredUsers.length }} entries
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-1 text-sm">
           <button
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
@@ -189,7 +189,7 @@
               'bg-defaultGreen text-white': currentPage === page,
               'bg-gray-200 text-gray-700': currentPage !== page,
             }"
-            class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+            class="px-3 py-1 rounded-md hover:bg-green-300"
           >
             {{ page }}
           </button>
@@ -235,20 +235,20 @@ export default {
 
       // Filter only Faculty & Program Chairperson
       users = users.filter(
-        (u) => u.role === "Faculty" || u.role === "Program Chairperson"
+        (u) => u.role === "Faculty" || u.role === "Program Chairperson",
       );
 
       // Limit by logged-in user's institute/program
       if (this.user) {
         if (this.user.role === "Program Chairperson") {
           users = users.filter(
-            (u) => u.institute?.institute_id === this.user.institute_id
+            (u) => u.institute?.institute_id === this.user.institute_id,
           );
         } else {
           users = users.filter(
             (u) =>
               u.institute?.institute_id === this.user.institute_id &&
-              u.program?.program_id === this.user.program_id
+              u.program?.program_id === this.user.program_id,
           );
         }
       }
@@ -384,7 +384,7 @@ export default {
           process.env.VUE_APP_API_BASE_URL + "/auth/me",
           {
             withCredentials: true,
-          }
+          },
         );
         this.user = res.data;
       } catch (err) {
@@ -400,7 +400,7 @@ export default {
     async fetchAllCourses() {
       try {
         const res = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/courses/get-courses"
+          process.env.VUE_APP_API_BASE_URL + "/courses/get-courses",
         );
         this.allCourses = res.data;
       } catch (err) {

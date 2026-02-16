@@ -25,11 +25,13 @@
         >
           <div class="text-center">
             <p v-if="!file" class="text-gray-600">
-              <span class="text-green-600">Upload a file</span> or drag and
+              <span class="text-defaultGreen">Upload a file</span> or drag and
               drop<br />
               Excel / CSV (.xlsx, .xls, .csv) up to 10MB
             </p>
-            <p v-else class="text-green-600">File uploaded: {{ file.name }}</p>
+            <p v-else class="text-defaultGreen">
+              File uploaded: {{ file.name }}
+            </p>
 
             <input
               type="file"
@@ -53,7 +55,7 @@
         <!-- Uploading -->
         <div
           v-if="uploading"
-          class="text-green-600 text-sm flex items-center gap-2 mt-2"
+          class="text-defaultGreen text-sm flex items-center gap-2 mt-2"
         >
           <span
             class="animate-spin border-2 border-green-600 border-t-transparent rounded-full w-4 h-4"
@@ -141,7 +143,7 @@ export default {
             .map((row) => {
               const instituteCode = row["Institute"] || "";
               const institute = this.institutes.find(
-                (i) => i.institute_code === instituteCode
+                (i) => i.institute_code === instituteCode,
               );
 
               return {
@@ -160,7 +162,7 @@ export default {
                 r.level &&
                 r.room_name &&
                 r.room_capacity > 0 &&
-                r.room_type
+                r.room_type,
             );
 
           console.log("ROOM DATA:", this.parsedData);
@@ -185,7 +187,7 @@ export default {
         // ✅ Send as bulk array to NestJS upload endpoint
         await axios.post(
           process.env.VUE_APP_API_BASE_URL + "/rooms/add-rooms",
-          this.parsedData
+          this.parsedData,
         );
 
         toast.success("Rooms uploaded successfully!");

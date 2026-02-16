@@ -1,20 +1,20 @@
 <template>
   <div v-if="isTable" class=" ">
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / Prospectus
       </div>
 
       <div
         @click="toggleAdd"
-        class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
+        class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
       >
         <div
           class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
         >
           <icon
             :name="'circle-add'"
-            class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
+            class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-defaultGreen"
           />
         </div>
         <span class="font-medium text-sm">Generate Report</span>
@@ -41,7 +41,7 @@
             </select>
             <!-- Custom arrow -->
             <div
-              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-600 transition-colors"
+              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-defaultGreen transition-colors"
             >
               <svg
                 class="w-4 h-4"
@@ -72,7 +72,7 @@
           />
           <!-- Search icon -->
           <div
-            class="absolute inset-y-0 left-3 flex items-center text-green-600 pointer-events-none transition-colors"
+            class="absolute inset-y-0 left-3 flex items-center text-defaultGreen pointer-events-none transition-colors"
           >
             <svg
               class="w-4 h-4"
@@ -145,13 +145,11 @@
       </div>
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
-          <span>
-            Showing {{ startIndex }} to {{ endIndex }} of
-            {{ filteredData.length }} entries
-          </span>
+        <div class="text-gray-700 text-sm">
+          Showing {{ startIndex }} to {{ endIndex }} of
+          {{ filteredData.length }} entries
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-1 text-sm">
           <button
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
@@ -166,7 +164,7 @@
                 ' bg-defaultGreen text-white': currentPage === page,
                 'bg-gray-200 text-gray-700': currentPage !== page,
               }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+              class="px-3 py-1 rounded-md hover:bg-green-300"
             >
               {{ page }}
             </button>

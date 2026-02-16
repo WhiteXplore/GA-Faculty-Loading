@@ -1,19 +1,19 @@
 <template>
   <div v-if="isTable" class=" ">
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / Faculty List
       </div>
       <div
         @click="toggleAdd"
-        class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
+        class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
       >
         <div
           class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
         >
           <icon
             :name="'circle-add'"
-            class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
+            class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-defaultGreen"
           />
         </div>
         <span class="font-medium text-sm">Add Instructor</span>
@@ -150,7 +150,7 @@
                   ' bg-defaultGreen text-white': currentPage === page,
                   'bg-gray-200 text-gray-700': currentPage !== page,
                 }"
-                class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+                class="px-3 py-1 rounded-md hover:bg-green-300"
               >
                 {{ page }}
               </button>
@@ -263,7 +263,7 @@ export default {
       return this.instructors.filter((item) =>
         `${item.instructor_fname} ${item.instructor_mname} ${item.instructor_lname}`
           .toLowerCase()
-          .includes(query)
+          .includes(query),
       );
     },
     totalPages() {
@@ -324,7 +324,7 @@ export default {
       try {
         await axios.delete(
           process.env.VUE_APP_API_BASE_URL +
-            `/instructors/delete-id/${this.recordToDelete.instructor_id}`
+            `/instructors/delete-id/${this.recordToDelete.instructor_id}`,
         );
 
         // Play sound after successful delete

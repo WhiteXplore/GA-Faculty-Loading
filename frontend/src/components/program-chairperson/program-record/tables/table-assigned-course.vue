@@ -1,12 +1,12 @@
 <template>
   <div class="space-y-6 text-[13px]">
     <!-- HEADER -->
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4">Pages / Assigned Course</div>
       <button
         v-if="user?.role !== 'Admin'"
         @click="openAssignCoursesModal"
-        class="flex items-center gap-2 px-4 py-2 text-green-600 bg-white border border-green-500 rounded-xl shadow-sm hover:bg-green-600 hover:text-white transition-all duration-300"
+        class="flex items-center gap-2 px-4 py-2 text-defaultGreen bg-white border border-green-500 rounded-xl shadow-sm hover:bg-green-600 hover:text-white transition-all duration-300"
       >
         <div
           class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full"
@@ -45,7 +45,7 @@
               <td class="py-3 px-4 text-center">
                 <button
                   @click="viewDetails(group)"
-                  class="px-3 py-1 text-green-600 border border-green-500 rounded-lg hover:bg-green-600 hover:text-white transition-all duration-300"
+                  class="px-3 py-1 text-defaultGreen border border-green-500 rounded-lg hover:bg-green-600 hover:text-white transition-all duration-300"
                 >
                   View
                 </button>
@@ -108,7 +108,7 @@
               </div>
               <span
                 v-if="getCoursesByYear(selectedGroup.courses, year).length > 0"
-                class="px-2 py-1 bg-green-500 text-white text-xs rounded-full"
+                class="px-2 py-1 bg-defaultGreen text-white text-xs rounded-full"
               >
                 {{ getCoursesByYear(selectedGroup.courses, year).length }}
                 course(s)
@@ -196,7 +196,7 @@
               </h4>
               <span
                 v-if="getCoursesByYear(assignedCourses, year).length > 0"
-                class="px-2 py-1 bg-green-500 text-white text-xs rounded-full"
+                class="px-2 py-1 bg-defaultGreen text-white text-xs rounded-full"
               >
                 {{ getCoursesByYear(assignedCourses, year).length }} course(s)
               </span>

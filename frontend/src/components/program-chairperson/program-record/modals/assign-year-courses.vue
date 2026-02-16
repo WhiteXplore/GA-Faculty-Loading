@@ -72,14 +72,14 @@
                   :name="
                     expandedYears.includes(year) ? 'arrow-down' : 'arrow-right'
                   "
-                  class="w-5 h-5 text-green-600"
+                  class="w-5 h-5 text-defaultGreen"
                 />
                 <h3 class="font-semibold text-gray-800">
                   {{ getYearLabel(year) }}
                 </h3>
                 <span
                   v-if="yearCourses[year]?.length"
-                  class="ml-2 px-2 py-0.5 bg-green-500 text-white text-xs rounded-full"
+                  class="ml-2 px-2 py-0.5 bg-defaultGreen text-white text-xs rounded-full"
                 >
                   {{ yearCourses[year].length }} course(s)
                 </span>
@@ -176,7 +176,7 @@
                   <div>
                     <icon
                       name="question"
-                      class="w-16 h-16 mb-4 rounded-full flex items-center justify-center bg-green-100 shadow-sm text-green-600"
+                      class="w-16 h-16 mb-4 rounded-full flex items-center justify-center bg-green-100 shadow-sm text-defaultGreen"
                     />
                   </div>
 
@@ -191,7 +191,7 @@
                   <!-- Optional Action Button -->
                   <button
                     @click="showDropdown[year] = true"
-                    class="mt-5 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-xs font-medium rounded-lg shadow-sm transition-all"
+                    class="mt-5 px-4 py-2 bg-defaultGreen hover:bg-green-600 text-white text-xs font-medium rounded-lg shadow-sm transition-all"
                   >
                     Add Course
                   </button>
@@ -274,13 +274,13 @@ export default {
       const activeSchoolYear = this.schoolYears.find((sy) => sy.is_active);
       return activeSchoolYear
         ? `${activeSchoolYear.school_year_name} - ${this.getSemesterLabel(
-            activeSchoolYear.semester
+            activeSchoolYear.semester,
           )}`
         : "Current School Year";
     },
     hasAnyCoursesSelected() {
       return Object.values(this.yearCourses).some(
-        (courses) => courses.length > 0
+        (courses) => courses.length > 0,
       );
     },
   },
@@ -315,7 +315,7 @@ export default {
       let programCourses = this.allCourses.filter(
         (c) =>
           c.curriculum?.program_id === this.programData.program_id &&
-          !selectedIds.includes(c.course_id)
+          !selectedIds.includes(c.course_id),
       );
 
       // Apply search filter
@@ -324,7 +324,7 @@ export default {
           (c) =>
             c.course_code?.toLowerCase().includes(query) ||
             c.course_description?.toLowerCase().includes(query) ||
-            c.curriculum?.curriculum_name?.toLowerCase().includes(query)
+            c.curriculum?.curriculum_name?.toLowerCase().includes(query),
         );
       }
 
@@ -333,7 +333,7 @@ export default {
     addCourseToYear(year, course) {
       // Check if course is already added
       const exists = this.yearCourses[year].some(
-        (c) => c.course_id === course.course_id
+        (c) => c.course_id === course.course_id,
       );
       if (!exists) {
         this.yearCourses[year].push(course);
@@ -343,7 +343,7 @@ export default {
     },
     removeCourseFromYear(year, courseId) {
       this.yearCourses[year] = this.yearCourses[year].filter(
-        (c) => c.course_id !== courseId
+        (c) => c.course_id !== courseId,
       );
     },
     clearYearCourses(year) {
@@ -352,7 +352,7 @@ export default {
     async loadCourses() {
       try {
         const response = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/courses/get-courses"
+          process.env.VUE_APP_API_BASE_URL + "/courses/get-courses",
         );
         this.allCourses = response.data;
       } catch (error) {
@@ -363,7 +363,7 @@ export default {
     async loadSchoolYears() {
       try {
         const response = await axios.get(
-          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years"
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years",
         );
         this.schoolYears = response.data;
       } catch (error) {
@@ -382,7 +382,7 @@ export default {
               program_id: this.programData.program_id,
               school_year_id: this.activeSchoolYearId,
             },
-          }
+          },
         );
 
         this.existingAssignments = response.data;
@@ -393,7 +393,7 @@ export default {
           const course = assignment.course;
           if (course && yearLevel >= 1 && yearLevel <= 4) {
             const exists = this.yearCourses[yearLevel].some(
-              (c) => c.course_id === course.course_id
+              (c) => c.course_id === course.course_id,
             );
             if (!exists) {
               this.yearCourses[yearLevel].push(course);
@@ -441,7 +441,7 @@ export default {
                 year_level: year,
                 school_year_id: this.activeSchoolYearId,
               },
-            }
+            },
           );
         }
 
@@ -449,7 +449,7 @@ export default {
         await axios.post(
           process.env.VUE_APP_API_BASE_URL +
             "/program-year-courses/create-bulk",
-          bulkData
+          bulkData,
         );
 
         toast.success("Course assignments saved successfully!");

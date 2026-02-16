@@ -1,6 +1,6 @@
 <template>
   <div v-if="isTable" class=" ">
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / Exam Schedules
       </div>
@@ -184,7 +184,7 @@
                   ' bg-defaultGreen text-white': currentPage === page,
                   'bg-gray-200 text-gray-700': currentPage !== page,
                 }"
-                class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+                class="px-3 py-1 rounded-md hover:bg-green-300"
               >
                 {{ page }}
               </button>
@@ -231,7 +231,7 @@ export default {
     filteredData() {
       const query = this.searchQuery.toLowerCase();
       return this.exam_schedule_data.filter((item) =>
-        `${item.instructor || ""}`.toLowerCase().includes(query)
+        `${item.instructor || ""}`.toLowerCase().includes(query),
       );
     },
     totalPages() {
@@ -303,7 +303,8 @@ export default {
     confirmDelete() {
       if (!this.recordToDelete) return;
       this.exam_schedule_data = this.exam_schedule_data.filter(
-        (item) => item.exam_schedule_id !== this.recordToDelete.exam_schedule_id
+        (item) =>
+          item.exam_schedule_id !== this.recordToDelete.exam_schedule_id,
       );
       this.recordToDelete = null;
       this.showDeleteModal = false;

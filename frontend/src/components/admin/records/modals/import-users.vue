@@ -53,8 +53,12 @@
             <h3 class="font-bold text-blue-800 mb-2">Import Instructions:</h3>
             <ul class="text-blue-700 text-sm space-y-1">
               <li>• File must be in XLSX format (.xlsx)</li>
-              <li>• Required columns: Last Name, First Name, Email, Designation</li>
-              <li>• Optional column: Program (must match existing program name)</li>
+              <li>
+                • Required columns: Last Name, First Name, Email, Designation
+              </li>
+              <li>
+                • Optional column: Program (must match existing program name)
+              </li>
               <li>• Default password will be: Password123!</li>
             </ul>
           </div>
@@ -126,7 +130,7 @@
                   <button
                     type="button"
                     @click="$refs.fileInput.click()"
-                    class="text-green-600 hover:text-green-700 font-semibold underline"
+                    class="text-defaultGreen hover:text-green-700 font-semibold underline"
                   >
                     browse
                   </button>
@@ -136,7 +140,7 @@
               <div v-else class="space-y-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="h-12 w-12 mx-auto text-green-600"
+                  class="h-12 w-12 mx-auto text-defaultGreen"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -148,7 +152,9 @@
                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                   />
                 </svg>
-                <p class="text-gray-800 font-semibold">{{ selectedFile.name }}</p>
+                <p class="text-gray-800 font-semibold">
+                  {{ selectedFile.name }}
+                </p>
                 <p class="text-gray-500 text-sm">
                   {{ formatFileSize(selectedFile.size) }}
                 </p>
@@ -167,7 +173,9 @@
           <div v-if="uploading" class="space-y-2">
             <div class="flex justify-between text-sm">
               <span class="text-gray-600">Uploading and processing...</span>
-              <span class="text-gray-800 font-semibold">{{ uploadProgress }}%</span>
+              <span class="text-gray-800 font-semibold"
+                >{{ uploadProgress }}%</span
+              >
             </div>
             <div class="w-full bg-gray-200 rounded-full h-2.5">
               <div
@@ -204,7 +212,9 @@
                   <p>
                     <strong>Row {{ error.row }}:</strong> {{ error.error }}
                   </p>
-                  <p v-if="error.email" class="text-xs">Email: {{ error.email }}</p>
+                  <p v-if="error.email" class="text-xs">
+                    Email: {{ error.email }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -226,7 +236,7 @@
               :class="[
                 'px-4 py-2 rounded-lg transition duration-200',
                 selectedFile && !uploading
-                  ? 'bg-green-600 text-white hover:bg-green-700'
+                  ? 'bg-green-600 text-white hover:bg-defaultGreen'
                   : 'bg-gray-300 text-gray-500 cursor-not-allowed',
               ]"
             >
@@ -287,7 +297,7 @@ export default {
       const k = 1024;
       const sizes = ["Bytes", "KB", "MB", "GB"];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return Math.round(bytes / Math.pow(k, i) * 100) / 100 + " " + sizes[i];
+      return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i];
     },
     downloadTemplate() {
       // Create sample data
@@ -295,23 +305,23 @@ export default {
         {
           "Last Name": "Acdal",
           "First Name": "April",
-          "Email": "acdal.april@dnsc.edu.ph",
-          "Designation": "Faculty",
-          "Program": "BSDRM",
+          Email: "acdal.april@dnsc.edu.ph",
+          Designation: "Faculty",
+          Program: "BSDRM",
         },
         {
           "Last Name": "Anobong Jr.",
           "First Name": "Anselmo",
-          "Email": "anobong.jr..anselmo@dnsc.edu.ph",
-          "Designation": "Faculty",
-          "Program": "BSEDSCI",
+          Email: "anobong.jr..anselmo@dnsc.edu.ph",
+          Designation: "Faculty",
+          Program: "BSEDSCI",
         },
         {
           "Last Name": "Balio",
           "First Name": "Ariel",
-          "Email": "balio.ariel.@dnsc.edu.ph",
-          "Designation": "Faculty",
-          "Program": "BTLEd",
+          Email: "balio.ariel.@dnsc.edu.ph",
+          Designation: "Faculty",
+          Program: "BTLEd",
         },
       ];
 
@@ -361,7 +371,7 @@ export default {
             headers: {
               "Content-Type": "multipart/form-data",
             },
-          }
+          },
         );
 
         clearInterval(progressInterval);
@@ -375,21 +385,21 @@ export default {
 
         if (response.data.success > 0) {
           toast.success(
-            `Successfully imported ${response.data.success} users!`
+            `Successfully imported ${response.data.success} users!`,
           );
           this.$emit("refresh");
         }
 
         if (response.data.failed > 0) {
           toast.warning(
-            `${response.data.failed} users failed to import. Check details below.`
+            `${response.data.failed} users failed to import. Check details below.`,
           );
         }
       } catch (error) {
         console.error("Import failed:", error);
         toast.error(
           error.response?.data?.message ||
-            "Failed to import users. Please try again."
+            "Failed to import users. Please try again.",
         );
       } finally {
         this.uploading = false;
@@ -415,5 +425,3 @@ export default {
   animation: slideUp 0.3s ease-out;
 }
 </style>
-
-

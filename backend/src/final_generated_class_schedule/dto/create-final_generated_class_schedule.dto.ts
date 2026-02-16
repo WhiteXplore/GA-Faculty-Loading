@@ -18,6 +18,10 @@ export class CreateFinalGeneratedClassScheduleDto {
   program_id?: number;
 
   @IsOptional()
+  @IsString()
+  program_name?: string;
+
+  @IsOptional()
   @IsInt()
   institute_id?: number;
 

@@ -25,11 +25,13 @@
         >
           <div class="text-center">
             <p v-if="!file" class="text-gray-600">
-              <span class="text-green-600">Upload a file</span> or drag and
+              <span class="text-defaultGreen">Upload a file</span> or drag and
               drop<br />
               Excel / CSV (.xlsx, .xls, .csv) up to 10MB
             </p>
-            <p v-else class="text-green-600">File uploaded: {{ file.name }}</p>
+            <p v-else class="text-defaultGreen">
+              File uploaded: {{ file.name }}
+            </p>
 
             <input
               type="file"
@@ -54,7 +56,7 @@
         <!-- Uploading Status -->
         <div
           v-if="uploading"
-          class="text-green-600 text-sm flex items-center gap-2 mt-2"
+          class="text-defaultGreen text-sm flex items-center gap-2 mt-2"
         >
           <span
             class="animate-spin border-2 border-green-600 border-t-transparent rounded-full w-4 h-4"
@@ -65,13 +67,13 @@
         <!-- Action Buttons -->
         <div class="tracking-wide flex justify-end gap-2 mt-4">
           <button
-            class="bg-red-600 p-2 px-3 rounded-md text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md"
+            class="bg-gray-200 p-2 px-3 rounded-lg text-gray-700 hover:bg-white border hover:border-gray-800 hover:text-gray-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
             @click="$emit('close')"
           >
             Cancel
           </button>
           <button
-            class="bg-green-600 p-2 px-3 rounded-md text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
+            class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
             @click="submitUpload"
             :disabled="!file || uploading"
           >
@@ -196,7 +198,7 @@ export default {
         // 1️⃣ Deduplicate institutes
         const uniqueInstitutes = [
           ...new Map(
-            this.parsedData.map((row) => [row.institute_code, row])
+            this.parsedData.map((row) => [row.institute_code, row]),
           ).values(),
         ];
 
@@ -209,7 +211,7 @@ export default {
             {
               institute_code: inst.institute_code,
               institute_name: inst.institute_name,
-            }
+            },
           );
           instituteMap.set(inst.institute_code, res.data.institute_id);
         }
@@ -220,7 +222,7 @@ export default {
             this.parsedData.map((row) => [
               `${row.institute_code}-${row.program_code}`,
               row,
-            ])
+            ]),
           ).values(),
         ];
 
@@ -235,12 +237,12 @@ export default {
               program_code: prog.program_code,
               program_name: prog.program_name,
               institute_id: instituteMap.get(prog.institute_code),
-            }
+            },
           );
           const program = programRes.data;
           programMap.set(
             `${prog.institute_code}-${prog.program_code}`,
-            program.program_id
+            program.program_id,
           );
 
           const curriculumRes = await axios.post(
@@ -250,12 +252,12 @@ export default {
               curriculum_end_year: prog.curriculum_end_year,
               institute_id: instituteMap.get(prog.institute_code),
               program_id: program.program_id,
-            }
+            },
           );
           const curriculum = curriculumRes.data;
           curriculumMap.set(
             `${prog.institute_code}-${prog.program_code}`,
-            curriculum.curriculum_id
+            curriculum.curriculum_id,
           );
         }
 
@@ -269,17 +271,17 @@ export default {
           course_lab: row.course_lab,
           institute_id: instituteMap.get(row.institute_code),
           program_id: programMap.get(
-            `${row.institute_code}-${row.program_code}`
+            `${row.institute_code}-${row.program_code}`,
           ),
           curriculum_id: curriculumMap.get(
-            `${row.institute_code}-${row.program_code}`
+            `${row.institute_code}-${row.program_code}`,
           ),
         }));
 
         // 5️⃣ Upload courses
         await axios.post(
           process.env.VUE_APP_API_BASE_URL + "/courses/add-courses",
-          coursesPayload
+          coursesPayload,
         );
 
         this.$emit("refresh");

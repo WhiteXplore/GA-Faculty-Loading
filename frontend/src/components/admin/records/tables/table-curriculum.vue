@@ -1,22 +1,20 @@
 <template>
   <div v-if="isTable" class=" ">
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / Curriculum Offers
       </div>
 
       <div
         @click="toggleAdd"
-        class="flex items-center gap-2 px-3 py-2 bg-defaultGreen text-white rounded-xl shadow-sm hover:shadow-md border border-defaultGreen hover:bg-white hover:text-defaultGreen transition-all duration-300 cursor-pointer"
+        class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
       >
         <div
-          class="flex items-center justify-center w-5 h-5 bg-white rounded-full group-hover:bg-green-100 transition-colors duration-300"
+          class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
         >
-          <icon
-            :name="'circle-add'"
-            class="w-4 h-4 text-defaultGreen transition-colors duration-300 group-hover:text-green-600"
-          />
+          <icon name="circle-add" />
         </div>
+
         <span class="font-medium text-sm">Add Curriculum</span>
       </div>
     </div>
@@ -41,7 +39,7 @@
             </select>
             <!-- Custom arrow -->
             <div
-              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-600 transition-colors"
+              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-defaultGreen transition-colors"
             >
               <svg
                 class="w-4 h-4"
@@ -72,7 +70,7 @@
           />
           <!-- Search icon -->
           <div
-            class="absolute inset-y-0 left-3 flex items-center text-green-600 pointer-events-none transition-colors"
+            class="absolute inset-y-0 left-3 flex items-center text-defaultGreen pointer-events-none transition-colors"
           >
             <svg
               class="w-4 h-4"
@@ -95,16 +93,17 @@
             class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
             <tr>
-              <!-- <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
-                ID
-              </th> -->
-              <th class="px-4 py-3 text-left font-normal w-[40%]">
+              <th class="px-4 py-3 text-left font-normal w-[45%]">
                 Program Title
               </th>
-              <!-- <th class="px-4 py-3 text-left font-normal">Curriculum Name</th> -->
-              <th class="px-4 py-3 font-normal text-center">Effective Year</th>
 
-              <th class="px-4 py-3 text-center rounded-tr-lg font-normal">
+              <th class="px-4 py-3 font-normal text-center w-[33%]">
+                Effective Year
+              </th>
+
+              <th
+                class="px-4 py-3 text-center rounded-tr-lg font-normal w-[25%]"
+              >
                 Actions
               </th>
             </tr>
@@ -115,13 +114,9 @@
               :key="curriculum_data.curriculum_id"
               class="hover:bg-green-50 transition-all border-t"
             >
-              <!-- <td class="px-4 py-3 text-left">{{ startIndex + index }}</td> -->
               <td class="px-4 py-3 text-left">
                 {{ curriculum_data.program?.program_name }}
               </td>
-              <!-- <td class="px-4 py-3 text-left">
-                {{ curriculum_data.curriculum_name }}
-              </td> -->
               <td class="px-4 py-3 text-center">
                 {{ curriculum_data.curriculum_end_year }}
               </td>
@@ -152,13 +147,11 @@
       </div>
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
-          <span>
-            Showing {{ startIndex }} to {{ endIndex }} of
-            {{ filteredData.length }} entries
-          </span>
+        <div class="text-gray-700 text-sm">
+          Showing {{ startIndex }} to {{ endIndex }} of
+          {{ filteredData.length }} entries
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-1 text-sm">
           <button
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
@@ -173,7 +166,7 @@
                 ' bg-defaultGreen text-white': currentPage === page,
                 'bg-gray-200 text-gray-700': currentPage !== page,
               }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+              class="px-3 py-1 rounded-md hover:bg-green-300"
             >
               {{ page }}
             </button>
@@ -343,10 +336,11 @@ export default {
     toggleEdit(item) {
       this.selectedCurriculum = {
         curriculum_id: item.curriculum_id,
-        program_id: item.program_id || item.program?.program_id, // support nested
-        curriculum_name: item.curriculum_name,
-        curriculum_effective: item.curriculum_effective,
+        program_id: item.program_id ?? item.program?.program_id,
+        curriculum_start_year: item.curriculum_start_year,
+        curriculum_end_year: item.curriculum_end_year,
       };
+
       this.showEditModal = true;
     },
     toggleDelete(item) {

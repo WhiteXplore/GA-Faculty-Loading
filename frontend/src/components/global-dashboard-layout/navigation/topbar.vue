@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white shadow-md px-4 py-2 flex justify-between items-center rounded-t-lg"
+    class="bg-white shadow-md px-3 py-2 flex justify-between items-center rounded-t-lg"
   >
     <!-- Left: Title -->
     <div class="text-green-900 font-bold text-lg tracking-wide">
@@ -10,22 +10,19 @@
     <!-- Center: Date/Time -->
     <div class="flex flex-col items-center">
       <div class="text-sm font-medium text-gray-600">{{ formattedDate }}</div>
-      <div class="text-sm text-gray-500">{{ formattedTime }}</div>
+      <!-- <div class="text-sm text-gray-500">{{ formattedTime }}</div> -->
     </div>
 
     <!-- Right: Dropdown + Profile -->
     <div class="flex items-center gap-2">
       <!-- Dropdown -->
-      <div
-        v-if="activeYears.length > 1"
-        class="relative flex items-center gap-2"
-      >
+      <div v-if="activeYears.length > 1" class="relative flex items-center">
         <select
           v-model="selectedSchoolYearId"
           @change="updateSchoolYear"
           @focus="isDropdownOpen = true"
           @blur="isDropdownOpen = false"
-          class="appearance-none rounded-full border border-green-600 bg-white px-4 py-1.5 w-52 text-green-900 text-sm font-semibold shadow-md cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:outline-none hover:shadow-lg"
+          class="appearance-none rounded-full border border-green-600 bg-white py-2 pl-4 pr-10 text-center text-green-900 text-sm font-semibold shadow-md cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-lg"
         >
           <option value="" disabled>Select Active School Year</option>
           <option
@@ -37,8 +34,9 @@
           </option>
         </select>
 
+        <!-- Custom Dropdown Icon -->
         <div
-          class="transition-transform duration-300 text-green-700 cursor-pointer"
+          class="pointer-events-none absolute right-3 flex items-center transition-transform duration-300 text-green-700"
           :class="{ 'rotate-180': isDropdownOpen }"
         >
           <svg

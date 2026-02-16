@@ -4,43 +4,45 @@
   >
     <div class="rounded-[16px] shadow-lg justify-center animate-slideUp">
       <form
+        ref="curriculumnForm"
         @submit.prevent="submitData"
         class="w-auto bg-white text-[13px] rounded-[16px] shadow-lg p-0.5"
-        ref="curriculumnForm"
       >
         <!-- Header -->
         <div
           class="w-full p-5 py-3 bg-defaultGreen text-white rounded-t-[16px] flex justify-between items-center border-b shadow"
         >
           <div class="flex gap-1 items-center">
-            <icon :name="'add-students'" />
+            <icon name="add-students" />
             <h1 class="font-bold tracking-wide text-lg">
-              {{ mode === "add" ? "Add Curriculum" : "Edit Curriculum" }}
+              {{ isEdit ? "Edit Curriculum" : "Add Curriculum" }}
             </h1>
           </div>
           <icon
-            :name="'circle-close3'"
-            @click="$emit('close')"
+            name="circle-close3"
             class="cursor-pointer"
+            @click="$emit('close')"
           />
         </div>
 
-        <!-- Form Body -->
-        <div class="p-5 w-[28vw] space-y-3">
+        <!-- Body -->
+        <div class="p-5 w-[28vw] space-y-4">
           <!-- Program -->
-          <div class="flex flex-col space-y-2 w-full relative">
-            <label class="font-bold">Program :</label>
+          <div class="flex flex-col space-y-2 relative">
+            <label class="font-bold">Program:</label>
             <input
               v-model="searchProgramQuery"
               type="text"
               placeholder="Search program..."
-              class="px-3 py-3 border w-full border-gray-600 rounded-md text-md text-gray-800"
+              class="px-3 py-3 border border-gray-600 rounded-md"
               @focus="showProgramDropdown = true"
-              :disabled="mode === 'edit'"
+              :disabled="isEdit"
+              required
             />
+
             <div
-              v-if="showProgramDropdown && filteredPrograms.length"
-              class="absolute top-[60px] w-full bg-white border border-gray-300 rounded-md max-h-40 overflow-y-auto z-10"
+              v-if="showProgramDropdown && filteredPrograms.length && !isEdit"
+              class="absolute top-[60px] w-full bg-white border rounded-md max-h-40 overflow-y-auto z-10"
               @mouseleave="showProgramDropdown = false"
             >
               <div
@@ -55,54 +57,45 @@
           </div>
 
           <!-- Curriculum Name -->
-          <div class="w-full space-y-2 text-left flex flex-col">
-            <label for="curriculum_name" class="font-bold"
-              >Curriculum Name:</label
-            >
+          <div class="flex flex-col space-y-2">
+            <label class="font-bold">Curriculum Name:</label>
             <input
-              v-model="form.curriculum_name"
+              :value="formattedCurriculumName"
               type="text"
-              id="curriculum_name"
-              required
-              class="w-full border px-3 py-3 border-gray-600 rounded-md text-md text-gray-800"
-              placeholder="Enter curriculum"
+              disabled
+              class="w-full border px-3 py-3 border-gray-600 rounded-md bg-gray-100 cursor-not-allowed"
             />
           </div>
 
           <!-- Effective Year -->
-          <div class="flex gap-3">
-            <div class="w-full space-y-2 text-left flex flex-col">
-              <label for="curriculum_effective" class="font-bold"
-                >Effective Year:</label
-              >
-              <input
-                v-model="form.curriculum_effective"
-                type="text"
-                id="curriculum_effective"
-                required
-                class="w-full border px-3 py-3 border-gray-600 rounded-md text-md text-gray-800"
-                placeholder="Enter effective year"
-              />
-            </div>
+          <div class="flex flex-col space-y-2">
+            <label class="font-bold">Effective Year:</label>
+            <input
+              v-model="form.curriculum_end_year"
+              type="number"
+              required
+              class="w-full border px-3 py-3 border-gray-600 rounded-md"
+              placeholder="e.g. 2025"
+            />
           </div>
 
           <!-- Divider -->
-          <div class="w-full h-[1px] rounded-md bg-gray-200 mt-4"></div>
+          <div class="h-[1px] bg-gray-200 my-4"></div>
 
           <!-- Buttons -->
-          <div class="tracking-wide flex justify-end gap-2 mt-4">
+          <div class="flex justify-end gap-2">
             <button
-              class="bg-red-600 p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
-              @click="$emit('close')"
               type="button"
+              class="bg-gray-200 p-2 px-3 rounded-lg text-gray-700 hover:bg-white border hover:border-gray-800 hover:text-gray-800 hover:shadow-md transition-all duration-300 hover:scale-105"
+              @click="$emit('close')"
             >
               Cancel
             </button>
             <button
-              class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
               type="submit"
+              class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md transition-all duration-300 hover:scale-105"
             >
-              {{ mode === "add" ? "Submit" : "Update" }}
+              {{ isEdit ? "Save Changes" : "Submit" }}
             </button>
           </div>
         </div>
@@ -113,46 +106,90 @@
 
 <script>
 import icon from "@/assets/icon.vue";
-import { toast } from "vue3-toastify";
 import axios from "axios";
+import { toast } from "vue3-toastify";
 import { useFetchDataStore } from "@/store/fetch-data-store";
 import { mapState, mapActions } from "pinia";
 
 export default {
   name: "AddEditCurriculumPage",
   components: { icon },
+
   props: {
-    mode: { type: String, default: "add" }, // 'add' or 'edit'
-    curriculumData: { type: Object, default: null }, // when editing
+    curriculumData: {
+      type: Object,
+      default: null,
+    },
   },
+
   data() {
     return {
       form: {
         program_id: "",
-        curriculum_name: "",
-        curriculum_effective: "",
+        curriculum_start_year: "",
+        curriculum_end_year: "",
       },
       searchProgramQuery: "",
       showProgramDropdown: false,
     };
   },
+
   computed: {
     ...mapState(useFetchDataStore, ["programs"]),
+
+    isEdit() {
+      return !!this.curriculumData;
+    },
+
     filteredPrograms() {
       if (!this.searchProgramQuery) return this.programs;
-      const query = this.searchProgramQuery.toLowerCase();
-      return this.programs.filter((program) =>
-        program.program_name.toLowerCase().includes(query)
+      return this.programs.filter((p) =>
+        p.program_name
+          .toLowerCase()
+          .includes(this.searchProgramQuery.toLowerCase()),
       );
     },
+
+    formattedCurriculumName() {
+      if (!this.form.program_id || !this.form.curriculum_end_year) return "";
+      const program = this.programs.find(
+        (p) => p.program_id === this.form.program_id,
+      );
+      return program
+        ? `${this.form.curriculum_end_year} - ${program.program_name}`
+        : "";
+    },
   },
+
+  watch: {
+    curriculumData: {
+      immediate: true,
+      handler(newVal) {
+        if (newVal) {
+          this.form.program_id = newVal.program_id;
+          this.form.curriculum_start_year = newVal.curriculum_start_year;
+          this.form.curriculum_end_year = newVal.curriculum_end_year;
+
+          const program = this.programs.find(
+            (p) => p.program_id === newVal.program_id,
+          );
+          if (program) {
+            this.searchProgramQuery = program.program_name;
+          }
+        }
+      },
+    },
+  },
+
   methods: {
     ...mapActions(useFetchDataStore, ["fetchPrograms"]),
+
     selectProgram(program) {
       this.form.program_id = program.program_id;
       this.searchProgramQuery = program.program_name;
       this.showProgramDropdown = false;
     },
+
     async submitData() {
       const formEl = this.$refs.curriculumnForm;
       if (!formEl.checkValidity()) {
@@ -161,47 +198,31 @@ export default {
       }
 
       try {
-        if (this.mode === "add") {
-          await axios.post(
-            process.env.VUE_APP_API_BASE_URL + "/curriculums/add-curriculums",
-            this.form
-          );
-          toast.success("Curriculum added successfully!");
-          new Audio(require("@/assets/add.mp3")).play();
-        } else {
+        if (this.isEdit) {
           await axios.patch(
-            process.env.VUE_APP_API_BASE_URL +
-              `/curriculums/update-curriculum/${this.curriculumData.curriculum_id}`,
-            this.form
+            `${process.env.VUE_APP_API_BASE_URL}/curriculums/update-curriculum/${this.curriculumData.curriculum_id}`,
+            this.form,
           );
           toast.success("Curriculum updated successfully!");
-          new Audio(require("@/assets/add.mp3")).play();
+        } else {
+          await axios.post(
+            `${process.env.VUE_APP_API_BASE_URL}/curriculums/add-curriculums`,
+            this.form,
+          );
+          toast.success("Curriculum added successfully!");
         }
 
+        new Audio(require("@/assets/add.mp3")).play();
         this.$emit("refresh");
         this.$emit("close");
-      } catch (error) {
+      } catch (err) {
         toast.error("Failed to save curriculum");
       }
     },
   },
+
   mounted() {
     this.fetchPrograms();
-
-    if (this.mode === "edit" && this.curriculumData) {
-      this.form = {
-        program_id: this.curriculumData.program_id,
-        curriculum_name: this.curriculumData.curriculum_name,
-        curriculum_effective: this.curriculumData.curriculum_effective,
-      };
-      // set program name in input
-      const selectedProgram = this.programs.find(
-        (p) => p.program_id === this.curriculumData.program_id
-      );
-      if (selectedProgram) {
-        this.searchProgramQuery = selectedProgram.program_name;
-      }
-    }
   },
 };
 </script>

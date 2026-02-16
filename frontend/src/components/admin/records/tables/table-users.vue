@@ -1,7 +1,7 @@
 <template>
   <div v-if="isTable">
     <!-- Header -->
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / User Accounts
       </div>
@@ -39,27 +39,14 @@
           <div
             class="p-1 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-              />
-            </svg>
+            <icon :name="'uploads'" class="w-4 h-4" />
           </div>
           <span class="font-medium text-sm">Import Users</span>
         </div>
 
         <div
           @click="toggleAdd"
-          class="flex items-center gap-2 px-3 py-2 border text-green-600 border-green-600 rounded-xl hover:bg-green-700 hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
+          class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
         >
           <div
             class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
@@ -234,13 +221,11 @@
       </div>
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
-          <span>
-            Showing {{ startIndex }} to {{ endIndex }} of
-            {{ filteredData.length }} entries
-          </span>
+        <div class="text-gray-700 text-sm">
+          Showing {{ startIndex }} to {{ endIndex }} of
+          {{ filteredData.length }} entries
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-1 text-sm">
           <button
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
@@ -255,7 +240,7 @@
                 'bg-defaultGreen text-white': currentPage === page,
                 'bg-gray-200 text-gray-700': currentPage !== page,
               }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+              class="px-3 py-1 rounded-md hover:bg-green-300"
             >
               {{ page }}
             </button>
@@ -386,7 +371,7 @@ export default {
       return this.users.filter((user) =>
         `${user.first_name} ${user.last_name} ${user.role} ${user.email}`
           .toLowerCase()
-          .includes(query)
+          .includes(query),
       );
     },
     totalPages() {
@@ -471,7 +456,7 @@ export default {
 
       try {
         await axios.delete(
-          process.env.VUE_APP_API_BASE_URL + `/auth/remove/${userId}`
+          process.env.VUE_APP_API_BASE_URL + `/auth/remove/${userId}`,
         );
         this.recordToDelete = null;
         this.showDeleteModal = false;

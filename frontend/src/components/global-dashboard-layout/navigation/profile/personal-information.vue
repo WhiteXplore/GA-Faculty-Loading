@@ -27,7 +27,7 @@
         </div>
 
         <div
-          class="gap-1 flex cursor-pointer border border-green-600 text-green-600 px-2 py-1 rounded-lg hover:bg-green-50 transition"
+          class="gap-1 flex cursor-pointer border border-green-600 text-defaultGreen px-2 py-1 rounded-lg hover:bg-green-50 transition"
           @click="$emit('edit')"
         >
           <icon :name="'edit'" />
@@ -132,7 +132,7 @@ export default {
     employmentBadgeColor(type) {
       switch (type) {
         case "Full Time":
-          return "bg-green-500"; // green badge
+          return "bg-defaultGreen"; // green badge
         case "Part Time":
           return "bg-blue-400"; // blue badge
         default:

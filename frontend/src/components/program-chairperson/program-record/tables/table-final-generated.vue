@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-3 h-[90vh]">
+  <div class="flex flex-col gap-3 h-[87vh]">
     <!-- TODO  Top Controls -->
     <div class="flex flex-wrap justify-between items-center gap-3">
       <div class="text-sm text-gray-600 mt-2 font-medium">
@@ -128,7 +128,7 @@
                   <option value="20">20</option>
                 </select>
                 <div
-                  class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-600"
+                  class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-defaultGreen"
                 >
                   <svg
                     class="w-4 h-4"
@@ -158,7 +158,7 @@
                 @input="changePage(1)"
               />
               <div
-                class="absolute inset-y-0 left-3 flex items-center text-green-600 pointer-events-none"
+                class="absolute inset-y-0 left-3 flex items-center text-defaultGreen pointer-events-none"
               >
                 <svg
                   class="w-4 h-4"
@@ -176,7 +176,7 @@
 
           <!-- TODO  Faculty Table -->
           <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
-            <div class="max-h-[65vh] overflow-y-auto">
+            <div class="max-h-[69vh] overflow-y-auto">
               <table class="min-w-full text-sm text-gray-700 border-collapse">
                 <thead
                   class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
@@ -234,7 +234,8 @@
               {{ Object.keys(filteredGroupedSchedule).length }} faculty
             </div>
 
-            <div class="flex items-center">
+            <div class="flex items-center gap-1">
+              <!-- Previous -->
               <button
                 @click="changePage(currentPage - 1)"
                 :disabled="currentPage === 1"
@@ -243,6 +244,7 @@
                 &lt;
               </button>
 
+              <!-- Page Numbers -->
               <span v-for="page in pageNumbers" :key="'page-' + page">
                 <button
                   @click="changePage(page)"
@@ -250,12 +252,13 @@
                     'bg-defaultGreen text-white': currentPage === page,
                     'bg-gray-200 text-gray-700': currentPage !== page,
                   }"
-                  class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+                  class="px-3 py-1 rounded-md hover:bg-green-300"
                 >
                   {{ page }}
                 </button>
               </span>
 
+              <!-- Next -->
               <button
                 @click="changePage(currentPage + 1)"
                 :disabled="currentPage === totalPages"
@@ -277,11 +280,11 @@
             ? 'grid-cols-1 md:grid-cols-2 h-[87vh] overflow-y-auto'
             : Object.keys(filteredGroupedSchedule).length === 1
             ? 'grid-cols-1'
-            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3  overflow-y-auto',
+            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-2  overflow-y-auto',
         ]"
       >
         <div
-          v-for="(records, instructor) in filteredGroupedSchedule"
+          v-for="(records, instructor) in paginatedFacultyCards"
           :key="instructor"
           class="bg-white rounded-xl border flex flex-col shadow-sm overflow-hidden"
         >
@@ -412,7 +415,9 @@
                           {{ item.course_code }}
                         </div>
                         <div class="truncate">{{ item.room_name }}</div>
-                        <div class="truncate">{{ item.set_name }}</div>
+                        <div class="truncate">
+                          {{ item.program_name }}-{{ item.set_name }}
+                        </div>
 
                         <!-- Conflict Button -->
                         <div class="w-full flex justify-center mt-1">
@@ -468,7 +473,8 @@
               <div class="text-[10px] text-gray-700 space-y-0.5">
                 <p><strong>Faculty:</strong> {{ tooltipItem.faculty_name }}</p>
                 <p>
-                  <strong>Year & Section:</strong> {{ tooltipItem.set_name }}
+                  <strong>Year & Section:</strong>
+                  {{ tooltipItem.program_name }}-{{ tooltipItem.set_name }}
                 </p>
                 <p><strong>Room:</strong> {{ tooltipItem.room_name }}</p>
                 <p><strong>Day:</strong> {{ tooltipItem.day }}</p>
@@ -487,98 +493,218 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div
-    v-if="conflictModalVisible"
-    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50"
-  >
-    <div
-      class="bg-white rounded-xl shadow-lg w-full max-w-lg relative max-h-[80vh] overflow-y-auto p-6"
-    >
-      <!-- TODO  Header -->
-      <div class="flex justify-between items-center border-b pb-3 mb-4">
-        <div class="flex gap-1">
-          <icon
-            name="exclamation-circle"
-            class="text-red-900 w-7 p-1 rounded-full bg-red-200"
-          />
-          <h3 class="text-lg font-semibold text-gray-800">
-            Schedule Conflicts
-          </h3>
-        </div>
+      <div
+        v-if="!showFacultyTable && totalCardPages > 1"
+        class="flex justify-center items-center gap-2 mt-4 w-full"
+      >
+        <button
+          @click="currentCardPage--"
+          :disabled="currentCardPage === 1"
+          class="px-3 py-1 rounded-lg bg-gray-200 disabled:opacity-50"
+        >
+          &lt;
+        </button>
+
+        <span class="text-sm font-medium text-gray-600">
+          Page {{ currentCardPage }} of {{ totalCardPages }}
+        </span>
 
         <button
+          @click="currentCardPage++"
+          :disabled="currentCardPage === totalCardPages"
+          class="px-3 py-1 rounded-lg bg-gray-200 disabled:opacity-50"
+        >
+          &gt;
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Conflict Modal -->
+  <div
+    v-if="conflictModalVisible"
+    class="fixed inset-0 z-50 bg-black/40 flex items-center justify-center"
+  >
+    <div class="bg-white w-[900px] rounded-2xl p-6 shadow-xl">
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-4 border-b pb-2">
+        <h3 class="text-lg font-semibold text-red-700">
+          Schedule Conflict Detected
+        </h3>
+        <button
           @click="closeConflictModal"
-          class="text-gray-400 hover:text-gray-600 transition"
+          class="text-gray-400 hover:text-gray-600"
         >
           ✕
         </button>
       </div>
 
-      <!-- TODO  Conflicts List -->
-      <div class="space-y-3">
-        <div class="px-4 py-3 rounded-xl bg-red-50 text-sm text-red-900">
-          Please select another shedule.
+      <!-- Body -->
+      <div class="grid grid-cols-2 gap-6 mt-6">
+        <!-- LEFT: Selected Schedule -->
+        <div class="relative bg-white rounded-2xl p-5 border">
+          <!-- Badge -->
+          <span
+            class="absolute -top-3 left-4 bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow"
+          >
+            Selected Schedule
+          </span>
+
+          <div class="mt-3 space-y-3 text-sm text-gray-800">
+            <div class="flex justify-between items-center">
+              <h4 class="font-semibold text-base">
+                {{ selectedSchedule.course_code }}
+              </h4>
+              <span
+                class="text-xs px-2 py-1 rounded-full font-medium"
+                :class="{
+                  'bg-orange-500 text-white':
+                    selectedSchedule.mode === 'face to face',
+                  'bg-purple-700 text-white':
+                    selectedSchedule.mode === 'online',
+                }"
+              >
+                {{
+                  selectedSchedule.mode === "face to face"
+                    ? "Face to Face"
+                    : "Online"
+                }}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <p class="text-xs text-gray-500">Faculty</p>
+                <p class="font-medium">{{ selectedSchedule.faculty_name }}</p>
+              </div>
+
+              <div>
+                <p class="text-xs text-gray-500">Section</p>
+                <p class="font-medium">
+                  {{ selectedSchedule.program_name }}-{{
+                    selectedSchedule.set_name
+                  }}
+                </p>
+              </div>
+
+              <div>
+                <p class="text-xs text-gray-500">Room</p>
+                <p class="font-medium">{{ selectedSchedule.room_name }}</p>
+              </div>
+
+              <div>
+                <p class="text-xs text-gray-500">Time</p>
+                <p class="font-medium">
+                  {{ formatTime(selectedSchedule.start_hour) }} –
+                  {{
+                    formatTime(
+                      selectedSchedule.start_hour + selectedSchedule.duration,
+                    )
+                  }}
+                </p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500">Day</p>
+                <p class="font-medium">{{ selectedSchedule.day }}</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div
-          v-for="conflict in conflictRecords"
-          :key="conflict.id"
-          class="p-3 rounded-md shadow-sm space-y-2"
-        >
-          <p class="text-sm text-gray-800">
-            <span class="font-semibold">Faculty:</span>
-            {{ conflict.faculty_name }}
-          </p>
-          <p class="text-sm text-gray-800">
-            <span class="font-semibold">Set and Section:</span>
-            {{ conflict.set_name }}
-          </p>
-          <p class="text-sm text-gray-800">
-            <span class="font-semibold">Course:</span>
-            {{ conflict.course_code }}
-          </p>
-          <p class="text-sm text-gray-800">
-            <span class="font-semibold">Room:</span> {{ conflict.room_name }}
-          </p>
-          <p class="text-sm text-gray-800">
-            <span class="font-semibold">Day:</span> {{ conflict.day }}
-          </p>
-          <p class="text-sm text-gray-800">
-            <span class="font-semibold">Time:</span>
-            {{ formatTime(conflict.start_hour) }} -
-            {{ formatTime(conflict.start_hour + conflict.duration) }}
-          </p>
-          <p class="text-sm text-gray-800 flex items-center gap-1">
-            <span class="font-semibold">Mode:</span>
-            <span
-              v-if="conflict.mode"
-              :class="[
-                'w-auto h-4 px-2 rounded-full text-[10px] font-bold flex items-center justify-center text-white',
-                conflict.mode === 'face to face' ? 'bg-orange-500' : '',
-                conflict.mode === 'online' ? 'bg-purple-500' : '',
-              ]"
+
+        <!-- RIGHT: Conflict Schedules -->
+        <div class="relative bg-white rounded-2xl p-5 border">
+          <!-- Badge -->
+          <span
+            class="absolute -top-3 left-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full shadow"
+          >
+            Conflicting Schedules
+          </span>
+
+          <!-- Scrollable list -->
+          <div class="mt-3 space-y-4 max-h-[420px] overflow-y-auto pr-2 p-2">
+            <div
+              v-for="conflict in conflictRecords"
+              :key="conflict.id"
+              class="relative bg-white rounded-xl p-4 ring-1 ring-red-200"
             >
-              {{ conflict.mode === "face to face" ? "Face to Face" : "Online" }}
-            </span>
-          </p>
-          <!-- <p class="text-sm text-gray-800" v-if="conflict.reason">
-            <span class="font-semibold">Reason:</span> {{ conflict.reason }}
-          </p> -->
+              <div class="space-y-2 text-sm">
+                <div class="flex justify-between items-center">
+                  <h5 class="font-semibold text-gray-800">
+                    {{ conflict.course_code }}
+                  </h5>
+                  <span
+                    class="text-xs px-2 py-1 rounded-full font-medium"
+                    :class="{
+                      'bg-orange-500 text-white':
+                        conflict.mode === 'face to face',
+                      'bg-purple-700 text-white': conflict.mode === 'online',
+                    }"
+                  >
+                    {{
+                      conflict.mode === "face to face"
+                        ? "Face to Face"
+                        : "Online"
+                    }}
+                  </span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 text-gray-700">
+                  <div>
+                    <p class="text-xs text-gray-500">Faculty</p>
+                    <p class="font-medium">{{ conflict.faculty_name }}</p>
+                  </div>
+
+                  <div>
+                    <p class="text-xs text-gray-500">Section</p>
+                    <p class="font-medium">
+                      {{ conflict.program_name }}{{ conflict.set_name }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p class="text-xs text-gray-500">Room</p>
+                    <p class="font-medium">{{ conflict.room_name }}</p>
+                  </div>
+
+                  <div>
+                    <p class="text-xs text-gray-500">Time</p>
+                    <p class="font-medium">
+                      {{ formatTime(conflict.start_hour) }} –
+                      {{ formatTime(conflict.start_hour + conflict.duration) }}
+                    </p>
+                  </div>
+                  <div>
+                    <p class="text-xs text-gray-500">Day</p>
+                    <p class="font-medium">{{ conflict.day }}</p>
+                  </div>
+                </div>
+
+                <!-- Reason -->
+                <div
+                  class="flex items-start gap-2 mt-2 p-2 rounded-lg bg-red-50 text-xs text-red-700"
+                >
+                  <span>⚠</span>
+                  <span>
+                    {{ conflict.reason || "Schedule overlap detected" }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- TODO  Footer -->
+      <!-- Footer -->
       <div class="flex justify-end mt-5">
         <button
           @click="closeConflictModal"
-          class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition text-sm"
+          class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm"
         >
           Close
         </button>
       </div>
     </div>
   </div>
+
   <!-- TODO  Edit Instructor Modal -->
   <editSchedule
     :show="showEditModal"
@@ -613,22 +739,28 @@ export default {
       selectedInstituteId: "",
       selectedProgramId: "",
       confirmSaveModal: false,
-      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      days: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
 
-      // 8 AM to 8 PM
-      timeSlots: Array.from({ length: 13 }, (_, i) => ({
-        start: 8 + i,
-        end: 9 + i,
+      timeSlots: Array.from({ length: 14 }, (_, i) => ({
+        start: 7 + i, // 7, 8, 9 ... 20
+        end: 8 + i, // 8, 9, 10 ... 21
       })),
 
       progress: 0,
       progressInterval: null,
-      showConflictModal: false,
-      selectedConflict: {},
+
       currentPage: 1,
       itemsPerPage: 10,
       timeSlotHeight: 60,
-
+      pageWindow: 3,
       schoolYears: [],
       swapSelection: [],
       showEditModal: false,
@@ -643,10 +775,55 @@ export default {
       tooltipX: 0,
       tooltipY: 0,
       draggedRecord: null,
+      selectedSchedule: null,
+      conflictRecords: [],
+      visibleCardCount: 6,
+      currentCardPage: 1,
+      cardsPerPage: 6,
     };
   },
 
   computed: {
+    paginatedFacultyCards() {
+      const entries = Object.entries(this.filteredGroupedSchedule);
+
+      // ✅ Always show both in compare mode
+      if (this.showCompareView) {
+        return Object.fromEntries(entries);
+      }
+
+      const start = (this.currentCardPage - 1) * this.cardsPerPage;
+      const end = start + this.cardsPerPage;
+
+      return Object.fromEntries(entries.slice(start, end));
+    },
+    totalCardPages() {
+      return Math.ceil(
+        Object.keys(this.filteredGroupedSchedule).length / this.cardsPerPage,
+      );
+    },
+    paginatedSource() {
+      if (!this.searchQuery) return this.filteredGroupedSchedule;
+
+      const q = this.searchQuery.toLowerCase();
+      return Object.fromEntries(
+        Object.entries(this.filteredGroupedSchedule).filter(([name]) =>
+          name.toLowerCase().includes(q),
+        ),
+      );
+    },
+    visibleFacultyCards() {
+      return Object.entries(this.filteredGroupedSchedule).slice(
+        0,
+        this.visibleCardCount,
+      );
+    },
+
+    hasMoreCards() {
+      return (
+        Object.keys(this.filteredGroupedSchedule).length > this.visibleCardCount
+      );
+    },
     coursesList() {
       const store = useFetchDataStore();
       return store.courses || [];
@@ -737,6 +914,11 @@ export default {
           : latest,
       );
     },
+    totalPages() {
+      return Math.ceil(
+        Object.keys(this.filteredGroupedSchedule).length / this.itemsPerPage,
+      );
+    },
     startIndex() {
       return (this.currentPage - 1) * this.itemsPerPage + 1;
     },
@@ -746,20 +928,28 @@ export default {
         Object.keys(this.filteredGroupedSchedule).length,
       );
     },
-    totalPages() {
-      return Math.ceil(
-        Object.keys(this.filteredGroupedSchedule).length / this.itemsPerPage,
-      );
-    },
     pageNumbers() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      let pages = [];
+      const halfWindow = Math.floor(this.pageWindow / 2);
+      let start = Math.max(1, this.currentPage - halfWindow);
+      let end = Math.min(this.totalPages, start + this.pageWindow - 1);
+
+      // Adjust start if not enough pages at the end
+      start = Math.max(1, end - this.pageWindow + 1);
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+      return pages;
     },
+
     paginatedFaculty() {
-      const allFaculty = Object.entries(this.filteredGroupedSchedule);
+      const entries = Object.entries(this.paginatedSource);
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return Object.fromEntries(allFaculty.slice(start, end));
+      return Object.fromEntries(entries.slice(start, end));
     },
+
     searchedFaculty() {
       if (!this.searchQuery) return this.filteredGroupedSchedule;
       const query = this.searchQuery.toLowerCase();
@@ -825,78 +1015,72 @@ export default {
           const rStart = this.normalizeHour(r.start_hour);
           const rEnd = rStart + Number(r.duration);
 
-          // time overlap check
-          return Math.max(rStart, recordStart) < Math.min(rEnd, recordEnd);
-        })
-        .map((r) => {
-          let reason = "";
+          // ⛔ NO TIME OVERLAP → NO CONFLICT
+          const isOverlapping =
+            Math.max(rStart, recordStart) < Math.min(rEnd, recordEnd);
 
-          // 🔴 SAME ROOM + SAME DAY + OVERLAPPING TIME
+          if (!isOverlapping) return false;
+
+          // 🔴 RULE 1: SAME ROOM (Face-to-Face only)
           if (
             r.room_id &&
             record.room_id &&
             r.room_id === record.room_id &&
-            r.day === record.day &&
-            record.mode === "face to face" &&
-            r.mode === "face to face"
+            r.mode === "face to face" &&
+            record.mode === "face to face"
           ) {
-            reason =
-              "Conflict detected due to: SAME ROOM, SAME DAY, and OVERLAPPING TIME";
+            return true;
           }
 
-          // 🔴 SAME CLASS / SECTION + SAME DAY + OVERLAPPING TIME
-          else if (
-            r.class_id &&
-            record.class_id &&
-            r.class_id === record.class_id &&
-            r.day === record.day
-          ) {
-            reason =
-              "Conflict detected due to: SAME CLASS / SECTION, SAME DAY, and OVERLAPPING TIME";
+          // 🔴 RULE 2: SAME FACULTY
+          if (r.faculty_id === record.faculty_id) {
+            return true;
           }
 
-          // 🔴 SAME FACULTY + SAME MODE + SAME DAY + OVERLAPPING TIME
-          else if (
-            r.faculty_id === record.faculty_id &&
-            r.day === record.day &&
-            (r.mode || "").toLowerCase() === (record.mode || "").toLowerCase()
-          ) {
-            reason =
-              "Conflict detected due to: SAME FACULTY, SAME MODE, SAME DAY, and OVERLAPPING TIME";
+          // 🔴 RULE 3: SAME CLASS / SECTION
+          if (r.class_id && record.class_id && r.class_id === record.class_id) {
+            return true;
           }
 
-          return {
-            ...r,
-            reason,
-          };
+          return false;
         })
-        .filter((r) => r.reason); // only keep real conflicts
-    },
+        .map((r) => {
+          let reason = "";
 
+          if (
+            r.room_id === record.room_id &&
+            r.mode === "face to face" &&
+            record.mode === "face to face"
+          ) {
+            reason = "Same room, same day, and overlapping time (Face-to-Face)";
+          } else if (r.faculty_id === record.faculty_id) {
+            reason = "Same faculty assigned to overlapping schedules";
+          } else if (r.class_id === record.class_id) {
+            reason = "Same class/section has overlapping schedules";
+          }
+
+          return { ...r, reason };
+        });
+    },
     hasRoomConflict(record) {
       return this.getConflictingRecords(record).length > 0;
     }, // Open the conflict modal for a record
     openConflictModal(record) {
       const conflicts = this.getConflictingRecords(record);
 
-      // Only show conflicts with OTHER instructors/records
-      const otherConflicts = conflicts.filter(
-        (r) =>
-          r.faculty_name !== record.faculty_name ||
-          (r.id?.toString() || r.tempId) !==
-            (record.id?.toString() || record.tempId),
-      );
+      if (!conflicts.length) return;
 
-      if (!otherConflicts.length) return;
-
-      this.conflictRecords = otherConflicts;
+      this.selectedSchedule = record; // 👈 LEFT SIDE
+      this.conflictRecords = conflicts; // 👉 RIGHT SIDE
       this.conflictModalVisible = true;
     },
 
     closeConflictModal() {
       this.conflictModalVisible = false;
       this.conflictRecords = [];
+      this.selectedSchedule = null;
     },
+
     toggleShowCompareSelection() {
       this.showCompareSelection = !this.showCompareSelection;
     },
@@ -911,7 +1095,6 @@ export default {
     showCompareFacultyCards() {
       if (!this.compareInstructorA || !this.compareInstructorB) return;
 
-      // Filter groupedSchedule to only the selected instructors
       this.filteredGroupedSchedule = {
         [this.compareInstructorA]:
           this.groupedSchedule[this.compareInstructorA] || [],
@@ -919,8 +1102,11 @@ export default {
           this.groupedSchedule[this.compareInstructorB] || [],
       };
 
-      this.showFacultyTable = false; // hide table view
+      this.showFacultyTable = false;
       this.showCompareView = true;
+
+      // ✅ RESET CARD PAGINATION
+      this.currentCardPage = 1;
     },
     openEditInstructorModal(instructor) {
       // Send fresh copies of schedules to modal
@@ -1028,6 +1214,7 @@ export default {
       // Check for conflicts
       const conflicts = this.getConflictingRecords(record);
       if (conflicts.length) {
+        this.selectedSchedule = record;
         this.conflictRecords = conflicts;
         this.conflictModalVisible = true;
         this.draggedRecord = null;
@@ -1108,12 +1295,10 @@ export default {
     },
 
     normalizeHour(hour) {
-      hour = Number(hour);
-      if (Number.isNaN(hour)) return hour;
-      // If you are using 1–7 as PM and 8–24 as actual hours
-      return hour <= 7 ? hour + 12 : hour;
+      const h = Number(hour);
+      if (Number.isNaN(h)) return null;
+      return h; // ✅ already 24-hour based
     },
-
     formatTime(h) {
       if (h == null) return "";
       const hour = Math.floor(h); // integer hour

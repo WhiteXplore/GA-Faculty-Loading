@@ -164,7 +164,7 @@
 
                     <!-- Class Size Input -->
                     <div class="flex items-center gap-2 mt-2">
-                      <icon name="users" class="size-4 text-green-600" />
+                      <icon name="users" class="size-4 text-defaultGreen" />
                       <input
                         v-model.number="section.classSize"
                         type="number"

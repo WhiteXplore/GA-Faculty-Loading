@@ -1,6 +1,6 @@
 <template>
   <div v-if="isTable">
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / Final Schedules
       </div>
@@ -132,7 +132,7 @@
                   ' bg-defaultGreen text-white': currentPage === page,
                   'bg-gray-200 text-gray-700': currentPage !== page,
                 }"
-                class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+                class="px-3 py-1 rounded-md hover:bg-green-300"
               >
                 {{ page }}
               </button>
@@ -224,7 +224,7 @@ export default {
         (item) =>
           item.faculty_name.toLowerCase().includes(query) ||
           item.course_code.toLowerCase().includes(query) ||
-          item.room_name.toLowerCase().includes(query)
+          item.room_name.toLowerCase().includes(query),
       );
     },
     totalPages() {
@@ -269,7 +269,7 @@ export default {
       try {
         const { data } = await axios.get(
           process.env.VUE_APP_API_BASE_URL +
-            "/final-generated-class-schedule/get-all-final-schedules"
+            "/final-generated-class-schedule/get-all-final-schedules",
         );
         this.finalSchedules = data;
       } catch (err) {
@@ -292,7 +292,7 @@ export default {
       try {
         await axios.delete(
           process.env.VUE_APP_API_BASE_URL +
-            `/final-generated-class-schedule/delete/${this.recordToDelete.id}`
+            `/final-generated-class-schedule/delete/${this.recordToDelete.id}`,
         );
         toast.success("Schedule deleted successfully");
         this.fetchFinalSchedules();
