@@ -19,6 +19,8 @@ import { ClassModule } from './class/class.module';
 import { ProgramYearCoursesModule } from './program_year_courses/program_year_courses.module';
 import { FinalGeneratedClassScheduleModule } from './final_generated_class_schedule/final_generated_class_schedule.module';
 import { CollegeBranchModule } from './college_branch/college_branch.module';
+import { UnscheduledMeetingsModule } from './unscheduled_meetings/unscheduled_meetings.module';
+import { FacultyBranchModule } from './faculty_branch/faculty_branch.module';
 
 @Module({
   imports: [
@@ -56,6 +58,8 @@ import { CollegeBranchModule } from './college_branch/college_branch.module';
     ProgramYearCoursesModule,
     FinalGeneratedClassScheduleModule,
     CollegeBranchModule,
+    UnscheduledMeetingsModule,
+    FacultyBranchModule,
   ],
 })
 export class AppModule {}

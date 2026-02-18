@@ -178,7 +178,9 @@
                 Showing {{ startIndex }} to {{ endIndex }} of
                 {{ filteredAndSearchedClasses.length }} entries
               </div>
-              <div class="flex items-center">
+
+              <div class="flex items-center gap-1 text-sm">
+                <!-- Prev -->
                 <button
                   @click="changePage(currentPage - 1)"
                   :disabled="currentPage === 1"
@@ -186,18 +188,22 @@
                 >
                   &lt;
                 </button>
-                <button
-                  v-for="page in pageNumbers"
-                  :key="'page-' + page"
-                  @click="changePage(page)"
-                  :class="{
-                    'bg-defaultGreen text-white': currentPage === page,
-                    'bg-gray-200 text-gray-700': currentPage !== page,
-                  }"
-                  class="px-3 py-1 rounded-md hover:bg-green-300"
-                >
-                  {{ page }}
-                </button>
+
+                <!-- Page Numbers -->
+                <span v-for="page in paginatedNumbers" :key="'page-' + page">
+                  <button
+                    @click="changePage(page)"
+                    :class="{
+                      'bg-defaultGreen text-white': currentPage === page,
+                      'bg-gray-200 text-gray-700': currentPage !== page,
+                    }"
+                    class="px-3 py-1 rounded-md hover:bg-green-300"
+                  >
+                    {{ page }}
+                  </button>
+                </span>
+
+                <!-- Next -->
                 <button
                   @click="changePage(currentPage + 1)"
                   :disabled="currentPage === totalPages"
@@ -398,9 +404,12 @@ export default {
       );
     },
 
-    pageNumbers() {
+    paginatedNumbers() {
       const total = this.totalPages;
-      if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
+
+      if (total <= 3) {
+        return Array.from({ length: total }, (_, i) => i + 1);
+      }
 
       let start = this.currentPage - 1;
       let end = this.currentPage + 1;
@@ -409,6 +418,7 @@ export default {
         start = 1;
         end = 3;
       }
+
       if (end > total) {
         end = total;
         start = total - 2;

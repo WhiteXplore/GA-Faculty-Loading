@@ -150,12 +150,13 @@
 
         <!-- Pagination -->
         <div class="flex justify-between items-center mt-4 w-full">
-          <div class="text-gray-700">
+          <div class="text-gray-700 text-sm">
             Showing {{ classStartIndex }} to {{ classEndIndex }} of
             {{ filteredClasses.length }} entries
           </div>
 
-          <div class="flex items-center">
+          <div class="flex items-center gap-1 text-sm">
+            <!-- Prev -->
             <button
               @click="changePage(classPage - 1)"
               :disabled="classPage === 1"
@@ -163,18 +164,22 @@
             >
               &lt;
             </button>
-            <button
-              v-for="page in classTotalPages"
-              :key="page"
-              @click="changePage(page)"
-              :class="{
-                'bg-defaultGreen text-white': classPage === page,
-                'bg-gray-200 text-gray-700': classPage !== page,
-              }"
-              class="px-3 py-1 rounded-md hover:bg-green-300"
-            >
-              {{ page }}
-            </button>
+
+            <!-- Page Numbers -->
+            <span v-for="page in paginatedNumbers" :key="'page-' + page">
+              <button
+                @click="changePage(page)"
+                :class="{
+                  'bg-defaultGreen text-white': classPage === page,
+                  'bg-gray-200 text-gray-700': classPage !== page,
+                }"
+                class="px-3 py-1 rounded-md hover:bg-green-300"
+              >
+                {{ page }}
+              </button>
+            </span>
+
+            <!-- Next -->
             <button
               @click="changePage(classPage + 1)"
               :disabled="classPage === classTotalPages"
@@ -315,6 +320,29 @@ export default {
 
       return result;
     },
+    paginatedNumbers() {
+      const total = this.classTotalPages;
+
+      if (total <= 3) {
+        return Array.from({ length: total }, (_, i) => i + 1);
+      }
+
+      let start = this.classPage - 1;
+      let end = this.classPage + 1;
+
+      if (start < 1) {
+        start = 1;
+        end = 3;
+      }
+
+      if (end > total) {
+        end = total;
+        start = total - 2;
+      }
+
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+    },
+
     paginatedClasses() {
       const start = (this.classPage - 1) * this.itemsPerPage;
       return this.filteredClasses.slice(start, start + this.itemsPerPage);

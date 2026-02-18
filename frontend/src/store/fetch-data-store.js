@@ -25,6 +25,9 @@ export const useFetchDataStore = defineStore("fetchData", {
     faculty: [],
     final_schedules: [],
     class_sections: [],
+    unscheduled_meetings: [],
+    college_branch: [],
+    faculty_branch: [],
     year: null, // currently selected year
     activeYears: [],
     activeYear: null, // latest active year for table filtering
@@ -35,6 +38,53 @@ export const useFetchDataStore = defineStore("fetchData", {
   }),
 
   actions: {
+    async fetchFacultyBranch() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL +
+            "/faculty-branch/get-all-faculty-branch",
+        );
+        this.faculty_branch = data;
+      } catch (err) {
+        this.error = err.message || "Failed to fetch faculty_branch";
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async fetchCollegeBranch() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL +
+            "/college-branch/get-college-branch",
+        );
+        this.college_branch = data;
+      } catch (err) {
+        this.error = err.message || "Failed to fetch college_branch";
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async fetchUnscheduledMeetings() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL +
+            "/unscheduled-meetings/get-all-unscheduled-meetings",
+        );
+        this.unscheduled_meetings = data;
+      } catch (err) {
+        this.error = err.message || "Failed to fetch unscheduled_meetings";
+      } finally {
+        this.loading = false;
+      }
+    },
     async fetchClassSections() {
       this.loading = true;
       this.error = null;

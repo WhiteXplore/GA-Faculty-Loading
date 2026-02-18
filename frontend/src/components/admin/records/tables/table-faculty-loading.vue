@@ -835,6 +835,7 @@ export default {
     return {
       user: {},
       schedule: [],
+      unscheduledMeetings: [],
       groupedSchedule: {},
       filteredGroupedSchedule: {},
       loading: false,
@@ -1297,7 +1298,10 @@ export default {
           `${process.env.VUE_APP_API_BASE_URL}/generated-scheduled/load`,
         );
 
-        const allSchedules = res.data.data.scheduled_meetings || [];
+        const data = res.data.data || {};
+
+        const allSchedules = data.scheduled_meetings || [];
+        this.unscheduledMeetings = data.unscheduled_meetings || []; // ✅ IMPORTANT
 
         this.schedule = allSchedules;
         this.groupedSchedule = this.groupByInstructor(this.schedule);
@@ -1375,7 +1379,10 @@ export default {
           return;
         }
 
-        const payload = this.schedule.map((item) => ({
+        // ----------------------------------------
+        // 1️⃣ SAVE SCHEDULED MEETINGS
+        // ----------------------------------------
+        const scheduledPayload = this.schedule.map((item) => ({
           class_id: item.class_id,
           set_name: item.set_name,
           course_code: item.course_code,
@@ -1401,13 +1408,42 @@ export default {
           mode: item.schedule_type,
         }));
 
-        await axios.post(
-          `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/bulk`,
-          payload,
-          { withCredentials: true },
-        );
+        if (scheduledPayload.length > 0) {
+          await axios.post(
+            `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/bulk`,
+            scheduledPayload,
+            { withCredentials: true },
+          );
+        }
 
-        toast.success("Schedule saved successfully!");
+        // ----------------------------------------
+        // 2️⃣ SAVE UNSCHEDULED MEETINGS
+        // ----------------------------------------
+        const unscheduledMeetings = this.unscheduledMeetings || [];
+
+        const unscheduledPayload = unscheduledMeetings.map((item) => ({
+          class_id: item.class_id,
+          course_code: item.course_code,
+          program_id: item.program_id,
+          program_name: item.program_name,
+          type: item.type,
+          hours: item.hours,
+          reason: item.reason,
+          school_year: latestSchoolYear.school_year_name,
+          semester: latestSchoolYear.semester,
+        }));
+
+        if (unscheduledPayload.length > 0) {
+          await axios.post(
+            `${process.env.VUE_APP_API_BASE_URL}/unscheduled-meetings/add-unscheduled-meetings`,
+            unscheduledPayload,
+            { withCredentials: true },
+          );
+        }
+
+        toast.success(
+          "✅ Schedule and unscheduled meetings saved successfully!",
+        );
       } catch (error) {
         console.error(error);
         alert("❌ Failed to save schedule.");

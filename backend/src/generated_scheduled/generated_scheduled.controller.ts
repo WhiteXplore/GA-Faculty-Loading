@@ -11,7 +11,9 @@ import {
 import { GeneratedScheduledService } from './generated_scheduled.service';
 import { CreateGeneratedScheduledDto } from './dto/create-generated_scheduled.dto';
 import { UpdateGeneratedScheduledDto } from './dto/update-generated_scheduled.dto';
-import { exec } from 'child_process';
+// import { exec } from 'child_process';
+import { spawn } from 'child_process';
+
 import * as path from 'path';
 
 @Controller('generated-scheduled')
@@ -28,64 +30,69 @@ export class GeneratedScheduledController {
   @Get('load')
   getFacultyLoad() {
     return new Promise((resolve, reject) => {
-      // Resolve path and replace backslashes with forward slashes
       const scriptPath = path
         .resolve(__dirname, '../../../python/faculty_ga_remar.py')
         .replace(/\\/g, '/');
+
       console.log('Running Python script:', scriptPath);
 
-      // Use double quotes around the path in exec
-      exec(
-        `python "${scriptPath}"`,
-        { encoding: 'utf-8' },
-        (error, stdout, stderr) => {
-          if (error) {
-            console.error('Python script error:', error.message);
-            console.error(stderr);
-            return reject(
-              new InternalServerErrorException(
-                'Failed to generate faculty load.',
-              ),
-            );
-          }
+      const pythonProcess = spawn('python', [scriptPath]);
 
-          console.log('Python stdout:', stdout);
+      let stdoutData = '';
+      let stderrData = '';
 
-          // Extract JSON between markers
-          const jsonStartMarker = '===JSON_START===';
-          const jsonEndMarker = '===JSON_END===';
+      // 🔹 Collect stdout (streamed, no buffer limit)
+      pythonProcess.stdout.on('data', (data) => {
+        stdoutData += data.toString();
+      });
 
-          const startIndex = stdout.indexOf(jsonStartMarker);
-          const endIndex = stdout.indexOf(jsonEndMarker);
+      // 🔹 Collect stderr
+      pythonProcess.stderr.on('data', (data) => {
+        stderrData += data.toString();
+      });
 
-          if (startIndex === -1 || endIndex === -1) {
-            console.error('No JSON markers found in Python output.');
-            return reject(
-              new InternalServerErrorException(
-                'No JSON markers found in Python output.',
-              ),
-            );
-          }
+      // 🔹 When process finishes
+      pythonProcess.on('close', (code) => {
+        if (code !== 0) {
+          console.error('Python error:', stderrData);
+          return reject(
+            new InternalServerErrorException(
+              'Failed to generate faculty load.',
+            ),
+          );
+        }
 
-          // Extract JSON content between markers
-          const jsonString = stdout
-            .substring(startIndex + jsonStartMarker.length, endIndex)
-            .trim();
+        const jsonStartMarker = '===JSON_START===';
+        const jsonEndMarker = '===JSON_END===';
 
-          try {
-            const schedule = JSON.parse(jsonString);
-            resolve({ success: true, data: schedule });
-          } catch (parseError) {
-            console.error('JSON parse error:', parseError.message);
-            console.error('JSON string:', jsonString.substring(0, 200));
-            reject(
-              new InternalServerErrorException(
-                'Failed to parse JSON from Python output.',
-              ),
-            );
-          }
-        },
-      );
+        const startIndex = stdoutData.indexOf(jsonStartMarker);
+        const endIndex = stdoutData.indexOf(jsonEndMarker);
+
+        if (startIndex === -1 || endIndex === -1) {
+          console.error('No JSON markers found.');
+          return reject(
+            new InternalServerErrorException(
+              'No JSON markers found in Python output.',
+            ),
+          );
+        }
+
+        const jsonString = stdoutData
+          .substring(startIndex + jsonStartMarker.length, endIndex)
+          .trim();
+
+        try {
+          const schedule = JSON.parse(jsonString);
+          resolve({ success: true, data: schedule });
+        } catch (err) {
+          console.error('JSON parse error:', err.message);
+          reject(
+            new InternalServerErrorException(
+              'Failed to parse JSON from Python output.',
+            ),
+          );
+        }
+      });
     });
   }
 

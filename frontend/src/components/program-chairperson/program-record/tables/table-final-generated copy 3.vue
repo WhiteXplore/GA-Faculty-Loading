@@ -1,77 +1,40 @@
 <template>
-  <div class="flex flex-col gap-1 h-[82vh]">
+  <div class="flex flex-col gap-3 h-[87vh]">
     <!-- TODO  Top Controls -->
-
-    <div class="flex justify-between items-center">
-      <div class="flex items-center gap-4 p-4 w-max">
-        <!-- Label -->
-        <span class="font-medium text-gray-700">Join Scheduled:</span>
-
-        <!-- Toggle Container -->
-        <div class="flex items-center gap-2">
-          <!-- YES / NOT text -->
-          <span
-            class="font-semibold"
-            :class="isJoined ? 'text-green-600' : 'text-gray-400'"
-          >
-            {{ isJoined ? "YES" : "NOT" }}
-          </span>
-
-          <!-- Toggle Button -->
-          <button
-            @click="isJoined = !isJoined"
-            :class="[
-              'w-14 h-8 rounded-full p-1 flex items-center transition-colors duration-300 focus:outline-none',
-              isJoined ? 'bg-green-500' : 'bg-gray-300',
-            ]"
-          >
-            <span
-              class="bg-white w-6 h-6 rounded-full shadow-md transform transition-transform duration-300"
-              :class="isJoined ? 'translate-x-6' : 'translate-x-0'"
-            ></span>
-          </button>
-        </div>
+    <div class="flex flex-wrap justify-between items-center gap-3">
+      <div class="text-sm text-gray-600 mt-2 font-medium">
+        Pages / Faculty Loads
       </div>
-      <div class="flex items-center gap-3 flex-wrap">
-        <!-- Toggle View Button -->
-        <div
+
+      <div class="flex gap-3 flex-wrap">
+        <!-- TODO  Toggle View Button -->
+        <button
           @click="showFacultyTable = !showFacultyTable"
-          class="flex items-center gap-2 px-3 py-2 border text-blue-600 border-blue-600 rounded-xl hover:bg-blue-700 hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
+          class="group flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white rounded-xl shadow-sm transition"
         >
           <div
-            class="p-1 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center"
+            class="p-1 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-white transition"
           >
-            <icon name="users" />
+            <icon
+              name="users"
+              class="w-4 h-4 text-blue-600 group-hover:text-blue-600"
+            />
           </div>
           <span class="font-medium text-sm">
             {{ showFacultyTable ? "View Cards" : "View Faculty" }}
           </span>
-        </div>
-
-        <!-- Compare Button (when selection hidden) -->
-        <div
-          v-show="!showCompareSelection"
-          @click="toggleShowCompareSelection"
-          class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-defaultGreen rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
-        >
-          <div
-            class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
-          >
-            <icon name="faculty-loading" />
-          </div>
-          <span class="font-medium text-sm">Compare</span>
-        </div>
+        </button>
 
         <!-- Compare & Swap Controls -->
         <div
-          v-show="showCompareSelection"
-          class="flex items-center gap-3 flex-wrap"
+          class="flex items-center gap-3 flex-wrap ml-auto"
+          v-if="showCompareSelection"
         >
           <!-- Instructor Selects -->
           <div class="flex gap-2 items-center">
             <select
               v-model="compareInstructorA"
-              class="rounded-xl border border-defaultGreen px-2 py-2.5 text-sm text-defaultGreen shadow-sm"
+              class="rounded-xl border border-purple-600 px-2 py-2.5 text-sm text-purple-700 shadow-sm"
             >
               <option value="">Select Instructor</option>
               <option
@@ -85,7 +48,7 @@
 
             <select
               v-model="compareInstructorB"
-              class="rounded-xl border border-defaultGreen px-2 py-2.5 text-sm text-defaultGreen shadow-sm"
+              class="rounded-xl border border-purple-600 px-2 py-2.5 text-sm text-purple-700 shadow-sm"
             >
               <option value="">Select Instructor</option>
               <option
@@ -98,24 +61,17 @@
             </select>
 
             <!-- Compare Button -->
-            <div
+            <button
               @click="showCompareFacultyCards"
-              :class="[
-                'flex items-center gap-2 px-3 py-2 border rounded-xl transition duration-200',
-                compareInstructorA &&
-                compareInstructorB &&
-                compareInstructorA !== compareInstructorB
-                  ? 'text-defaultGreen border-defaultGreen hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer'
-                  : 'text-gray-400 border-gray-300 cursor-not-allowed',
-              ]"
+              :disabled="
+                !compareInstructorA ||
+                !compareInstructorB ||
+                compareInstructorA === compareInstructorB
+              "
+              class="bg-purple-600 text-white px-4 py-2.5 rounded-xl hover:bg-purple-700 transition"
             >
-              <div
-                class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
-              >
-                <icon name="faculty-loading" />
-              </div>
-              <span class="font-medium text-sm">Compare</span>
-            </div>
+              Compare
+            </button>
           </div>
 
           <!-- Close Compare -->
@@ -126,10 +82,18 @@
             <icon name="circle-close" class="w-5 h-5" />
           </button>
         </div>
+
+        <button
+          @click="toggleShowCompareSelection"
+          v-if="!showCompareSelection"
+          class="bg-purple-600 text-white px-4 py-1 rounded-xl hover:bg-purple-700 transition"
+        >
+          Compare
+        </button>
       </div>
     </div>
 
-    <div class="flex flex-wrap items-center gap-4 px-2">
+    <div class="flex flex-wrap items-center gap-4">
       <!-- TODO  Back Button -->
       <button
         v-if="
@@ -408,6 +372,10 @@
                         v-if="isStartingSlot(item, slot)"
                         draggable="true"
                         @dragstart="onDragStart($event, item)"
+                        @click="
+                          toggleSwapSelection(item);
+                          highlightRow(item);
+                        "
                         @mouseenter="showScheduleTooltip($event, item)"
                         @mouseleave="hideScheduleTooltip"
                         :class="[
@@ -441,13 +409,6 @@
                         >
                           {{ item.mode === "face to face" ? "F2F" : "OL" }}
                         </span>
-                        <!-- Join Badge -->
-                        <span
-                          v-if="item.joined"
-                          class="absolute top-2 left-2 w-4 h-4 flex items-center justify-center bg-green-500 text-white text-[10px] font-bold rounded-full"
-                        >
-                          J
-                        </span>
 
                         <!-- Course Info -->
                         <div class="truncate font-semibold">
@@ -474,62 +435,59 @@
                 </tr>
               </tbody>
             </table>
-            <!-- 🔍 Schedule Tooltip -->
+          </div>
+
+          <!-- 🔍 Schedule Tooltip -->
+          <div
+            v-if="scheduleTooltipVisible && tooltipItem"
+            class="fixed z-[9999] pointer-events-none"
+            :style="{ top: tooltipY + 'px', left: tooltipX + 'px' }"
+          >
             <div
-              v-if="scheduleTooltipVisible && tooltipItem"
-              class="fixed z-[9999] pointer-events-none"
-              :style="{ top: tooltipY + 'px', left: tooltipX + 'px' }"
+              class="bg-white border border-gray-300 rounded-xl p-3 scale-125 origin-top-left"
             >
-              <div
-                class="bg-white border border-gray-300 rounded-xl p-3 scale-125 origin-top-left"
-              >
-                <div
-                  class="flex items-center justify-between gap-2 mb-2 w-full"
+              <div class="flex items-center justify-between gap-2 mb-2 w-full">
+                <!-- Course Code -->
+                <div class="text-sm font-bold text-defaultGreen leading-none">
+                  {{ tooltipItem.course_code }}
+                </div>
+
+                <!-- Schedule Type Badge -->
+                <span
+                  v-if="tooltipItem.mode"
+                  class="inline-flex items-center justify-center px-2 py-1 text-[8px] leading-none rounded-full text-white"
+                  :class="
+                    tooltipItem.mode === 'face to face'
+                      ? 'bg-orange-500'
+                      : 'bg-purple-500'
+                  "
                 >
-                  <!-- Course Code -->
-                  <div class="text-sm font-bold text-defaultGreen leading-none">
-                    {{ tooltipItem.course_code }}
-                  </div>
+                  {{
+                    tooltipItem.mode === "face to face"
+                      ? "Face to Face"
+                      : "Online"
+                  }}
+                </span>
+              </div>
 
-                  <!-- Schedule Type Badge -->
-                  <span
-                    v-if="tooltipItem.mode"
-                    class="inline-flex items-center justify-center px-2 py-1 text-[8px] leading-none rounded-full text-white"
-                    :class="
-                      tooltipItem.mode === 'face to face'
-                        ? 'bg-orange-500'
-                        : 'bg-purple-500'
-                    "
-                  >
-                    {{
-                      tooltipItem.mode === "face to face"
-                        ? "Face to Face"
-                        : "Online"
-                    }}
-                  </span>
-                </div>
-
-                <div class="text-[10px] text-gray-700 space-y-0.5">
-                  <p>
-                    <strong>Faculty:</strong> {{ tooltipItem.faculty_name }}
-                  </p>
-                  <p>
-                    <strong>Year & Section:</strong>
-                    {{ tooltipItem.program_name }}-{{ tooltipItem.set_name }}
-                  </p>
-                  <p><strong>Room:</strong> {{ tooltipItem.room_name }}</p>
-                  <p><strong>Day:</strong> {{ tooltipItem.day }}</p>
-                  <p>
-                    <strong>Time:</strong>
-                    {{ formatTime(tooltipItem.start_hour) }} –
-                    {{
-                      formatTime(
-                        tooltipItem.start_hour + Number(tooltipItem.duration),
-                      )
-                    }}
-                  </p>
-                  <p><strong>Type:</strong> {{ tooltipItem.type }}</p>
-                </div>
+              <div class="text-[10px] text-gray-700 space-y-0.5">
+                <p><strong>Faculty:</strong> {{ tooltipItem.faculty_name }}</p>
+                <p>
+                  <strong>Year & Section:</strong>
+                  {{ tooltipItem.program_name }}-{{ tooltipItem.set_name }}
+                </p>
+                <p><strong>Room:</strong> {{ tooltipItem.room_name }}</p>
+                <p><strong>Day:</strong> {{ tooltipItem.day }}</p>
+                <p>
+                  <strong>Time:</strong>
+                  {{ formatTime(tooltipItem.start_hour) }} –
+                  {{
+                    formatTime(
+                      tooltipItem.start_hour + Number(tooltipItem.duration),
+                    )
+                  }}
+                </p>
+                <p><strong>Type:</strong> {{ tooltipItem.type }}</p>
               </div>
             </div>
           </div>
@@ -770,7 +728,7 @@ export default {
   data() {
     return {
       user: {},
-      isJoined: false,
+
       groupedSchedule: {},
       filteredGroupedSchedule: {},
       finalSchedules: [],
@@ -1037,7 +995,14 @@ export default {
       this.scheduleTooltipVisible = false;
       this.tooltipItem = null;
     },
-
+    highlightRow(item) {
+      this.highlightedRecordId = item.id || item.tempId;
+      // optional: scroll to the row
+      this.$nextTick(() => {
+        const el = document.getElementById(`row-${this.highlightedRecordId}`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    },
     getConflictingRecords(record) {
       const recordStart = this.normalizeHour(record.start_hour);
       const recordEnd = recordStart + Number(record.duration);
@@ -1212,6 +1177,16 @@ export default {
       this.editInstructorData = {};
     },
 
+    toggleSwapSelection(item) {
+      const index = this.swapSelection.findIndex((s) => s.id === item.id);
+      if (index > -1) {
+        this.swapSelection.splice(index, 1);
+      } else if (this.swapSelection.length < 2) {
+        this.swapSelection.push(item);
+      } else {
+        toast.info("You can only swap 2 courses at a time.");
+      }
+    },
     onDragOver(event, instructor, day, slotStart) {
       if (!this.draggedRecord) return;
       this.previewX = event.clientX + 12;

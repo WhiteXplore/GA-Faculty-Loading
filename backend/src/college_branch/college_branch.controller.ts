@@ -15,12 +15,12 @@ import { UpdateCollegeBranchDto } from './dto/update-college_branch.dto';
 export class CollegeBranchController {
   constructor(private readonly collegeBranchService: CollegeBranchService) {}
 
-  @Post()
+  @Post('add-college-branch')
   create(@Body() createCollegeBranchDto: CreateCollegeBranchDto) {
     return this.collegeBranchService.create(createCollegeBranchDto);
   }
 
-  @Get()
+  @Get('get-college-branch')
   findAll() {
     return this.collegeBranchService.findAll();
   }

@@ -86,20 +86,29 @@
               class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
               <tr>
-                <th class="px-4 py-3 text-left font-normal w-[18%]">
+                <th class="px-4 py-3 text-left font-normal w-[15%]">
                   Faculty Name
                 </th>
-                <th class="px-4 py-3 text-left font-normal w-[10%]">
+                <!-- <th class="px-4 py-3 text-center font-normal w-[5%]">
                   Institute
                 </th>
-                <th class="px-4 py-3 text-left font-normal w-[30%]">Program</th>
-                <th class="px-4 py-3 text-center font-normal w-[16%]">
-                  Employment Status
-                </th>
-                <th class="px-4 py-3 text-center font-normal w-[16%]">
+                <th class="px-4 py-3 text-left font-normal w-[30%]">Program</th> -->
+                <th class="px-4 py-3 text-center font-normal w-[15%]">
                   Designation
                 </th>
-                <th class="px-4 py-3 text-center rounded-tr-lg font-normal">
+                <th class="px-4 py-3 text-center font-normal w-[15%]">
+                  Employment Status
+                </th>
+
+                <th class="px-4 py-3 text-center font-normal w-[20%]">
+                  Preffered Time
+                </th>
+                <th class="px-4 py-3 text-center font-normal w-[16%]">
+                  Inter-branch
+                </th>
+                <th
+                  class="px-4 py-3 text-center rounded-tr-lg font-normal w-[10%]"
+                >
                   Actions
                 </th>
               </tr>
@@ -113,11 +122,14 @@
                 <td class="px-4 py-3">
                   {{ user.first_name }} {{ user.last_name }}
                 </td>
-                <td class="px-4 py-3">
+                <!-- <td class="px-4 py-3 text-center">
                   {{ user.institute?.institute_code || "-" }}
                 </td>
                 <td class="px-4 py-3">
-                  {{ user.program?.program_name || "-" }}
+                  {{ user.program?.program_code || "-" }}
+                </td> -->
+                <td class="px-4 py-3 text-center">
+                  {{ user.designation || "-" }}
                 </td>
                 <td class="px-4 py-3 text-center">
                   <span
@@ -135,15 +147,39 @@
                 </td>
 
                 <td class="px-4 py-3 text-center">
-                  {{ user.designation || "-" }}
+                  {{ user.preffered_time || "-" }}
                 </td>
+
+                <td class="px-4 py-3 text-center">
+                  <div
+                    v-if="facultyBranchesByUser[user.id]?.length"
+                    class="flex flex-wrap gap-1 justify-center"
+                  >
+                    <span
+                      v-for="(branchName, idx) in facultyBranchesByUser[
+                        user.id
+                      ]"
+                      :key="idx"
+                      class="bg-gray-100 text-green-800 text-xs px-2 py-1 rounded-full"
+                    >
+                      {{ branchName }}
+                    </span>
+                  </div>
+                  <span v-else class="text-gray-400">-</span>
+                </td>
+
                 <td class="px-4 py-3 items-center justify-center flex">
                   <div class="flex gap-2">
                     <button
                       class="px-3 py-1 h-8 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-lg flex items-center gap-1"
                       @click="toggleView(user)"
                     >
-                      <icon name="eye" /> View
+                      <icon name="eye" /> View</button
+                    ><button
+                      class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
+                      @click="openAddModal(user)"
+                    >
+                      <icon name="eye" /> Add
                     </button>
                   </div>
                 </td>
@@ -195,6 +231,256 @@
     </div>
   </div>
 
+  <!-- Add Modal -->
+  <div
+    v-if="showAddModal"
+    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+  >
+    <div class="rounded-[16px] shadow-lg animate-slideUp">
+      <form
+        @submit.prevent="submitData"
+        class="w-[30vw] bg-white text-[13px] rounded-[16px] shadow-lg p-0.5"
+      >
+        <!-- Header -->
+        <div
+          class="w-full px-4 py-3 bg-defaultGreen text-white rounded-t-[16px] flex justify-between items-center"
+        >
+          <h1 class="font-bold tracking-wide text-lg">Update Faculty</h1>
+
+          <button
+            type="button"
+            @click="showAddModal = false"
+            class="text-white text-lg"
+          >
+            ✕
+          </button>
+        </div>
+
+        <!-- Body -->
+        <div class="px-4 py-3 space-y-4">
+          <!-- Faculty Info -->
+          <div class="bg-gray-50 p-3 rounded-lg space-y-1">
+            <p>
+              <span class="font-semibold">Faculty:</span>
+              {{ selectedFaculty?.first_name }}
+              {{ selectedFaculty?.last_name }}
+            </p>
+
+            <p>
+              <span class="font-semibold">Institute:</span>
+              {{ selectedFaculty?.institute?.institute_name || "N/A" }}
+            </p>
+
+            <p>
+              <span class="font-semibold">Program:</span>
+              {{ selectedFaculty?.program?.program_name || "N/A" }}
+            </p>
+          </div>
+
+          <!-- Update Mode Selection -->
+          <div class="space-y-2">
+            <label class="text-xs font-semibold block mb-1">
+              Select Update Type
+            </label>
+
+            <select
+              v-model="updateMode"
+              class="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 cursor-pointer"
+            >
+              <option disabled value="">-- Select Option --</option>
+              <option value="preffered_time">Preffered Time</option>
+              <option value="interbranch">Inter-branch</option>
+              <option value="all">All (Preffered Time + Inter-branch)</option>
+            </select>
+          </div>
+
+          <!-- ===================== -->
+          <!-- PREFFERD TIME SECTION -->
+          <!-- ===================== -->
+          <div
+            v-if="updateMode === 'preffered_time' || updateMode === 'all'"
+            class="space-y-3"
+          >
+            <!-- Selected Slot Display -->
+            <div
+              v-if="formattedSlot"
+              class="bg-green-50 p-3 rounded-lg border border-green-200 space-y-2"
+            >
+              <p class="text-sm text-gray-900 font-semibold">
+                Selected Time Slot:
+              </p>
+              <p class="text-sm text-gray-800">
+                {{ formattedSlot }}
+              </p>
+              <p class="text-xs text-gray-600">
+                Total Hours: {{ totalHours }} hrs
+              </p>
+            </div>
+            <!-- MORNING -->
+            <div class="rounded-lg space-y-3">
+              <h3 class="font-bold text-green-800 text-[13px]">
+                Morning Schedule
+              </h3>
+
+              <div class="flex gap-4">
+                <div class="flex-1">
+                  <label class="text-xs font-semibold block mb-1">
+                    Start
+                  </label>
+                  <input
+                    type="time"
+                    v-model="form.morningStart"
+                    class="w-full border px-3 py-2 rounded-md"
+                  />
+                </div>
+
+                <div class="flex-1">
+                  <label class="text-xs font-semibold block mb-1"> End </label>
+                  <input
+                    type="time"
+                    v-model="form.morningEnd"
+                    class="w-full border px-3 py-2 rounded-md"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- AFTERNOON -->
+            <div class="rounded-lg space-y-3">
+              <h3 class="font-bold text-green-800 text-[13px]">
+                Afternoon Schedule
+              </h3>
+
+              <div class="flex gap-4">
+                <div class="flex-1">
+                  <label class="text-xs font-semibold block mb-1">
+                    Start
+                  </label>
+                  <input
+                    type="time"
+                    v-model="form.afternoonStart"
+                    class="w-full border px-3 py-2 rounded-md"
+                  />
+                </div>
+
+                <div class="flex-1">
+                  <label class="text-xs font-semibold block mb-1"> End </label>
+                  <input
+                    type="time"
+                    v-model="form.afternoonEnd"
+                    class="w-full border px-3 py-2 rounded-md"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===================== -->
+          <!-- INTERBRANCH SECTION -->
+          <!-- ===================== -->
+          <div
+            v-if="updateMode === 'interbranch' || updateMode === 'all'"
+            class="space-y-3"
+          >
+            <label class="text-xs font-semibold block mb-1">
+              Select Inter-branch Campus
+            </label>
+
+            <!-- Dropdown Trigger -->
+            <div class="relative">
+              <button
+                type="button"
+                @click="showBranchDropdown = !showBranchDropdown"
+                class="w-full border px-3 py-2 rounded-md bg-white text-left flex justify-between items-center"
+              >
+                <span v-if="form.interbranchCampus.length">
+                  {{ form.interbranchCampus.length }} campus(es) selected
+                </span>
+                <span v-else class="text-gray-400"> Select campuses </span>
+                <span>▾</span>
+              </button>
+
+              <!-- Dropdown List -->
+              <div
+                v-if="showBranchDropdown"
+                @mouseleave="showBranchDropdown = false"
+                class="absolute z-50 mt-1 w-full bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto"
+              >
+                <label
+                  v-for="branch in college_branch"
+                  :key="branch.college_branch_id"
+                  class="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    :value="branch.college_branch_id"
+                    :checked="
+                      form.interbranchCampus.includes(branch.college_branch_id)
+                    "
+                    :disabled="
+                      form.interbranchCampus.length >= 2 &&
+                      !form.interbranchCampus.includes(branch.college_branch_id)
+                    "
+                    @change="toggleBranch(branch.college_branch_id)"
+                  />
+
+                  {{ branch.college_branch_name }}
+                </label>
+              </div>
+            </div>
+
+            <p class="text-xs text-gray-500">
+              You may select up to 2 campuses only.
+            </p>
+
+            <!-- Selected Tags -->
+            <div
+              v-if="form.interbranchCampus.length"
+              class="flex flex-wrap gap-2 mt-2"
+            >
+              <div
+                v-for="id in form.interbranchCampus"
+                :key="id"
+                class="flex items-center gap-2 bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold"
+              >
+                {{
+                  college_branch.find((b) => b.college_branch_id === id)
+                    ?.college_branch_name
+                }}
+
+                <button
+                  type="button"
+                  @click="removeBranch(id)"
+                  class="text-green-900 hover:text-red-600"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex justify-end gap-2 pt-3">
+            <button
+              type="button"
+              @click="showAddModal = false"
+              class="bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              class="bg-defaultGreen px-4 py-2 rounded-lg text-white hover:bg-green-800"
+            >
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- View Modal -->
   <div
     v-if="showViewModal"
@@ -230,21 +516,22 @@
       </div>
 
       <!-- Content -->
-      <div class="space-y-4" v-if="selectedFaculty">
-        <div class="grid gap-2 text-xs">
-          <p class="flex space-x-6">
+      <div class="space-y-6" v-if="selectedFaculty">
+        <!-- Basic Info -->
+        <div class="grid gap-2 text-sm">
+          <p class="flex space-x-4">
             <span class="font-semibold text-gray-700">Name:</span>
             <span class="text-gray-900">
               {{ selectedFaculty.first_name }} {{ selectedFaculty.last_name }}
             </span>
           </p>
-          <p class="flex space-x-2">
+          <p class="flex space-x-4">
             <span class="font-semibold text-gray-700">Institute:</span>
             <span class="text-gray-900">
               {{ selectedFaculty.institute?.institute_name || "N/A" }}
             </span>
           </p>
-          <p class="flex space-x-2">
+          <p class="flex space-x-4">
             <span class="font-semibold text-gray-700">Program:</span>
             <span class="text-gray-900">
               {{ selectedFaculty.program?.program_name || "N/A" }}
@@ -252,56 +539,90 @@
           </p>
         </div>
 
-        <div class="pt-3 border-t">
-          <h3 class="font-semibold text-gray-800 mb-2">Expertise</h3>
-          <ul
-            class="list-disc list-inside ml-2 space-y-1 text-gray-700 text-sm"
-          >
-            <li v-for="(other, i) in selectedFaculty.expertise || []" :key="i">
-              {{ other.course?.course_code }} -
-              {{ other.course?.course_description }}
-            </li>
-            <li
-              v-if="
-                !selectedFaculty.expertise ||
-                selectedFaculty.expertise.length === 0
-              "
-              class="text-gray-500 italic"
-            >
-              No expertise added
-            </li>
-          </ul>
+        <!-- Expertise & Other Expertise -->
+        <div class="flex justify-between gap-6 border-t py-3 text-sm">
+          <div class="flex-1">
+            <h3 class="font-semibold text-gray-800 mb-2">Expertise</h3>
+            <ul class="list-disc list-inside ml-2 space-y-1 text-gray-700">
+              <li v-for="(exp, i) in selectedFaculty.expertise || []" :key="i">
+                {{ exp.course?.course_code }} -
+                {{ exp.course?.course_description }}
+              </li>
+              <li
+                v-if="
+                  !selectedFaculty.expertise ||
+                  selectedFaculty.expertise.length === 0
+                "
+                class="text-gray-500 italic"
+              >
+                No expertise added
+              </li>
+            </ul>
+          </div>
+
+          <div class="flex-1">
+            <h3 class="font-semibold text-gray-800 mb-2">Other Expertise</h3>
+            <ul class="list-disc list-inside ml-2 space-y-1 text-gray-700">
+              <li
+                v-for="(other, i) in selectedFaculty.other_expertise || []"
+                :key="i"
+              >
+                {{ other.course?.course_code }} -
+                {{ other.course?.course_description }}
+              </li>
+              <li
+                v-if="
+                  !selectedFaculty.other_expertise ||
+                  selectedFaculty.other_expertise.length === 0
+                "
+                class="text-gray-500 italic"
+              >
+                None other expertise added
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div class="pt-3 border-t">
-          <h3 class="font-semibold text-gray-800 mb-2">Other Expertise</h3>
-          <ul
-            class="list-disc list-inside ml-2 space-y-1 text-gray-700 text-sm"
-          >
-            <li
-              v-for="(other, i) in selectedFaculty.other_expertise || []"
+        <!-- Preferred Time -->
+        <div class="pt-3 border-t text-sm">
+          <h3 class="font-semibold text-gray-800 mb-2">Preferred Time</h3>
+          <p class="text-gray-700">
+            {{ selectedFaculty.preffered_time || "No preferred time set" }}
+          </p>
+        </div>
+
+        <!-- Inter-branch Campuses -->
+        <div class="pt-3 border-t text-sm">
+          <h3 class="font-semibold text-gray-800 mb-2">
+            Inter-branch Campuses
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="(branchName, i) in selectedFaculty.faculty_branches || []"
               :key="i"
+              class="bg-gray-100 text-green-800 text-xs px-2 py-1 rounded-full"
             >
-              {{ other.course?.course_code }} -
-              {{ other.course?.course_description }}
-            </li>
-            <li
+              {{ branchName }}
+            </span>
+            <span
               v-if="
-                !selectedFaculty.other_expertise ||
-                selectedFaculty.other_expertise.length === 0
+                !selectedFaculty.faculty_branches ||
+                selectedFaculty.faculty_branches.length === 0
               "
               class="text-gray-500 italic"
             >
-              None other expertise added
-            </li>
-          </ul>
+              No inter-branch campuses
+            </span>
+          </div>
         </div>
       </div>
 
+      <!-- Close Button -->
       <div class="flex justify-end mt-6">
         <button
+          type="button"
           @click="showViewModal = false"
-          class="px-5 py-3 rounded-lg bg-[#147452] text-white font-medium hover:bg-defaultGreen transition"
+          class="bg-gray-200 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-300"
         >
           Close
         </button>
@@ -326,17 +647,90 @@ export default {
       itemsPerPage: 10,
       searchQuery: "",
       isTable: true,
-      showDeleteModal: false,
-      recordToDelete: null,
       selectedFaculty: null,
-      showEditModal: false,
       showViewModal: false,
-      user: null, // ✅ added for current logged-in user
+      showAddModal: false,
+      user: null,
+
+      form: {
+        morningStart: "",
+        morningEnd: "",
+        afternoonStart: "",
+        afternoonEnd: "",
+        interbranchCampus: [], // ← make it array
+      },
+
+      selectedOption: "",
+      updateMode: "",
+      showBranchDropdown: false,
+
+      facultyBranches: [],
     };
   },
-  computed: {
-    ...mapState(useFetchDataStore, ["rawusers"]),
 
+  computed: {
+    ...mapState(useFetchDataStore, [
+      "rawusers",
+      "college_branch",
+      "faculty_branch",
+    ]),
+    filteredSlots() {
+      if (this.form.period === "morning") {
+        return this.morningSlots;
+      }
+      if (this.form.period === "afternoon") {
+        return this.afternoonSlots;
+      }
+      return [];
+    },
+    facultyBranchesByUser() {
+      const map = {};
+      (this.faculty_branch || []).forEach((fb) => {
+        const uid = fb.user.id;
+        if (!map[uid]) map[uid] = [];
+        map[uid].push(fb.collegeBranch.college_branch_name);
+      });
+      return map;
+    },
+
+    totalHours() {
+      let total = 0;
+
+      if (this.form.morningStart && this.form.morningEnd) {
+        const start = new Date(`1970-01-01T${this.form.morningStart}`);
+        const end = new Date(`1970-01-01T${this.form.morningEnd}`);
+        total += (end - start) / (1000 * 60 * 60);
+      }
+
+      if (this.form.afternoonStart && this.form.afternoonEnd) {
+        const start = new Date(`1970-01-01T${this.form.afternoonStart}`);
+        const end = new Date(`1970-01-01T${this.form.afternoonEnd}`);
+        total += (end - start) / (1000 * 60 * 60);
+      }
+
+      return total;
+    },
+    formattedSlot() {
+      let parts = [];
+
+      if (this.form.morningStart && this.form.morningEnd) {
+        parts.push(
+          `${this.formatTo12(this.form.morningStart)} - ${this.formatTo12(
+            this.form.morningEnd,
+          )}`,
+        );
+      }
+
+      if (this.form.afternoonStart && this.form.afternoonEnd) {
+        parts.push(
+          `${this.formatTo12(this.form.afternoonStart)} - ${this.formatTo12(
+            this.form.afternoonEnd,
+          )}`,
+        );
+      }
+
+      return parts.join(" , ");
+    },
     filteredData() {
       const query = this.searchQuery.toLowerCase();
       const currentUser = this.user;
@@ -412,12 +806,108 @@ export default {
   },
 
   methods: {
+    convertTo24(time12) {
+      const [time, modifier] = time12.split(" ");
+      let [hours, minutes] = time.split(":");
+
+      if (modifier === "PM" && hours !== "12") {
+        hours = parseInt(hours, 10) + 12;
+      }
+      if (modifier === "AM" && hours === "12") {
+        hours = "00";
+      }
+
+      return `${hours.toString().padStart(2, "0")}:${minutes}`;
+    },
+    limitInterbranch() {
+      if (this.form.interbranchCampus.length > 2) {
+        this.form.interbranchCampus.pop();
+        alert("You can only select up to 2 campuses.");
+      }
+    },
+
+    toggleBranch(id) {
+      const index = this.form.interbranchCampus.indexOf(id);
+
+      if (index > -1) {
+        this.form.interbranchCampus.splice(index, 1);
+      } else {
+        if (this.form.interbranchCampus.length >= 2) {
+          alert("Maximum of 2 campuses only.");
+          return;
+        }
+        this.form.interbranchCampus.push(id);
+      }
+    },
+
+    removeBranch(id) {
+      this.form.interbranchCampus = this.form.interbranchCampus.filter(
+        (b) => b !== id,
+      );
+    },
+
+    handleClickOutside(event) {
+      if (!this.$el.contains(event.target)) {
+        this.showBranchDropdown = false;
+      }
+    },
     async loadUsers() {
       const store = useFetchDataStore();
       await store.fetchRawUsers();
     },
-    toggleView(user) {
+    formatTo12(time) {
+      const [hour, minute] = time.split(":");
+      let h = parseInt(hour);
+      const ampm = h >= 12 ? "PM" : "AM";
+      h = h % 12;
+      h = h ? h : 12;
+      return `${h}:${minute} ${ampm}`;
+    },
+
+    openAddModal(user) {
       this.selectedFaculty = user;
+
+      // Reset form
+      this.form = {
+        morningStart: "",
+        morningEnd: "",
+        afternoonStart: "",
+        afternoonEnd: "",
+        interbranchCampus: [],
+      };
+
+      // Populate existing preferred time
+      if (user.preffered_time) {
+        const parts = user.preffered_time.split(",");
+        parts.forEach((slot, index) => {
+          const [start, end] = slot.trim().split(" - ");
+          const start24 = this.convertTo24(start);
+          const end24 = this.convertTo24(end);
+
+          if (index === 0) {
+            this.form.morningStart = start24;
+            this.form.morningEnd = end24;
+          } else if (index === 1) {
+            this.form.afternoonStart = start24;
+            this.form.afternoonEnd = end24;
+          }
+        });
+      }
+
+      // Populate inter-branch campuses from your store
+      this.form.interbranchCampus = (this.faculty_branch || [])
+        .filter((fb) => fb.user.id === user.id)
+        .map((fb) => fb.collegeBranch.college_branch_id);
+
+      this.updateMode = "";
+      this.showAddModal = true;
+    },
+    toggleView(user) {
+      // Access computed property WITHOUT parentheses
+      this.selectedFaculty = {
+        ...user,
+        faculty_branches: this.facultyBranchesByUser[user.id] || [],
+      };
       this.showViewModal = true;
     },
     changePage(page) {
@@ -441,11 +931,111 @@ export default {
         this.$router.push("/");
       }
     },
+    async submitData() {
+      try {
+        if (!this.updateMode) {
+          alert("Please select update type.");
+          return;
+        }
+
+        // Prepare variables
+        const userId = this.selectedFaculty.id;
+
+        // ----- 1️⃣ Only Preferred Time -----
+        if (this.updateMode === "preffered_time") {
+          if (this.totalHours !== 8) {
+            alert("Total time must equal exactly 8 hours.");
+            return;
+          }
+
+          await axios.patch(
+            `${process.env.VUE_APP_API_BASE_URL}/users/${userId}`,
+            { preffered_time: this.formattedSlot },
+            { withCredentials: true },
+          );
+
+          alert("Preferred time updated successfully!");
+        }
+
+        // ----- 2️⃣ Only Inter-branch -----
+        else if (this.updateMode === "interbranch") {
+          if (!this.form.interbranchCampus.length) {
+            alert("Please select at least one inter-branch campus.");
+            return;
+          }
+
+          // Delete existing faculty branch records for this user
+          for (const fb of this.selectedFaculty.facultyBranches || []) {
+            await axios.delete(
+              `${process.env.VUE_APP_API_BASE_URL}/faculty-branch/${fb.faculty_branch_id}`,
+              { withCredentials: true },
+            );
+          }
+
+          // Add new faculty branch records
+          for (const branchId of this.form.interbranchCampus) {
+            await axios.post(
+              `${process.env.VUE_APP_API_BASE_URL}/faculty-branch`,
+              { user_id: userId, college_branch_id: branchId },
+              { withCredentials: true },
+            );
+          }
+
+          alert("Inter-branch campuses updated successfully!");
+        }
+
+        // ----- 3️⃣ Both Preferred Time and Inter-branch -----
+        else if (this.updateMode === "all") {
+          // Update preferred time
+          if (this.totalHours !== 8) {
+            alert("Total time must equal exactly 8 hours.");
+            return;
+          }
+
+          await axios.patch(
+            `${process.env.VUE_APP_API_BASE_URL}/users/${userId}`,
+            { preffered_time: this.formattedSlot },
+            { withCredentials: true },
+          );
+
+          // Update inter-branch campuses
+          for (const fb of this.selectedFaculty.facultyBranches || []) {
+            await axios.delete(
+              `${process.env.VUE_APP_API_BASE_URL}/faculty-branch/${fb.faculty_branch_id}`,
+              { withCredentials: true },
+            );
+          }
+
+          for (const branchId of this.form.interbranchCampus) {
+            await axios.post(
+              `${process.env.VUE_APP_API_BASE_URL}/faculty-branch`,
+              { user_id: userId, college_branch_id: branchId },
+              { withCredentials: true },
+            );
+          }
+
+          alert(
+            "Preferred time and inter-branch campuses updated successfully!",
+          );
+        }
+
+        // Reload users after update
+        this.showAddModal = false;
+        await this.loadUsers();
+      } catch (error) {
+        console.error(error);
+        alert("Failed to update data. Check console for details.");
+      }
+    },
   },
 
   async mounted() {
     await this.fetchUser();
     await this.loadUsers();
+
+    const store = useFetchDataStore();
+    await store.fetchCollegeBranch();
+    await store.fetchFacultyBranch();
   },
 };
 </script>

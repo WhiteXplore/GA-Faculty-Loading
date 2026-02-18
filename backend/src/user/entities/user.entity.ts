@@ -11,7 +11,7 @@ import { Program } from 'src/programs/entities/program.entity';
 import { UserExpertise } from 'src/user/entities/user_expertise.entity';
 import { UserOtherExpertise } from 'src/user/entities/user_other_expertise.entity';
 import { SchoolYear } from 'src/school_year/entities/school_year.entity';
-
+import { FacultyBranch } from 'src/faculty_branch/entities/faculty_branch.entity';
 @Entity('user_accounts')
 export class User_Accounts {
   @PrimaryGeneratedColumn('increment')
@@ -40,6 +40,9 @@ export class User_Accounts {
 
   @Column()
   designation: string;
+
+  @Column()
+  preffered_time: string;
 
   // Institute Relationship
   @ManyToOne(() => Institute, (institute) => institute.users, {
@@ -73,4 +76,9 @@ export class User_Accounts {
     cascade: true,
   })
   other_expertise: UserOtherExpertise[];
+
+  @OneToMany(() => FacultyBranch, (fb) => fb.user, {
+    cascade: true,
+  })
+  facultyBranches: FacultyBranch[];
 }

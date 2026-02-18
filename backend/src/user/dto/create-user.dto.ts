@@ -35,6 +35,10 @@ export class CreateUserDto {
   @IsString()
   designation: string;
 
+  @IsNotEmpty()
+  @IsString()
+  preffered_time: string;
+
   @IsOptional()
   @IsNumber()
   unit_load: number;
