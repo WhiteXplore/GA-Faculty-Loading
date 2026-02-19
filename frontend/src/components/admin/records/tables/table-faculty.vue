@@ -257,13 +257,12 @@
         </div>
 
         <!-- Body -->
-        <div class="px-4 py-3 space-y-4">
+        <div class="px-4 py-3 space-y-4 text-sm">
           <!-- Faculty Info -->
           <div class="bg-gray-50 p-3 rounded-lg space-y-1">
             <p>
               <span class="font-semibold">Faculty:</span>
-              {{ selectedFaculty?.first_name }}
-              {{ selectedFaculty?.last_name }}
+              {{ selectedFaculty?.first_name }} {{ selectedFaculty?.last_name }}
             </p>
 
             <p>
@@ -279,9 +278,7 @@
 
           <!-- Update Mode Selection -->
           <div class="space-y-2">
-            <label class="text-xs font-semibold block mb-1">
-              Select Update Type
-            </label>
+            <label class="font-semibold block mb-1">Select Update Type</label>
 
             <select
               v-model="updateMode"
@@ -295,7 +292,7 @@
           </div>
 
           <!-- ===================== -->
-          <!-- PREFFERD TIME SECTION -->
+          <!-- PREFFERED TIME SECTION -->
           <!-- ===================== -->
           <div
             v-if="updateMode === 'preffered_time' || updateMode === 'all'"
@@ -306,27 +303,18 @@
               v-if="formattedSlot"
               class="bg-green-50 p-3 rounded-lg border border-green-200 space-y-2"
             >
-              <p class="text-sm text-gray-900 font-semibold">
-                Selected Time Slot:
-              </p>
-              <p class="text-sm text-gray-800">
-                {{ formattedSlot }}
-              </p>
-              <p class="text-xs text-gray-600">
-                Total Hours: {{ totalHours }} hrs
-              </p>
+              <p class="font-semibold">Selected Time Slot:</p>
+              <p>{{ formattedSlot }}</p>
+              <p>Total Hours: {{ totalHours }} hrs</p>
             </div>
+
             <!-- MORNING -->
             <div class="rounded-lg space-y-3">
-              <h3 class="font-bold text-green-800 text-[13px]">
-                Morning Schedule
-              </h3>
+              <h3 class="font-bold text-green-800 text-sm">Morning Schedule</h3>
 
               <div class="flex gap-4">
                 <div class="flex-1">
-                  <label class="text-xs font-semibold block mb-1">
-                    Start
-                  </label>
+                  <label class="font-semibold block mb-1">Start</label>
                   <input
                     type="time"
                     v-model="form.morningStart"
@@ -335,7 +323,7 @@
                 </div>
 
                 <div class="flex-1">
-                  <label class="text-xs font-semibold block mb-1"> End </label>
+                  <label class="font-semibold block mb-1">End</label>
                   <input
                     type="time"
                     v-model="form.morningEnd"
@@ -347,15 +335,13 @@
 
             <!-- AFTERNOON -->
             <div class="rounded-lg space-y-3">
-              <h3 class="font-bold text-green-800 text-[13px]">
+              <h3 class="font-bold text-green-800 text-sm">
                 Afternoon Schedule
               </h3>
 
               <div class="flex gap-4">
                 <div class="flex-1">
-                  <label class="text-xs font-semibold block mb-1">
-                    Start
-                  </label>
+                  <label class="font-semibold block mb-1">Start</label>
                   <input
                     type="time"
                     v-model="form.afternoonStart"
@@ -364,7 +350,7 @@
                 </div>
 
                 <div class="flex-1">
-                  <label class="text-xs font-semibold block mb-1"> End </label>
+                  <label class="font-semibold block mb-1">End</label>
                   <input
                     type="time"
                     v-model="form.afternoonEnd"
@@ -382,9 +368,9 @@
             v-if="updateMode === 'interbranch' || updateMode === 'all'"
             class="space-y-3"
           >
-            <label class="text-xs font-semibold block mb-1">
-              Select Inter-branch Campus
-            </label>
+            <label class="font-semibold block mb-1"
+              >Select Inter-branch Campus</label
+            >
 
             <!-- Dropdown Trigger -->
             <div class="relative">
@@ -396,7 +382,7 @@
                 <span v-if="form.interbranchCampus.length">
                   {{ form.interbranchCampus.length }} campus(es) selected
                 </span>
-                <span v-else class="text-gray-400"> Select campuses </span>
+                <span v-else class="text-gray-400">Select campuses</span>
                 <span>▾</span>
               </button>
 
@@ -423,15 +409,12 @@
                     "
                     @change="toggleBranch(branch.college_branch_id)"
                   />
-
                   {{ branch.college_branch_name }}
                 </label>
               </div>
             </div>
 
-            <p class="text-xs text-gray-500">
-              You may select up to 2 campuses only.
-            </p>
+            <p class="text-gray-500">You may select up to 2 campuses only.</p>
 
             <!-- Selected Tags -->
             <div
@@ -441,7 +424,7 @@
               <div
                 v-for="id in form.interbranchCampus"
                 :key="id"
-                class="flex items-center gap-2 bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold"
+                class="flex items-center gap-2 bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold"
               >
                 {{
                   college_branch.find((b) => b.college_branch_id === id)
@@ -586,9 +569,10 @@
         <!-- Preferred Time -->
         <div class="pt-3 border-t text-sm">
           <h3 class="font-semibold text-gray-800 mb-2">Preferred Time</h3>
-          <p class="text-gray-700">
-            {{ selectedFaculty.preffered_time || "No preferred time set" }}
+          <p class="text-gray-700" v-if="selectedFaculty.preffered_time">
+            {{ selectedFaculty.preffered_time }}
           </p>
+          <p class="text-gray-500 italic" v-else>No preferred time set</p>
         </div>
 
         <!-- Inter-branch Campuses -->

@@ -1,4 +1,11 @@
-import { IsInt, IsString, IsOptional, IsNumber } from 'class-validator';
+import {
+  IsInt,
+  IsString,
+  IsOptional,
+  IsNumber,
+  IsBoolean,
+  IsArray,
+} from 'class-validator';
 
 export class CreateFinalGeneratedClassScheduleDto {
   @IsOptional()
@@ -85,4 +92,11 @@ export class CreateFinalGeneratedClassScheduleDto {
   @IsOptional()
   @IsString()
   mode?: string;
+
+  // -------------------------
+  // NEW: Join tracking fields
+  // -------------------------
+  @IsOptional() @IsInt() join_group_id?: number;
+  @IsOptional() @IsBoolean() is_joined?: boolean;
+  @IsOptional() @IsArray() joined_with?: number[];
 }

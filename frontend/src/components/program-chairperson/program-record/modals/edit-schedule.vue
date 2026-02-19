@@ -314,6 +314,11 @@
                     class="px-3 py-2 border w-full rounded-md text-md"
                     @focus="record.showRoomDropdown = true"
                     @input="record.room_id = null"
+                    :disabled="(record.mode || '').toLowerCase() === 'online'"
+                    :class="{
+                      'bg-gray-100 cursor-not-allowed':
+                        (record.mode || '').toLowerCase() === 'online',
+                    }"
                   />
 
                   <div
@@ -870,7 +875,7 @@ export default {
         "day",
         "start_hour",
         "duration",
-
+        "room_name",
         "room_id",
         "room_type",
         "room_capacity",
@@ -901,13 +906,19 @@ export default {
     },
     onModeChange(record) {
       if ((record.mode || "").toLowerCase() === "online") {
+        // Clear all room info
         record.room_id = null;
-        record.room_name = "None";
+        record.room_name = null; // important
         record.room_type = null;
         record.room_capacity = null;
-        record.searchRoomQuery = "None";
+        record.searchRoomQuery = ""; // important to clear input display
+        record.showRoomDropdown = false;
       } else {
+        // reset when switching back to face-to-face
         record.room_name = "";
+        record.room_id = null;
+        record.room_type = null;
+        record.room_capacity = null;
         record.searchRoomQuery = "";
       }
     },

@@ -8,7 +8,7 @@
     </div>
 
     <!-- Tabs -->
-    <div class="mt-4 justify-between flex">
+    <div class="mt-2 justify-between flex items-center">
       <div class="flex gap-1">
         <button
           v-for="tab in tabs"
@@ -24,7 +24,7 @@
           {{ tab.label }}
         </button>
       </div>
-      <div class="text-[13px] text-gray-700 px-2">
+      <div class="text-[13px] text-gray-700 px-2 flex justify-end">
         Pages / Generated Schedules
         <span class="text-gray-400 mx-1">/</span>
         <span class="font-semibold text-defaultGreen">{{ activeTab }}</span>
@@ -32,7 +32,7 @@
     </div>
 
     <!-- Content Card -->
-    <div class="bg-white border border-gray-300 border-t-0 shadow-sm">
+    <div class="bg-white border border-gray-300 border-t-0 shadow-sm mt-2">
       <tableFinalGenerated v-if="activeTab === 'Scheduled'" />
       <tableUnscheduledMeetings v-if="activeTab === 'Unscheduled'" />
     </div>

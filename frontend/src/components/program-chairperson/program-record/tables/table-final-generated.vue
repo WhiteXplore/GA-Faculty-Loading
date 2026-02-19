@@ -1,133 +1,19 @@
 <template>
-  <div class="flex flex-col gap-1 h-[82vh]">
+  <div class="flex flex-col h-[82vh]">
     <!-- TODO  Top Controls -->
 
-    <div class="flex justify-between items-center">
-      <div class="flex items-center gap-4 p-4 w-max">
-        <!-- Label -->
-        <span class="font-medium text-gray-700">Join Scheduled:</span>
-
-        <!-- Toggle Container -->
-        <div class="flex items-center gap-2">
-          <!-- YES / NOT text -->
-          <span
-            class="font-semibold"
-            :class="isJoined ? 'text-green-600' : 'text-gray-400'"
-          >
-            {{ isJoined ? "YES" : "NOT" }}
-          </span>
-
-          <!-- Toggle Button -->
-          <button
-            @click="isJoined = !isJoined"
-            :class="[
-              'w-14 h-8 rounded-full p-1 flex items-center transition-colors duration-300 focus:outline-none',
-              isJoined ? 'bg-green-500' : 'bg-gray-300',
-            ]"
-          >
-            <span
-              class="bg-white w-6 h-6 rounded-full shadow-md transform transition-transform duration-300"
-              :class="isJoined ? 'translate-x-6' : 'translate-x-0'"
-            ></span>
-          </button>
-        </div>
-      </div>
-      <div class="flex items-center gap-3 flex-wrap">
-        <!-- Toggle View Button -->
-        <div
-          @click="showFacultyTable = !showFacultyTable"
-          class="flex items-center gap-2 px-3 py-2 border text-blue-600 border-blue-600 rounded-xl hover:bg-blue-700 hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
-        >
-          <div
-            class="p-1 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center"
-          >
-            <icon name="users" />
-          </div>
-          <span class="font-medium text-sm">
-            {{ showFacultyTable ? "View Cards" : "View Faculty" }}
-          </span>
-        </div>
-
-        <!-- Compare Button (when selection hidden) -->
-        <div
-          v-show="!showCompareSelection"
-          @click="toggleShowCompareSelection"
-          class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-defaultGreen rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
-        >
-          <div
-            class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
-          >
-            <icon name="faculty-loading" />
-          </div>
-          <span class="font-medium text-sm">Compare</span>
-        </div>
-
-        <!-- Compare & Swap Controls -->
-        <div
-          v-show="showCompareSelection"
-          class="flex items-center gap-3 flex-wrap"
-        >
-          <!-- Instructor Selects -->
-          <div class="flex gap-2 items-center">
-            <select
-              v-model="compareInstructorA"
-              class="rounded-xl border border-defaultGreen px-2 py-2.5 text-sm text-defaultGreen shadow-sm"
-            >
-              <option value="">Select Instructor</option>
-              <option
-                v-for="instructor in Object.keys(groupedSchedule)"
-                :key="'a-' + instructor"
-                :value="instructor"
-              >
-                {{ instructor }}
-              </option>
-            </select>
-
-            <select
-              v-model="compareInstructorB"
-              class="rounded-xl border border-defaultGreen px-2 py-2.5 text-sm text-defaultGreen shadow-sm"
-            >
-              <option value="">Select Instructor</option>
-              <option
-                v-for="instructor in Object.keys(groupedSchedule)"
-                :key="'b-' + instructor"
-                :value="instructor"
-              >
-                {{ instructor }}
-              </option>
-            </select>
-
-            <!-- Compare Button -->
-            <div
-              @click="showCompareFacultyCards"
-              :class="[
-                'flex items-center gap-2 px-3 py-2 border rounded-xl transition duration-200',
-                compareInstructorA &&
-                compareInstructorB &&
-                compareInstructorA !== compareInstructorB
-                  ? 'text-defaultGreen border-defaultGreen hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer'
-                  : 'text-gray-400 border-gray-300 cursor-not-allowed',
-              ]"
-            >
-              <div
-                class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
-              >
-                <icon name="faculty-loading" />
-              </div>
-              <span class="font-medium text-sm">Compare</span>
-            </div>
-          </div>
-
-          <!-- Close Compare -->
-          <button
-            @click="backFromCompare"
-            class="flex items-center gap-2 p-1 border border-gray-400 rounded-full shadow-sm hover:bg-gray-100 transition"
-          >
-            <icon name="circle-close" class="w-5 h-5" />
-          </button>
-        </div>
-      </div>
-    </div>
+    <FacultyTopControls
+      v-model:isJoined="isJoined"
+      :showFacultyTable="showFacultyTable"
+      :showCompareSelection="showCompareSelection"
+      v-model:compareInstructorA="compareInstructorA"
+      v-model:compareInstructorB="compareInstructorB"
+      :instructorList="Object.keys(groupedSchedule)"
+      @toggleFacultyTable="showFacultyTable = !showFacultyTable"
+      @toggleCompareSelection="toggleShowCompareSelection"
+      @compare="showCompareFacultyCards"
+      @backFromCompare="backFromCompare"
+    />
 
     <div class="flex flex-wrap items-center gap-4 px-2">
       <!-- TODO  Back Button -->
@@ -384,6 +270,12 @@
                     :key="day"
                     class="relative border p-0 overflow-visible transition-colors"
                     :class="{
+                      'bg-green-100':
+                        isJoined &&
+                        draggedRecord &&
+                        getJoinableSchedules(draggedRecord).some(
+                          (j) => j.day === day,
+                        ),
                       'bg-red-100':
                         draggedRecord &&
                         getConflictsForDrag(
@@ -393,7 +285,6 @@
                           slot.start,
                         ).length,
                     }"
-                    :style="{ height: timeSlotHeight + 'px' }"
                     @dragover.prevent
                     @drop="onDrop($event, instructor, day, slot.start)"
                   >
@@ -406,7 +297,10 @@
                     >
                       <div
                         v-if="isStartingSlot(item, slot)"
-                        draggable="true"
+                        :draggable="
+                          !(isJoined && Number(item.class_size) >= 30)
+                        "
+                        @dblclick.stop="handleUnjoin(item)"
                         @dragstart="onDragStart($event, item)"
                         @mouseenter="showScheduleTooltip($event, item)"
                         @mouseleave="hideScheduleTooltip"
@@ -415,11 +309,15 @@
                           item.id?.toString().startsWith('temp-')
                             ? 'bg-purple-200 border-purple-400 text-purple-900'
                             : getTypeColor(item.type),
-                          hasRoomConflict(item)
+                          hasRoomConflict(item) && !isJoined
                             ? 'bg-red-300 border-red-500 text-red-900'
                             : '',
                           swapSelection.includes(item)
                             ? 'border-yellow-500 bg-yellow-100'
+                            : '',
+                          item.is_joined ? 'bg-blue-100 border-blue-400' : '',
+                          isJoined && Number(item.class_size) >= 30
+                            ? 'opacity-50 pointer-events-none cursor-not-allowed'
                             : '',
                           'hover:bg-yellow-100',
                         ]"
@@ -441,10 +339,11 @@
                         >
                           {{ item.mode === "face to face" ? "F2F" : "OL" }}
                         </span>
+
                         <!-- Join Badge -->
                         <span
-                          v-if="item.joined"
-                          class="absolute top-2 left-2 w-4 h-4 flex items-center justify-center bg-green-500 text-white text-[10px] font-bold rounded-full"
+                          v-if="item.is_joined"
+                          class="absolute bottom-2 right-2 px-2 h-5 flex items-center justify-center bg-blue-600 text-white text-[10px] font-bold rounded-full shadow"
                         >
                           J
                         </span>
@@ -455,13 +354,25 @@
                         </div>
                         <div class="truncate">{{ item.room_name }}</div>
                         <div class="truncate">
-                          {{ item.program_name }}-{{ item.set_name }}
+                          <template v-if="item.is_joined && item.join_group_id">
+                            {{
+                              finalSchedules
+                                .filter(
+                                  (s) => s.join_group_id === item.join_group_id,
+                                )
+                                .map((s) => s.set_name)
+                                .join(" + ")
+                            }}
+                          </template>
+                          <template v-else>
+                            {{ item.program_name }}-{{ item.set_name }}
+                          </template>
                         </div>
 
                         <!-- Conflict Button -->
                         <div class="w-full flex justify-center mt-1">
                           <button
-                            v-if="hasRoomConflict(item)"
+                            v-if="hasRoomConflict(item) && !isJoined"
                             @click.stop="openConflictModal(item)"
                             class="px-2 h-5 text-[10px] bg-red-100 text-red-600 rounded"
                           >
@@ -513,10 +424,31 @@
                   <p>
                     <strong>Faculty:</strong> {{ tooltipItem.faculty_name }}
                   </p>
-                  <p>
-                    <strong>Year & Section:</strong>
-                    {{ tooltipItem.program_name }}-{{ tooltipItem.set_name }}
-                  </p>
+
+                  <p><strong>Year & Section:</strong></p>
+                  <ul class="ml-2 list-disc">
+                    <template
+                      v-if="tooltipItem.is_joined && tooltipItem.join_group_id"
+                    >
+                      <li
+                        v-for="s in finalSchedules.filter(
+                          (s) => s.join_group_id === tooltipItem.join_group_id,
+                        )"
+                        :key="s.class_id"
+                      >
+                        {{ s.program_name }} - {{ s.set_name }} (Class Size:
+                        {{ s.class_size }})
+                      </li>
+                    </template>
+                    <template v-else>
+                      <li>
+                        {{ tooltipItem.program_name }} -
+                        {{ tooltipItem.set_name }} (Class Size:
+                        {{ tooltipItem.class_size }})
+                      </li>
+                    </template>
+                  </ul>
+
                   <p><strong>Room:</strong> {{ tooltipItem.room_name }}</p>
                   <p><strong>Day:</strong> {{ tooltipItem.day }}</p>
                   <p>
@@ -562,190 +494,129 @@
     </div>
   </div>
   <!-- Conflict Modal -->
+  <ConflictModal
+    :visible="conflictModalVisible"
+    :schedule="selectedSchedule"
+    :conflicts="conflictRecords"
+    @close="conflictModalVisible = false"
+  />
+  <!-- JOIN VALIDATION MODAL -->
+  <!-- JOIN VALIDATION MODAL -->
   <div
-    v-if="conflictModalVisible"
-    class="fixed inset-0 z-50 bg-black/40 flex items-center justify-center"
+    v-if="joinValidationModalVisible"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
   >
-    <div class="bg-white w-[900px] rounded-2xl p-6 shadow-xl">
+    <div
+      class="bg-white w-[480px] rounded-2xl shadow-2xl p-6 relative animate-slideUp"
+    >
       <!-- Header -->
-      <div class="flex justify-between items-center mb-4 border-b pb-2">
-        <h3 class="text-lg font-semibold text-red-700">
-          Schedule Conflict Detected
-        </h3>
+      <div class="flex items-center justify-between border-b pb-3 mb-4">
+        <div class="flex items-center gap-2">
+          <icon
+            name="exclamation-circle"
+            class="w-7 h-7 p-1 rounded-full bg-yellow-200 text-yellow-900 flex items-center justify-center"
+          />
+          <h3 class="text-lg font-semibold text-gray-800 leading-none">
+            Verify Join Classes
+          </h3>
+        </div>
         <button
-          @click="closeConflictModal"
-          class="text-gray-400 hover:text-gray-600"
+          @click="cancelJoin"
+          class="text-gray-400 hover:text-gray-600 transition"
         >
           ✕
         </button>
       </div>
 
-      <!-- Body -->
-      <div class="grid grid-cols-2 gap-6 mt-6">
-        <!-- LEFT: Selected Schedule -->
-        <div class="relative bg-white rounded-2xl p-5 border">
-          <!-- Badge -->
-          <span
-            class="absolute -top-3 left-4 bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow"
-          >
-            Selected Schedule
-          </span>
-
-          <div class="mt-3 space-y-3 text-sm text-gray-800">
-            <div class="flex justify-between items-center">
-              <h4 class="font-semibold text-base">
-                {{ selectedSchedule.course_code }}
-              </h4>
-              <span
-                class="text-xs px-2 py-1 rounded-full font-medium"
-                :class="{
-                  'bg-orange-500 text-white':
-                    selectedSchedule.mode === 'face to face',
-                  'bg-purple-700 text-white':
-                    selectedSchedule.mode === 'online',
-                }"
-              >
-                {{
-                  selectedSchedule.mode === "face to face"
-                    ? "Face to Face"
-                    : "Online"
-                }}
-              </span>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <p class="text-xs text-gray-500">Faculty</p>
-                <p class="font-medium">{{ selectedSchedule.faculty_name }}</p>
-              </div>
-
-              <div>
-                <p class="text-xs text-gray-500">Section</p>
-                <p class="font-medium">
-                  {{ selectedSchedule.program_name }}-{{
-                    selectedSchedule.set_name
-                  }}
-                </p>
-              </div>
-
-              <div>
-                <p class="text-xs text-gray-500">Room</p>
-                <p class="font-medium">{{ selectedSchedule.room_name }}</p>
-              </div>
-
-              <div>
-                <p class="text-xs text-gray-500">Time</p>
-                <p class="font-medium">
-                  {{ formatTime(selectedSchedule.start_hour) }} –
-                  {{
-                    formatTime(
-                      selectedSchedule.start_hour + selectedSchedule.duration,
-                    )
-                  }}
-                </p>
-              </div>
-              <div>
-                <p class="text-xs text-gray-500">Day</p>
-                <p class="font-medium">{{ selectedSchedule.day }}</p>
-              </div>
-            </div>
-          </div>
+      <!-- Base Class Card -->
+      <div class="border rounded-xl p-4 bg-gray-50 mb-4 relative">
+        <div class="font-semibold text-gray-800 mb-1">
+          {{ pendingJoinRecord?.course_code }}
         </div>
+        <div class="text-sm text-gray-600">
+          Type: {{ pendingJoinRecord?.type }}
+        </div>
+        <div class="text-sm text-gray-600">
+          {{ pendingJoinRecord?.program_name }} -
+          {{ pendingJoinRecord?.set_name }}
+        </div>
+        <div class="text-sm text-gray-600">
+          Students: {{ pendingJoinRecord?.class_size }}
+        </div>
+        <div class="text-sm text-gray-600">
+          Day: {{ pendingJoinRecord?.day }}
+        </div>
+        <div class="text-sm text-gray-600">
+          Room: {{ pendingJoinRecord?.room_name || "No Room" }}
+        </div>
+        <div class="text-sm text-gray-600">
+          Room Type: {{ pendingJoinRecord?.room_type || "No Room Type" }}
+        </div>
+      </div>
 
-        <!-- RIGHT: Conflict Schedules -->
-        <div class="relative bg-white rounded-2xl p-5 border">
-          <!-- Badge -->
-          <span
-            class="absolute -top-3 left-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full shadow"
-          >
-            Conflicting Schedules
-          </span>
-
-          <!-- Scrollable list -->
-          <div class="mt-3 space-y-4 max-h-[420px] overflow-y-auto pr-2 p-2">
-            <div
-              v-for="conflict in conflictRecords"
-              :key="conflict.id"
-              class="relative bg-white rounded-xl p-4 ring-1 ring-red-200"
-            >
-              <div class="space-y-2 text-sm">
-                <div class="flex justify-between items-center">
-                  <h5 class="font-semibold text-gray-800">
-                    {{ conflict.course_code }}
-                  </h5>
-                  <span
-                    class="text-xs px-2 py-1 rounded-full font-medium"
-                    :class="{
-                      'bg-orange-500 text-white':
-                        conflict.mode === 'face to face',
-                      'bg-purple-700 text-white': conflict.mode === 'online',
-                    }"
-                  >
-                    {{
-                      conflict.mode === "face to face"
-                        ? "Face to Face"
-                        : "Online"
-                    }}
-                  </span>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2 text-gray-700">
-                  <div>
-                    <p class="text-xs text-gray-500">Faculty</p>
-                    <p class="font-medium">{{ conflict.faculty_name }}</p>
-                  </div>
-
-                  <div>
-                    <p class="text-xs text-gray-500">Section</p>
-                    <p class="font-medium">
-                      {{ conflict.program_name }}{{ conflict.set_name }}
-                    </p>
-                  </div>
-
-                  <div>
-                    <p class="text-xs text-gray-500">Room</p>
-                    <p class="font-medium">{{ conflict.room_name }}</p>
-                  </div>
-
-                  <div>
-                    <p class="text-xs text-gray-500">Time</p>
-                    <p class="font-medium">
-                      {{ formatTime(conflict.start_hour) }} –
-                      {{ formatTime(conflict.start_hour + conflict.duration) }}
-                    </p>
-                  </div>
-                  <div>
-                    <p class="text-xs text-gray-500">Day</p>
-                    <p class="font-medium">{{ conflict.day }}</p>
-                  </div>
-                </div>
-
-                <!-- Reason -->
-                <div
-                  class="flex items-start gap-2 mt-2 p-2 rounded-lg bg-red-50 text-xs text-red-700"
-                >
-                  <span>⚠</span>
-                  <span>
-                    {{ conflict.reason || "Schedule overlap detected" }}
-                  </span>
-                </div>
-              </div>
-            </div>
+      <!-- Pending Join Targets -->
+      <div class="space-y-3">
+        <div
+          v-for="target in pendingJoinTargets"
+          :key="target.id"
+          class="border rounded-xl p-4 bg-gray-50 relative hover:shadow-md transition-shadow"
+        >
+          <div class="font-semibold text-gray-800 mb-1">
+            {{ target.course_code }}
+          </div>
+          <div class="text-sm text-gray-600">Type: {{ target.type }}</div>
+          <div class="text-sm text-gray-600">
+            {{ target.program_name }} - {{ target.set_name }}
+          </div>
+          <div class="text-sm text-gray-600">
+            Students: {{ target.class_size }}
+          </div>
+          <div class="text-sm text-gray-600">Day: {{ target.day }}</div>
+          <div class="text-sm text-gray-600">
+            Room: {{ target?.room_name || "No Room" }}
+          </div>
+          <div class="text-sm text-gray-600">
+            Room Type: {{ target?.room_type || "No Room Type" }}
           </div>
         </div>
       </div>
 
-      <!-- Footer -->
-      <div class="flex justify-end mt-5">
+      <!-- Total Combined Students -->
+      <div class="mt-4 text-sm font-medium text-gray-700">
+        Total Combined Students:
+        {{
+          pendingJoinTargets.reduce(
+            (sum, s) => sum + Number(s.class_size || 0),
+            Number(pendingJoinRecord?.class_size || 0),
+          )
+        }}
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-end mt-5 gap-3">
         <button
-          @click="closeConflictModal"
-          class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm"
+          @click="cancelJoin"
+          class="bg-gray-200 p-2 px-3 rounded-lg text-gray-700 hover:bg-white border hover:border-gray-800 hover:text-gray-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
         >
-          Close
+          Cancel
+        </button>
+
+        <button
+          @click="confirmJoin"
+          class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-defaultGreen hover:text-defaultGreen hover:shadow-md transform transition-all duration-300 hover:scale-105"
+        >
+          Yes, Join
         </button>
       </div>
     </div>
   </div>
+
+  <!-- Unjoin Confirmation Modal -->
+  <UnjoinModal
+    :visible="unjoinModalVisible"
+    @close="cancelUnjoin"
+    @confirm="confirmUnjoin"
+  />
 
   <!-- TODO  Edit Instructor Modal -->
   <editSchedule
@@ -763,12 +634,21 @@ import icon from "@/assets/icon.vue";
 import { useFetchDataStore } from "@/store/fetch-data-store";
 import editSchedule from "../modals/edit-schedule.vue";
 import { toast } from "vue3-toastify";
-
+import FacultyTopControls from "../faculty-components/faculty-top-controls.vue";
+import ConflictModal from "../faculty-components/conflict-modal.vue";
+import UnjoinModal from "../faculty-components/join-validation-modal.vue";
 export default {
   name: "FacultySchedule",
-  components: { icon, editSchedule },
+  components: {
+    icon,
+    editSchedule,
+    FacultyTopControls,
+    ConflictModal,
+    UnjoinModal,
+  },
   data() {
     return {
+      joinGroupCounter: 1,
       user: {},
       isJoined: false,
       groupedSchedule: {},
@@ -822,10 +702,22 @@ export default {
       visibleCardCount: 6,
       currentCardPage: 1,
       cardsPerPage: 6,
+      joinValidationModalVisible: false,
+      joinTargetRecord: null,
+      joinEligibleRecords: [],
+      pendingJoinRecord: null,
+      pendingJoinTargets: [],
+      isDragging: false,
+      unjoinModalVisible: false,
+      unjoinTargetRecord: null,
     };
   },
 
   computed: {
+    isDraggable(record) {
+      // If Join is active and class size >= 30 → not draggable
+      return !(this.isJoined && Number(record.class_size) >= 30);
+    },
     paginatedFacultyCards() {
       const entries = Object.entries(this.filteredGroupedSchedule);
 
@@ -1014,6 +906,267 @@ export default {
   },
 
   methods: {
+    handleUnjoin(record) {
+      if (!record.is_joined || !record.join_group_id) return;
+
+      // Show modal instead of alert
+      this.unjoinTargetRecord = record;
+      this.unjoinModalVisible = true;
+    },
+
+    async confirmUnjoin() {
+      if (!this.unjoinTargetRecord) return;
+
+      const record = this.unjoinTargetRecord;
+
+      // Get all records in the same join group
+      const groupRecords = this.finalSchedules.filter(
+        (r) => r.join_group_id === record.join_group_id,
+      );
+
+      try {
+        await Promise.all(
+          groupRecords.map((r) =>
+            axios.patch(
+              `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${r.id}`,
+              {
+                is_joined: false,
+                join_group_id: null,
+                joined_with: [],
+              },
+            ),
+          ),
+        );
+
+        // Update local state
+        this.finalSchedules = this.finalSchedules.map((r) => {
+          if (r.join_group_id === record.join_group_id) {
+            return {
+              ...r,
+              is_joined: false,
+              join_group_id: null,
+              joined_with: [],
+            };
+          }
+          return r;
+        });
+
+        this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
+        this.filteredGroupedSchedule = { ...this.groupedSchedule };
+
+        toast.success("Schedules successfully unjoined!");
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to unjoin schedules.");
+      } finally {
+        this.unjoinModalVisible = false;
+        this.unjoinTargetRecord = null;
+      }
+    },
+
+    cancelUnjoin() {
+      this.unjoinModalVisible = false;
+      this.unjoinTargetRecord = null;
+    },
+    async confirmJoin() {
+      if (!this.pendingJoinRecord || !this.pendingJoinTargets.length) return;
+
+      const baseRecord = this.pendingJoinRecord;
+
+      // 🔥 STEP 1: Filter valid join targets
+      const validTargets = this.pendingJoinTargets.filter((target) => {
+        const baseSet = baseRecord.set_name?.split(" ")[0];
+        const targetSet = target.set_name?.split(" ")[0];
+
+        return (
+          target.course_code === baseRecord.course_code &&
+          target.type === baseRecord.type &&
+          target.semester === baseRecord.semester &&
+          targetSet === baseSet &&
+          !target.is_joined
+        );
+      });
+
+      if (!validTargets.length) {
+        toast.error("No valid schedules to join based on the rules.");
+        this.resetJoinState();
+        return;
+      }
+
+      // 🔥 STEP 2: Combine schedules
+      const allToJoin = [baseRecord, ...validTargets];
+
+      // 🔥 STEP 3: Base schedule decides final mode
+      const finalMode = baseRecord.mode?.toLowerCase();
+
+      // 🔥 STEP 4: Calculate total students using class_size ONLY
+      const totalStudents = allToJoin.reduce(
+        (sum, s) => sum + Number(s.class_size || 0),
+        0,
+      );
+
+      console.log("Total Combined Students:", totalStudents);
+
+      // 🚫 NO ROOM CAPACITY CHECK
+      // (Completely removed as per your requirement)
+
+      // 🔥 STEP 5: Generate join group
+      const joinGroupId = baseRecord.id;
+      const joinedIds = allToJoin.map((s) => s.id);
+
+      // 🔥 STEP 6: Apply updates
+      allToJoin.forEach((s) => {
+        // Copy time from base
+        s.day = baseRecord.day;
+        s.start_hour = baseRecord.start_hour;
+        s.duration = baseRecord.duration;
+
+        // Apply final mode
+        s.mode = finalMode;
+
+        if (finalMode === "face to face") {
+          // Copy room FROM BASE RECORD
+          s.room_id = baseRecord.room_id || null;
+          s.room_name = baseRecord.room_name || null;
+          s.room_capacity = baseRecord.room_capacity || null;
+          s.room_type = baseRecord.room_type || null;
+        } else {
+          // ONLINE → clear room
+          s.room_id = null;
+          s.room_name = null;
+          s.room_capacity = null;
+          s.room_type = null;
+        }
+
+        s.join_group_id = joinGroupId;
+        s.is_joined = true;
+        s.joined_with = joinedIds.filter((id) => id !== s.id);
+      });
+
+      // 🔥 STEP 7: Save to backend
+      try {
+        await Promise.all(
+          allToJoin.map((s) =>
+            axios.patch(
+              `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${s.id}`,
+              {
+                day: s.day,
+                start_hour: s.start_hour,
+                duration: s.duration,
+                mode: s.mode,
+                room_id: s.room_id,
+                room_name: s.room_name,
+                room_capacity: s.room_capacity,
+                room_type: s.room_type,
+                join_group_id: s.join_group_id,
+                is_joined: s.is_joined,
+                joined_with: s.joined_with,
+              },
+            ),
+          ),
+        );
+
+        toast.success(
+          `Classes successfully joined! Total students: ${totalStudents}`,
+        );
+        await this.fetchFinalSchedules();
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to save joined schedules.");
+      }
+
+      this.resetJoinState();
+    },
+    cancelJoin() {
+      this.resetJoinState();
+    },
+    resetJoinState() {
+      this.pendingJoinRecord = null;
+      this.pendingJoinTargets = [];
+      this.joinValidationModalVisible = false;
+    },
+    async saveScheduleMove(record) {
+      try {
+        await axios.patch(
+          `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${record.id}`,
+          {
+            faculty_id: record.faculty_id,
+            faculty_name: record.faculty_name,
+            day: record.day,
+            start_hour: record.start_hour,
+            duration: record.duration,
+            room_id: record.room_id,
+            room_name: record.room_name,
+            mode: record.mode,
+            type: record.type,
+          },
+        );
+
+        toast.success("Schedule moved successfully!");
+        await this.fetchFinalSchedules();
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to save schedule.");
+      }
+    },
+    getJoinableSchedules(baseRecord) {
+      if (!baseRecord) return [];
+
+      const extractYearLevel = (setName) => {
+        if (!setName) return "";
+        return setName.split(" ")[0].trim();
+      };
+
+      const baseYear = extractYearLevel(baseRecord.set_name);
+
+      return this.finalSchedules.filter((r) => {
+        if (r.id === baseRecord.id) return false;
+        if (r.is_joined) return false;
+
+        const targetYear = extractYearLevel(r.set_name);
+
+        const modeCompatible =
+          ["online", "face to face"].includes(baseRecord.mode.toLowerCase()) &&
+          ["online", "face to face"].includes(r.mode.toLowerCase());
+
+        return (
+          r.course_code === baseRecord.course_code &&
+          r.type === baseRecord.type &&
+          r.semester === baseRecord.semester &&
+          baseYear === targetYear &&
+          modeCompatible &&
+          Number(r.class_size) < 30 &&
+          Number(baseRecord.class_size) < 30
+        );
+      });
+    },
+    canJoin(recordA, recordB) {
+      if (!recordA || !recordB) return false;
+
+      const getSetPrefix = (set_name) => set_name?.split(" ")[0] || "";
+
+      const baseSet = getSetPrefix(recordA.set_name);
+      const targetSet = getSetPrefix(recordB.set_name);
+
+      // Join only if both classes are below 30 students
+      const classSizeCheck =
+        Number(recordA.class_size) < 30 && Number(recordB.class_size) < 30;
+      const modeCompatible =
+        ["online", "face to face"].includes(recordA.mode.toLowerCase()) &&
+        ["online", "face to face"].includes(recordB.mode.toLowerCase());
+
+      return (
+        recordA.id !== recordB.id &&
+        recordA.course_code === recordB.course_code &&
+        recordA.type === recordB.type && // Lecture ↔ Lecture, Lab ↔ Lab
+        recordA.semester === recordB.semester &&
+        baseSet === targetSet &&
+        classSizeCheck &&
+        modeCompatible &&
+        !recordB.is_joined // cannot join already joined
+      );
+    },
+
     getConflictsForDrag(record, targetInstructor, targetDay, targetStartHour) {
       const clonedRecord = { ...record };
       clonedRecord.faculty_name = targetInstructor;
@@ -1023,12 +1176,25 @@ export default {
       return this.getConflictingRecords(clonedRecord);
     },
     showScheduleTooltip(event, item) {
+      // ✅ Don't show tooltip while dragging
+      if (this.draggedRecord) return;
+
       const rect = event.currentTarget.getBoundingClientRect();
 
-      this.tooltipItem = item;
-      this.scheduleTooltipVisible = true;
+      if (item.is_joined && item.join_group_id) {
+        const joinedItems = this.finalSchedules.filter(
+          (s) => s.join_group_id === item.join_group_id,
+        );
 
-      // 👉 fixed position: right side of block
+        this.tooltipItem = {
+          ...item,
+          joinedItems,
+        };
+      } else {
+        this.tooltipItem = item;
+      }
+
+      this.scheduleTooltipVisible = true;
       this.tooltipX = rect.right + 12;
       this.tooltipY = rect.top;
     },
@@ -1047,16 +1213,24 @@ export default {
           if (r.id === record.id) return false;
           if (r.day !== record.day) return false;
 
+          // Same join group → ignore
+          if (
+            record.is_joined &&
+            r.is_joined &&
+            record.join_group_id &&
+            r.join_group_id &&
+            record.join_group_id === r.join_group_id
+          )
+            return false;
+
           const rStart = this.normalizeHour(r.start_hour);
           const rEnd = rStart + Number(r.duration);
 
-          // ⛔ NO TIME OVERLAP → NO CONFLICT
-          const isOverlapping =
+          const overlaps =
             Math.max(rStart, recordStart) < Math.min(rEnd, recordEnd);
+          if (!overlaps) return false;
 
-          if (!isOverlapping) return false;
-
-          // 🔴 RULE 1: SAME ROOM (Face-to-Face only)
+          // Same room conflict only if NOT join mode or same faculty
           if (
             r.room_id &&
             record.room_id &&
@@ -1064,39 +1238,36 @@ export default {
             r.mode === "face to face" &&
             record.mode === "face to face"
           ) {
-            return true;
+            if (!this.isJoined || r.faculty_id === record.faculty_id)
+              return true;
           }
 
-          // 🔴 RULE 2: SAME FACULTY
-          if (r.faculty_id === record.faculty_id) {
-            return true;
-          }
+          // Same faculty
+          if (r.faculty_id === record.faculty_id) return true;
 
-          // 🔴 RULE 3: SAME CLASS / SECTION
-          if (r.class_id && record.class_id && r.class_id === record.class_id) {
+          // Same class/section
+          if (r.class_id && record.class_id && r.class_id === record.class_id)
             return true;
-          }
 
           return false;
         })
         .map((r) => {
           let reason = "";
-
           if (
             r.room_id === record.room_id &&
             r.mode === "face to face" &&
-            record.mode === "face to face"
-          ) {
+            record.mode === "face to face" &&
+            (!this.isJoined || r.faculty_id === record.faculty_id)
+          )
             reason = "Same room, same day, and overlapping time (Face-to-Face)";
-          } else if (r.faculty_id === record.faculty_id) {
+          else if (r.faculty_id === record.faculty_id)
             reason = "Same faculty assigned to overlapping schedules";
-          } else if (r.class_id === record.class_id) {
+          else if (r.class_id === record.class_id)
             reason = "Same class/section has overlapping schedules";
-          }
-
           return { ...r, reason };
         });
     },
+
     hasRoomConflict(record) {
       return this.getConflictingRecords(record).length > 0;
     }, // Open the conflict modal for a record
@@ -1224,88 +1395,101 @@ export default {
       );
     },
     onDragStart(event, record) {
-      this.draggedRecord = { ...record }; // make a copy to prevent direct mutation
-      event.dataTransfer.effectAllowed = "move";
-    },
-    async onDrop(event, targetInstructor, targetDay, targetStartHour) {
-      if (!this.draggedRecord) return;
-
-      // Create a copy of the dragged record and update its new instructor/day/start
-      const record = { ...this.draggedRecord };
-      record.faculty_name = targetInstructor;
-      record.day = targetDay;
-      record.start_hour = targetStartHour;
-
-      // Check for conflicts
-      const conflicts = this.getConflictingRecords(record);
-      if (conflicts.length) {
-        this.selectedSchedule = record;
-        this.conflictRecords = conflicts;
-        this.conflictModalVisible = true;
-        this.draggedRecord = null;
+      // Block large classes if Join is active
+      if (this.isJoined && Number(record.class_size) >= 30) {
+        toast.info(
+          "Cannot move classes with 30 or more students when Join is active.",
+        );
+        event.preventDefault();
         return;
       }
 
-      // Update local UI
-      this.finalSchedules = this.finalSchedules.map((s) =>
-        s.id === record.id ? { ...record } : s,
-      );
+      this.draggedRecord = { ...record };
 
-      // Re-group schedules by instructor
-      this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
+      // ✅ Hide tooltip when dragging starts
+      this.scheduleTooltipVisible = false;
+      this.tooltipItem = null;
 
-      // ✅ Preserve Compare View if active
-      if (this.showCompareView) {
-        this.filteredGroupedSchedule = {
-          [this.compareInstructorA]:
-            this.groupedSchedule[this.compareInstructorA] || [],
-          [this.compareInstructorB]:
-            this.groupedSchedule[this.compareInstructorB] || [],
-        };
-      } else {
-        this.filteredGroupedSchedule = { ...this.groupedSchedule };
+      event.dataTransfer.effectAllowed = "move";
+    },
+
+    async onDrop(event, targetInstructor, targetDay, targetStartHour) {
+      if (!this.draggedRecord) return;
+
+      const baseRecord = this.draggedRecord;
+
+      // 🔥 Join mode
+      if (this.isJoined) {
+        const joinable = this.getJoinableSchedules(baseRecord);
+
+        if (joinable.length) {
+          this.pendingJoinRecord = baseRecord;
+          this.pendingJoinTargets = joinable;
+          this.joinValidationModalVisible = true;
+          this.draggedRecord = null;
+          return; // wait for user confirmation
+        }
       }
 
-      // Reset dragged record
-      this.draggedRecord = null;
+      // Determine records to move (single or joined)
+      const recordsToMove =
+        baseRecord.is_joined && baseRecord.join_group_id
+          ? this.finalSchedules.filter(
+              (r) => r.join_group_id === baseRecord.join_group_id,
+            )
+          : [baseRecord];
 
-      // Prepare payload for backend (only allowed fields)
-      const allowedFields = [
-        "faculty_id",
-        "faculty_name",
-        "day",
-        "start_hour",
-        "duration",
-        "room_id",
-        "room_name",
-        "mode",
-        "type",
-      ];
+      // Apply new position
+      recordsToMove.forEach((r) => {
+        r.faculty_name = targetInstructor;
+        r.day = targetDay;
+        r.start_hour = targetStartHour;
+      });
 
-      const payload = {};
-      allowedFields.forEach((f) => (payload[f] = record[f]));
+      // Conflict check
+      if (!this.isJoined) {
+        for (const r of recordsToMove) {
+          const conflicts = this.getConflictingRecords(r);
+          if (conflicts.length) {
+            this.selectedSchedule = r;
+            this.conflictRecords = conflicts;
+            this.conflictModalVisible = true;
+            this.draggedRecord = null;
+            return;
+          }
+        }
+      }
 
-      // Save to backend
+      // Save
       try {
-        await axios.patch(
-          `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${record.id}`,
-          payload,
+        await Promise.all(
+          recordsToMove.map((r) =>
+            axios.patch(
+              `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${r.id}`,
+              {
+                faculty_id: r.faculty_id,
+                faculty_name: r.faculty_name,
+                day: r.day,
+                start_hour: r.start_hour,
+                duration: r.duration,
+                room_id: r.room_id,
+                room_name: r.room_name,
+                mode: r.mode,
+                type: r.type,
+              },
+            ),
+          ),
         );
         toast.success("Schedule moved successfully!");
-        await this.fetchFinalSchedules(); // ✅ Preserve compare view if active
-        if (this.showCompareView) {
-          this.filteredGroupedSchedule = {
-            [this.compareInstructorA]:
-              this.groupedSchedule[this.compareInstructorA] || [],
-            [this.compareInstructorB]:
-              this.groupedSchedule[this.compareInstructorB] || [],
-          };
-        }
-      } catch (error) {
-        console.error(error);
-        toast.error("Failed to save schedule.");
+        await this.fetchFinalSchedules();
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to move schedule.");
       }
+
+      this.draggedRecord = null;
     },
+
     async loadFetchData() {
       const store = useFetchDataStore();
       await store.fetchPrograms();
@@ -1378,15 +1562,27 @@ export default {
     },
     getScheduleForCell(slot, day, instructor) {
       const schedules = this.filteredGroupedSchedule[instructor] || [];
+      const renderedGroups = new Set();
+
       return schedules.filter((item) => {
         if (item.day !== day) return false;
 
         const start = this.normalizeHour(item.start_hour);
         const end = start + Number(item.duration);
-        return end > slot.start && start < slot.end;
+        const overlaps = end > slot.start && start < slot.end;
+        if (!overlaps) return false;
+
+        // 🔥 If joined → render only first occurrence
+        if (item.is_joined && item.join_group_id) {
+          if (renderedGroups.has(item.join_group_id)) {
+            return false;
+          }
+          renderedGroups.add(item.join_group_id);
+        }
+
+        return true;
       });
     },
-
     getTypeColor(room_type) {
       if (!room_type) return "bg-green-100 border-green-400";
       const normalized = room_type.toLowerCase();
