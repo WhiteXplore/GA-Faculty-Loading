@@ -24,7 +24,7 @@
           {{ tab.label }}
         </button>
       </div>
-      <div class="text-[13px] text-gray-700 px-2 flex justify-end">
+      <div class="text-[13px] text-gray-700 px-6 flex justify-end">
         Pages / Generated Schedules
         <span class="text-gray-400 mx-1">/</span>
         <span class="font-semibold text-defaultGreen">{{ activeTab }}</span>

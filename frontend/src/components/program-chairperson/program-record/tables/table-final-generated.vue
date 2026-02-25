@@ -15,7 +15,7 @@
       @backFromCompare="backFromCompare"
     />
 
-    <div class="flex flex-wrap items-center gap-4 px-2">
+    <div class="flex flex-wrap items-center gap-4 px-2 mt-2">
       <!-- TODO  Back Button -->
       <button
         v-if="
@@ -197,13 +197,14 @@
       <div
         v-else
         :class="[
-          'gap-3 grid p-2 h-auto',
+          'gap-3 grid  h-auto',
           showCompareView
-            ? 'grid-cols-1 md:grid-cols-2 h-[87vh] overflow-y-auto'
+            ? 'grid-cols-1 md:grid-cols-2 h-[87vh]  overflow-y-auto'
             : Object.keys(filteredGroupedSchedule).length === 1
-            ? 'grid-cols-1'
-            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-2  overflow-y-auto',
+            ? 'grid-cols-1 '
+            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-2  overflow-y-auto ',
         ]"
+        class="mt-2 px-2"
       >
         <div
           v-for="(records, instructor) in paginatedFacultyCards"
@@ -500,116 +501,15 @@
     :conflicts="conflictRecords"
     @close="conflictModalVisible = false"
   />
+
   <!-- JOIN VALIDATION MODAL -->
-  <!-- JOIN VALIDATION MODAL -->
-  <div
-    v-if="joinValidationModalVisible"
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-  >
-    <div
-      class="bg-white w-[480px] rounded-2xl shadow-2xl p-6 relative animate-slideUp"
-    >
-      <!-- Header -->
-      <div class="flex items-center justify-between border-b pb-3 mb-4">
-        <div class="flex items-center gap-2">
-          <icon
-            name="exclamation-circle"
-            class="w-7 h-7 p-1 rounded-full bg-yellow-200 text-yellow-900 flex items-center justify-center"
-          />
-          <h3 class="text-lg font-semibold text-gray-800 leading-none">
-            Verify Join Classes
-          </h3>
-        </div>
-        <button
-          @click="cancelJoin"
-          class="text-gray-400 hover:text-gray-600 transition"
-        >
-          ✕
-        </button>
-      </div>
-
-      <!-- Base Class Card -->
-      <div class="border rounded-xl p-4 bg-gray-50 mb-4 relative">
-        <div class="font-semibold text-gray-800 mb-1">
-          {{ pendingJoinRecord?.course_code }}
-        </div>
-        <div class="text-sm text-gray-600">
-          Type: {{ pendingJoinRecord?.type }}
-        </div>
-        <div class="text-sm text-gray-600">
-          {{ pendingJoinRecord?.program_name }} -
-          {{ pendingJoinRecord?.set_name }}
-        </div>
-        <div class="text-sm text-gray-600">
-          Students: {{ pendingJoinRecord?.class_size }}
-        </div>
-        <div class="text-sm text-gray-600">
-          Day: {{ pendingJoinRecord?.day }}
-        </div>
-        <div class="text-sm text-gray-600">
-          Room: {{ pendingJoinRecord?.room_name || "No Room" }}
-        </div>
-        <div class="text-sm text-gray-600">
-          Room Type: {{ pendingJoinRecord?.room_type || "No Room Type" }}
-        </div>
-      </div>
-
-      <!-- Pending Join Targets -->
-      <div class="space-y-3">
-        <div
-          v-for="target in pendingJoinTargets"
-          :key="target.id"
-          class="border rounded-xl p-4 bg-gray-50 relative hover:shadow-md transition-shadow"
-        >
-          <div class="font-semibold text-gray-800 mb-1">
-            {{ target.course_code }}
-          </div>
-          <div class="text-sm text-gray-600">Type: {{ target.type }}</div>
-          <div class="text-sm text-gray-600">
-            {{ target.program_name }} - {{ target.set_name }}
-          </div>
-          <div class="text-sm text-gray-600">
-            Students: {{ target.class_size }}
-          </div>
-          <div class="text-sm text-gray-600">Day: {{ target.day }}</div>
-          <div class="text-sm text-gray-600">
-            Room: {{ target?.room_name || "No Room" }}
-          </div>
-          <div class="text-sm text-gray-600">
-            Room Type: {{ target?.room_type || "No Room Type" }}
-          </div>
-        </div>
-      </div>
-
-      <!-- Total Combined Students -->
-      <div class="mt-4 text-sm font-medium text-gray-700">
-        Total Combined Students:
-        {{
-          pendingJoinTargets.reduce(
-            (sum, s) => sum + Number(s.class_size || 0),
-            Number(pendingJoinRecord?.class_size || 0),
-          )
-        }}
-      </div>
-
-      <!-- Buttons -->
-      <div class="flex justify-end mt-5 gap-3">
-        <button
-          @click="cancelJoin"
-          class="bg-gray-200 p-2 px-3 rounded-lg text-gray-700 hover:bg-white border hover:border-gray-800 hover:text-gray-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
-        >
-          Cancel
-        </button>
-
-        <button
-          @click="confirmJoin"
-          class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-defaultGreen hover:text-defaultGreen hover:shadow-md transform transition-all duration-300 hover:scale-105"
-        >
-          Yes, Join
-        </button>
-      </div>
-    </div>
-  </div>
+  <JoinValidationModal
+    :visible="joinValidationModalVisible"
+    :pendingJoinRecord="pendingJoinRecord"
+    :pendingJoinTargets="pendingJoinTargets"
+    @cancel="cancelJoin"
+    @confirm="confirmJoin"
+  />
 
   <!-- Unjoin Confirmation Modal -->
   <UnjoinModal
@@ -636,7 +536,8 @@ import editSchedule from "../modals/edit-schedule.vue";
 import { toast } from "vue3-toastify";
 import FacultyTopControls from "../faculty-components/faculty-top-controls.vue";
 import ConflictModal from "../faculty-components/conflict-modal.vue";
-import UnjoinModal from "../faculty-components/join-validation-modal.vue";
+import UnjoinModal from "../faculty-components/unjoin-validation-modal.vue";
+import JoinValidationModal from "../faculty-components/join-validation-modal.vue";
 export default {
   name: "FacultySchedule",
   components: {
@@ -645,6 +546,7 @@ export default {
     FacultyTopControls,
     ConflictModal,
     UnjoinModal,
+    JoinValidationModal,
   },
   data() {
     return {
@@ -954,6 +856,10 @@ export default {
         this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
         this.filteredGroupedSchedule = { ...this.groupedSchedule };
 
+        // ✅ Automatically update global join mode if no more joined records
+        const anyJoined = this.finalSchedules.some((r) => r.is_joined);
+        this.isJoined = anyJoined;
+
         toast.success("Schedules successfully unjoined!");
       } catch (err) {
         console.error(err);
@@ -973,19 +879,31 @@ export default {
 
       const baseRecord = this.pendingJoinRecord;
 
-      // 🔥 STEP 1: Filter valid join targets
-      const validTargets = this.pendingJoinTargets.filter((target) => {
-        const baseSet = baseRecord.set_name?.split(" ")[0];
-        const targetSet = target.set_name?.split(" ")[0];
+      // Helper function to determine if two schedules can join
+      const canJoin = (a, b) => {
+        if (!a || !b) return false;
+
+        const baseSet = a.set_name?.split(" ")[0];
+        const targetSet = b.set_name?.split(" ")[0];
+        const modeCompatible = a.mode?.toLowerCase() === b.mode?.toLowerCase();
 
         return (
-          target.course_code === baseRecord.course_code &&
-          target.type === baseRecord.type &&
-          target.semester === baseRecord.semester &&
-          targetSet === baseSet &&
-          !target.is_joined
+          a.id !== b.id &&
+          a.course_code === b.course_code &&
+          a.type === b.type &&
+          a.semester === b.semester &&
+          baseSet === targetSet &&
+          Number(a.class_size) < 30 &&
+          Number(b.class_size) < 30 &&
+          modeCompatible &&
+          !b.is_joined
         );
-      });
+      };
+
+      // 🔥 STEP 1: Filter only truly joinable targets
+      const validTargets = this.pendingJoinTargets.filter((target) =>
+        canJoin(baseRecord, target),
+      );
 
       if (!validTargets.length) {
         toast.error("No valid schedules to join based on the rules.");
@@ -993,45 +911,29 @@ export default {
         return;
       }
 
-      // 🔥 STEP 2: Combine schedules
+      // 🔥 STEP 2: Combine schedules (base + valid targets)
       const allToJoin = [baseRecord, ...validTargets];
 
-      // 🔥 STEP 3: Base schedule decides final mode
       const finalMode = baseRecord.mode?.toLowerCase();
-
-      // 🔥 STEP 4: Calculate total students using class_size ONLY
+      const joinGroupId = baseRecord.id;
+      const joinedIds = allToJoin.map((s) => s.id);
       const totalStudents = allToJoin.reduce(
         (sum, s) => sum + Number(s.class_size || 0),
         0,
       );
 
-      console.log("Total Combined Students:", totalStudents);
-
-      // 🚫 NO ROOM CAPACITY CHECK
-      // (Completely removed as per your requirement)
-
-      // 🔥 STEP 5: Generate join group
-      const joinGroupId = baseRecord.id;
-      const joinedIds = allToJoin.map((s) => s.id);
-
-      // 🔥 STEP 6: Apply updates
       allToJoin.forEach((s) => {
-        // Copy time from base
         s.day = baseRecord.day;
         s.start_hour = baseRecord.start_hour;
         s.duration = baseRecord.duration;
-
-        // Apply final mode
         s.mode = finalMode;
 
         if (finalMode === "face to face") {
-          // Copy room FROM BASE RECORD
           s.room_id = baseRecord.room_id || null;
           s.room_name = baseRecord.room_name || null;
           s.room_capacity = baseRecord.room_capacity || null;
           s.room_type = baseRecord.room_type || null;
         } else {
-          // ONLINE → clear room
           s.room_id = null;
           s.room_name = null;
           s.room_capacity = null;
@@ -1043,7 +945,6 @@ export default {
         s.joined_with = joinedIds.filter((id) => id !== s.id);
       });
 
-      // 🔥 STEP 7: Save to backend
       try {
         await Promise.all(
           allToJoin.map((s) =>
@@ -1102,7 +1003,7 @@ export default {
           },
         );
 
-        toast.success("Schedule moved successfully!");
+        // toast.success("Schedule moved successfully!");
         await this.fetchFinalSchedules();
       } catch (error) {
         console.error(error);
@@ -1143,30 +1044,31 @@ export default {
     canJoin(recordA, recordB) {
       if (!recordA || !recordB) return false;
 
-      const getSetPrefix = (set_name) => set_name?.split(" ")[0] || "";
+      // Use full set_name (year + section) as group identifier
+      const getGroupId = (set_name) => set_name?.trim() || "";
 
-      const baseSet = getSetPrefix(recordA.set_name);
-      const targetSet = getSetPrefix(recordB.set_name);
+      const baseGroup = getGroupId(recordA.set_name);
+      const targetGroup = getGroupId(recordB.set_name);
 
-      // Join only if both classes are below 30 students
+      // Both classes must be below 30 students
       const classSizeCheck =
         Number(recordA.class_size) < 30 && Number(recordB.class_size) < 30;
-      const modeCompatible =
-        ["online", "face to face"].includes(recordA.mode.toLowerCase()) &&
-        ["online", "face to face"].includes(recordB.mode.toLowerCase());
+
+      // Must be the same mode to join
+      const sameMode =
+        recordA.mode?.toLowerCase() === recordB.mode?.toLowerCase();
 
       return (
         recordA.id !== recordB.id &&
         recordA.course_code === recordB.course_code &&
         recordA.type === recordB.type && // Lecture ↔ Lecture, Lab ↔ Lab
         recordA.semester === recordB.semester &&
-        baseSet === targetSet &&
+        baseGroup === targetGroup && // Only same class/set
         classSizeCheck &&
-        modeCompatible &&
+        sameMode && // ✅ Ensure modes match exactly
         !recordB.is_joined // cannot join already joined
       );
     },
-
     getConflictsForDrag(record, targetInstructor, targetDay, targetStartHour) {
       const clonedRecord = { ...record };
       clonedRecord.faculty_name = targetInstructor;
@@ -1322,52 +1224,29 @@ export default {
       this.showEditModal = true;
     },
     handleModalSaved(updatedInstructorSchedules) {
-      if (!updatedInstructorSchedules.length) return;
-
-      // 1️⃣ Merge updates into finalSchedules
       updatedInstructorSchedules.forEach((updated) => {
         const index = this.finalSchedules.findIndex((s) => s.id === updated.id);
         if (index > -1) {
-          this.finalSchedules[index] = { ...updated };
+          Object.assign(this.finalSchedules[index], updated); // reactive in place
         } else {
-          this.finalSchedules.push({ ...updated });
+          this.finalSchedules.push(updated);
         }
       });
 
-      // 2️⃣ Rebuild grouped schedules
-      this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
-
-      // 3️⃣ ✅ PRESERVE COMPARE VIEW
-      if (
-        this.showCompareView &&
-        this.compareInstructorA &&
-        this.compareInstructorB
-      ) {
-        this.filteredGroupedSchedule = {
-          [this.compareInstructorA]:
-            this.groupedSchedule[this.compareInstructorA] || [],
-          [this.compareInstructorB]:
-            this.groupedSchedule[this.compareInstructorB] || [],
-        };
-      } else {
-        this.filteredGroupedSchedule = { ...this.groupedSchedule };
-      }
-
-      // 4️⃣ Reset pagination
-      this.currentPage = 1;
-
-      // 5️⃣ Keep modal data in sync (no view reset)
-      if (this.showEditModal) {
-        const instructorsInModal = Array.from(
-          new Set(this.editInstructorData.map((item) => item.faculty_name)),
+      // Only update groupedSchedule for affected instructors
+      const affectedInstructors = Array.from(
+        new Set(updatedInstructorSchedules.map((u) => u.faculty_name)),
+      );
+      affectedInstructors.forEach((inst) => {
+        this.groupedSchedule[inst] = this.finalSchedules.filter(
+          (s) => s.faculty_name === inst,
         );
+      });
 
-        this.$nextTick(() => {
-          this.editInstructorData = instructorsInModal.flatMap((instructor) => {
-            return (this.groupedSchedule[instructor] || []).map((r) => ({
-              ...r,
-            }));
-          });
+      // Update filteredGroupedSchedule only if necessary
+      if (!this.showCompareView) {
+        affectedInstructors.forEach((inst) => {
+          this.filteredGroupedSchedule[inst] = this.groupedSchedule[inst];
         });
       }
     },
@@ -1480,7 +1359,7 @@ export default {
             ),
           ),
         );
-        toast.success("Schedule moved successfully!");
+        // toast.success("Schedule moved successfully!");
         await this.fetchFinalSchedules();
       } catch (err) {
         console.error(err);

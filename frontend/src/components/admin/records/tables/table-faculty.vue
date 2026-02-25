@@ -101,7 +101,7 @@
                 </th>
 
                 <th class="px-4 py-3 text-center font-normal w-[20%]">
-                  Preffered Time
+                  Preferred Time
                 </th>
                 <th class="px-4 py-3 text-center font-normal w-[16%]">
                   Inter-branch
@@ -285,9 +285,9 @@
               class="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 cursor-pointer"
             >
               <option disabled value="">-- Select Option --</option>
-              <option value="preffered_time">Preffered Time</option>
+              <option value="preffered_time">Preferred Time</option>
               <option value="interbranch">Inter-branch</option>
-              <option value="all">All (Preffered Time + Inter-branch)</option>
+              <option value="all">All (Preferred Time + Inter-branch)</option>
             </select>
           </div>
 
@@ -488,7 +488,7 @@
               d="M12 11c0 1.657-1.343 3-3 3S6 12.657 6 11s1.343-3 3-3 3 1.343 3 3zm0 0v10m0-10c0 1.657 1.343 3 3 3s3-1.343 3-3-1.343-3-3-3-3 1.343-3 3z"
             />
           </svg>
-          Faculty Expertise
+          Faculty Informations
         </h2>
         <button
           @click="showViewModal = false"

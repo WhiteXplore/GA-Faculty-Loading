@@ -1,12 +1,12 @@
 <template>
   <div
     v-if="show"
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 p-10 gap-2"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 px-2 gap-2"
   >
-    <div class="flex justify-center gap-4 w-full">
+    <div class="flex justify-center gap-2 w-full">
       <!-- MAIN MODAL WRAPPER -->
       <div
-        class="bg-white w-[50vw] h-[95vh] rounded-xl shadow-xl flex flex-col overflow-hidden p-1"
+        class="bg-white w-[60vw] h-[98vh] rounded-xl shadow-xl flex flex-col overflow-hidden p-1"
       >
         <!-- HEADER -->
         <div
@@ -14,7 +14,7 @@
         >
           <div class="flex items-center gap-2">
             <icon name="edit" />
-            <h1 class="text-lg font-bold">Edit Schedules</h1>
+            <h3 class="text-lg font-bold">Edit Schedules</h3>
           </div>
 
           <icon
@@ -33,11 +33,11 @@
               showAddSchedulePanel ? 'w-[100%]' : 'w-full',
             ]"
           >
-            <div class="flex-1 overflow-auto bg-gray-50 p-2 h-full">
+            <div class="flex-1 overflow-auto bg-gray-50 h-full">
               <div
                 v-for="(records, instructor) in groupedSchedule"
                 :key="instructor"
-                class="border rounded-lg shadow-sm bg-white mb-4"
+                class="border rounded-lg shadow-sm bg-white"
               >
                 <!-- Instructor Header -->
                 <div
@@ -53,7 +53,35 @@
                       </p>
                     </div>
                   </div>
+                  <div
+                    class="flex items-center gap-4 py-2 px-3 ml-2 rounded-full border w-max bg-gray-50 text-xs"
+                  >
+                    <span class="font-medium text-gray-700"
+                      >Join Scheduled:</span
+                    >
 
+                    <div class="flex items-center gap-2">
+                      <span
+                        class="font-semibold"
+                        :class="isJoined ? 'text-green-600' : 'text-gray-400'"
+                      >
+                        {{ isJoined ? "YES" : "NOT" }}
+                      </span>
+
+                      <button
+                        @click="toggleJoin"
+                        :class="[
+                          'w-12 h-6 rounded-full p-1 flex items-center transition-colors duration-300 focus:outline-none',
+                          isJoined ? 'bg-green-500' : 'bg-gray-300',
+                        ]"
+                      >
+                        <span
+                          class="bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300"
+                          :class="isJoined ? 'translate-x-6' : 'translate-x-0'"
+                        ></span>
+                      </button>
+                    </div>
+                  </div>
                   <button
                     @click="openAddSchedulePanel(instructor)"
                     class="px-3 py-1 text-xs font-bold text-defaultGreen rounded-full border border-defaultGreen hover:bg-defaultGreen hover:text-white"
@@ -86,11 +114,13 @@
                         :key="slot.start + slot.end"
                         class="odd:bg-white even:bg-gray-50"
                       >
-                        <td class="px-2 py-5 border text-center">
+                        <!-- Time Column -->
+                        <td class="px-2 py-5 border text-center text-[10px]">
                           {{ formatTime(slot.start) }} -
                           {{ formatTime(slot.end) }}
                         </td>
 
+                        <!-- Days Columns -->
                         <td
                           v-for="day in days"
                           :key="day"
@@ -115,21 +145,33 @@
                               day,
                               instructor,
                             )"
-                            :key="item.id"
+                            :key="item.id || item.tempId"
                           >
                             <div
                               v-if="isStartingSlot(item, slot)"
-                              draggable="true"
+                              :draggable="
+                                !(isJoined && Number(item.class_size) >= 30)
+                              "
+                              @mouseenter="showScheduleTooltip($event, item)"
+                              @mouseleave="hideScheduleTooltip"
                               @dragstart="onDragStart($event, item)"
+                              @dblclick="attemptUnjoin(item)"
                               @click="highlightRow(item)"
                               :class="[
-                                'absolute inset-x-1 border rounded-lg text-[11px] p-1 shadow-sm truncate transition cursor-pointer hover:bg-yellow-100 hover:defaultGreen',
+                                'absolute inset-x-1 border rounded-lg text-[11px] p-1 shadow-sm truncate transition cursor-pointer',
                                 item.id?.toString().startsWith('temp-')
                                   ? 'bg-purple-200 border-purple-400 text-purple-900'
                                   : getTypeColor(item.type),
                                 hasRoomConflict(item)
                                   ? 'bg-red-300 border-red-500 text-red-900'
                                   : '',
+                                item.is_joined
+                                  ? 'bg-blue-100 border-blue-400'
+                                  : '',
+                                isJoined && Number(item.class_size) >= 30
+                                  ? 'opacity-50 pointer-events-none cursor-not-allowed'
+                                  : '',
+                                'hover:bg-yellow-100',
                               ]"
                               :style="{
                                 top: getBlockTop(item, slot.start) + 'px',
@@ -138,7 +180,7 @@
                                 zIndex: 10,
                               }"
                             >
-                              <!-- MODE BADGE -->
+                              <!-- Mode Badge -->
                               <span
                                 v-if="item.mode"
                                 :class="[
@@ -155,7 +197,12 @@
                                     : "Online"
                                 }}
                               </span>
-
+                              <span
+                                v-if="item.is_joined"
+                                class="absolute bottom-2 right-2 px-2 h-5 flex items-center justify-center bg-blue-600 text-white text-[10px] font-bold rounded-full shadow"
+                              >
+                                J
+                              </span>
                               <div class="truncate font-semibold">
                                 {{ item.course_code }}
                               </div>
@@ -207,201 +254,219 @@
         </div>
       </div>
       <!-- RIGHT: SLIDING ADD PANEL -->
-      <div
-        v-if="showAddSchedulePanel"
-        class="w-[50%] h-[40%] bg-white border shadow-xl transition-all duration-300 flex justify-start rounded-xl overflow-hidden"
-      >
-        <div class="max-h-[95vh] overflow-y-auto border-t p-0.5">
-          <div
-            class="flex items-center justify-between px-4 py-3 bg-defaultGreen text-white rounded-t-lg"
-          >
-            <h3 class="font-semibold">
-              Add Schedule — {{ selectedInstructorName }}
-            </h3>
-            <icon
-              name="circle-close3"
-              @click="closeAddSchedulePanel"
-              class="cursor-pointer text-white w-6 h-6"
-            />
-          </div>
+      <div class="flex flex-col gap-2">
+        <div
+          v-if="showAddSchedulePanel"
+          class="w-[45vw] max-h-[50vh] bg-white border shadow-xl transition-all duration-300 flex justify-start rounded-xl"
+        >
+          <div class="p-1 flex flex-col">
+            <!-- Header -->
+            <div
+              class="flex items-center justify-between px-4 py-3 bg-defaultGreen text-white rounded-t-lg"
+            >
+              <h3 class="font-semibold">
+                Add Schedule — {{ selectedInstructorName }}
+              </h3>
+              <icon
+                name="circle-close3"
+                @click="closeAddSchedulePanel"
+                class="cursor-pointer text-white w-6 h-6"
+              />
+            </div>
 
-          <table class="min-w-full divide-y divide-gray-200 text-xs">
-            <thead class="bg-gray-100">
-              <tr>
-                <th class="px-4 py-3 border w-[15%]">Section</th>
-                <th class="px-4 py-3 border w-[15%]">Course</th>
-                <th class="px-4 py-3 border w-[13%]">Room</th>
-                <th class="px-4 py-3 border w-[10%]">Day</th>
-                <th class="px-4 py-3 border w-[10%]">Start</th>
-                <th class="px-4 py-3 border w-[10%]">Hours</th>
-                <th class="px-4 py-3 border">Set Up</th>
-                <th class="px-4 py-3 border text-center">Action</th>
-              </tr>
-            </thead>
+            <!-- Table Wrapper for Scroll -->
+            <div class="overflow-y-auto max-h-[50vh] border-t">
+              <table class="min-w-full divide-y divide-gray-200 text-xs">
+                <!-- Table Head -->
+                <thead class="bg-gray-100 sticky top-0 z-20">
+                  <tr>
+                    <th class="px-4 py-3 border w-[13%]">Section</th>
+                    <th class="px-4 py-3 border w-[12%]">Course</th>
+                    <th class="px-4 py-3 border w-[13%]">Room</th>
+                    <th class="px-4 py-3 border w-[13%]">Day</th>
+                    <th class="px-4 py-3 border w-[10%]">Start</th>
+                    <th class="px-4 py-3 border w-[10%]">Hours</th>
+                    <th class="px-4 py-3 border w-[18%]">Set Up</th>
+                    <th class="px-4 py-3 border text-center">Action</th>
+                  </tr>
+                </thead>
 
-            <tbody>
-              <tr
-                v-for="record in sortedLocalData"
-                :key="record.id || record.tempId"
-                :id="'row-' + (record.id || record.tempId)"
-                :class="[
-                  'hover:bg-green-200',
-                  highlightedRecordId === (record.id || record.tempId)
-                    ? 'bg-blue-100'
-                    : '',
-                ]"
+                <!-- Table Body -->
+                <tbody>
+                  <tr
+                    v-for="record in sortedLocalData"
+                    :key="record.id || record.tempId"
+                    :id="'row-' + (record.id || record.tempId)"
+                    :class="[
+                      'hover:bg-green-200 relative',
+                      highlightedRecordId === (record.id || record.tempId)
+                        ? 'bg-blue-100'
+                        : '',
+                      record.join_group_id
+                        ? 'border-l-4 ' + getJoinColor(record.join_group_id)
+                        : '',
+                    ]"
+                  >
+                    <!-- Section Input -->
+                    <td class="px-2 py-2 border relative">
+                      <input
+                        v-model="record.searchSectionQuery"
+                        type="text"
+                        placeholder="Select section..."
+                        class="px-3 py-2 w-full rounded-md text-md"
+                        @focus="record.showSectionDropdown = true"
+                        @input="record.class_id = null"
+                      />
+                      <div
+                        v-if="
+                          record.showSectionDropdown &&
+                          filteredSections(record).length
+                        "
+                        class="absolute z-10 w-full bg-white border rounded-md max-h-40 overflow-y-auto mt-1"
+                      >
+                        <div
+                          v-for="section in filteredSections(record)"
+                          :key="section.class_id"
+                          class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                          @mousedown.prevent="selectSection(record, section)"
+                        >
+                          {{ section.set_name }}
+                        </div>
+                      </div>
+                    </td>
+
+                    <!-- Course Input -->
+                    <td class="px-2 py-2 border relative">
+                      <input
+                        v-model="record.searchCourseQuery"
+                        type="text"
+                        placeholder="Select course..."
+                        class="px-3 py-2 w-full rounded-md text-md"
+                        @focus="record.showCourseDropdown = true"
+                        @input="record.course_id = null"
+                      />
+                      <div
+                        v-if="
+                          record.showCourseDropdown &&
+                          filteredCourses(record).length
+                        "
+                        class="absolute z-10 w-full bg-white border rounded-md max-h-40 overflow-y-auto mt-1"
+                      >
+                        <div
+                          v-for="course in filteredCourses(record)"
+                          :key="course.course_id"
+                          class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                          @mousedown="selectCourse(record, course)"
+                        >
+                          {{ course.course_code }}
+                        </div>
+                      </div>
+                    </td>
+
+                    <!-- Room Input -->
+                    <td class="px-2 py-2 border relative">
+                      <input
+                        v-model="record.searchRoomQuery"
+                        type="text"
+                        placeholder="Select room..."
+                        class="px-3 py-2 w-full rounded-md text-md"
+                        @focus="record.showRoomDropdown = true"
+                        @input="record.room_id = null"
+                      />
+                      <div
+                        v-if="
+                          record.showRoomDropdown &&
+                          filteredRooms(record).length
+                        "
+                        class="absolute z-10 w-full bg-white border rounded-md max-h-40 overflow-y-auto mt-1"
+                      >
+                        <div
+                          v-for="room in filteredRooms(record)"
+                          :key="room.room_id"
+                          class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                          @mousedown="selectRoom(record, room)"
+                        >
+                          {{ room.room_name }}
+                        </div>
+                      </div>
+                    </td>
+
+                    <!-- Day -->
+                    <td class="px-2 py-2 border">
+                      <input
+                        v-model="record.day"
+                        class="w-full px-3 py-2 boder rounded-md text-center"
+                      />
+                    </td>
+
+                    <!-- Start Hour -->
+                    <td class="px-2 py-2 border text-center">
+                      <input
+                        v-model.number="record.start_hour"
+                        type="number"
+                        step="0.5"
+                        min="8"
+                        max="20"
+                        class="w-full px-3 py-2 rounded-md text-center"
+                      />
+                    </td>
+
+                    <!-- Duration -->
+                    <td class="px-2 py-2 border text-center">
+                      <input
+                        v-model.number="record.duration"
+                        type="number"
+                        class="w-full px-3 py-2 rounded-md text-center"
+                      />
+                    </td>
+
+                    <!-- Mode -->
+                    <td class="px-2 py-2 border">
+                      <select
+                        v-model="record.mode"
+                        @change="onModeChange(record)"
+                        class="w-full rounded px-2 py-1 text-sm"
+                      >
+                        <option value="" disabled selected>Select mode</option>
+                        <option value="face to face">Face to face</option>
+                        <option value="online">Online</option>
+                      </select>
+                    </td>
+
+                    <!-- Action -->
+                    <td class="px-2 py-3 border text-center">
+                      <button
+                        @click="toggleDelete(record)"
+                        class="bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Footer Buttons -->
+            <div class="flex justify-end gap-2 p-3 text-xs border-t">
+              <button
+                @click="addNewRow"
+                class="bg-defaultGreen text-white px-3 py-2 rounded-lg flex items-center gap-1"
               >
-                <td class="px-2 py-2 border relative">
-                  <input
-                    v-model="record.searchSectionQuery"
-                    type="text"
-                    placeholder="Select section..."
-                    class="px-3 py-2 border w-full rounded-md text-md"
-                    @focus="record.showSectionDropdown = true"
-                    @input="record.class_id = null"
-                  />
-
-                  <div
-                    v-if="
-                      record.showSectionDropdown &&
-                      filteredSections(record).length
-                    "
-                    class="absolute z-10 w-full bg-white border rounded-md max-h-40 overflow-y-auto mt-1"
-                  >
-                    <div
-                      v-for="section in filteredSections(record)"
-                      :key="section.class_id"
-                      class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                      @mousedown.prevent="selectSection(record, section)"
-                    >
-                      {{ section.set_name }}
-                    </div>
-                  </div>
-                </td>
-                <td class="px-2 py-2 border relative">
-                  <input
-                    v-model="record.searchCourseQuery"
-                    type="text"
-                    placeholder="Select course..."
-                    class="px-3 py-2 border w-full rounded-md text-md"
-                    @focus="record.showCourseDropdown = true"
-                    @input="record.course_id = null"
-                  />
-
-                  <div
-                    v-if="
-                      record.showCourseDropdown &&
-                      filteredCourses(record).length
-                    "
-                    class="absolute z-10 w-full bg-white border rounded-md max-h-40 overflow-y-auto mt-1"
-                  >
-                    <div
-                      v-for="course in filteredCourses(record)"
-                      :key="course.course_id"
-                      class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                      @mousedown="selectCourse(record, course)"
-                    >
-                      {{ course.course_code }}
-                    </div>
-                  </div>
-                </td>
-
-                <td class="px-2 py-2 border relative">
-                  <input
-                    v-model="record.searchRoomQuery"
-                    type="text"
-                    placeholder="Select room..."
-                    class="px-3 py-2 border w-full rounded-md text-md"
-                    @focus="record.showRoomDropdown = true"
-                    @input="record.room_id = null"
-                    :disabled="(record.mode || '').toLowerCase() === 'online'"
-                    :class="{
-                      'bg-gray-100 cursor-not-allowed':
-                        (record.mode || '').toLowerCase() === 'online',
-                    }"
-                  />
-
-                  <div
-                    v-if="
-                      record.showRoomDropdown && filteredRooms(record).length
-                    "
-                    class="absolute z-10 w-full bg-white border rounded-md max-h-40 overflow-y-auto mt-1"
-                  >
-                    <div
-                      v-for="room in filteredRooms(record)"
-                      :key="room.room_id"
-                      class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                      @mousedown="selectRoom(record, room)"
-                    >
-                      {{ room.room_name }}
-                    </div>
-                  </div>
-                </td>
-
-                <td class="px-2 py-2 border">
-                  <input
-                    v-model="record.day"
-                    class="w-full px-3 py-2 border rounded-md text-center"
-                  />
-                </td>
-
-                <td class="px-2 py-2 border text-center">
-                  <input
-                    v-model.number="record.start_hour"
-                    type="number"
-                    step="0.5"
-                    min="8"
-                    max="20"
-                    class="w-full px-3 py-2 border rounded-md text-center"
-                  />
-                </td>
-
-                <td class="px-2 py-2 border text-center">
-                  <input
-                    v-model.number="record.duration"
-                    type="number"
-                    class="w-full px-3 py-2 border rounded-md text-center"
-                  />
-                </td>
-                <td class="px-2 py-2 border">
-                  <select
-                    v-model="record.mode"
-                    @change="onModeChange(record)"
-                    class="w-full border rounded px-2 py-1 text-sm"
-                  >
-                    <option value="" disabled selected>Select mode</option>
-                    <option value="face to face">Face to face</option>
-                    <option value="online">Online</option>
-                  </select>
-                </td>
-
-                <td class="px-2 py-3 border text-center">
-                  <button
-                    @click="toggleDelete(record)"
-                    class="bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="flex justify-end gap-2 p-3 text-xs">
-            <button
-              @click="addNewRow"
-              class="bg-defaultGreen text-white px-3 py-2 rounded-lg flex items-center gap-1"
-            >
-              <icon name="circle-add1" />
-              Add Row
-            </button>
-            <button
-              @click="cancelNewRow"
-              class="bg-gray-300 text-gray-800 px-2 py-2 rounded-lg"
-            >
-              Clear
-            </button>
+                <icon name="circle-add1" />
+                Add Row
+              </button>
+              <button
+                @click="cancelNewRow"
+                class="bg-gray-300 text-gray-800 px-2 py-2 rounded-lg"
+              >
+                Clear
+              </button>
+            </div>
           </div>
+        </div>
+        <div v-if="showAddSchedulePanel">
+          <unscheduled />
         </div>
       </div>
     </div>
@@ -496,18 +561,18 @@
           </div>
 
           <!-- RIGHT: Conflicts -->
-          <div class="relative bg-white rounded-2xl p-5 border">
+          <div class="relative bg-white rounded-2xl p-4 border">
             <span
               class="absolute -top-3 left-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full shadow"
             >
               Conflicting Schedules
             </span>
 
-            <div class="mt-3 space-y-4 max-h-[420px] overflow-y-auto pr-2">
+            <div class="mt-3 space-y-4 max-h-[420px] overflow-y-auto p-2">
               <div
                 v-for="conflict in conflictRecords"
                 :key="conflict.id"
-                class="bg-white rounded-xl p-4 ring-1 ring-red-200"
+                class="bg-white rounded-xl p-8 ring-1 ring-red-200"
               >
                 <div class="space-y-2 text-sm">
                   <div class="flex justify-between items-center">
@@ -637,6 +702,96 @@
       </div>
     </div>
   </div>
+  <!-- Schedule Tooltip -->
+  <div
+    v-if="scheduleTooltipVisible && tooltipItem"
+    class="fixed z-[9999] pointer-events-none"
+    :style="{ top: tooltipY + 'px', left: tooltipX + 'px' }"
+  >
+    <div
+      class="bg-white border border-gray-300 rounded-xl p-3 scale-125 origin-top-left shadow-lg w-[250px]"
+    >
+      <!-- Header -->
+      <div class="flex items-center justify-between gap-2 mb-2 w-full">
+        <div class="text-sm font-bold text-defaultGreen leading-none truncate">
+          {{ tooltipItem.course_code }}
+        </div>
+        <div class="relative flex gap-1 items-center py-1 text-[8px]">
+          <!-- Joined Badge -->
+          <span
+            v-if="tooltipItem.is_joined"
+            class="inline-flex items-center justify-center px-2 py-1 bg-blue-600 text-white rounded-full shadow"
+          >
+            Joined
+          </span>
+          <!-- Mode Badge -->
+          <span
+            v-if="tooltipItem.mode"
+            class="inline-flex items-center justify-center px-2 py-1 rounded-full text-white"
+            :class="
+              tooltipItem.mode === 'face to face'
+                ? 'bg-orange-500'
+                : 'bg-purple-500'
+            "
+          >
+            {{
+              tooltipItem.mode === "face to face" ? "Face to Face" : "Online"
+            }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="text-[10px] text-gray-700 space-y-1">
+        <p><strong>Faculty:</strong> {{ tooltipItem.faculty_name }}</p>
+
+        <!-- Joined Sections -->
+        <div>
+          <p class="font-semibold">Year & Section:</p>
+          <ul class="ml-3 list-disc space-y-0.5">
+            <template v-if="tooltipItem.joinedItems?.length">
+              <li v-for="s in tooltipItem.joinedItems" :key="s.id">
+                {{ s.program_name }} - {{ s.set_name }} ({{ s.class_size }})
+              </li>
+            </template>
+            <template v-else>
+              <li>
+                {{ tooltipItem.program_name }} - {{ tooltipItem.set_name }} ({{
+                  tooltipItem.class_size
+                }})
+              </li>
+            </template>
+          </ul>
+        </div>
+
+        <p><strong>Room:</strong> {{ tooltipItem.room_name || "N/A" }}</p>
+        <p><strong>Day:</strong> {{ tooltipItem.day }}</p>
+        <p>
+          <strong>Time:</strong>
+          {{ formatTime(tooltipItem.start_hour) }} –
+          {{
+            formatTime(tooltipItem.start_hour + Number(tooltipItem.duration))
+          }}
+        </p>
+        <p><strong>Type:</strong> {{ tooltipItem.type }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unjoin Confirmation Modal -->
+  <UnjoinModal
+    :visible="unjoinModalVisible"
+    @confirm="confirmUnjoin"
+    @close="cancelUnjoin"
+  />
+
+  <editJoinValdiation
+    :visible="joinValidationModalVisible"
+    :baseRecord="pendingJoinRecord"
+    :targets="pendingJoinTargets"
+    @close="cancelJoin"
+    @confirm="confirmJoin"
+  />
 </template>
 
 <script>
@@ -645,8 +800,11 @@ import { toast } from "vue3-toastify";
 import { useFetchDataStore } from "@/store/fetch-data-store";
 import { mapState, mapActions } from "pinia";
 import icon from "@/assets/icon.vue";
+import editJoinValdiation from "../faculty-components/edit-join-valdiation.vue";
+import unscheduled from "../faculty-components/unscheduled.vue";
+import UnjoinModal from "../faculty-components/unjoin-validation-modal.vue";
 export default {
-  components: { icon },
+  components: { icon, editJoinValdiation, unscheduled, UnjoinModal },
   props: {
     show: Boolean,
     instructorData: { type: Array, default: () => [] },
@@ -656,11 +814,19 @@ export default {
       user: {},
       localData: [],
       saving: false,
-      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      // 8 AM to 8 PM
-      timeSlots: Array.from({ length: 13 }, (_, i) => ({
-        start: 8 + i,
-        end: 9 + i,
+      days: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+
+      timeSlots: Array.from({ length: 14 }, (_, i) => ({
+        start: 7 + i, // 7, 8, 9 ... 20
+        end: 8 + i, // 8, 9, 10 ... 21
       })),
       selectedSchedule: {},
       draggedRecord: null,
@@ -678,10 +844,26 @@ export default {
 
       deletedIds: new Set(),
       highlightedRecordId: null,
+      isJoined: false,
+      joinValidationModalVisible: false,
+      pendingJoinRecord: null,
+      pendingJoinTargets: [],
+
+      draggedGroup: [],
+      scheduleTooltipVisible: false,
+      tooltipItem: null,
+      tooltipX: 0,
+      tooltipY: 0,
+      unjoinModalVisible: false,
+      unjoinTarget: null,
     };
   },
   computed: {
     ...mapState(useFetchDataStore, ["rooms"]),
+    isDraggable(record) {
+      // If Join is active and class size >= 30 → not draggable
+      return !(this.isJoined && Number(record.class_size) >= 30);
+    },
     sortedLocalData() {
       const dayOrder = [
         "Monday",
@@ -863,6 +1045,257 @@ export default {
       "fetchCourses",
       "fetchClassSections",
     ]),
+    cancelJoin() {
+      this.resetJoinState();
+    },
+    attemptUnjoin(item) {
+      if (item.is_joined) {
+        this.unjoinTarget = item;
+        this.unjoinModalVisible = true;
+      }
+    },
+    async confirmUnjoin() {
+      if (!this.unjoinTarget) return;
+
+      const record = this.unjoinTarget;
+      const groupId = record.join_group_id;
+
+      // Find all schedules in this join group
+      const groupRecords = this.localData.filter(
+        (r) => r.join_group_id === groupId,
+      );
+
+      // Reset join info for the entire group
+      groupRecords.forEach((r) => {
+        r.is_joined = false;
+        r.join_group_id = null;
+        r.joined_with = [];
+      });
+
+      // Clear global join modal state
+      this.pendingJoinRecord = null;
+      this.pendingJoinTargets = [];
+      this.isJoined = false;
+
+      // Optionally update backend
+      try {
+        await Promise.all(
+          groupRecords.map((r) =>
+            axios.patch(
+              `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${r.id}`,
+              {
+                is_joined: false,
+                join_group_id: null,
+                joined_with: [],
+              },
+            ),
+          ),
+        );
+        toast.success("All schedules in the join group have been unjoined!");
+      } catch (err) {
+        console.error("Failed to unjoin schedules:", err);
+        toast.error("Failed to unjoin schedules.");
+        // Rollback if needed
+        groupRecords.forEach((r) => {
+          r.is_joined = true;
+          r.join_group_id = groupId;
+          r.joined_with = groupRecords
+            .filter((x) => x.id !== r.id)
+            .map((x) => x.id);
+        });
+      } finally {
+        this.unjoinModalVisible = false;
+        this.unjoinTarget = null;
+      }
+    },
+
+    cancelUnjoin() {
+      this.unjoinModalVisible = false;
+      this.unjoinTarget = null;
+    },
+    onMouseMoveTooltip(event) {
+      if (this.scheduleTooltipVisible) {
+        // Slight offset so the tooltip doesn’t cover the cursor
+        this.tooltipX = event.clientX + 10;
+        this.tooltipY = event.clientY + 10;
+      }
+    },
+    hideScheduleTooltip() {
+      this.scheduleTooltipVisible = false;
+      this.tooltipItem = null;
+    },
+    showScheduleTooltip(event, item) {
+      if (this.draggedRecord) return;
+
+      const rect = event.currentTarget.getBoundingClientRect();
+
+      // ✅ SAFE fallback
+      const schedules = this.finalSchedules || this.localData || [];
+
+      let joinedItems = [];
+
+      if (item.is_joined && item.join_group_id) {
+        joinedItems = schedules.filter(
+          (s) => s.join_group_id === item.join_group_id,
+        );
+      }
+
+      this.tooltipItem = {
+        ...item,
+        joinedItems,
+      };
+
+      this.scheduleTooltipVisible = true;
+
+      const tooltipWidth = 260;
+      const tooltipHeight = 200;
+
+      this.tooltipX = Math.min(
+        rect.right + 12,
+        window.innerWidth - tooltipWidth,
+      );
+
+      this.tooltipY = Math.min(rect.top, window.innerHeight - tooltipHeight);
+    },
+    toggleJoin() {
+      this.isJoined = !this.isJoined;
+    },
+    getJoinColor(groupId) {
+      if (!groupId) return null;
+
+      const colors = [
+        "border-blue-500",
+        "border-green-500",
+        "border-purple-500",
+        "border-pink-500",
+        "border-yellow-500",
+        "border-indigo-500",
+      ];
+
+      const index = Math.abs(groupId) % colors.length;
+      return colors[index];
+    },
+    canJoin(recordA, recordB) {
+      if (!recordA || !recordB) return false;
+      if (recordA.id === recordB.id) return false;
+      if (recordB.is_joined) return false;
+
+      const getSetPrefix = (set_name) => set_name?.split(" ")[0]?.trim() || "";
+
+      const baseSet = getSetPrefix(recordA.set_name);
+      const targetSet = getSetPrefix(recordB.set_name);
+
+      const validModes = ["online", "face to face"];
+      const modeA = recordA.mode?.toLowerCase();
+      const modeB = recordB.mode?.toLowerCase();
+
+      return (
+        recordA.course_code === recordB.course_code &&
+        recordA.type === recordB.type &&
+        recordA.semester === recordB.semester &&
+        baseSet === targetSet &&
+        Number(recordA.class_size) < 30 &&
+        Number(recordB.class_size) < 30 &&
+        validModes.includes(modeA) &&
+        validModes.includes(modeB) &&
+        modeA === modeB // <-- make sure the modes match exactly
+      );
+    },
+    getJoinableSchedules(record) {
+      if (!this.localData || !Array.isArray(this.localData)) {
+        return [];
+      }
+
+      return this.localData.filter((r) => this.canJoin(record, r));
+    },
+    resetJoinState() {
+      this.pendingJoinRecord = null;
+      this.pendingJoinTargets = [];
+      this.joinValidationModalVisible = false;
+    },
+    cleanDropdownFields(payload) {
+      delete payload.searchRoomQuery;
+      delete payload.showRoomDropdown;
+      delete payload.searchCourseQuery;
+      delete payload.showCourseDropdown;
+      delete payload.searchSectionQuery;
+      delete payload.showSectionDropdown;
+    },
+    async confirmJoin() {
+      if (!this.pendingJoinRecord || !this.pendingJoinTargets.length) return;
+
+      const baseRecord = this.pendingJoinRecord;
+
+      // Filter only valid join targets
+      const validTargets = this.pendingJoinTargets.filter((target) =>
+        this.canJoin(baseRecord, target),
+      );
+
+      if (!validTargets.length) {
+        toast.error("No valid schedules to join based on the rules.");
+        this.resetJoinState();
+        return;
+      }
+
+      const allToJoin = [baseRecord, ...validTargets];
+      const finalMode = baseRecord.mode?.toLowerCase();
+      const joinGroupId = baseRecord.id;
+      const joinedIds = allToJoin.map((s) => s.id);
+
+      // ✅ Update UI instantly
+      allToJoin.forEach((s) => {
+        s.day = baseRecord.day;
+        s.start_hour = baseRecord.start_hour;
+        s.duration = baseRecord.duration;
+        s.mode = finalMode;
+
+        if (finalMode === "face to face") {
+          s.room_id = baseRecord.room_id || null;
+          s.room_name = baseRecord.room_name || null;
+          s.room_capacity = baseRecord.room_capacity || null;
+          s.room_type = baseRecord.room_type || null;
+        } else {
+          s.room_id = null;
+          s.room_name = null;
+          s.room_capacity = null;
+          s.room_type = null;
+        }
+
+        s.join_group_id = joinGroupId;
+        s.is_joined = true;
+        s.joined_with = joinedIds.filter((id) => id !== s.id);
+      });
+
+      this.resetJoinState();
+
+      // ✅ Send PATCH request in background (batch style)
+      axios
+        .patch(
+          `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/bulk-join`,
+          allToJoin.map((s) => ({
+            id: s.id,
+            day: s.day,
+            start_hour: s.start_hour,
+            duration: s.duration,
+            mode: s.mode,
+            room_id: s.room_id,
+            room_name: s.room_name,
+            room_capacity: s.room_capacity,
+            room_type: s.room_type,
+            join_group_id: s.join_group_id,
+            is_joined: s.is_joined,
+            joined_with: s.joined_with,
+          })),
+        )
+        .catch((err) => console.error("Failed to save joined schedules:", err));
+
+      toast.success(
+        `Classes joined! Total students: ${allToJoin.reduce(
+          (a, s) => a + Number(s.class_size || 0),
+          0,
+        )}`,
+      );
+    },
     /* ------------------ 1. UTILITY ------------------ */ // called whenever mode changes
 
     sanitizePayload(record) {
@@ -875,7 +1308,7 @@ export default {
         "day",
         "start_hour",
         "duration",
-        "room_name",
+
         "room_id",
         "room_type",
         "room_capacity",
@@ -884,6 +1317,10 @@ export default {
         "school_year",
         "semester",
         "mode",
+
+        "is_joined",
+        "join_group_id",
+        "joined_with",
       ];
 
       const payload = {};
@@ -906,19 +1343,13 @@ export default {
     },
     onModeChange(record) {
       if ((record.mode || "").toLowerCase() === "online") {
-        // Clear all room info
         record.room_id = null;
-        record.room_name = null; // important
+        record.room_name = "None";
         record.room_type = null;
         record.room_capacity = null;
-        record.searchRoomQuery = ""; // important to clear input display
-        record.showRoomDropdown = false;
+        record.searchRoomQuery = "None";
       } else {
-        // reset when switching back to face-to-face
         record.room_name = "";
-        record.room_id = null;
-        record.room_type = null;
-        record.room_capacity = null;
         record.searchRoomQuery = "";
       }
     },
@@ -1261,54 +1692,43 @@ export default {
         .filter((r) => r.faculty_name !== instructor);
     },
     getConflictingRecords(record) {
-      const recordStart = this.normalizeHour(record.start_hour);
-      const recordEnd = recordStart + Number(record.duration);
+      return this.localData.filter((r) => {
+        // 🚫 Skip self
+        if (r.id === record.id) return false;
 
-      return this.allData
-        .map((r) => {
-          // Ignore self
-          if (
-            (r.id && record.id && r.id === record.id) ||
-            (r.tempId && record.tempId && r.tempId === record.tempId)
-          )
-            return null;
+        // 🚫 Skip conflict if same join group
+        if (
+          record.join_group_id &&
+          r.join_group_id &&
+          record.join_group_id === r.join_group_id
+        ) {
+          return false;
+        }
 
-          // Same day only
-          if (r.day !== record.day) return null;
+        const recordEnd = record.start_hour + (record.duration || 0);
+        const rEnd = r.start_hour + (r.duration || 0);
 
-          const rStart = this.normalizeHour(r.start_hour);
-          const rEnd = rStart + Number(r.duration);
+        // ⏰ Time overlap check
+        const timeOverlap =
+          record.start_hour < rEnd && recordEnd > r.start_hour;
 
-          // No time overlap
-          if (Math.max(rStart, recordStart) >= Math.min(rEnd, recordEnd))
-            return null;
+        if (!timeOverlap) return false;
 
-          // Determine conflict reason
-          let reason = [];
-          if (r.class_id && record.class_id && r.class_id === record.class_id)
-            reason.push("Same set and section in the same day and time!");
-          if (
-            record.mode === "face to face" &&
-            r.mode === "face to face" &&
-            r.room_id &&
-            record.room_id &&
-            r.room_id === record.room_id
-          )
-            reason.push("Same Room");
-          if (
-            r.faculty_id === record.faculty_id &&
-            (r.mode || "").toLowerCase() === (record.mode || "").toLowerCase()
-          )
-            reason.push("Same Faculty and Same Mode");
+        // 👩‍🏫 Same faculty conflict
+        const sameFaculty =
+          r.faculty_name === record.faculty_name && r.day === record.day;
 
-          if (!reason.length) return null;
+        // 🏫 Same room conflict (only for face-to-face)
+        const sameRoom =
+          record.mode === "face to face" &&
+          r.mode === "face to face" &&
+          r.room_name &&
+          record.room_name &&
+          r.room_name === record.room_name &&
+          r.day === record.day;
 
-          return {
-            ...r,
-            reason: reason.join(", "),
-          };
-        })
-        .filter(Boolean);
+        return sameFaculty || sameRoom;
+      });
     },
     openConflictModal(record) {
       this.selectedSchedule = {
@@ -1391,126 +1811,119 @@ export default {
       );
     },
     onDragStart(event, record) {
-      this.draggedRecord = record;
       event.dataTransfer.effectAllowed = "move";
-    },
+      this.draggedRecord = record;
 
+      // Drag whole group if joined
+      if (record.join_group_id) {
+        this.draggedGroup = this.localData.filter(
+          (r) => r.join_group_id === record.join_group_id,
+        );
+      } else {
+        this.draggedGroup = [record];
+      }
+    },
     async onDrop(event, targetInstructor, targetDay, targetStartHour) {
       if (!this.draggedRecord) return;
 
-      // Create temporary record for new position
-      const tempRecord = {
-        ...this.draggedRecord,
-        faculty_name: targetInstructor,
-        day: targetDay,
-        start_hour: targetStartHour,
-        mode: this.draggedRecord.mode,
-      };
+      const group = this.draggedGroup?.length
+        ? this.draggedGroup
+        : [this.draggedRecord];
 
-      // Check for conflicts
-      const conflicts = this.getConflictingRecords(tempRecord);
-      if (conflicts.length) {
-        // ✅ Set the dragged record as the selected schedule in conflict modal
-        this.selectedSchedule = {
-          ...tempRecord,
-          time_start: tempRecord.start_hour ?? 0,
-          time_end: (tempRecord.start_hour ?? 0) + (tempRecord.duration ?? 0),
-          course_code: tempRecord.course_code || "N/A",
-          faculty_name: tempRecord.faculty_name || "TBD",
-          set_name: tempRecord.set_name || "TBD",
-          room_name: tempRecord.room_name || "TBD",
-          day: tempRecord.day || "TBD",
-          mode: tempRecord.mode || "face to face",
+      /* ===============================
+     STEP 1: JOIN MODE CHECK
+  =============================== */
+
+      if (this.isJoined && group.length === 1) {
+        const tempRecord = {
+          ...this.draggedRecord,
+          faculty_name: targetInstructor,
+          day: targetDay,
+          start_hour: targetStartHour,
         };
 
-        this.conflictRecords = conflicts;
-        this.conflictModalVisible = true;
-        this.draggedRecord = null;
-        return; // do not move
+        const joinables = this.getJoinableSchedules(tempRecord);
+
+        if (joinables.length) {
+          this.pendingJoinRecord = this.draggedRecord;
+          this.pendingJoinTargets = joinables;
+          this.joinValidationModalVisible = true;
+          return;
+        }
       }
 
-      // Check if target cell has a record to swap
-      const targetRecord = this.localData.find(
-        (r) =>
-          r.faculty_name === targetInstructor &&
-          r.day === targetDay &&
-          r.start_hour === targetStartHour,
-      );
+      /* ===============================
+     STEP 2: GROUP CONFLICT CHECK
+  =============================== */
 
-      if (targetRecord) {
-        // Swap records
-        const temp = {
-          day: targetRecord.day,
-          start_hour: targetRecord.start_hour,
-          faculty_name: targetRecord.faculty_name,
+      const groupConflicts = [];
+
+      for (const rec of group) {
+        const tempRecord = {
+          ...rec,
+          faculty_name: targetInstructor,
+          day: targetDay,
+          start_hour: targetStartHour,
         };
 
-        Object.assign(targetRecord, {
-          day: this.draggedRecord.day,
-          start_hour: this.draggedRecord.start_hour,
-          faculty_name: this.draggedRecord.faculty_name,
-          mode: this.draggedRecord.mode || "face to face",
-        });
-
-        Object.assign(this.draggedRecord, temp);
-
-        // PATCH both records
-        await Promise.all(
-          [targetRecord, this.draggedRecord].map(async (rec) => {
-            const payload = this.sanitizePayload(rec);
-            delete payload.searchRoomQuery;
-            delete payload.showRoomDropdown;
-            delete payload.searchCourseQuery;
-            delete payload.showCourseDropdown;
-            delete payload.searchSectionQuery;
-            delete payload.showSectionDropdown;
-            const id = rec.id || rec.schedule_id || rec.final_generated_id;
-            if (!id) return;
-            try {
-              await axios.patch(
-                `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${id}`,
-                payload,
-              );
-            } catch (error) {
-              console.error("Failed to update schedule:", error);
-              toast.error("Failed to update schedule.");
-            }
-          }),
+        const conflicts = this.getConflictingRecords(tempRecord).filter(
+          (c) => !group.some((g) => g.id === c.id),
         );
-      } else {
-        // Move dragged record to empty cell
-        Object.assign(this.draggedRecord, {
+
+        groupConflicts.push(...conflicts);
+      }
+
+      if (groupConflicts.length) {
+        this.selectedSchedule = {
+          ...this.draggedRecord,
+          time_start: targetStartHour ?? 0,
+          time_end: (targetStartHour ?? 0) + (this.draggedRecord.duration ?? 0),
+          faculty_name: targetInstructor,
+          day: targetDay,
+        };
+
+        this.conflictRecords = groupConflicts;
+        this.conflictModalVisible = true;
+
+        this.draggedRecord = null;
+        this.draggedGroup = [];
+        return;
+      }
+
+      /* ===============================
+     STEP 3: MOVE ENTIRE GROUP
+  =============================== */
+
+      for (const rec of group) {
+        Object.assign(rec, {
           faculty_name: targetInstructor,
           day: targetDay,
           start_hour: targetStartHour,
         });
 
-        const payload = this.sanitizePayload(this.draggedRecord);
-        delete payload.searchRoomQuery;
-        delete payload.showRoomDropdown;
-        delete payload.searchCourseQuery;
-        delete payload.showCourseDropdown;
-        delete payload.searchSectionQuery;
-        delete payload.showSectionDropdown;
+        const payload = this.sanitizePayload(rec);
+        this.cleanDropdownFields(payload);
 
-        const id =
-          this.draggedRecord.id ||
-          this.draggedRecord.schedule_id ||
-          this.draggedRecord.final_generated_id;
-        if (id) {
-          try {
-            await axios.patch(
-              `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${id}`,
-              payload,
-            );
-          } catch (error) {
-            console.error("Failed to update schedule:", error);
-            toast.error("Failed to update schedule.");
-          }
+        const id = rec.id || rec.schedule_id || rec.final_generated_id;
+
+        if (!id) continue;
+
+        try {
+          await axios.patch(
+            `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${id}`,
+            payload,
+          );
+        } catch (error) {
+          console.error("Failed to update schedule:", error);
         }
       }
 
-      this.draggedRecord = null; // reset drag state
+      /* ===============================
+     RESET
+  =============================== */
+
+      this.draggedRecord = null;
+      this.draggedGroup = [];
     },
     /* ------------------ 9. SAVING TO DATABASE  ---------------- */
     async saveEdit() {
@@ -1530,10 +1943,9 @@ export default {
         });
 
         const newRows = [];
-        const existingRows = [];
+        const updatedRows = [];
 
         this.localData.forEach((record) => {
-          // 🔒 SANITIZE PAYLOAD HERE
           const payload = this.sanitizePayload({
             ...record,
             mode:
@@ -1542,28 +1954,32 @@ export default {
                 : "face to face",
           });
 
-          const existingId =
+          const id =
             record.id || record.schedule_id || record.final_generated_id;
 
-          if (existingId) {
-            existingRows.push({ id: existingId, payload });
-          } else {
-            newRows.push(payload);
-          }
+          if (id) updatedRows.push({ id, payload });
+          else newRows.push(payload);
         });
 
-        // ➕ Create new schedules
+        // 1️⃣ Create new schedules (bulk)
         if (newRows.length) {
-          await axios.post(
+          const { data } = await axios.post(
             `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/bulk`,
             newRows,
           );
+          // assign returned IDs to localData
+          data.forEach((row, idx) => {
+            const tempRecord = this.localData.find(
+              (r) => !r.id && r.tempId === newRows[idx].tempId,
+            );
+            if (tempRecord) tempRecord.id = row.id;
+          });
         }
 
-        // ✏️ Update existing schedules
-        if (existingRows.length) {
+        // 2️⃣ Update existing schedules in parallel
+        if (updatedRows.length) {
           await Promise.all(
-            existingRows.map(({ id, payload }) =>
+            updatedRows.map(({ id, payload }) =>
               axios.patch(
                 `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/${id}`,
                 payload,
@@ -1571,20 +1987,6 @@ export default {
             ),
           );
         }
-
-        // 🔄 Refresh schedules
-        const fetchDataStore = useFetchDataStore();
-        await fetchDataStore.fetchFinalSchedules();
-
-        this.localData = (fetchDataStore.final_schedules || []).map((rec) => ({
-          ...rec,
-          searchRoomQuery: rec.room_name || "",
-          showRoomDropdown: false,
-          searchCourseQuery: rec.course_code || "",
-          showCourseDropdown: false,
-          searchSectionQuery: rec.set_name || "",
-          showSectionDropdown: false,
-        }));
 
         toast.success("Schedules saved successfully!");
         this.$emit("saved", this.localData);

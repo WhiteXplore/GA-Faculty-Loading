@@ -2,7 +2,7 @@
   <div class="bg-defaultGreen h-screen flex animate-scaleUp">
     <!-- Sidebar -->
     <div
-      :class="{ 'w-16': !isExpanded, 'w-64': isExpanded }"
+      :class="{ 'w-[70px]': !isExpanded, 'w-[240px]': isExpanded }"
       class="h-full fixed left-0 top-0 bg-defaultGreen text-white p-3 transition-all duration-300 ease-in-out"
       v-if="user.role"
     >
@@ -48,7 +48,7 @@
 
       <!-- Dynamic Menu -->
       <div
-        class="flex flex-col mt-6 gap-2 tracking-wide text-[13px] w-full overflow-auto max-h-[calc(100vh-200px)] pr-2 scrollbar-glass"
+        class="flex flex-col mt-6 gap-2 tracking-wide text-[13px] w-full overflow-auto max-h-[calc(100vh-200px)] scrollbar-glass"
       >
         <template v-for="section in roleMenuSections" :key="section.title">
           <div v-if="isExpanded" class="text-md text-white mt-1 text-left">
@@ -150,15 +150,16 @@
     </div>
 
     <!-- Main Content -->
+
     <div
       :class="{
-        'ml-16': !isExpanded,
-        'ml-64': isExpanded,
+        'ml-[70px]': !isExpanded,
+        'ml-[240px]': isExpanded,
       }"
-      class="flex-grow transition-all max-h-screen rounded-t-xl overflow-y-auto z-50 mt-2"
+      class="flex-grow transition-all max-h-screen rounded-t-xl overflow-y-auto z-50 mt-3"
     >
       <slot>
-        <div class="bg-white w-auto shadow mr-2 rounded-t-xl h-full">
+        <div class="bg-white w-auto shadow mr-3 rounded-t-xl h-full">
           <adminTopbar />
           <div class="">
             <router-view></router-view>

@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center">
     <!-- LEFT: JOIN TOGGLE -->
     <div
-      class="flex items-center gap-4 py-2 px-3 ml-2 rounded-lg border w-max bg-gray-50 text-sm"
+      class="flex items-center gap-4 py-2 px-3 ml-2 rounded-full border w-max bg-white text-sm"
     >
       <span class="font-medium text-gray-700">Join Scheduled:</span>
 
@@ -30,7 +30,7 @@
     </div>
 
     <!-- RIGHT SIDE -->
-    <div class="flex items-center gap-3 flex-wrap">
+    <div class="flex items-center gap-3 flex-wrap mr-4">
       <!-- VIEW TOGGLE -->
       <div
         @click="$emit('toggleFacultyTable')"
