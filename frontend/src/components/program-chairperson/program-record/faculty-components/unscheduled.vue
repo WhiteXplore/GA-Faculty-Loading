@@ -7,7 +7,7 @@
       class="flex items-center justify-between px-4 py-2 text-defaultGreen rounded-t-lg"
     >
       <!-- Title -->
-      <h3 class="font-semibold text-base">Unscheduled Courses</h3>
+      <h3 class="font-semibold text-base">Unscheduled Coursessss</h3>
 
       <!-- Search Input -->
       <div class="flex items-center gap-2">
@@ -40,7 +40,7 @@
               <th class="px-4 py-3 text-center">Type</th>
               <th class="px-4 py-3 text-center">School Year</th>
               <th class="px-4 py-3 text-center">Semester</th>
-              <th class="px-4 py-3 text-center">Reason</th>
+              <th class="px-4 py-3 text-center w-[29%]">Reason</th>
               <th class="px-4 py-3 text-center">Action</th>
             </tr>
           </thead>

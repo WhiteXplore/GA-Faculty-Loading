@@ -11,7 +11,7 @@ export class CreateUnscheduledMeetingDto {
   program_id: number;
 
   @IsString()
-  program_name: string;
+  program_code: string;
 
   @IsString()
   type: string;

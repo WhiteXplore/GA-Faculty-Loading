@@ -6,7 +6,6 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Instructor } from 'src/instructors/entities/instructor.entity';
 import { Program } from 'src/programs/entities/program.entity';
 import { Room } from 'src/rooms/entities/room.entity';
 import { User_Accounts } from 'src/user/entities/user.entity';
@@ -29,8 +28,6 @@ export class Institute {
   updated_at: Date;
 
   // 🔹 Relations
-  @OneToMany(() => Instructor, (instructor) => instructor.institute)
-  instructors: Instructor[];
 
   @OneToMany(() => Program, (program) => program.institute)
   programs: Program[];

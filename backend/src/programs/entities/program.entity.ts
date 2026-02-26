@@ -10,7 +10,6 @@ import {
 } from 'typeorm';
 import { Curriculum } from 'src/curriculum/entities/curriculum.entity';
 import { Institute } from 'src/institute/entities/institute.entity';
-import { Instructor } from 'src/instructors/entities/instructor.entity';
 import { Calendar } from 'src/calendar/entities/calendar.entity';
 import { User_Accounts } from 'src/user/entities/user.entity';
 import { AssignClass } from 'src/assign_class/entities/assign_class.entity';
@@ -46,9 +45,6 @@ export class Program {
 
   @OneToMany(() => Curriculum, (curriculum) => curriculum.program)
   curricula: Curriculum[];
-
-  @OneToMany(() => Instructor, (instructor) => instructor.program)
-  instructors: Instructor[];
 
   @OneToMany(() => Calendar, (calendar) => calendar.program)
   calendarEvents: Calendar[];

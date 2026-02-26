@@ -7,10 +7,6 @@ export class CreateRoomDto {
 
   @IsOptional()
   @IsString()
-  level: string;
-
-  @IsOptional()
-  @IsString()
   room_name: string;
 
   @IsOptional()

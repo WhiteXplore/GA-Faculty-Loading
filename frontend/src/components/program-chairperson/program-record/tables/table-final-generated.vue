@@ -366,7 +366,7 @@
                             }}
                           </template>
                           <template v-else>
-                            {{ item.program_name }}-{{ item.set_name }}
+                            {{ item.program_code }}-{{ item.set_name }}
                           </template>
                         </div>
 
@@ -437,13 +437,13 @@
                         )"
                         :key="s.class_id"
                       >
-                        {{ s.program_name }} - {{ s.set_name }} (Class Size:
+                        {{ s.program_code }} - {{ s.set_name }} (Class Size:
                         {{ s.class_size }})
                       </li>
                     </template>
                     <template v-else>
                       <li>
-                        {{ tooltipItem.program_name }} -
+                        {{ tooltipItem.program_code }} -
                         {{ tooltipItem.set_name }} (Class Size:
                         {{ tooltipItem.class_size }})
                       </li>
@@ -735,7 +735,7 @@ export default {
       return programIds.map((id) => {
         const prog = programs.find((p) => String(p.program_id) === String(id));
         return prog
-          ? { id, name: prog.program_name }
+          ? { id, name: prog.program_code }
           : { id, name: `Program ${id}` };
       });
     },

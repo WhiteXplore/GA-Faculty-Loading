@@ -26,7 +26,7 @@ export class CreateFinalGeneratedClassScheduleDto {
 
   @IsOptional()
   @IsString()
-  program_name?: string;
+  program_code?: string;
 
   @IsOptional()
   @IsInt()

@@ -21,7 +21,7 @@ export class FinalGeneratedClassSchedule {
   program_id: number;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
-  program_name: string;
+  program_code: string;
 
   @Column({ type: 'int', nullable: true })
   institute_id: number;

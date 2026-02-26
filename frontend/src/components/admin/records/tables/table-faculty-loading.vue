@@ -516,7 +516,7 @@
                               {{ item.room_name }}
                             </p>
                             <p class="text-gray-600 truncate">
-                              {{ item.program_name }}-{{ item.set_name }}
+                              {{ item.program_code }}-{{ item.set_name }}
                             </p>
                             <button
                               v-if="hasRoomConflict(item)"
@@ -574,7 +574,7 @@
                   </p>
                   <p>
                     <strong>Year & Section:</strong>
-                    {{ tooltipItem.program_name }}-{{ tooltipItem.set_name }}
+                    {{ tooltipItem.program_code }}-{{ tooltipItem.set_name }}
                   </p>
                   <p><strong>Room:</strong> {{ tooltipItem.room_name }}</p>
                   <p><strong>Day:</strong> {{ tooltipItem.day }}</p>
@@ -976,7 +976,7 @@ export default {
       return programIds.map((id) => {
         const prog = programs.find((p) => p.program_id === id);
         return prog
-          ? { id, name: prog.program_name }
+          ? { id, name: prog.program_code }
           : { id, name: `Program ${id}` };
       });
     },
@@ -1387,7 +1387,7 @@ export default {
           set_name: item.set_name,
           course_code: item.course_code,
           program_id: item.program_id,
-          program_name: item.program_name,
+          program_code: item.program_code,
           institute_id: item.institute_id,
           type: item.type,
           day: item.day,
@@ -1425,7 +1425,7 @@ export default {
           class_id: item.class_id,
           course_code: item.course_code,
           program_id: item.program_id,
-          program_name: item.program_name,
+          program_code: item.program_code,
           type: item.type,
           hours: item.hours,
           reason: item.reason,

@@ -20,7 +20,7 @@ export class UnscheduledMeeting {
   program_id: number;
 
   @Column()
-  program_name: string;
+  program_code: string;
 
   @Column()
   type: string;

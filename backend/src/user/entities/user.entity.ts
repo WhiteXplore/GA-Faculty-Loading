@@ -41,7 +41,7 @@ export class User_Accounts {
   @Column()
   designation: string;
 
-  @Column()
+  @Column({ nullable: true })
   preffered_time: string;
 
   // Institute Relationship
