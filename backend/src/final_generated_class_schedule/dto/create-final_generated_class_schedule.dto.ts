@@ -5,6 +5,8 @@ import {
   IsNumber,
   IsBoolean,
   IsArray,
+  ArrayNotEmpty,
+  ArrayUnique,
 } from 'class-validator';
 
 export class CreateFinalGeneratedClassScheduleDto {
@@ -48,11 +50,6 @@ export class CreateFinalGeneratedClassScheduleDto {
   @IsNumber()
   duration?: number;
 
-  // Optional: remove if not stored
-  // @IsOptional()
-  // @IsString()
-  // time_slot?: string;
-
   @IsOptional()
   @IsInt()
   room_id?: number;
@@ -60,6 +57,14 @@ export class CreateFinalGeneratedClassScheduleDto {
   @IsOptional()
   @IsString()
   room_name?: string;
+
+  @IsOptional()
+  @IsString()
+  set_name?: string;
+
+  @IsOptional()
+  @IsString()
+  time_slot?: string;
 
   @IsOptional()
   @IsString()
@@ -94,9 +99,20 @@ export class CreateFinalGeneratedClassScheduleDto {
   mode?: string;
 
   // -------------------------
-  // NEW: Join tracking fields
+  // Join tracking fields
   // -------------------------
-  @IsOptional() @IsInt() join_group_id?: number;
-  @IsOptional() @IsBoolean() is_joined?: boolean;
-  @IsOptional() @IsArray() joined_with?: number[];
+  @IsOptional()
+  @IsInt()
+  join_group_id?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  is_joined?: boolean;
+
+  @IsOptional()
+  @IsArray()
+  @ArrayNotEmpty()
+  @ArrayUnique()
+  @IsInt({ each: true })
+  joined_with?: number[];
 }

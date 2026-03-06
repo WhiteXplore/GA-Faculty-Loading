@@ -13,6 +13,15 @@ export class InstituteService {
   ) {}
 
   async create(createInstituteDto: CreateInstituteDto): Promise<Institute> {
+    const existing = await this.instituteRepository.findOne({
+      where: { institute_code: createInstituteDto.institute_code },
+    });
+
+    // If institute already exists, return it instead of creating new
+    if (existing) {
+      return existing;
+    }
+
     const institute = this.instituteRepository.create(createInstituteDto);
     return await this.instituteRepository.save(institute);
   }

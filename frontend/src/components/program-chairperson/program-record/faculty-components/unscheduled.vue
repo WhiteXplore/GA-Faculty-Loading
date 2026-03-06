@@ -1,21 +1,14 @@
 <template>
   <div
-    class="w-[45vw] h-[47vh] bg-white border shadow-xl transition-all duration-300 flex flex-col justify-start rounded-xl overflow-hidden"
+    class="w-[45vw] h-[47vh] bg-white border shadow-xl transition-all duration-300 flex flex-col justify-start rounded-xl overflow-hidden p-1"
   >
     <!-- Header -->
     <div
-      class="flex items-center justify-between px-4 py-2 text-defaultGreen rounded-t-lg"
+      class="flex items-center justify-between px-2 py-2 text-white bg-defaultGreen rounded-t-lg"
     >
-      <!-- Title -->
-      <h3 class="font-semibold text-base">Unscheduled Coursessss</h3>
+      <h3 class="font-semibold text-base ml-2">Unscheduled Courses</h3>
 
-      <!-- Search Input -->
       <div class="flex items-center gap-2">
-        <!-- Optional entries badge (commented) -->
-        <!-- <div class="px-3 py-1 bg-green-700 rounded-full text-xs">
-      {{ filteredData.length }} entries
-    </div> -->
-
         <input
           v-model="searchQuery"
           @input="changePage(1)"
@@ -28,17 +21,15 @@
 
     <!-- Body -->
     <div class="flex-1 overflow-y-auto p-2">
-      <!-- Controls -->
-
       <!-- Table -->
-      <div class="w-full rounded-md border bg-white overflow-hidden">
+      <div class="w-full h-[35vh] rounded-md border bg-white overflow-hidden">
         <table class="min-w-full text-xs text-gray-700">
-          <thead class="bg-defaultGreen text-white">
+          <thead class="bg-gray-100 text-defaultGreen">
             <tr>
-              <th class="px-4 py-3 text-left">Course</th>
+              <th class="px-4 py-3 text-left">Set</th>
               <th class="px-4 py-3 text-center">Program</th>
+              <th class="px-4 py-3 text-left">Course</th>
               <th class="px-4 py-3 text-center">Type</th>
-              <th class="px-4 py-3 text-center">School Year</th>
               <th class="px-4 py-3 text-center">Semester</th>
               <th class="px-4 py-3 text-center w-[29%]">Reason</th>
               <th class="px-4 py-3 text-center">Action</th>
@@ -51,10 +42,12 @@
               :key="item.id"
               class="border-t hover:bg-green-50"
             >
+              <td class="px-4 py-3 font-semibold">
+                {{ getSetName(item.class_id) }}
+              </td>
+              <td class="px-4 py-3 text-center">{{ item.program_code }}</td>
               <td class="px-4 py-3 font-semibold">{{ item.course_code }}</td>
-              <td class="px-4 py-3 text-center">{{ item.program_name }}</td>
               <td class="px-4 py-3 text-center">{{ item.type }}</td>
-              <td class="px-4 py-3 text-center">{{ item.school_year }}</td>
               <td class="px-4 py-3 text-center">
                 {{ semesterLabel(item.semester) }}
               </td>
@@ -72,8 +65,12 @@
             </tr>
 
             <tr v-if="paginatedData.length === 0">
-              <td colspan="7" class="text-center py-8 text-gray-400">
-                No unscheduled courses found
+              <td colspan="7" class="py-8">
+                <div
+                  class="flex justify-center items-center text-gray-400 text-xs"
+                >
+                  No unscheduled courses found
+                </div>
               </td>
             </tr>
           </tbody>
@@ -168,12 +165,11 @@
 <script>
 import { useFetchDataStore } from "@/store/fetch-data-store";
 import axios from "axios";
-// import icon from "@/assets/icon.vue";
 
 export default {
-  name: "UnscheduledCoursesPage",
-  // components: { icon },
+  name: "AssignCoursePage",
   props: { closeAddSchedulePanel: { type: Function, required: true } },
+
   data() {
     return {
       currentPage: 1,
@@ -181,14 +177,16 @@ export default {
       searchQuery: "",
       user: {},
       assignModalVisible: false,
-      selectedCourse: null,
+      selectedCourse: {},
       selectedInstructor: "",
     };
   },
+
   computed: {
     store() {
       return useFetchDataStore();
     },
+
     filteredData() {
       const query = this.searchQuery?.toLowerCase() || "";
       return this.store.unscheduled_meetings.filter((item) => {
@@ -205,33 +203,26 @@ export default {
         return isSameProgram && matchesQuery;
       });
     },
+
     paginatedData() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       return this.filteredData.slice(start, start + this.itemsPerPage);
     },
+
     totalPages() {
       return Math.ceil(this.filteredData.length / this.itemsPerPage) || 1;
     },
+
     pageNumbers() {
-      const total = this.totalPages;
-      if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
-      let start = this.currentPage - 1,
-        end = this.currentPage + 1;
-      if (start < 1) {
-        start = 1;
-        end = 3;
-      }
-      if (end > total) {
-        end = total;
-        start = total - 2;
-      }
-      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
     },
+
     startIndex() {
       return this.filteredData.length === 0
         ? 0
         : (this.currentPage - 1) * this.itemsPerPage + 1;
     },
+
     endIndex() {
       return Math.min(
         this.currentPage * this.itemsPerPage,
@@ -241,7 +232,6 @@ export default {
 
     uniqueInstructors() {
       if (!this.user.program_id) return [];
-
       const seen = new Set();
       return (this.store.final_schedules || [])
         .filter((s) => s.faculty_id && s.program_id === this.user.program_id)
@@ -252,41 +242,121 @@ export default {
         });
     },
   },
+
   methods: {
     changePage(page) {
       this.currentPage = Math.max(1, Math.min(page, this.totalPages));
     },
+
     semesterLabel(sem) {
       return sem === "1" ? "1st Semester" : sem === "2" ? "2nd Semester" : sem;
     },
+
     openAssignModal(item) {
-      this.selectedCourse = item;
+      const courseInfo = this.store.courses?.find(
+        (c) => c.course_id === item.course_id,
+      );
+      const programInfo = this.store.programs?.find(
+        (p) => p.program_id === item.program_id,
+      );
+
+      this.selectedCourse = {
+        ...item,
+        course_code: item.course_code || courseInfo?.course_code || "Unknown",
+        program_code:
+          item.program_code || programInfo?.program_code || "Unknown",
+        set_name: this.getSetName(item.class_id) || `Set ${item.class_id}`,
+        hours: item.hours || "3h lec",
+      };
+
       this.assignModalVisible = true;
     },
+
     closeAssignModal() {
       this.assignModalVisible = false;
-      this.selectedCourse = null;
+      this.selectedCourse = {};
       this.selectedInstructor = "";
     },
+
     async assignCourse() {
-      if (!this.selectedInstructor) return alert("Please select an instructor");
-      try {
-        await axios.post(
-          `${process.env.VUE_APP_API_BASE_URL}/assign-course`,
-          {
-            class_id: this.selectedCourse.class_id,
-            faculty_id: this.selectedInstructor,
-          },
-          { withCredentials: true },
-        );
-        alert("Course assigned successfully!");
-        this.closeAssignModal();
-        await this.store.fetchUnscheduledMeetings();
-      } catch (err) {
-        console.error(err);
-        alert("Failed to assign course");
+      if (!this.selectedInstructor) {
+        return alert("Please select an instructor");
       }
+
+      const course = {
+        ...JSON.parse(JSON.stringify(this.selectedCourse)),
+        faculty_id: this.selectedInstructor,
+        faculty_name: this.getFacultyName(this.selectedInstructor),
+      };
+      delete course.id;
+
+      // Determine durations
+      const lectureMatch = course.hours?.match(/(\d+(\.\d+)?)h lec/);
+      const labMatch = course.hours?.match(/(\d+(\.\d+)?)h lab/);
+      const lectureDuration = lectureMatch ? parseFloat(lectureMatch[1]) : 3;
+      const labDuration = labMatch ? parseFloat(labMatch[1]) : 3;
+
+      const instituteId = this.getInstituteId(course.program_id);
+
+      let payload = [];
+
+      if (course.type === "Lecture+Lab") {
+        payload = [
+          {
+            ...course,
+            type: "Lecture",
+            duration: lectureDuration,
+            institute_id: instituteId,
+            start_hour: 7,
+            day: "Monday",
+            time_slot: "7:00 AM - 10:00 AM",
+            mode: course.mode || "online",
+          },
+          {
+            ...course,
+            type: "Laboratory",
+            duration: labDuration,
+            institute_id: instituteId,
+            start_hour: 13,
+            day: "Monday",
+            time_slot: "1:00 PM - 4:00 PM",
+            mode: "face to face",
+          },
+        ];
+      } else {
+        payload = [
+          {
+            ...course,
+            duration: lectureDuration || labDuration,
+            institute_id: instituteId,
+            start_hour: 7,
+            day: "Monday",
+            time_slot: "7:00 AM - 10:00 AM",
+            mode: course.mode || "face to face",
+          },
+        ];
+      }
+
+      // Emit to parent first
+      this.$emit("open-edit-schedule", payload);
+
+      // Send to backend
+      // try {
+      //   await axios.post(
+      //     `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/bulk`,
+      //     payload,
+      //     { withCredentials: true },
+      //   );
+      //   // toast.success("Course assigned successfully!");
+      // } catch (err) {
+      //   console.error(err);
+      //   // toast.error("Failed to assign course. Try again.");
+      // }
+
+      // Reset modal
+      this.closeAssignModal();
     },
+
     async fetchUser() {
       try {
         const res = await axios.get(
@@ -298,11 +368,36 @@ export default {
         this.user = {};
       }
     },
+
+    getSetName(classId) {
+      const section = this.store.sections.find(
+        (sec) => sec.class_id === classId,
+      );
+      return section ? section.set_name : classId;
+    },
+
+    getInstituteId(programId) {
+      const program = this.store.programs.find(
+        (p) => p.program_id === programId,
+      );
+      return program ? program.institute_id : null;
+    },
+
+    getFacultyName(facultyId) {
+      const user = this.store.rawusers?.find((u) => u.id === facultyId);
+      if (!user) return "Unknown Faculty";
+      return [user.first_name, user.middle_name, user.last_name]
+        .filter(Boolean)
+        .join(" ");
+    },
   },
+
   async mounted() {
     await this.fetchUser();
     await this.store.fetchUnscheduledMeetings();
-    await this.store.fetchFinalSchedules(); // fetch final schedules for instructors
+    await this.store.fetchFinalSchedules();
+    await this.store.fetchClassSections();
+    await this.store.fetchRawUsers();
   },
 };
 </script>

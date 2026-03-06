@@ -3,7 +3,7 @@
     class="bg-white shadow-md px-3 py-2 flex justify-between items-center rounded-t-lg"
   >
     <!-- Left: Title -->
-    <div class="text-green-900 font-bold text-lg tracking-wide">
+    <div class="text-green-900 font-semibold text-md tracking-wide">
       Faculty Loading & Exam Scheduler
     </div>
 

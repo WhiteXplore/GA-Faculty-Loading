@@ -208,7 +208,7 @@
                               </div>
                               <div class="truncate">{{ item.room_name }}</div>
                               <div class="truncate">
-                                {{ item.program_name }}-{{ item.set_name }}
+                                {{ item.program_code }}-{{ item.set_name }}
                               </div>
 
                               <div class="w-full flex justify-center">
@@ -465,9 +465,11 @@
             </div>
           </div>
         </div>
-        <div v-if="showAddSchedulePanel">
-          <unscheduled />
-        </div>
+        <unscheduled
+          v-if="showAddSchedulePanel"
+          :close-add-schedule-panel="closeAddSchedulePanel"
+          @open-edit-schedule="addUnscheduledToCalendar"
+        />
       </div>
     </div>
     <div
@@ -529,7 +531,7 @@
                 <div>
                   <p class="text-xs text-gray-500">Section</p>
                   <p class="font-medium">
-                    {{ selectedSchedule.program_name }}-{{
+                    {{ selectedSchedule.program_code }}-{{
                       selectedSchedule.set_name
                     }}
                   </p>
@@ -602,7 +604,7 @@
                     <div>
                       <p class="text-xs text-gray-500">Section</p>
                       <p class="font-medium">
-                        {{ conflict.program_name }}-{{ conflict.set_name }}
+                        {{ conflict.program_code }}-{{ conflict.set_name }}
                       </p>
                     </div>
 
@@ -751,12 +753,12 @@
           <ul class="ml-3 list-disc space-y-0.5">
             <template v-if="tooltipItem.joinedItems?.length">
               <li v-for="s in tooltipItem.joinedItems" :key="s.id">
-                {{ s.program_name }} - {{ s.set_name }} ({{ s.class_size }})
+                {{ s.program_code }} - {{ s.set_name }} ({{ s.class_size }})
               </li>
             </template>
             <template v-else>
               <li>
-                {{ tooltipItem.program_name }} - {{ tooltipItem.set_name }} ({{
+                {{ tooltipItem.program_code }} - {{ tooltipItem.set_name }} ({{
                   tooltipItem.class_size
                 }})
               </li>
@@ -1015,6 +1017,16 @@ export default {
         // Reset drag state to prevent false conflicts
         this.draggedRecord = null;
       },
+      localData: {
+        deep: true,
+        handler(newVal) {
+          newVal.forEach((r) => {
+            if (r.start_hour != null && r.duration != null) {
+              r.time_slot = this.generateTimeSlot(r.start_hour, r.duration);
+            }
+          });
+        },
+      },
     },
 
     // Watch for modal open (show = true) to refresh all data
@@ -1045,6 +1057,46 @@ export default {
       "fetchCourses",
       "fetchClassSections",
     ]),
+    generateTimeSlot(startHour, duration) {
+      if (startHour == null || duration == null) return null;
+
+      const format = (h) => {
+        const hour = Math.floor(h);
+        const minutes = Math.round((h - hour) * 60);
+        const period = hour >= 12 ? "PM" : "AM";
+        const hour12 = hour % 12 || 12;
+        const minutesStr = minutes.toString().padStart(2, "0");
+        return `${hour12}:${minutesStr} ${period}`;
+      };
+
+      const endHour = Number(startHour) + Number(duration);
+
+      return `${format(startHour)} - ${format(endHour)}`;
+    },
+    addUnscheduledToCalendar(courses) {
+      console.log("Payload sent by the child:", courses);
+
+      courses.forEach((course) => {
+        const tempId = `temp-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+        const newRecord = {
+          ...JSON.parse(JSON.stringify(course)),
+          tempId,
+          isNew: true,
+          searchRoomQuery: course.room_name || "",
+          showRoomDropdown: false,
+          searchCourseQuery: course.course_code || "",
+          showCourseDropdown: false,
+          searchSectionQuery: course.set_name || "",
+          showSectionDropdown: false,
+        };
+
+        this.localData.push(newRecord);
+      });
+
+      toast.success(`${courses.length} course(s) assigned!`);
+      this.closeAddSchedulePanel();
+    },
     cancelJoin() {
       this.resetJoinState();
     },
@@ -1247,6 +1299,7 @@ export default {
         s.day = baseRecord.day;
         s.start_hour = baseRecord.start_hour;
         s.duration = baseRecord.duration;
+        s.time_slot = this.generateTimeSlot(s.start_hour, s.duration);
         s.mode = finalMode;
 
         if (finalMode === "face to face") {
@@ -1302,22 +1355,26 @@ export default {
       const allowed = [
         "class_id",
         "course_id",
+        "course_code", // ✅ ADD THIS
+        "set_name", // ✅ ADD THIS
         "program_id",
+        "program_code",
         "institute_id",
         "type",
         "day",
         "start_hour",
         "duration",
-
+        "time_slot", // ✅ ADD THIS
         "room_id",
+        "room_name", // ✅ ADD THIS
         "room_type",
         "room_capacity",
         "class_size",
         "faculty_id",
+        "faculty_name", // ✅ ADD THIS
         "school_year",
         "semester",
         "mode",
-
         "is_joined",
         "join_group_id",
         "joined_with",
@@ -1326,10 +1383,14 @@ export default {
       const payload = {};
 
       allowed.forEach((key) => {
-        if (record[key] !== undefined) {
-          payload[key] = record[key];
-        }
+        payload[key] = record[key] ?? null;
       });
+
+      // ✅ ALWAYS regenerate time_slot
+      payload.time_slot = this.generateTimeSlot(
+        record.start_hour,
+        record.duration,
+      );
 
       return payload;
     },
@@ -1433,6 +1494,7 @@ export default {
         this.user = {};
       }
     },
+
     async fetchCoursesForUser() {
       const fetchDataStore = useFetchDataStore();
       if (!this.user.role) return;
@@ -1901,6 +1963,8 @@ export default {
           start_hour: targetStartHour,
         });
 
+        rec.time_slot = this.generateTimeSlot(rec.start_hour, rec.duration);
+
         const payload = this.sanitizePayload(rec);
         this.cleanDropdownFields(payload);
 
@@ -1930,7 +1994,9 @@ export default {
       this.saving = true;
 
       try {
-        // Remove duplicates
+        // -----------------------------
+        // 1️⃣ Remove duplicates locally
+        // -----------------------------
         const seen = new Set();
         this.localData = this.localData.filter((record) => {
           const key =
@@ -1946,6 +2012,13 @@ export default {
         const updatedRows = [];
 
         this.localData.forEach((record) => {
+          // Ensure new records have a tempId
+          if (!record.id && !record.tempId) {
+            record.tempId = `temp-${Date.now()}-${Math.floor(
+              Math.random() * 1000,
+            )}`;
+          }
+
           const payload = this.sanitizePayload({
             ...record,
             mode:
@@ -1958,25 +2031,34 @@ export default {
             record.id || record.schedule_id || record.final_generated_id;
 
           if (id) updatedRows.push({ id, payload });
-          else newRows.push(payload);
+          else {
+            // Attach tempId to payload for matching later
+            payload.tempId = record.tempId;
+            newRows.push(payload);
+          }
         });
 
-        // 1️⃣ Create new schedules (bulk)
+        // -----------------------------
+        // 2️⃣ Create new schedules (bulk)
+        // -----------------------------
         if (newRows.length) {
           const { data } = await axios.post(
             `${process.env.VUE_APP_API_BASE_URL}/final-generated-class-schedule/bulk`,
             newRows,
           );
-          // assign returned IDs to localData
-          data.forEach((row, idx) => {
+
+          // Assign returned IDs to localData
+          data.forEach((row) => {
             const tempRecord = this.localData.find(
-              (r) => !r.id && r.tempId === newRows[idx].tempId,
+              (r) => !r.id && r.tempId === row.tempId,
             );
             if (tempRecord) tempRecord.id = row.id;
           });
         }
 
-        // 2️⃣ Update existing schedules in parallel
+        // -----------------------------
+        // 3️⃣ Update existing schedules
+        // -----------------------------
         if (updatedRows.length) {
           await Promise.all(
             updatedRows.map(({ id, payload }) =>
@@ -1991,9 +2073,10 @@ export default {
         toast.success("Schedules saved successfully!");
         this.$emit("saved", this.localData);
         this.$emit("close");
+        this.$emit("refresh");
       } catch (err) {
-        console.error("Failed to save schedules:", err.response?.data || err);
-        toast.error("Failed to save schedules. Check console for details.");
+        console.error("Failed to save schedules:", err);
+        toast.error("Failed to save schedules.");
       } finally {
         this.saving = false;
       }

@@ -2,7 +2,7 @@
   <div class="bg-defaultGreen h-screen flex animate-scaleUp">
     <!-- Sidebar -->
     <div
-      :class="{ 'w-[70px]': !isExpanded, 'w-[240px]': isExpanded }"
+      :class="{ 'w-[60px]': !isExpanded, 'w-[240px]': isExpanded }"
       class="h-full fixed left-0 top-0 bg-defaultGreen text-white p-3 transition-all duration-300 ease-in-out"
       v-if="user.role"
     >
@@ -11,7 +11,7 @@
         <icon
           :name="'burger'"
           class="cursor-pointer"
-          :class="{ 'mr-3 mt-1': !isExpanded }"
+          :class="{ 'flex w-full justify-center items-center ': !isExpanded }"
         />
       </div>
 
@@ -48,15 +48,15 @@
 
       <!-- Dynamic Menu -->
       <div
-        class="flex flex-col mt-6 gap-2 tracking-wide text-[13px] w-full overflow-auto max-h-[calc(100vh-200px)] scrollbar-glass"
+        :class="[
+          'flex flex-col justify-between mt-6 tracking-wide text-[13px] w-full',
+          isExpanded ? 'h-[calc(100vh-200px)]' : 'h-[90vh]',
+        ]"
       >
-        <template v-for="section in roleMenuSections" :key="section.title">
-          <div v-if="isExpanded" class="text-md text-white mt-1 text-left">
-            {{ section.title }}
-          </div>
-          <!-- Collapsible Parent / Non-children items -->
-          <div v-for="item in section.items" :key="item.name" class="w-full">
-            <!-- Special sync item for Program Chairperson -->
+        <!-- TOP MENU -->
+        <div class="flex flex-col gap-2 overflow-auto scrollbar-glass">
+          <div v-for="item in topMenuItems" :key="item.name" class="w-full">
+            <!-- Special sync item -->
             <div
               v-if="item.name === 'Class & Assigned Courses'"
               @click="syncProgramYearCourses(item.route)"
@@ -64,15 +64,15 @@
               :class="[
                 $route.path.startsWith(item.route)
                   ? 'bg-white text-green-700 p-2'
-                  : 'text-white hover:bg-white hover:text-gray-800 p-2 hover:p-2',
-                !isExpanded ? 'justify-center h-8' : 'justify-start p-2',
+                  : 'text-white hover:bg-white hover:text-gray-800 p-2',
+                !isExpanded ? 'justify-center h-8' : 'justify-start',
               ]"
             >
               <icon :name="item.icon" />
               <span v-show="isExpanded">{{ item.name }}</span>
             </div>
 
-            <!-- Default router-link for all other non-children items -->
+            <!-- Router Link -->
             <router-link
               v-else-if="!item.children"
               :to="item.route"
@@ -80,15 +80,15 @@
               :class="[
                 $route.path.startsWith(item.route)
                   ? 'bg-white text-green-700 p-2'
-                  : 'text-white hover:bg-white hover:text-gray-800 p-2 hover:p-2',
-                !isExpanded ? 'justify-center h-8' : 'justify-start p-2',
+                  : 'text-white hover:bg-white hover:text-gray-800 p-2',
+                !isExpanded ? 'justify-center h-8' : 'justify-start',
               ]"
             >
               <icon :name="item.icon" />
               <span v-show="isExpanded">{{ item.name }}</span>
             </router-link>
 
-            <!-- Collapsible Parent items -->
+            <!-- Dropdown -->
             <div v-else>
               <div
                 @click="toggleDropdown(item.name)"
@@ -112,6 +112,7 @@
                   <icon :name="item.icon" />
                   <span v-show="isExpanded">{{ item.name }}</span>
                 </div>
+
                 <icon
                   name="arrow-down"
                   v-show="isExpanded"
@@ -123,20 +124,18 @@
               <transition name="slide">
                 <div
                   v-show="isDropdownOpen === item.name && isExpanded"
-                  class="max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100"
+                  class="max-h-[400px] overflow-y-auto"
                 >
                   <router-link
                     v-for="(sub, index) in item.children"
                     :key="sub.name"
                     :to="sub.route"
-                    class="block w-full py-2 px-[60px] text-[13px] transition-all duration-200 text-left border border-white"
+                    class="block w-full py-2 px-[50px] text-[13px] transition-all duration-200 text-left border border-white"
                     :class="[
                       $route.path.startsWith(sub.route)
-                        ? 'bg-defaultGreen text-white '
+                        ? 'bg-defaultGreen text-white'
                         : 'bg-white text-gray-800 hover:bg-gray-200',
-                      index === item.children.length - 1
-                        ? 'rounded-b-md border border-white'
-                        : '',
+                      index === item.children.length - 1 ? 'rounded-b-md' : '',
                     ]"
                   >
                     {{ sub.name }}
@@ -145,7 +144,84 @@
               </transition>
             </div>
           </div>
-        </template>
+        </div>
+
+        <!-- BOTTOM MENU -->
+        <div class="flex flex-col gap-2">
+          <div v-for="item in bottomMenuItems" :key="item.name" class="w-full">
+            <!-- Router -->
+            <router-link
+              v-if="!item.children"
+              :to="item.route"
+              class="flex items-center w-full gap-5 rounded-md transition-all duration-200"
+              :class="[
+                $route.path.startsWith(item.route)
+                  ? 'bg-white text-green-700 p-2'
+                  : 'text-white hover:bg-white hover:text-gray-800 p-2',
+                !isExpanded ? 'justify-center h-8' : 'justify-start',
+              ]"
+            >
+              <icon :name="item.icon" />
+              <span v-show="isExpanded">{{ item.name }}</span>
+            </router-link>
+
+            <!-- Dropdown -->
+            <div v-else>
+              <div
+                @click="toggleDropdown(item.name)"
+                class="flex items-center justify-between w-full p-2 cursor-pointer transition-all duration-200"
+                :class="[
+                  isDropdownOpen === item.name
+                    ? `bg-white text-gray-800 ${
+                        !isExpanded ? 'rounded-md' : 'rounded-t-md'
+                      }`
+                    : 'text-white hover:bg-white hover:text-gray-800 hover:rounded-md',
+                ]"
+              >
+                <div
+                  :class="[
+                    !isExpanded
+                      ? 'justify-center w-full'
+                      : 'justify-start gap-5',
+                  ]"
+                  class="flex items-center"
+                >
+                  <icon :name="item.icon" />
+                  <span v-show="isExpanded">{{ item.name }}</span>
+                </div>
+
+                <icon
+                  name="arrow-down"
+                  v-show="isExpanded"
+                  class="transition-transform"
+                  :class="{ 'rotate-180': isDropdownOpen === item.name }"
+                />
+              </div>
+
+              <transition name="slide">
+                <div
+                  v-show="isDropdownOpen === item.name && isExpanded"
+                  class="max-h-[400px] overflow-y-auto"
+                >
+                  <router-link
+                    v-for="(sub, index) in item.children"
+                    :key="sub.name"
+                    :to="sub.route"
+                    class="block w-full py-2 px-[50px] text-[13px] transition-all duration-200 text-left border border-white"
+                    :class="[
+                      $route.path.startsWith(sub.route)
+                        ? 'bg-defaultGreen text-white'
+                        : 'bg-white text-gray-800 hover:bg-gray-200',
+                      index === item.children.length - 1 ? 'rounded-b-md' : '',
+                    ]"
+                  >
+                    {{ sub.name }}
+                  </router-link>
+                </div>
+              </transition>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -156,10 +232,10 @@
         'ml-[70px]': !isExpanded,
         'ml-[240px]': isExpanded,
       }"
-      class="flex-grow transition-all max-h-screen rounded-t-xl overflow-y-auto z-50 mt-3"
+      class="flex-grow transition-all max-h-screen rounded-t-xl overflow-y-auto z-50 mt-2"
     >
       <slot>
-        <div class="bg-white w-auto shadow mr-3 rounded-t-xl h-full">
+        <div class="bg-white shadow rounded-t-xl h-full w-full">
           <adminTopbar />
           <div class="">
             <router-view></router-view>
@@ -187,7 +263,8 @@ export default {
       menuItemsByRole: {
         Admin: [
           {
-            title: "Home",
+            // title: "Home",
+            title: "",
             items: [
               {
                 name: "Dashboard",
@@ -197,11 +274,13 @@ export default {
             ],
           },
           {
-            title: "Records Management",
+            // title: "Records Management",
+            title: "",
             items: [
               {
                 name: "Setup",
                 icon: "set-up",
+                bottom: true,
                 children: [
                   // { name: "Instructors", route: "/instructors" },
                   { name: "Institutes", route: "/institutes" },
@@ -231,7 +310,8 @@ export default {
             ],
           },
           {
-            title: "Generation",
+            // title: "Generation",
+            title: "",
             items: [
               {
                 icon: "faculty-loading",
@@ -241,7 +321,8 @@ export default {
             ],
           },
           {
-            title: "Documents",
+            // title: "Documents",
+            title: "",
             items: [
               {
                 icon: "prospectus",
@@ -251,12 +332,15 @@ export default {
             ],
           },
           {
-            title: "Accounts",
+            // title: "Accounts",
+            title: "",
+
             items: [
               {
-                name: "User Management",
+                name: "Users List",
                 icon: "user-account",
-                children: [{ name: "Users list", route: "/user-accounts" }],
+                route: "/user-accounts",
+                bottom: true,
               },
             ],
           },
@@ -279,6 +363,7 @@ export default {
               {
                 name: "Setup",
                 icon: "set-up",
+                bottom: true,
                 children: [
                   { name: "Courses", route: "/program-chair-courses" },
                   {
@@ -365,6 +450,17 @@ export default {
   computed: {
     roleMenuSections() {
       return this.menuItemsByRole[this.user.role] || [];
+    },
+    topMenuItems() {
+      return this.roleMenuSections.flatMap((section) =>
+        section.items.filter((item) => !item.bottom),
+      );
+    },
+
+    bottomMenuItems() {
+      return this.roleMenuSections.flatMap((section) =>
+        section.items.filter((item) => item.bottom),
+      );
     },
   },
   mounted() {

@@ -23,11 +23,11 @@ export class Curriculum {
   @Column({ type: 'int' })
   program_id: number;
 
-  @Column({ type: 'varchar', length: 10 })
-  curriculum_start_year: string;
+  @Column({ type: 'int' })
+  curriculum_start_year: number;
 
-  @Column({ type: 'varchar', length: 10 })
-  curriculum_end_year: string;
+  @Column({ type: 'int' })
+  curriculum_end_year: number;
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;

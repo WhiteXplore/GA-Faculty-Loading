@@ -73,9 +73,7 @@ export class UserController {
         ...results,
       };
     } catch (error) {
-      throw new BadRequestException(
-        `Failed to process file: ${error.message}`,
-      );
+      throw new BadRequestException(`Failed to process file: ${error.message}`);
     }
   }
 
@@ -94,53 +92,53 @@ export class UserController {
     return this.userService.remove(+id);
   }
 
-  @Post('import-expertise')
-  @UseInterceptors(FileInterceptor('file'))
-  async importExpertise(@UploadedFile() file: Express.Multer.File) {
-    if (!file) {
-      throw new BadRequestException('No file uploaded');
-    }
+  // @Post('import-expertise')
+  // @UseInterceptors(FileInterceptor('file'))
+  // async importExpertise(@UploadedFile() file: Express.Multer.File) {
+  //   if (!file) {
+  //     throw new BadRequestException('No file uploaded');
+  //   }
 
-    try {
-      // Parse the XLSX file
-      const workbook = XLSX.read(file.buffer, { type: 'buffer' });
-      const sheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[sheetName];
+  //   try {
+  //     // Parse the XLSX file
+  //     const workbook = XLSX.read(file.buffer, { type: 'buffer' });
+  //     const sheetName = workbook.SheetNames[0];
+  //     const worksheet = workbook.Sheets[sheetName];
 
-      // Convert to JSON
-      const rawData: any[] = XLSX.utils.sheet_to_json(worksheet, {
-        raw: false,
-        defval: '',
-      });
+  //     // Convert to JSON
+  //     const rawData: any[] = XLSX.utils.sheet_to_json(worksheet, {
+  //       raw: false,
+  //       defval: '',
+  //     });
 
-      if (rawData.length === 0) {
-        throw new BadRequestException('File is empty or has no valid data');
-      }
+  //     if (rawData.length === 0) {
+  //       throw new BadRequestException('File is empty or has no valid data');
+  //     }
 
-      // Map columns from XLSX to ImportExpertiseDto
-      // Expected columns: "Instructors Name", "Course Code"
-      const importData: ImportExpertiseDto[] = rawData.map((row) => ({
-        instructor_name:
-          row['Instructors Name'] ||
-          row['Instructor Name'] ||
-          row['instructor_name'] ||
-          row['Instructor'] ||
-          '',
-        course_code:
-          row['Course Code'] || row['course_code'] || row['Code'] || '',
-      }));
+  //     // Map columns from XLSX to ImportExpertiseDto
+  //     // Expected columns: "Instructors Name", "Course Code"
+  //     const importData: ImportExpertiseDto[] = rawData.map((row) => ({
+  //       instructor_name:
+  //         row['Instructors Name'] ||
+  //         row['Instructor Name'] ||
+  //         row['instructor_name'] ||
+  //         row['Instructor'] ||
+  //         '',
+  //       course_code:
+  //         row['Course Code'] || row['course_code'] || row['Code'] || '',
+  //     }));
 
-      // Import expertise
-      const results = await this.userService.importExpertise(importData);
+  //     // Import expertise
+  //     const results = await this.userService.importExpertise(importData);
 
-      return {
-        message: 'Import completed',
-        ...results,
-      };
-    } catch (error) {
-      throw new BadRequestException(
-        `Failed to process file: ${error.message}`,
-      );
-    }
-  }
+  //     return {
+  //       message: 'Import completed',
+  //       ...results,
+  //     };
+  //   } catch (error) {
+  //     throw new BadRequestException(
+  //       `Failed to process file: ${error.message}`,
+  //     );
+  //   }
+  // }
 }

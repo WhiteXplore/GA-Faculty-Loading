@@ -524,6 +524,7 @@
     :instructorData="editInstructorData"
     @close="showEditModal = false"
     @saved="handleModalSaved"
+    @refresh="fetchFinalSchedules"
     @deleted="handleDeletedSchedule"
   />
 </template>
@@ -612,10 +613,25 @@ export default {
       isDragging: false,
       unjoinModalVisible: false,
       unjoinTargetRecord: null,
+      scheduleIndex: {
+        byDay: {},
+        byFaculty: {},
+        byRoom: {},
+        byClass: {},
+      },
+      joinIndex: {},
     };
   },
 
   computed: {
+    scheduleIndexByDay() {
+      const map = {};
+      this.finalSchedules.forEach((s) => {
+        if (!map[s.day]) map[s.day] = [];
+        map[s.day].push(s);
+      });
+      return map;
+    },
     isDraggable(record) {
       // If Join is active and class size >= 30 → not draggable
       return !(this.isJoined && Number(record.class_size) >= 30);
@@ -808,6 +824,27 @@ export default {
   },
 
   methods: {
+    buildJoinIndex() {
+      const index = {};
+
+      this.finalSchedules.forEach((r) => {
+        const year = r.set_name?.split(" ")[0] || "";
+
+        const key = `${r.course_code}|${r.type}|${r.semester}|${year}`;
+
+        if (!index[key]) index[key] = [];
+        index[key].push(r);
+      });
+
+      this.joinIndex = index;
+    },
+    rebuildAllIndexes() {
+      this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
+      this.filteredGroupedSchedule = { ...this.groupedSchedule };
+
+      this.buildScheduleIndex();
+      this.buildJoinIndex();
+    },
     handleUnjoin(record) {
       if (!record.is_joined || !record.join_group_id) return;
 
@@ -855,7 +892,7 @@ export default {
 
         this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
         this.filteredGroupedSchedule = { ...this.groupedSchedule };
-
+        this.rebuildAllIndexes();
         // ✅ Automatically update global join mode if no more joined records
         const anyJoined = this.finalSchedules.some((r) => r.is_joined);
         this.isJoined = anyJoined;
@@ -970,6 +1007,7 @@ export default {
         toast.success(
           `Classes successfully joined! Total students: ${totalStudents}`,
         );
+        this.rebuildAllIndexes();
         await this.fetchFinalSchedules();
       } catch (error) {
         console.error(error);
@@ -1013,32 +1051,23 @@ export default {
     getJoinableSchedules(baseRecord) {
       if (!baseRecord) return [];
 
-      const extractYearLevel = (setName) => {
-        if (!setName) return "";
-        return setName.split(" ")[0].trim();
-      };
+      const year = baseRecord.set_name?.split(" ")[0] || "";
+      const key = `${baseRecord.course_code}|${baseRecord.type}|${baseRecord.semester}|${year}`;
 
-      const baseYear = extractYearLevel(baseRecord.set_name);
+      const possible = this.joinIndex[key] || [];
 
-      return this.finalSchedules.filter((r) => {
+      const baseMode = baseRecord.mode?.toLowerCase();
+
+      return possible.filter((r) => {
         if (r.id === baseRecord.id) return false;
         if (r.is_joined) return false;
 
-        const targetYear = extractYearLevel(r.set_name);
+        if (Number(r.class_size) >= 30) return false;
+        if (Number(baseRecord.class_size) >= 30) return false;
 
-        const modeCompatible =
-          ["online", "face to face"].includes(baseRecord.mode.toLowerCase()) &&
-          ["online", "face to face"].includes(r.mode.toLowerCase());
+        if (r.mode?.toLowerCase() !== baseMode) return false;
 
-        return (
-          r.course_code === baseRecord.course_code &&
-          r.type === baseRecord.type &&
-          r.semester === baseRecord.semester &&
-          baseYear === targetYear &&
-          modeCompatible &&
-          Number(r.class_size) < 30 &&
-          Number(baseRecord.class_size) < 30
-        );
+        return true;
       });
     },
     canJoin(recordA, recordB) {
@@ -1105,67 +1134,104 @@ export default {
       this.scheduleTooltipVisible = false;
       this.tooltipItem = null;
     },
-
     getConflictingRecords(record) {
+      if (!record || record.start_hour == null || !record.duration) return [];
+
       const recordStart = this.normalizeHour(record.start_hour);
       const recordEnd = recordStart + Number(record.duration);
 
-      return this.finalSchedules
-        .filter((r) => {
-          if (r.id === record.id) return false;
-          if (r.day !== record.day) return false;
+      const sameDaySchedules = this.scheduleIndex.byDay[record.day] || [];
 
-          // Same join group → ignore
+      return sameDaySchedules
+        .filter((r) => {
+          if (!r || r.id === record.id) return false;
+
+          // Ignore same join group
           if (
             record.is_joined &&
             r.is_joined &&
             record.join_group_id &&
             r.join_group_id &&
             record.join_group_id === r.join_group_id
-          )
+          ) {
             return false;
+          }
 
           const rStart = this.normalizeHour(r.start_hour);
           const rEnd = rStart + Number(r.duration);
 
+          if (rStart == null || rEnd == null) return false;
+
+          // Check time overlap first
           const overlaps =
             Math.max(rStart, recordStart) < Math.min(rEnd, recordEnd);
+
           if (!overlaps) return false;
 
-          // Same room conflict only if NOT join mode or same faculty
+          // ✅ 1. FACULTY CONFLICT (ALWAYS conflict if same faculty & overlap)
+          // Same faculty
+          const sameFaculty =
+            (r.faculty_id &&
+              record.faculty_id &&
+              r.faculty_id === record.faculty_id) ||
+            (r.faculty_name &&
+              record.faculty_name &&
+              r.faculty_name.trim().toLowerCase() ===
+                record.faculty_name.trim().toLowerCase());
+
+          if (sameFaculty) {
+            return true;
+          }
+
+          // ✅ 2. ROOM CONFLICT (only if both Face-to-Face)
           if (
             r.room_id &&
             record.room_id &&
             r.room_id === record.room_id &&
-            r.mode === "face to face" &&
-            record.mode === "face to face"
+            r.mode?.toLowerCase() === "face to face" &&
+            record.mode?.toLowerCase() === "face to face"
           ) {
-            if (!this.isJoined || r.faculty_id === record.faculty_id)
+            if (!this.isJoined || r.faculty_id === record.faculty_id) {
               return true;
+            }
           }
 
-          // Same faculty
-          if (r.faculty_id === record.faculty_id) return true;
-
-          // Same class/section
-          if (r.class_id && record.class_id && r.class_id === record.class_id)
+          // ✅ 3. CLASS CONFLICT
+          if (r.class_id && record.class_id && r.class_id === record.class_id) {
             return true;
+          }
 
           return false;
         })
         .map((r) => {
           let reason = "";
+
+          // Faculty conflict (priority)
           if (
+            (r.faculty_id &&
+              record.faculty_id &&
+              r.faculty_id === record.faculty_id) ||
+            (r.faculty_name &&
+              record.faculty_name &&
+              r.faculty_name.trim().toLowerCase() ===
+                record.faculty_name.trim().toLowerCase())
+          ) {
+            reason =
+              "Same faculty assigned to overlapping schedules (Mode does not matter)";
+          }
+          // Room conflict
+          else if (
             r.room_id === record.room_id &&
-            r.mode === "face to face" &&
-            record.mode === "face to face" &&
-            (!this.isJoined || r.faculty_id === record.faculty_id)
-          )
+            r.mode?.toLowerCase() === "face to face" &&
+            record.mode?.toLowerCase() === "face to face"
+          ) {
             reason = "Same room, same day, and overlapping time (Face-to-Face)";
-          else if (r.faculty_id === record.faculty_id)
-            reason = "Same faculty assigned to overlapping schedules";
-          else if (r.class_id === record.class_id)
+          }
+          // Class conflict
+          else if (r.class_id === record.class_id) {
             reason = "Same class/section has overlapping schedules";
+          }
+
           return { ...r, reason };
         });
     },
@@ -1264,14 +1330,15 @@ export default {
 
     onDragOver(event, instructor, day, slotStart) {
       if (!this.draggedRecord) return;
-      this.previewX = event.clientX + 12;
-      this.previewY = event.clientY + 12;
-      this.conflictPreview = this.getConflictsForDrag(
-        this.draggedRecord,
-        instructor,
-        day,
-        slotStart,
-      );
+
+      requestAnimationFrame(() => {
+        this.conflictPreview = this.getConflictsForDrag(
+          this.draggedRecord,
+          instructor,
+          day,
+          slotStart,
+        );
+      });
     },
     onDragStart(event, record) {
       // Block large classes if Join is active
@@ -1493,7 +1560,38 @@ export default {
         this.user = {};
       }
     },
+    buildScheduleIndex() {
+      const index = {
+        byDay: {},
+        byFaculty: {},
+        byRoom: {},
+        byClass: {},
+      };
 
+      this.finalSchedules.forEach((r) => {
+        // Index by Day
+        if (!index.byDay[r.day]) index.byDay[r.day] = [];
+        index.byDay[r.day].push(r);
+
+        // Index by Faculty
+        if (!index.byFaculty[r.faculty_id]) index.byFaculty[r.faculty_id] = [];
+        index.byFaculty[r.faculty_id].push(r);
+
+        // Index by Room
+        if (r.room_id) {
+          if (!index.byRoom[r.room_id]) index.byRoom[r.room_id] = [];
+          index.byRoom[r.room_id].push(r);
+        }
+
+        // Index by Class
+        if (r.class_id) {
+          if (!index.byClass[r.class_id]) index.byClass[r.class_id] = [];
+          index.byClass[r.class_id].push(r);
+        }
+      });
+
+      this.scheduleIndex = index;
+    },
     async fetchFinalSchedules() {
       this.loading = true;
       this.error = null;
@@ -1513,10 +1611,9 @@ export default {
               s.program_id === this.user.program_id,
           );
         }
-
+        this.buildScheduleIndex();
         this.finalSchedules = schedules;
-        this.groupedSchedule = this.groupByInstructor(this.finalSchedules);
-        this.filteredGroupedSchedule = { ...this.groupedSchedule };
+        this.rebuildAllIndexes();
 
         this.changePage(1);
       } catch (err) {

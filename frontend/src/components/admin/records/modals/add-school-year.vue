@@ -26,16 +26,15 @@
 
         <!-- Body -->
         <div class="p-5 w-[35vw] space-y-5">
-          <div class="w-full space-y-2">
+          <!-- <div class="w-full space-y-2">
             <label>School Year Name:</label>
             <input
-              v-model="form.school_year_name"
+              :value="schoolYearName"
               type="text"
-              required
-              class="w-full border px-3 py-3 rounded-md"
-              placeholder="e.g., 2024-2025"
+              readonly
+              class="w-full border px-3 py-3 rounded-md bg-gray-100"
             />
-          </div>
+          </div> -->
 
           <div class="w-full flex gap-3">
             <div class="w-full space-y-2">
@@ -134,6 +133,10 @@ export default {
     isEdit() {
       return !!this.schoolYearData;
     },
+    schoolYearName() {
+      if (!this.form.start_year || !this.form.end_year) return "";
+      return `${this.form.start_year}-${this.form.end_year}`;
+    },
   },
   mounted() {
     if (this.isEdit) this.form = { ...this.schoolYearData };
@@ -146,7 +149,7 @@ export default {
           return;
         }
 
-        const payload = { ...this.form };
+        const payload = { ...this.form, school_year_name: this.schoolYearName };
         if (this.isEdit) {
           await axios.patch(
             process.env.VUE_APP_API_BASE_URL +

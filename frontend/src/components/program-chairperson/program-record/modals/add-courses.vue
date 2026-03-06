@@ -287,7 +287,7 @@ export default {
       if (!this.searchCurriculumQuery) return this.curriculums;
       const q = this.searchCurriculumQuery.toLowerCase();
       return this.curriculums.filter((c) =>
-        c.curriculum_name?.toLowerCase().includes(q)
+        c.curriculum_name?.toLowerCase().includes(q),
       );
     },
     filteredCourse() {
@@ -296,13 +296,14 @@ export default {
         (course) =>
           (course.course_code?.toLowerCase().includes(q) ||
             course.course_description?.toLowerCase().includes(q)) &&
-          this.form.curriculum_id === course.curriculum_id
+          this.form.curriculum_id === course.curriculum_id,
       );
     },
     filteredTags() {
       const q = this.searchTagQuery.toLowerCase();
       return this.availableTags.filter(
-        (t) => t.toLowerCase().includes(q) && !this.form.course_tags.includes(t)
+        (t) =>
+          t.toLowerCase().includes(q) && !this.form.course_tags.includes(t),
       );
     },
   },
@@ -321,7 +322,7 @@ export default {
     },
     removeRequisite(code) {
       this.form.course_requisite = this.form.course_requisite.filter(
-        (c) => c !== code
+        (c) => c !== code,
       );
     },
     selectTag(tag) {
@@ -345,14 +346,14 @@ export default {
           await axios.patch(
             process.env.VUE_APP_API_BASE_URL +
               `/courses/update-course/${this.courseData.course_id}`,
-            payload
+            payload,
           );
           toast.success("Course updated successfully!");
         } else {
           // ADD
           await axios.post(
             process.env.VUE_APP_API_BASE_URL + "/courses/add-courses",
-            payload
+            payload,
           );
           toast.success("Course added successfully!");
         }
@@ -361,13 +362,13 @@ export default {
         this.$emit("close");
 
         const audio = new Audio(
-          require(`@/assets/${this.isEdit ? "update.mp3" : "add.mp3"}`)
+          require(`@/assets/${this.isEdit ? "update.mp3" : "add.mp3"}`),
         );
         audio.play();
       } catch (err) {
         console.error(err);
         toast.error(
-          this.isEdit ? "Failed to update course." : "Failed to add course."
+          this.isEdit ? "Failed to update course." : "Failed to add course.",
         );
       }
     },

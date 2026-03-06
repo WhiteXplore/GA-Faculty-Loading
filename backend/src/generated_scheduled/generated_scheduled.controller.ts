@@ -6,15 +6,11 @@ import {
   Patch,
   Param,
   Delete,
-  InternalServerErrorException,
 } from '@nestjs/common';
+
 import { GeneratedScheduledService } from './generated_scheduled.service';
 import { CreateGeneratedScheduledDto } from './dto/create-generated_scheduled.dto';
 import { UpdateGeneratedScheduledDto } from './dto/update-generated_scheduled.dto';
-// import { exec } from 'child_process';
-import { spawn } from 'child_process';
-
-import * as path from 'path';
 
 @Controller('generated-scheduled')
 export class GeneratedScheduledController {
@@ -27,73 +23,32 @@ export class GeneratedScheduledController {
     return this.generatedScheduledService.create(createGeneratedScheduledDto);
   }
 
+  /**
+   * ⭐ Run Python Scheduler
+   */
   @Get('load')
-  getFacultyLoad() {
-    return new Promise((resolve, reject) => {
-      const scriptPath = path
-        .resolve(__dirname, '../../../python/faculty_ga_remar.py')
-        .replace(/\\/g, '/');
+  async runScheduler() {
+    const data =
+      await this.generatedScheduledService.runPythonScheduler();
 
-      console.log('Running Python script:', scriptPath);
+    return {
+      success: true,
+      data,
+    };
+  }
 
-      const pythonProcess = spawn('python', [scriptPath]);
+  /**
+   * ⭐ Read JSON output
+   */
+  @Get('generate')
+  getGeneratedSchedule() {
+    const data =
+      this.generatedScheduledService.getFacultyLoadingFromFile();
 
-      let stdoutData = '';
-      let stderrData = '';
-
-      // 🔹 Collect stdout (streamed, no buffer limit)
-      pythonProcess.stdout.on('data', (data) => {
-        stdoutData += data.toString();
-      });
-
-      // 🔹 Collect stderr
-      pythonProcess.stderr.on('data', (data) => {
-        stderrData += data.toString();
-      });
-
-      // 🔹 When process finishes
-      pythonProcess.on('close', (code) => {
-        if (code !== 0) {
-          console.error('Python error:', stderrData);
-          return reject(
-            new InternalServerErrorException(
-              'Failed to generate faculty load.',
-            ),
-          );
-        }
-
-        const jsonStartMarker = '===JSON_START===';
-        const jsonEndMarker = '===JSON_END===';
-
-        const startIndex = stdoutData.indexOf(jsonStartMarker);
-        const endIndex = stdoutData.indexOf(jsonEndMarker);
-
-        if (startIndex === -1 || endIndex === -1) {
-          console.error('No JSON markers found.');
-          return reject(
-            new InternalServerErrorException(
-              'No JSON markers found in Python output.',
-            ),
-          );
-        }
-
-        const jsonString = stdoutData
-          .substring(startIndex + jsonStartMarker.length, endIndex)
-          .trim();
-
-        try {
-          const schedule = JSON.parse(jsonString);
-          resolve({ success: true, data: schedule });
-        } catch (err) {
-          console.error('JSON parse error:', err.message);
-          reject(
-            new InternalServerErrorException(
-              'Failed to parse JSON from Python output.',
-            ),
-          );
-        }
-      });
-    });
+    return {
+      success: true,
+      data,
+    };
   }
 
   @Get()

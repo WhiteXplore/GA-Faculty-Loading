@@ -183,116 +183,122 @@ export class UserService {
     return results;
   }
 
-  async importExpertise(
-    importData: ImportExpertiseDto[],
-  ): Promise<ImportResult> {
-    const results: ImportResult = { success: 0, failed: 0, errors: [] };
+  // async importExpertise(
+  //   importData: ImportExpertiseDto[],
+  // ): Promise<ImportResult> {
+  //   const results: ImportResult = { success: 0, failed: 0, errors: [] };
 
-    // Fetch all users and courses for matching
-    const users = await this.userRepository.find();
-    const courses = await this.courseRepository.find();
+  //   const users = await this.userRepository.find();
+  //   const courses = await this.courseRepository.find();
 
-    for (let i = 0; i < importData.length; i++) {
-      try {
-        const expertiseData = importData[i];
+  //   for (let i = 0; i < importData.length; i++) {
+  //     try {
+  //       const expertiseData = importData[i];
 
-        // Validate required fields
-        if (!expertiseData.instructor_name || !expertiseData.course_code) {
-          results.failed++;
-          results.errors.push({
-            row: i + 2, // +2 because row 1 is header
-            error: 'Missing required fields',
-            data: expertiseData,
-          });
-          continue;
-        }
+  //       if (!expertiseData.instructor_name || !expertiseData.course_code) {
+  //         results.failed++;
+  //         results.errors.push({
+  //           row: i + 2,
+  //           error: 'Missing required fields',
+  //           data: expertiseData,
+  //         });
+  //         continue;
+  //       }
 
-        // Parse instructor name (format: "Last Name, First Name M.")
-        const instructorName = expertiseData.instructor_name.trim();
+  //       // Normalize instructor name from Excel
+  //       const instructorName = expertiseData.instructor_name
+  //         .trim()
+  //         .replace(/\s+/g, ' ')
+  //         .toLowerCase();
 
-        // Find user by matching name (try different formats)
-        let user: User_Accounts | undefined = undefined;
+  //       let user: User_Accounts | undefined = undefined;
 
-        // Try to match by full name comparison
-        user = users.find((u) => {
-          const fullName = `${u.last_name}, ${u.first_name}`;
-          const fullNameReverse = `${u.first_name} ${u.last_name}`;
-          const instructorLower = instructorName.toLowerCase();
-          const fullNameLower = fullName.toLowerCase();
-          const fullNameReverseLower = fullNameReverse.toLowerCase();
+  //       const instructorName = expertiseData.instructor_name
+  //         .trim()
+  //         .replace(/\s+/g, ' ')
+  //         .toLowerCase();
 
-          return (
-            instructorLower === fullNameLower ||
-            instructorLower.includes(fullNameLower) ||
-            fullNameLower.includes(instructorLower) ||
-            instructorLower === fullNameReverseLower ||
-            instructorLower.includes(fullNameReverseLower)
-          );
-        });
+  //       const nameParts = instructorName.split(' ');
 
-        if (!user) {
-          results.failed++;
-          results.errors.push({
-            row: i + 2,
-            error: `Instructor not found: ${instructorName}`,
-            data: expertiseData,
-          });
-          continue;
-        }
+  //       const excelLastName = nameParts[nameParts.length - 1];
+  //       const excelFirstName = nameParts
+  //         .slice(0, nameParts.length - 1)
+  //         .join(' ');
 
-        // Find course by course code
-        const courseCode = expertiseData.course_code.trim().toUpperCase();
-        const course = courses.find(
-          (c) => c.course_code.toUpperCase() === courseCode,
-        );
+  //       let user = users.find((u) => {
+  //         const dbFirst = u.first_name.toLowerCase();
+  //         const dbLast = u.last_name.toLowerCase();
 
-        if (!course) {
-          results.failed++;
-          results.errors.push({
-            row: i + 2,
-            error: `Course not found: ${courseCode}`,
-            data: expertiseData,
-          });
-          continue;
-        }
+  //         return dbLast === excelLastName && dbFirst.includes(excelFirstName);
+  //       });
 
-        // Check if expertise already exists
-        const existingExpertise = await this.userExpertiseRepository.findOne({
-          where: {
-            user: { id: user.id },
-            course: { course_id: course.course_id },
-          },
-          relations: ['user', 'course'],
-        });
+  //       if (!user) {
+  //         results.failed++;
+  //         results.errors.push({
+  //           row: i + 2,
+  //           error: `Instructor not found: ${expertiseData.instructor_name}`,
+  //           data: expertiseData,
+  //         });
+  //         continue;
+  //       }
 
-        if (existingExpertise) {
-          results.failed++;
-          results.errors.push({
-            row: i + 2,
-            error: `Expertise already exists for ${instructorName} - ${courseCode}`,
-            data: expertiseData,
-          });
-          continue;
-        }
+  //       // Normalize course code
+  //       const courseCode = expertiseData.course_code
+  //         .trim()
+  //         .replace(/\s+/g, '')
+  //         .toUpperCase();
 
-        // Create new expertise
-        const newExpertise = this.userExpertiseRepository.create({
-          user: user,
-          course: course,
-        });
+  //       const course = courses.find(
+  //         (c) => c.course_code.replace(/\s+/g, '').toUpperCase() === courseCode,
+  //       );
 
-        await this.userExpertiseRepository.save(newExpertise);
-        results.success++;
-      } catch (error) {
-        results.failed++;
-        results.errors.push({
-          row: i + 2,
-          error: error.message || 'Unknown error',
-          data: importData[i],
-        });
-      }
-    }
+  //       if (!course) {
+  //         results.failed++;
+  //         results.errors.push({
+  //           row: i + 2,
+  //           error: `Course not found: ${courseCode}`,
+  //           data: expertiseData,
+  //         });
+  //         continue;
+  //       }
 
-    return results;
-  }
+  //       // Check if expertise already exists
+  //       const existingExpertise = await this.userExpertiseRepository.findOne({
+  //         where: {
+  //           user: { id: user.id },
+  //           course: { course_id: course.course_id },
+  //         },
+  //         relations: ['user', 'course'],
+  //       });
+
+  //       if (existingExpertise) {
+  //         results.failed++;
+  //         results.errors.push({
+  //           row: i + 2,
+  //           error: `Expertise already exists for ${instructorName} - ${courseCode}`,
+  //           data: expertiseData,
+  //         });
+  //         continue;
+  //       }
+
+  //       const newExpertise = this.userExpertiseRepository.create({
+  //         user: user,
+  //         course: course,
+  //       });
+
+  //       await this.userExpertiseRepository.save(newExpertise);
+
+  //       results.success++;
+  //     } catch (error) {
+  //       results.failed++;
+  //       results.errors.push({
+  //         row: i + 2,
+  //         error: error.message || 'Unknown error',
+  //         data: importData[i],
+  //       });
+  //     }
+  //   }
+
+  //   return results;
+  // }
 }

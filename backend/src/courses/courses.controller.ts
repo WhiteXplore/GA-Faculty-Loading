@@ -6,25 +6,28 @@ import {
   Patch,
   Param,
   Delete,
+  BadRequestException,
 } from '@nestjs/common';
+
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 @Controller('courses')
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
+  // 🔹 BULK INSERT
   @Post('add-courses')
-  create(@Body() createCourseDto: CreateCourseDto) {
-    return this.coursesService.create(createCourseDto);
+  create(@Body() createCourseDto: CreateCourseDto[]) {
+    return this.coursesService.createMany(createCourseDto);
   }
 
   @Get('get-courses')
   findAll() {
     return this.coursesService.findAll();
   }
+
   @Get('get-report-curriculum-offer')
   findReportCurriculum() {
     return this.coursesService.findReportCurriculum();
@@ -43,9 +46,11 @@ export class CoursesController {
   @Delete('delete-id/:id')
   remove(@Param('id') id: string) {
     const numericId = parseInt(id, 10);
+
     if (isNaN(numericId)) {
       throw new BadRequestException('Invalid course ID');
     }
+
     return this.coursesService.remove(numericId);
   }
 }

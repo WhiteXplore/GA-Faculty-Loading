@@ -19,10 +19,10 @@
 
         <div
           @click="toggleAdd"
-          class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
+          class="flex items-center gap-2 px-3 py-2 border bg-defaultGreen text-white border-green-600 rounded-lg hover:bg-white hover:text-defaultGreen hover:shadow-lg cursor-pointer transition duration-200"
         >
           <div
-            class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
+            class="p-1 bg-white hover:bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
           >
             <icon name="circle-add" />
           </div>

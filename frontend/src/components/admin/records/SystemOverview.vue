@@ -2,7 +2,7 @@
   <div class="px-2 mt-2">
     <!-- Header -->
     <div class="flex justify-between items-start mb-4">
-      <h1 class="font-semibold tracking-wide text-md px-1">System Overview</h1>
+      <h1 class="font-semibold tracking-wide text-sm px-1">System Overview</h1>
     </div>
 
     <!-- Faculty with Expertise Section -->

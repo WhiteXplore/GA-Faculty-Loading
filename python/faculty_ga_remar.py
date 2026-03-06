@@ -471,7 +471,7 @@ def find_suitable_room(rooms, course_type, institute_id, class_size, day, start_
 def schedule_class_with_lab(cls, rooms, faculty_id, employment_type,
                             schedule_tracker, faculty_schedule_tracker,
                             unscheduled_meetings, class_schedule_tracker,
-                            day_pattern_tracker, preffered_time=None, faculty_branch_tracker=None):
+                            day_pattern_tracker, preferred_time=None, faculty_branch_tracker=None):
     """
     Schedule a class that has both lecture and lab components.
     They must be scheduled consecutively (lecture first, then lab) on the same day.
@@ -505,6 +505,9 @@ def schedule_class_with_lab(cls, rooms, faculty_id, employment_type,
         scheduling_start_hour = START_HOUR
         scheduling_end_hour = END_HOUR
 
+    # Track the most recent failure reason for specific error reporting
+    fail_reason = "No available time slots"
+
     # Try each day pattern (TTH, MF, MWF) - balanced for fairness
     balanced_patterns = get_balanced_patterns(
         day_pattern_tracker, total_hours_per_week)
@@ -527,7 +530,7 @@ def schedule_class_with_lab(cls, rooms, faculty_id, employment_type,
             consecutive_start, scheduling_end_hour, total_duration)
         # Restrict to preferred time windows if the faculty has one
         available_slots = filter_slots_by_preferred_time(
-            available_slots, preffered_time, total_duration)
+            available_slots, preferred_time, total_duration)
 
         # Try each time slot in order to keep scheduling back-to-back
         for start_hour in available_slots:
@@ -535,28 +538,33 @@ def schedule_class_with_lab(cls, rooms, faculty_id, employment_type,
             if not all(is_faculty_available(faculty_id, day, start_hour, total_duration,
                                             faculty_schedule_tracker)
                        for day in pattern_days):
+                fail_reason = "Faculty time conflict"
                 continue
 
             # Constraint: Check faculty daily workload limit (max 8 hours per day)
             if not all(get_faculty_daily_hours(faculty_id, day, faculty_schedule_tracker) + total_duration <= 8
                        for day in pattern_days):
+                fail_reason = "Faculty daily workload limit exceeded (max 8 hours)"
                 continue
 
             # Constraint: Check class section availability on ALL days
             class_id = cls["class_id"]
             if not all(is_class_available(class_id, day, start_hour, total_duration, class_schedule_tracker)
                        for day in pattern_days):
+                fail_reason = "Class section time conflict"
                 continue
 
             # Find lecture room on first day
             lecture_room = find_suitable_room(rooms, "Lecture", institute_id, class_size,
                                               pattern_days[0], start_hour, lecture_hours, schedule_tracker)
             if not lecture_room:
+                fail_reason = "No available lecture room"
                 continue
 
             # Check if same lecture room is available on ALL remaining days
             if not all(is_room_available(lecture_room, day, start_hour, lecture_hours, schedule_tracker)
                        for day in pattern_days[1:]):
+                fail_reason = "No available lecture room on all pattern days"
                 continue
 
             # Find lab room (starting right after lecture) on first day
@@ -564,17 +572,20 @@ def schedule_class_with_lab(cls, rooms, faculty_id, employment_type,
             lab_room = find_suitable_room(rooms, "Laboratory", institute_id, class_size,
                                           pattern_days[0], lab_start_hour, lab_hours, schedule_tracker)
             if not lab_room:
+                fail_reason = "No available laboratory room"
                 continue
 
             # Check if same lab room is available on ALL remaining days
             if not all(is_room_available(lab_room, day, lab_start_hour, lab_hours, schedule_tracker)
                        for day in pattern_days[1:]):
+                fail_reason = "No available laboratory room on all pattern days"
                 continue
 
             # Constraint: Check faculty branch consistency on ALL days
             branch_id = cls.get("college_branch_id")
             if not all(is_branch_available(faculty_id, day, branch_id, faculty_branch_tracker or {})
                        for day in pattern_days):
+                fail_reason = "Faculty branch conflict"
                 continue
 
             # All checks passed! Schedule on ALL days of the pattern
@@ -704,35 +715,41 @@ def schedule_class_with_lab(cls, rooms, faculty_id, employment_type,
     available_slots = find_available_slots(
         wed_consecutive_start, scheduling_end_hour, wed_total_duration)
     available_slots = filter_slots_by_preferred_time(
-        available_slots, preffered_time, wed_total_duration)
+        available_slots, preferred_time, wed_total_duration)
 
     for start_hour in available_slots:
         if not is_faculty_available(faculty_id, wednesday, start_hour, wed_total_duration,
                                     faculty_schedule_tracker):
+            fail_reason = "Faculty time conflict"
             continue
 
         faculty_hours_wed = get_faculty_daily_hours(
             faculty_id, wednesday, faculty_schedule_tracker)
         if faculty_hours_wed + wed_total_duration > 8:
+            fail_reason = "Faculty daily workload limit exceeded (max 8 hours)"
             continue
 
         class_id = cls["class_id"]
         if not is_class_available(class_id, wednesday, start_hour, wed_total_duration, class_schedule_tracker):
+            fail_reason = "Class section time conflict"
             continue
 
         branch_id = cls.get("college_branch_id")
         if not is_branch_available(faculty_id, wednesday, branch_id, faculty_branch_tracker or {}):
+            fail_reason = "Faculty branch conflict"
             continue
 
         lecture_room = find_suitable_room(rooms, "Lecture", institute_id, class_size,
                                           wednesday, start_hour, wed_lecture_hours, schedule_tracker)
         if not lecture_room:
+            fail_reason = "No available lecture room"
             continue
 
         wed_lab_start_hour = start_hour + wed_lecture_hours
         lab_room = find_suitable_room(rooms, "Laboratory", institute_id, class_size,
                                       wednesday, wed_lab_start_hour, wed_lab_hours, schedule_tracker)
         if not lab_room:
+            fail_reason = "No available laboratory room"
             continue
 
         # All checks passed! Schedule on Wednesday only
@@ -837,12 +854,16 @@ def schedule_class_with_lab(cls, rooms, faculty_id, employment_type,
     unscheduled_meetings.append({
         "class_id": cls["class_id"],
         "course_code": cls["course_code"],
+        "course_id": cls.get("course_id"),
+        "institute_id": cls.get("institute_id"),
+        "class_size": cls.get("class_size", 30),
+        "faculty_name": cls.get("faculty_name", "Unknown"),
         "program_id": cls["program_id"],
         "program_name": cls.get("program_name", "Unknown"),
         "program_code": cls.get("program_code", "Unknown"),
         "type": "Lecture+Lab",
         "hours": f"{lecture_hours_per_week}h lec + {lab_hours_per_week}h lab per week",
-        "reason": "No available consecutive time slots or rooms on any day pattern or Wednesday"
+        "reason": fail_reason
     })
 
     return None
@@ -851,7 +872,7 @@ def schedule_class_with_lab(cls, rooms, faculty_id, employment_type,
 def schedule_lecture_only(cls, rooms, faculty_id, employment_type,
                           schedule_tracker, faculty_schedule_tracker,
                           unscheduled_meetings, class_schedule_tracker,
-                          lecture_type_tracker, day_pattern_tracker, preffered_time=None, faculty_branch_tracker=None,
+                          lecture_type_tracker, day_pattern_tracker, preferred_time=None, faculty_branch_tracker=None,
                           day_f2f_tracker=None):
     """
     Schedule a class that has only lecture (no lab).
@@ -888,6 +909,9 @@ def schedule_lecture_only(cls, rooms, faculty_id, employment_type,
         scheduling_start_hour = START_HOUR
         scheduling_end_hour = END_HOUR
 
+    # Track the most recent failure reason for specific error reporting
+    fail_reason = "No available time slots"
+
     # Try each day pattern - balanced for fairness
     balanced_patterns = get_balanced_patterns(
         day_pattern_tracker, lecture_hours_per_week)
@@ -908,7 +932,7 @@ def schedule_lecture_only(cls, rooms, faculty_id, employment_type,
             consecutive_start, scheduling_end_hour, lecture_hours)
         # Restrict to preferred time windows if the faculty has one
         available_slots = filter_slots_by_preferred_time(
-            available_slots, preffered_time, lecture_hours)
+            available_slots, preferred_time, lecture_hours)
 
         # Try each time slot in order to keep scheduling back-to-back
         for start_hour in available_slots:
@@ -916,23 +940,27 @@ def schedule_lecture_only(cls, rooms, faculty_id, employment_type,
             if not all(is_faculty_available(faculty_id, day, start_hour, lecture_hours,
                                             faculty_schedule_tracker)
                        for day in pattern_days):
+                fail_reason = "Faculty time conflict"
                 continue
 
             # Constraint: Check faculty daily workload limit (max 8 hours per day)
             if not all(get_faculty_daily_hours(faculty_id, day, faculty_schedule_tracker) + lecture_hours <= 8
                        for day in pattern_days):
+                fail_reason = "Faculty daily workload limit exceeded (max 8 hours)"
                 continue
 
             # Constraint: Check class section availability on ALL days
             class_id = cls["class_id"]
             if not all(is_class_available(class_id, day, start_hour, lecture_hours, class_schedule_tracker)
                        for day in pattern_days):
+                fail_reason = "Class section time conflict"
                 continue
 
             # Constraint: Check faculty branch consistency on ALL days
             branch_id = cls.get("college_branch_id")
             if not all(is_branch_available(faculty_id, day, branch_id, faculty_branch_tracker or {})
                        for day in pattern_days):
+                fail_reason = "Faculty branch conflict"
                 continue
 
             # --- Per-day face-to-face / online assignment ---
@@ -1079,24 +1107,28 @@ def schedule_lecture_only(cls, rooms, faculty_id, employment_type,
     available_slots = find_available_slots(
         wed_consecutive_start, scheduling_end_hour, wed_lecture_hours)
     available_slots = filter_slots_by_preferred_time(
-        available_slots, preffered_time, wed_lecture_hours)
+        available_slots, preferred_time, wed_lecture_hours)
 
     for start_hour in available_slots:
         if not is_faculty_available(faculty_id, wednesday, start_hour, wed_lecture_hours,
                                     faculty_schedule_tracker):
+            fail_reason = "Faculty time conflict"
             continue
 
         faculty_hours_wed = get_faculty_daily_hours(
             faculty_id, wednesday, faculty_schedule_tracker)
         if faculty_hours_wed + wed_lecture_hours > 8:
+            fail_reason = "Faculty daily workload limit exceeded (max 8 hours)"
             continue
 
         class_id = cls["class_id"]
         if not is_class_available(class_id, wednesday, start_hour, wed_lecture_hours, class_schedule_tracker):
+            fail_reason = "Class section time conflict"
             continue
 
         branch_id = cls.get("college_branch_id")
         if not is_branch_available(faculty_id, wednesday, branch_id, faculty_branch_tracker or {}):
+            fail_reason = "Faculty branch conflict"
             continue
 
         # Per-day f2f/online for Wednesday (single day, same fairness logic as pattern days)
@@ -1206,12 +1238,16 @@ def schedule_lecture_only(cls, rooms, faculty_id, employment_type,
     unscheduled_meetings.append({
         "class_id": cls["class_id"],
         "course_code": cls["course_code"],
+        "course_id": cls.get("course_id"),
+        "institute_id": cls.get("institute_id"),
+        "class_size": cls.get("class_size", 30),
+        "faculty_name": cls.get("faculty_name", "Unknown"),
         "program_id": cls["program_id"],
         "program_name": cls.get("program_name", "Unknown"),
         "program_code": cls.get("program_code", "Unknown"),
         "type": "Lecture",
         "hours": f"{lecture_hours_per_week}h per week",
-        "reason": "No available time slots on any day pattern or Wednesday (faculty conflict)"
+        "reason": fail_reason
     })
 
     return None
@@ -1228,6 +1264,9 @@ def schedule_class_meeting(cls, course_type, hours, rooms, faculty_id,
     institute_id = cls.get("institute_id")
     class_size = cls.get("class_size", 30)  # Default to 30 if not specified
 
+    # Track the most recent failure reason for specific error reporting
+    fail_reason = "No available time slots"
+
     # Try each day
     for day in DAYS:
         # Find available time slots for this duration
@@ -1238,11 +1277,15 @@ def schedule_class_meeting(cls, course_type, hours, rooms, faculty_id,
             # Check faculty availability
             if not is_faculty_available(faculty_id, day, start_hour, hours,
                                         faculty_schedule_tracker):
+                fail_reason = "Faculty time conflict"
                 continue
 
             # Find suitable room
             room = find_suitable_room(rooms, course_type, institute_id, class_size,
                                       day, start_hour, hours, schedule_tracker)
+
+            if not room:
+                fail_reason = f"No available {course_type.lower()} room"
 
             if room:
                 # Schedule this meeting
@@ -1298,9 +1341,13 @@ def schedule_class_meeting(cls, course_type, hours, rooms, faculty_id,
     unscheduled_meetings.append({
         "class_id": cls["class_id"],
         "course_code": cls["course_code"],
+        "course_id": cls.get("course_id"),
+        "institute_id": cls.get("institute_id"),
+        "class_size": cls.get("class_size", 30),
+        "faculty_name": cls.get("faculty_name", "Unknown"),
         "type": course_type,
         "hours": hours,
-        "reason": "No available room/time slot found"
+        "reason": fail_reason
     })
 
     return None
@@ -1362,7 +1409,7 @@ def create_schedule(faculty_loads, rooms):
     for faculty_id, faculty_info in faculty_items:
         faculty_name = faculty_info["faculty_name"]
         employment_type = faculty_info.get("employment_type", "full time")
-        preffered_time = faculty_info.get("preffered_time", [])
+        preferred_time = faculty_info.get("preferred_time", [])
 
         if len(faculty_info["assigned_classes"]) == 0:
             continue
@@ -1390,7 +1437,7 @@ def create_schedule(faculty_loads, rooms):
                 scheduled_meetings = schedule_class_with_lab(
                     cls, rooms, faculty_id, employment_type,
                     schedule_tracker, faculty_schedule_tracker, unscheduled_meetings, class_schedule_tracker,
-                    day_pattern_tracker, preffered_time, faculty_branch_tracker
+                    day_pattern_tracker, preferred_time, faculty_branch_tracker
                 )
 
                 if scheduled_meetings:
@@ -1410,7 +1457,7 @@ def create_schedule(faculty_loads, rooms):
                 scheduled_meetings = schedule_lecture_only(
                     cls, rooms, faculty_id, employment_type,
                     schedule_tracker, faculty_schedule_tracker, unscheduled_meetings, class_schedule_tracker,
-                    lecture_type_tracker, day_pattern_tracker, preffered_time, faculty_branch_tracker,
+                    lecture_type_tracker, day_pattern_tracker, preferred_time, faculty_branch_tracker,
                     day_f2f_tracker
                 )
 
@@ -1432,7 +1479,7 @@ def create_schedule(faculty_loads, rooms):
                 scheduled_meetings = schedule_lecture_only(
                     cls, rooms, faculty_id, employment_type,
                     schedule_tracker, faculty_schedule_tracker, unscheduled_meetings, class_schedule_tracker,
-                    lecture_type_tracker, day_pattern_tracker, preffered_time, faculty_branch_tracker,
+                    lecture_type_tracker, day_pattern_tracker, preferred_time, faculty_branch_tracker,
                     day_f2f_tracker
                 )
 
@@ -1504,7 +1551,31 @@ def create_schedule(faculty_loads, rooms):
         print("No conflicts detected!")
     print("="*80)
 
-    return complete_schedule, unscheduled_meetings
+    # Build schedule_by_room: group schedule entries by room name, sorted chronologically
+    schedule_by_room = {}
+    day_order = {d: i for i, d in enumerate(DAYS)}
+    for entry in complete_schedule:
+        room_name = entry.get("room_name", "Online")
+        if room_name not in schedule_by_room:
+            schedule_by_room[room_name] = []
+        schedule_by_room[room_name].append({
+            "day_time": f"{entry['day']} {entry['time_slot']}",
+            "faculty_name": entry.get("faculty_name", "Unknown"),
+            "class_name": entry.get("set_name", "Unknown"),
+            "course_code": entry.get("course_code", "Unknown"),
+            "program_code": entry.get("program_code", "Unknown"),
+            "_sort_day": day_order.get(entry["day"], 99),
+            "_sort_hour": entry.get("start_hour", 0)
+        })
+    # Sort each room's entries by day then start hour, and remove sort keys
+    for room_name in schedule_by_room:
+        schedule_by_room[room_name].sort(
+            key=lambda x: (x["_sort_day"], x["_sort_hour"]))
+        for item in schedule_by_room[room_name]:
+            del item["_sort_day"]
+            del item["_sort_hour"]
+
+    return complete_schedule, unscheduled_meetings, schedule_by_room
 
 
 def validate_schedule(schedule):
@@ -1745,7 +1816,7 @@ def save_schedule_to_text(schedule, unscheduled, filename):
     print(f"\n[INFO] Schedule saved to text file: {filename}")
 
 
-def save_schedule_to_json(schedule, unscheduled, filename):
+def save_schedule_to_json(schedule, unscheduled, filename, schedule_by_room=None):
     """Save schedule to a JSON file."""
     # Count full time and part time faculty in schedule
     faculty_types = {}
@@ -1771,7 +1842,8 @@ def save_schedule_to_json(schedule, unscheduled, filename):
             "end_hour": END_HOUR
         },
         "scheduled_meetings": schedule,
-        "unscheduled_meetings": unscheduled
+        "unscheduled_meetings": unscheduled,
+        "schedule_by_room": schedule_by_room or {}
     }
 
     with open(filename, 'w', encoding='utf-8') as f:
@@ -2326,7 +2398,7 @@ def assign_faculty(classes_courses, faculty_expertise_courses):
                 "employment_type": f.get("employment_type", "full time"),
                 # Use faculty's load_unit or default to MAX_LOAD
                 "load_unit": f.get("load_unit", MAX_LOAD),
-                "preffered_time": parse_preferred_time(f.get("preffered_time", "")),
+                "preferred_time": parse_preferred_time(f.get("preffered_time", "")),
                 "assigned_classes": [],
                 "total_units": 0,
                 "total_lecture_hours": 0,
@@ -2572,7 +2644,7 @@ if __name__ == "__main__":
     # ------------------------------------------
     # CREATE ROOM AND TIME SCHEDULE
     # ------------------------------------------
-    complete_schedule, unscheduled_meetings = create_schedule(
+    complete_schedule, unscheduled_meetings, schedule_by_room = create_schedule(
         faculty_load_result,
         rooms
     )
@@ -2587,6 +2659,14 @@ if __name__ == "__main__":
         output_dir, f"scheduleeeessseee_{timestamp}.xlsx")
     save_schedule_to_excel(complete_schedule, unscheduled_meetings,
                            faculty_load_result, schedule_excel_filename)
+
+    # Save schedule to JSON file (always overwrites with same filename)
+    json_output_dir = os.path.join(
+        "..", "backend", "src", "generated_scheduled", "json_output")
+    os.makedirs(json_output_dir, exist_ok=True)
+    json_filename = os.path.join(json_output_dir, "faculty_loading.json")
+    save_schedule_to_json(
+        complete_schedule, unscheduled_meetings, json_filename, schedule_by_room)
 
     # ------------------------------------------
     # FINAL OUTPUT (FOR NESTJS)

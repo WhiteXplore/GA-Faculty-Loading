@@ -2,7 +2,7 @@
   <div class="px-2 mt-2">
     <!-- Headers -->
     <div class="flex justify-between items-start">
-      <h1 class="font-semibold tracking-wide text-md px-1">Programs</h1>
+      <h1 class="font-semibold tracking-wide text-sm px-1">Programs</h1>
       <button
         @click="showUploadModal = true"
         class="bg-green-600 hover:bg-defaultGreen text-white px-4 py-2 rounded-md text-sm flex items-center gap-2 transition-colors"

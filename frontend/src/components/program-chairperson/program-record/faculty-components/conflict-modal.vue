@@ -57,7 +57,7 @@
               <div>
                 <p class="text-xs text-gray-500">Section</p>
                 <p class="font-medium">
-                  {{ schedule.program_name }}-{{ schedule.set_name }}
+                  {{ schedule.program_code }}-{{ schedule.set_name }}
                 </p>
               </div>
               <div>
@@ -130,7 +130,7 @@
                   <div>
                     <p class="text-xs text-gray-500">Section</p>
                     <p class="font-medium">
-                      {{ conflict.program_name }}-{{ conflict.set_name }}
+                      {{ conflict.program_code }}-{{ conflict.set_name }}
                     </p>
                   </div>
                   <div>

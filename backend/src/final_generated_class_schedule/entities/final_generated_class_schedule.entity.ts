@@ -83,7 +83,7 @@ export class FinalGeneratedClassSchedule {
   @Column({ type: 'int', nullable: true })
   join_group_id: number; // all schedules in same join group share this ID
 
-  @Column({ type: 'boolean', default: false })
+  @Column({ type: 'boolean', default: false, nullable: true })
   is_joined: boolean; // true if part of a joined set
 
   @Column({ type: 'simple-array', nullable: true })

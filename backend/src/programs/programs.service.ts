@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Program } from './entities/program.entity';
@@ -17,6 +21,17 @@ export class ProgramsService {
   ) {}
 
   async create(createProgramDto: CreateProgramDto): Promise<Program> {
+    const existing = await this.programRepository.findOne({
+      where: {
+        program_code: createProgramDto.program_code,
+        institute_id: createProgramDto.institute_id,
+      },
+    });
+
+    if (existing) {
+      return existing;
+    }
+
     const newProgram = this.programRepository.create(createProgramDto);
     return await this.programRepository.save(newProgram);
   }
@@ -65,7 +80,9 @@ export class ProgramsService {
       'application/vnd.ms-excel',
     ];
     if (!allowedTypes.includes(file.mimetype)) {
-      throw new BadRequestException('Only Excel files (.xlsx, .xls) are allowed');
+      throw new BadRequestException(
+        'Only Excel files (.xlsx, .xls) are allowed',
+      );
     }
 
     try {
@@ -82,7 +99,7 @@ export class ProgramsService {
       // Get all institutes to map names to IDs
       const institutes = await this.instituteRepository.find();
       const instituteMap = new Map<string, number>();
-      institutes.forEach(inst => {
+      institutes.forEach((inst) => {
         instituteMap.set(inst.institute_code.toUpperCase(), inst.institute_id);
         instituteMap.set(inst.institute_name.toUpperCase(), inst.institute_id);
       });
@@ -90,7 +107,7 @@ export class ProgramsService {
       // Get all existing programs to check for duplicates
       const existingPrograms = await this.programRepository.find();
       const existingProgramCodes = new Set(
-        existingPrograms.map(p => p.program_code.toUpperCase())
+        existingPrograms.map((p) => p.program_code.toUpperCase()),
       );
 
       const programsToCreate: CreateProgramDto[] = [];
@@ -104,9 +121,19 @@ export class ProgramsService {
 
         try {
           // Extract data from row (handle various column name formats)
-          const instituteName = row['Institute'] || row['institute'] || row['INSTITUTE'];
-          const programCode = row['Program'] || row['program'] || row['PROGRAM'] || row['program_code'] || row['Program Code'];
-          const programName = row['Program Name'] || row['program_name'] || row['ProgramName'] || row['PROGRAM NAME'];
+          const instituteName =
+            row['Institute'] || row['institute'] || row['INSTITUTE'];
+          const programCode =
+            row['Program'] ||
+            row['program'] ||
+            row['PROGRAM'] ||
+            row['program_code'] ||
+            row['Program Code'];
+          const programName =
+            row['Program Name'] ||
+            row['program_name'] ||
+            row['ProgramName'] ||
+            row['PROGRAM NAME'];
 
           // Validate required fields
           if (!programCode) {
@@ -121,7 +148,9 @@ export class ProgramsService {
           // Check for duplicates
           const programCodeUpper = String(programCode).toUpperCase().trim();
           if (existingProgramCodes.has(programCodeUpper)) {
-            skipped.push(`Row ${rowNumber}: Program "${programCode}" already exists`);
+            skipped.push(
+              `Row ${rowNumber}: Program "${programCode}" already exists`,
+            );
             continue;
           }
 
@@ -131,11 +160,13 @@ export class ProgramsService {
             const instituteKey = String(instituteName).toUpperCase().trim();
             instituteId = instituteMap.get(instituteKey);
             if (!instituteId) {
-              errors.push(`Row ${rowNumber}: Institute "${instituteName}" not found`);
+              errors.push(
+                `Row ${rowNumber}: Institute "${instituteName}" not found`,
+              );
               continue;
             }
           }
-          
+
           // Create program DTO
           const programDto: CreateProgramDto = {
             program_name: String(programName).trim(),
@@ -164,7 +195,9 @@ export class ProgramsService {
         skippedDetails: skipped.length > 0 ? skipped : undefined,
       };
     } catch (error) {
-      throw new BadRequestException(`Failed to process Excel file: ${error.message}`);
+      throw new BadRequestException(
+        `Failed to process Excel file: ${error.message}`,
+      );
     }
   }
 }
