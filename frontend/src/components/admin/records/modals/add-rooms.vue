@@ -1,0 +1,241 @@
+<template>
+  <div
+    class="fixed inset-0 bg-gray-800 bg-opacity-40 flex justify-center items-center z-50"
+  >
+    <div class="rounded-[16px] shadow-lg justify-center animate-slideUp">
+      <form
+        @submit.prevent="submitData"
+        class="w-auto bg-white text-[13px] rounded-[16px] shadow-lg p-0.5"
+        ref="roomsForm"
+      >
+        <!-- Header -->
+        <div
+          class="w-full p-5 py-3 bg-defaultGreen text-white rounded-t-[16px] flex justify-between items-center border-b shadow"
+        >
+          <div class="flex gap-1 items-center">
+            <icon :name="'add-students'" />
+            <h1 class="font-bold tracking-wide text-lg">
+              {{ isEditMode ? "Edit " : "Add " }}Room
+            </h1>
+          </div>
+          <icon
+            :name="'circle-close3'"
+            @click="$emit('close')"
+            class="cursor-pointer"
+          />
+        </div>
+
+        <!-- Body -->
+        <div class="p-5 w-[27vw]">
+          <div class="w-full text-left gap-3 flex flex-col space-y-1">
+            <!-- Institute -->
+            <div class="flex flex-col space-y-2 w-full relative">
+              <label class="font-bold">Institute :</label>
+              <input
+                v-model="searchInstituteQuery"
+                type="text"
+                placeholder="Search institute..."
+                class="px-3 py-3 border w-full border-gray-600 rounded-md text-md text-gray-800"
+                @focus="showInstituteDropdown = true"
+              />
+              <div
+                v-if="showInstituteDropdown && filteredInstitutes.length"
+                class="absolute top-[60px] w-full bg-white border border-gray-300 rounded-md max-h-40 overflow-y-auto z-10"
+                @mouseleave="showInstituteDropdown = false"
+              >
+                <div
+                  v-for="institute in filteredInstitutes"
+                  :key="institute.institute_id"
+                  class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                  @mousedown="selectinstitute(institute)"
+                >
+                  {{ institute.institute_code }} -
+                  {{ institute.institute_name }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Room Name -->
+            <div class="w-full space-y-2">
+              <label for="room_name" class="font-bold">Room Name:</label>
+              <input
+                v-model="form.room_name"
+                type="text"
+                id="room_name"
+                required
+                class="w-full border px-3 py-3 border-gray-600 rounded-md text-md text-gray-800"
+                placeholder="Enter room name"
+              />
+            </div>
+
+            <!-- Room Type -->
+            <div class="w-full space-y-2">
+              <label for="room_type" class="font-bold">Room Type:</label>
+              <select
+                v-model="form.room_type"
+                required
+                class="w-full border px-2 py-3 border-gray-600 rounded-md text-md text-gray-800"
+              >
+                <option disabled value="">Select Room Type</option>
+                <option value="Lecture">Lecture</option>
+                <option value="Laboratory">Laboratory</option>
+              </select>
+            </div>
+
+            <!-- Room Capacity -->
+            <div class="w-full space-y-2">
+              <label for="room_capacity" class="font-bold"
+                >Room Capacity:</label
+              >
+              <input
+                v-model="form.room_capacity"
+                type="number"
+                id="room_capacity"
+                required
+                class="w-full border px-3 py-3 border-gray-600 rounded-md text-md text-gray-800"
+                placeholder="Enter room capacity"
+              />
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="w-full h-[1px] rounded-md bg-gray-200 mt-4"></div>
+
+          <!-- Buttons -->
+          <div class="tracking-wide flex justify-end gap-2 mt-4">
+            <button
+              class="bg-red-600 p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
+              @click="$emit('close')"
+            >
+              Cancel
+            </button>
+            <button
+              class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
+              type="submit"
+            >
+              {{ isEditMode ? "Update" : "Submit" }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+import icon from "@/assets/icon.vue";
+import { toast } from "vue3-toastify";
+import axios from "axios";
+import { useFetchDataStore } from "@/store/fetch-data-store";
+import { mapState, mapActions } from "pinia";
+
+export default {
+  name: "RoomFormModal",
+  props: {
+    roomData: {
+      type: Object,
+      default: null,
+    },
+  },
+  components: {
+    icon,
+  },
+  computed: {
+    ...mapState(useFetchDataStore, ["institutes"]),
+    filteredInstitutes() {
+      if (!this.searchInstituteQuery) return this.institutes;
+      return this.institutes.filter((institute) =>
+        institute.institute_name
+          .toLowerCase()
+          .includes(this.searchInstituteQuery.toLowerCase())
+      );
+    },
+    isEditMode() {
+      return !!this.roomData;
+    },
+  },
+  data() {
+    return {
+      form: {
+        institute_id: "",
+        room_name: "",
+        room_type: "",
+        room_capacity: "",
+      },
+      searchInstituteQuery: "",
+      showInstituteDropdown: false,
+    };
+  },
+  methods: {
+    ...mapActions(useFetchDataStore, ["fetchInstitutes"]),
+    selectinstitute(institute) {
+      this.form.institute_id = institute.institute_id;
+      this.searchInstituteQuery = institute.institute_name;
+      this.showInstituteDropdown = false;
+    },
+    async submitData() {
+      const form = this.$refs.roomsForm;
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      try {
+        if (this.isEditMode) {
+          // UPDATE existing room
+          await axios.put(
+            `http://localhost:8000/rooms/update-id/${this.roomData.room_id}`,
+            this.form
+          );
+          toast.success("Room updated successfully!");
+          const audio = new Audio(require("@/assets/add.mp3"));
+          audio.play();
+        } else {
+          // ADD new room
+          await axios.post("http://localhost:8000/rooms/add-rooms", this.form);
+          toast.success("Room added successfully!");
+          const audio = new Audio(require("@/assets/add.mp3"));
+          audio.play();
+        }
+
+        this.$emit("refresh");
+        this.$emit("close");
+      } catch (error) {
+        toast.error(
+          this.isEditMode ? "Failed to update room" : "Failed to add room"
+        );
+      }
+    },
+  },
+  mounted() {
+    this.fetchInstitutes();
+
+    // Pre-fill form if edit mode
+    if (this.isEditMode) {
+      this.form = {
+        institute_id: this.roomData.institute_id,
+        room_name: this.roomData.room_name,
+        room_type: this.roomData.room_type,
+        room_capacity: this.roomData.room_capacity,
+      };
+      this.searchInstituteQuery = this.roomData.institute?.institute_name || "";
+    }
+  },
+};
+</script>
+
+<style scoped>
+@keyframes fadeInUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.animate-slideUp {
+  animation: fadeInUp 0.3s ease-out;
+}
+</style>

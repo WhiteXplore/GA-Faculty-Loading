@@ -1,0 +1,118 @@
+{
+  "1st Year - A": {
+    "best_schedule": [
+      {
+        "course_id": 13,
+        "course_name": "NSTP1",
+        "type": "Lecture",
+        "day": "Wednesday",
+        "start_hour": 14,
+        "end_hour": 17,
+        "room_id": 3,
+        "room_name": "Room-301",
+        "faculty_id": 15,
+        "faculty_name": "IT1 Faculty",
+        "faculty_institute_id": 2,
+        "set": "1st Year - A",
+        "program_id": 31,
+        "institute_id": 2
+      },
+      {
+        "course_id": 9,
+        "course_name": "IT 111",
+        "type": "Lecture",
+        "day": "Thursday",
+        "start_hour": 15,
+        "end_hour": 18,
+        "room_id": 3,
+        "room_name": "Room-301",
+        "faculty_id": 2,
+        "faculty_name": "Sigfred Navasquez",
+        "faculty_institute_id": 2,
+        "set": "1st Year - A",
+        "program_id": 31,
+        "institute_id": 2
+      },
+      {
+        "course_id": 9,
+        "course_name": "IT 111",
+        "type": "Laboratory",
+        "day": "Friday",
+        "start_hour": 15,
+        "end_hour": 16,
+        "room_id": 2,
+        "room_name": "Lab-1",
+        "faculty_id": 2,
+        "faculty_name": "Sigfred Navasquez",
+        "faculty_institute_id": 2,
+        "set": "1st Year - A",
+        "program_id": 31,
+        "institute_id": 2
+      }
+    ],
+    "total_courses": 3,
+    "faculty_units": {
+      "2": 6.33,
+      "11": 3.33,
+      "15": 3.0
+    }
+  },
+  "1st Year - B": {
+    "best_schedule": [
+      {
+        "course_id": 9,
+        "course_name": "IT 111",
+        "type": "Laboratory",
+        "day": "Monday",
+        "start_hour": 15,
+        "end_hour": 16,
+        "room_id": 2,
+        "room_name": "Lab-1",
+        "faculty_id": 11,
+        "faculty_name": "Maria Flora",
+        "faculty_institute_id": 2,
+        "set": "1st Year - B",
+        "program_id": 31,
+        "institute_id": 2
+      },
+      {
+        "course_id": 13,
+        "course_name": "NSTP1",
+        "type": "Lecture",
+        "day": "Thursday",
+        "start_hour": 13,
+        "end_hour": 16,
+        "room_id": 4,
+        "room_name": "IC-1",
+        "faculty_id": 2,
+        "faculty_name": "Sigfred Navasquez",
+        "faculty_institute_id": 2,
+        "set": "1st Year - B",
+        "program_id": 31,
+        "institute_id": 2
+      },
+      {
+        "course_id": 9,
+        "course_name": "IT 111",
+        "type": "Lecture",
+        "day": "Friday",
+        "start_hour": 8,
+        "end_hour": 11,
+        "room_id": 3,
+        "room_name": "Room-301",
+        "faculty_id": 11,
+        "faculty_name": "Maria Flora",
+        "faculty_institute_id": 2,
+        "set": "1st Year - B",
+        "program_id": 31,
+        "institute_id": 2
+      }
+    ],
+    "total_courses": 3,
+    "faculty_units": {
+      "2": 6.33,
+      "11": 3.33,
+      "15": 3.0
+    }
+  }
+}

@@ -1,0 +1,58 @@
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Curriculum } from 'src/curriculum/entities/curriculum.entity';
+import { Institute } from 'src/institute/entities/institute.entity';
+import { Instructor } from 'src/instructors/entities/instructor.entity';
+import { Calendar } from 'src/calendar/entities/calendar.entity';
+import { User_Accounts } from 'src/user/entities/user.entity';
+import { AssignClass } from 'src/assign_class/entities/assign_class.entity';
+@Entity('programs')
+export class Program {
+  @PrimaryGeneratedColumn()
+  program_id: number;
+
+  @Column({ type: 'int', nullable: true })
+  institute_id: number;
+
+  @Column({ type: 'varchar', length: 255 })
+  program_name: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  program_code: string;
+
+  @CreateDateColumn({ type: 'timestamp' })
+  created_at: Date;
+
+  @UpdateDateColumn({ type: 'timestamp' })
+  updated_at: Date;
+
+  @OneToMany(() => Curriculum, (curriculum) => curriculum.program)
+  curricula: Curriculum[];
+
+  @OneToMany(() => Instructor, (instructor) => instructor.program)
+  instructors: Instructor[];
+
+  @OneToMany(() => Calendar, (calendar) => calendar.program)
+  calendarEvents: Calendar[];
+
+  @OneToMany(() => User_Accounts, (user) => user.program)
+  users: User_Accounts[];
+
+  @ManyToOne(() => Institute, (institute) => institute.programs, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  @JoinColumn({ name: 'institute_id' })
+  institute: Institute;
+
+  @OneToMany(() => AssignClass, (assignClass) => assignClass.course)
+  assignClasses: AssignClass[];
+}
