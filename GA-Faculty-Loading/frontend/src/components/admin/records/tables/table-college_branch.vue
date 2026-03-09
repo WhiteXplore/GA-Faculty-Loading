@@ -1,0 +1,319 @@
+<template>
+  <div v-if="isTable">
+    <div class="flex justify-between items-center px-1 text-sm">
+      <!-- LEFT -->
+      <div class="text-[13px] text-text font-regular">
+        Pages / College Branch
+      </div>
+
+      <!-- RIGHT -->
+      <div class="flex gap-2">
+        <div
+          @click="openAddModal"
+          class="flex items-center gap-2 px-3 py-2 border bg-defaultGreen text-white border-green-600 rounded-xl hover:bg-white hover:text-defaultGreen hover:shadow-lg cursor-pointer transition duration-200"
+        >
+          <div
+            class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
+          >
+            <icon name="circle-add" />
+          </div>
+
+          <span class="font-medium text-sm">Add Branch</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="mt-2 overflow-x-auto border p-3 rounded-xl bg-white">
+      <!-- Controls -->
+      <div
+        class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
+      >
+        <!-- Per page -->
+        <div class="flex items-center gap-2">
+          <select
+            v-model="itemsPerPage"
+            class="rounded-full border border-green-600 bg-white px-3 py-1 text-sm font-semibold"
+            @change="changePage(1)"
+          >
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+
+          <span class="text-sm font-medium text-gray-600">Per page</span>
+        </div>
+
+        <!-- Search -->
+        <div class="relative w-full sm:w-64 md:w-72 lg:w-80">
+          <input
+            v-model="searchQuery"
+            type="text"
+            placeholder="Search..."
+            class="rounded-full border border-green-600 bg-white px-4 py-2 pl-10 text-sm shadow-sm w-full"
+            @input="changePage(1)"
+          />
+
+          <div
+            class="absolute inset-y-0 left-3 flex items-center text-defaultGreen"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="M21 21l-4.35-4.35" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+        <div class="max-h-[69vh] overflow-y-auto">
+          <table class="min-w-full text-sm text-gray-700 border-collapse">
+            <thead class="bg-defaultGreen text-white sticky top-0">
+              <tr>
+                <th class="px-4 py-3 text-left font-normal w-[70%]">
+                  College Branch Name
+                </th>
+
+                <th class="px-4 py-3 text-center font-normal w-[30%]">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr
+                v-for="branch in paginatedData"
+                :key="branch.college_branch_id"
+                class="hover:bg-green-50 border-t"
+              >
+                <td class="px-4 py-3">
+                  {{ branch.college_branch_name }}
+                </td>
+
+                <td class="px-4 py-3 flex justify-center">
+                  <div class="flex gap-2">
+                    <button
+                      class="w-[90px] h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center justify-center gap-1 text-sm"
+                      @click="openEditModal(branch)"
+                    >
+                      <icon name="edit" /> Edit
+                    </button>
+
+                    <button
+                      class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                      @click="toggleDelete(branch)"
+                    >
+                      <icon name="delete" /> Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr v-if="paginatedData.length === 0">
+                <td colspan="2" class="text-center py-8 text-gray-400">
+                  No records found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex justify-between items-center mt-4">
+        <div class="text-gray-700 text-sm">
+          Showing {{ startIndex }} to {{ endIndex }} of
+          {{ filteredData.length }} entries
+        </div>
+
+        <div class="flex items-center gap-1 text-sm">
+          <button
+            @click="changePage(currentPage - 1)"
+            :disabled="currentPage === 1"
+            class="px-3 py-1 bg-gray-300 rounded-l-md"
+          >
+            &lt;
+          </button>
+
+          <button
+            v-for="page in pageNumbers"
+            :key="page"
+            @click="changePage(page)"
+            :class="[
+              'px-3 py-1 rounded-md',
+              currentPage === page
+                ? 'bg-defaultGreen text-white'
+                : 'bg-gray-200',
+            ]"
+          >
+            {{ page }}
+          </button>
+
+          <button
+            @click="changePage(currentPage + 1)"
+            :disabled="currentPage === totalPages"
+            class="px-3 py-1 bg-gray-300 rounded-r-md"
+          >
+            &gt;
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD MODAL -->
+  <addCollegeBranch
+    v-if="isAdd"
+    @close="isAdd = false"
+    @refresh="refreshTable"
+  />
+
+  <!-- EDIT MODAL -->
+  <addCollegeBranch
+    v-if="showEditModal"
+    :branchData="selectedBranch"
+    @close="closeModal"
+    @refresh="refreshTable"
+  />
+</template>
+
+<script>
+import icon from "@/assets/icon.vue";
+import addCollegeBranch from "../modals/add-college-branch.vue";
+import { useFetchDataStore } from "../../../../store/fetch-data-store";
+import { mapState } from "pinia";
+import axios from "axios";
+import { toast } from "vue3-toastify";
+
+export default {
+  name: "TableCollegeBranch",
+
+  components: {
+    icon,
+    addCollegeBranch,
+  },
+
+  data() {
+    return {
+      currentPage: 1,
+      itemsPerPage: 10,
+      searchQuery: "",
+
+      isAdd: false,
+      isTable: true,
+
+      selectedBranch: null,
+      showEditModal: false,
+    };
+  },
+
+  computed: {
+    ...mapState(useFetchDataStore, ["college_branch"]),
+
+    filteredData() {
+      const query = this.searchQuery.toLowerCase();
+
+      return (this.college_branch || []).filter((item) =>
+        item.college_branch_name.toLowerCase().includes(query),
+      );
+    },
+
+    totalPages() {
+      return Math.ceil(this.filteredData.length / this.itemsPerPage) || 1;
+    },
+
+    paginatedData() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      return this.filteredData.slice(start, start + this.itemsPerPage);
+    },
+
+    startIndex() {
+      return this.filteredData.length === 0
+        ? 0
+        : (this.currentPage - 1) * this.itemsPerPage + 1;
+    },
+
+    endIndex() {
+      const end = this.currentPage * this.itemsPerPage;
+      return end > this.filteredData.length ? this.filteredData.length : end;
+    },
+
+    pageNumbers() {
+      const total = this.totalPages;
+
+      if (total <= 3) {
+        return Array.from({ length: total }, (_, i) => i + 1);
+      }
+
+      let start = this.currentPage - 1;
+      let end = this.currentPage + 1;
+
+      if (start < 1) {
+        start = 1;
+        end = 3;
+      }
+
+      if (end > total) {
+        end = total;
+        start = total - 2;
+      }
+
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+    },
+  },
+
+  methods: {
+    async loadBranches() {
+      const store = useFetchDataStore();
+      await store.fetchCollegeBranch();
+    },
+
+    openAddModal() {
+      this.isAdd = true;
+    },
+
+    openEditModal(branch) {
+      this.selectedBranch = branch;
+      this.showEditModal = true;
+    },
+
+    closeModal() {
+      this.showEditModal = false;
+      this.selectedBranch = null;
+    },
+
+    refreshTable() {
+      this.loadBranches();
+    },
+
+    async toggleDelete(branch) {
+      try {
+        await axios.delete(
+          process.env.VUE_APP_API_BASE_URL +
+            `/college-branch/delete-id/${branch.college_branch_id}`,
+        );
+
+        toast.success("Branch deleted successfully");
+        this.loadBranches();
+      } catch (error) {
+        toast.error("Failed to delete branch");
+      }
+    },
+
+    changePage(page) {
+      this.currentPage = Math.max(1, Math.min(page, this.totalPages));
+    },
+  },
+
+  mounted() {
+    this.loadBranches();
+  },
+};
+</script>

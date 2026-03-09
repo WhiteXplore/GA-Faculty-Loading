@@ -1,0 +1,13 @@
+{
+  "editor.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
+  "editor.codeLensFontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
+  "editor.inlayHints.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
+  "terminal.integrated.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
+  "terminal.integrated.fontSize": 12,
+  "chat.editor.fontSize": 14,
+  "chat.fontSize": 13,
+  "markdown.preview.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
+  "tailwindCSS.rootFontSize": 14,
+  "markdown.preview.lineHeight": 1.6,
+  "vue3snippets.enable-compile-vue-file-on-did-save-code": false
+}
