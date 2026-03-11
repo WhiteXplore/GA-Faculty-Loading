@@ -89,7 +89,7 @@
 import * as XLSX from "xlsx";
 import axios from "axios";
 import { toast } from "vue3-toastify";
-
+import { useFetchDataStore } from "../../../../store/fetch-data-store";
 export default {
   name: "UploadCoursesPage",
   data() {
@@ -188,23 +188,56 @@ export default {
     },
     async submitUpload() {
       if (!this.parsedData || !this.parsedData.length) {
-        alert("Please upload a valid file first!");
+        toast.warning("Please upload a valid file first!");
         return;
       }
 
       this.uploading = true;
 
       try {
-        // 1️⃣ Deduplicate institutes
+        const fetchDataStore = useFetchDataStore();
+
+        // 🔹 Ensure courses are loaded
+        if (!fetchDataStore.courses.length) {
+          await fetchDataStore.fetchCourses();
+        }
+
+        const existingCourses = fetchDataStore.courses;
+
+        // 🔹 Normalize helper
+        const normalize = (val) =>
+          String(val || "")
+            .replace(/\s+/g, "")
+            .toUpperCase()
+            .trim();
+
+        const existingSet = new Set(
+          existingCourses
+            .map((course) => {
+              if (!course.curriculum || !course.curriculum.program) return null;
+
+              const start = course.curriculum?.curriculum_start_year;
+              const end = course.curriculum?.curriculum_end_year;
+
+              return `${normalize(course.course_code)}-${
+                course.curriculum.program.program_code
+              }-${
+                course.curriculum.program.institute?.institute_code
+              }-${start}-${end}-${course.course_level}-${
+                course.course_semester
+              }`;
+            })
+            .filter(Boolean), // removes null
+        );
+        // 🔹 Deduplicate institutes
         const uniqueInstitutes = [
           ...new Map(
             this.parsedData.map((row) => [row.institute_code, row]),
           ).values(),
         ];
 
-        const instituteMap = new Map(); // institute_code => institute_id
+        const instituteMap = new Map();
 
-        // Create each institute in backend
         for (const inst of uniqueInstitutes) {
           const res = await axios.post(
             process.env.VUE_APP_API_BASE_URL + "/institute/add-institute",
@@ -213,10 +246,11 @@ export default {
               institute_name: inst.institute_name,
             },
           );
+
           instituteMap.set(inst.institute_code, res.data.institute_id);
         }
 
-        // 2️⃣ Deduplicate programs by program_code + institute_code
+        // 🔹 Deduplicate programs
         const uniquePrograms = [
           ...new Map(
             this.parsedData.map((row) => [
@@ -226,10 +260,9 @@ export default {
           ).values(),
         ];
 
-        const programMap = new Map(); // program_code+institute => program_id
-        const curriculumMap = new Map(); // program_code+institute => curriculum_id
+        const programMap = new Map();
+        const curriculumMap = new Map();
 
-        // 3️⃣ Create programs and curriculums
         for (const prog of uniquePrograms) {
           const programRes = await axios.post(
             process.env.VUE_APP_API_BASE_URL + "/programs/add-programs",
@@ -239,7 +272,9 @@ export default {
               institute_id: instituteMap.get(prog.institute_code),
             },
           );
+
           const program = programRes.data;
+
           programMap.set(
             `${prog.institute_code}-${prog.program_code}`,
             program.program_id,
@@ -254,42 +289,73 @@ export default {
               program_id: program.program_id,
             },
           );
+
           const curriculum = curriculumRes.data;
+
           curriculumMap.set(
             `${prog.institute_code}-${prog.program_code}`,
             curriculum.curriculum_id,
           );
         }
 
-        // 4️⃣ Map courses
-        const coursesPayload = this.parsedData.map((row) => ({
-          course_level: row.course_level,
-          course_semester: row.course_semester,
-          course_code: row.course_code,
-          course_title: row.course_title,
-          course_lec: row.course_lec,
-          course_lab: row.course_lab,
-          institute_id: instituteMap.get(row.institute_code),
-          program_id: programMap.get(
+        // 🔹 Prepare course payload
+        const coursesPayload = this.parsedData.map((row) => {
+          const curriculum_id = curriculumMap.get(
             `${row.institute_code}-${row.program_code}`,
-          ),
-          curriculum_id: curriculumMap.get(
-            `${row.institute_code}-${row.program_code}`,
-          ),
-        }));
+          );
 
-        // 5️⃣ Upload courses
+          const key = `${normalize(row.course_code)}-${row.program_code}-${
+            row.institute_code
+          }-${row.curriculum_start_year}-${row.curriculum_end_year}-${
+            row.course_level
+          }-${row.course_semester}`;
+
+          return {
+            key,
+            payload: {
+              course_level: row.course_level,
+              course_semester: row.course_semester,
+              course_code: row.course_code,
+              course_title: row.course_title,
+              course_lec: row.course_lec,
+              course_lab: row.course_lab,
+              institute_id: instituteMap.get(row.institute_code),
+              program_id: programMap.get(
+                `${row.institute_code}-${row.program_code}`,
+              ),
+              curriculum_id: curriculum_id,
+            },
+          };
+        });
+
+        // 🔹 Filter duplicates
+        const newCourses = coursesPayload
+          .filter((course) => !existingSet.has(course.key))
+          .map((course) => course.payload);
+
+        // 🔹 If everything exists
+        if (!newCourses.length) {
+          toast.warning("All uploaded courses already exist in the database.");
+          this.uploading = false;
+          return;
+        }
+
+        // 🔹 Upload only new courses
         await axios.post(
           process.env.VUE_APP_API_BASE_URL + "/courses/add-courses",
-          coursesPayload,
+          newCourses,
         );
 
+        toast.success(`${newCourses.length} new courses uploaded successfully`);
+
+        // 🔹 Refresh store
+        await fetchDataStore.fetchCourses();
+
         this.$emit("refresh");
-        toast.success("Upload successful!");
         this.$emit("close");
       } catch (error) {
         console.error(error);
-        alert("Upload failed.");
+        toast.error("Upload failed.");
       } finally {
         this.uploading = false;
       }

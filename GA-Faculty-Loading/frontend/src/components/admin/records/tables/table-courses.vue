@@ -158,7 +158,7 @@
                 <td class="px-4 py-3 flex justify-center">
                   <div class="flex gap-2">
                     <button
-                      class="w-[90px] h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center justify-center gap-1 text-sm"
+                      class="w-[90px] h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center justify-center gap-1"
                       @click="toggleEdit(c)"
                     >
                       <icon name="edit" /> Edit

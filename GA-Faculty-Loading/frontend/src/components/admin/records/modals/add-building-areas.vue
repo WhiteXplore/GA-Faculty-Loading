@@ -84,6 +84,7 @@
               <option :value="90">1 Hour 30 Minutes</option>
               <option :value="120">2 Hours</option>
               <option :value="150">2 Hours 30 Minutes</option>
+              <option :value="180">3 Hours</option>
             </select>
           </div>
 
@@ -106,6 +107,48 @@
           </div>
         </div>
       </form>
+    </div>
+  </div>
+  <div
+    v-if="showDeleteModal"
+    class="fixed inset-0 bg-gray-800 bg-opacity-40 flex justify-center items-center z-50 w-min-screen"
+  >
+    <div
+      class="rounded-xl shadow-lg w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
+    >
+      <div
+        class="rounded-full w-16 h-16 md:w-20 md:h-20 flex justify-center items-center bg-red-300 animate-pulse"
+      >
+        <icon
+          name="question"
+          class="w-8 h-8 md:w-10 md:h-10 text-white flex justify-center items-center"
+        />
+      </div>
+
+      <h1 class="text-[14px] md:text-[16px] font-semibold mt-4">
+        Delete Confirmation
+      </h1>
+      <p class="mt-2 text-[12px] md:text-[13px] text-center px-8">
+        Are you sure you want to delete this record? This action cannot be
+        undone.
+      </p>
+
+      <div class="w-full h-[1px] rounded-md bg-gray-200 mt-4"></div>
+
+      <div class="tracking-wide flex gap-2 mt-4">
+        <button
+          class="bg-red-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md"
+          @click="showDeleteModal = false"
+        >
+          No, Cancel
+        </button>
+        <button
+          class="bg-green-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
+          @click="confirmDelete"
+        >
+          Yes, Delete
+        </button>
+      </div>
     </div>
   </div>
 </template>

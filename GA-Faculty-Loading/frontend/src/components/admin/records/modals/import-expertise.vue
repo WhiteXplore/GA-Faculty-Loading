@@ -23,7 +23,9 @@
                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
               />
             </svg>
-            <h1 class="font-bold tracking-wide text-lg">Import User Expertise</h1>
+            <h1 class="font-bold tracking-wide text-lg">
+              Import User Expertise
+            </h1>
           </div>
           <button
             @click="$emit('close')"
@@ -148,7 +150,9 @@
                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                   />
                 </svg>
-                <p class="text-gray-800 font-semibold">{{ selectedFile.name }}</p>
+                <p class="text-gray-800 font-semibold">
+                  {{ selectedFile.name }}
+                </p>
                 <p class="text-gray-500 text-sm">
                   {{ formatFileSize(selectedFile.size) }}
                 </p>
@@ -167,7 +171,9 @@
           <div v-if="uploading" class="space-y-2">
             <div class="flex justify-between text-sm">
               <span class="text-gray-600">Uploading and processing...</span>
-              <span class="text-gray-800 font-semibold">{{ uploadProgress }}%</span>
+              <span class="text-gray-800 font-semibold"
+                >{{ uploadProgress }}%</span
+              >
             </div>
             <div class="w-full bg-gray-200 rounded-full h-2.5">
               <div
@@ -184,7 +190,8 @@
               v-if="importResults.success > 0"
             >
               <p class="font-semibold text-green-800">
-                ✓ Successfully imported {{ importResults.success }} expertise records
+                ✓ Successfully imported {{ importResults.success }} expertise
+                records
               </p>
             </div>
 
@@ -353,7 +360,7 @@ export default {
             headers: {
               "Content-Type": "multipart/form-data",
             },
-          }
+          },
         );
 
         clearInterval(progressInterval);
@@ -367,21 +374,21 @@ export default {
 
         if (response.data.success > 0) {
           toast.success(
-            `Successfully imported ${response.data.success} expertise records!`
+            `Successfully imported ${response.data.success} expertise records!`,
           );
           this.$emit("refresh");
         }
 
         if (response.data.failed > 0) {
           toast.warning(
-            `${response.data.failed} expertise records failed to import. Check details below.`
+            `${response.data.failed} expertise records failed to import. Check details below.`,
           );
         }
       } catch (error) {
         console.error("Import failed:", error);
         toast.error(
           error.response?.data?.message ||
-            "Failed to import expertise. Please try again."
+            "Failed to import expertise. Please try again.",
         );
       } finally {
         this.uploading = false;
@@ -407,5 +414,3 @@ export default {
   animation: slideUp 0.3s ease-out;
 }
 </style>
-
-

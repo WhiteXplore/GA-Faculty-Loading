@@ -97,7 +97,7 @@
                   College Branch
                 </th>
                 <th class="px-4 py-3 text-left font-normalw-[25%]">Area</th>
-                <th class="px-4 py-3 text-center font-normal w-[25%]">
+                <th class="px-4 py-3 text-center font-normal w-[1%]">
                   Actions
                 </th>
               </tr>
@@ -204,6 +204,47 @@
       @refresh="loadBuildings"
     />
   </div>
+  <!-- DELETE CONFIRMATION MODAL -->
+  <div
+    v-if="showDeleteModal"
+    class="fixed inset-0 bg-gray-800 bg-opacity-40 flex justify-center items-center z-50"
+  >
+    <div
+      class="rounded-xl shadow-lg w-[320px] md:w-[420px] bg-white py-6 px-4 flex flex-col items-center"
+    >
+      <div
+        class="rounded-full w-20 h-20 flex justify-center items-center bg-red-300 animate-pulse"
+      >
+        <icon name="question" class="w-10 h-10 text-white" />
+      </div>
+
+      <h1 class="text-[16px] font-semibold mt-4">Delete Confirmation</h1>
+
+      <p class="mt-2 text-[13px] text-center px-8">
+        Are you sure you want to delete
+        <b>{{ recordToDelete?.building_name }}</b> ? This action cannot be
+        undone.
+      </p>
+
+      <div class="w-full h-[1px] rounded-md bg-gray-200 mt-4"></div>
+
+      <div class="tracking-wide flex gap-2 mt-4">
+        <button
+          class="bg-red-400 p-2 px-3 text-[13px] rounded-md text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md"
+          @click="showDeleteModal = false"
+        >
+          No, Cancel
+        </button>
+
+        <button
+          class="bg-green-400 p-2 px-3 text-[13px] rounded-md text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
+          @click="confirmDelete"
+        >
+          Yes, Delete
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -245,16 +286,26 @@ export default {
     filteredData() {
       const query = this.searchQuery.toLowerCase();
 
-      return this.buildings.filter((item) =>
+      const filtered = this.buildings.filter((item) =>
         [
           item.building_name,
-          item.collegeBranch?.branch_name,
+          item.buildingArea?.collegeBranch?.college_branch_name,
           item.buildingArea?.area_name,
         ]
           .join(" ")
           .toLowerCase()
           .includes(query),
       );
+
+      // Sort by Area number (Area 1 → Area 7)
+      return filtered.sort((a, b) => {
+        const areaA =
+          parseInt(a.buildingArea?.area_name?.replace("Area ", "")) || 0;
+        const areaB =
+          parseInt(b.buildingArea?.area_name?.replace("Area ", "")) || 0;
+
+        return areaA - areaB;
+      });
     },
 
     totalPages() {
@@ -315,18 +366,25 @@ export default {
       this.selectedBuilding = item;
       this.showEditModal = true;
     },
+    toggleDelete(item) {
+      this.recordToDelete = item;
+      this.showDeleteModal = true;
+    },
 
-    async toggleDelete(item) {
+    async confirmDelete() {
       try {
         await axios.delete(
-          process.env.VUE_APP_API_BASE_URL +
-            `/buildings/delete-id/${item.building_id}`,
+          `${process.env.VUE_APP_API_BASE_URL}/buildings/${this.recordToDelete.building_id}`,
         );
+        toast.success("Building area deleted successfully");
 
-        toast.success("Building deleted successfully");
+        this.showDeleteModal = false;
+        this.recordToDelete = null;
+
         this.loadBuildings();
       } catch (error) {
-        toast.error("Failed to delete building");
+        console.error(error);
+        toast.error("Failed to delete building area");
       }
     },
 

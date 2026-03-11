@@ -21,17 +21,21 @@ import * as XLSX from 'xlsx';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  // CREATE USER
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
 
+  // GET ALL USERS
   @Get('get-users')
   async findAll() {
     return this.userService.findAll();
   }
 
-  // ⚠️ IMPORTANT: Import route must come BEFORE :id routes
+  // ===============================
+  // IMPORT USERS
+  // ===============================
   @Post('import-users')
   @UseInterceptors(FileInterceptor('file'))
   async importUsers(@UploadedFile() file: Express.Multer.File) {
@@ -39,24 +43,24 @@ export class UserController {
       throw new BadRequestException('No file uploaded');
     }
 
+    if (!file.originalname.endsWith('.xlsx')) {
+      throw new BadRequestException('Only .xlsx files are allowed');
+    }
+
     try {
-      // Parse the XLSX file
       const workbook = XLSX.read(file.buffer, { type: 'buffer' });
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
 
-      // Convert to JSON
       const rawData: any[] = XLSX.utils.sheet_to_json(worksheet, {
         raw: false,
         defval: '',
       });
 
-      if (rawData.length === 0) {
-        throw new BadRequestException('File is empty or has no valid data');
+      if (!rawData.length) {
+        throw new BadRequestException('Excel file is empty');
       }
 
-      // Map columns from XLSX to ImportUserDto
-      // Expected columns: "Last Name", "First Name", "Email", "Designation", "Program"
       const importData: ImportUserDto[] = rawData.map((row) => ({
         first_name: row['First Name'] || row['first_name'] || '',
         last_name: row['Last Name'] || row['last_name'] || '',
@@ -65,11 +69,10 @@ export class UserController {
         program_name: row['Program'] || row['program'] || '',
       }));
 
-      // Import users
       const results = await this.userService.importUsers(importData);
 
       return {
-        message: 'Import completed',
+        message: 'Users imported successfully',
         ...results,
       };
     } catch (error) {
@@ -77,68 +80,81 @@ export class UserController {
     }
   }
 
+  // ===============================
+  // IMPORT USER EXPERTISE
+  // ===============================
+  @Post('import-expertise')
+  @UseInterceptors(FileInterceptor('file'))
+  async importExpertise(@UploadedFile() file: Express.Multer.File) {
+    if (!file) {
+      throw new BadRequestException('No file uploaded');
+    }
+
+    if (!file.originalname.endsWith('.xlsx')) {
+      throw new BadRequestException('Only .xlsx files are allowed');
+    }
+
+    try {
+      const workbook = XLSX.read(file.buffer, { type: 'buffer' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+
+      const rawData: any[] = XLSX.utils.sheet_to_json(worksheet, {
+        raw: false,
+        defval: '',
+      });
+
+      if (!rawData.length) {
+        throw new BadRequestException('Excel file is empty');
+      }
+
+      const importData: ImportExpertiseDto[] = rawData.map((row) => ({
+        instructor_name:
+          row['Instructors Name'] ||
+          row['Instructor Name'] ||
+          row['Instructor'] ||
+          row['instructor_name'] ||
+          '',
+        course_code:
+          row['Course Code'] ||
+          row['course_code'] ||
+          row['Course'] ||
+          row['Code'] ||
+          '',
+      }));
+
+      const results = await this.userService.importExpertise(importData);
+
+      return {
+        message: 'Expertise imported successfully',
+        ...results,
+      };
+    } catch (error) {
+      throw new BadRequestException(`Failed to process file: ${error.message}`);
+    }
+  }
+
+  // ===============================
+  // GET USER BY ID
+  // ===============================
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
   }
 
+  // ===============================
+  // UPDATE USER
+  // ===============================
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
   }
 
+  // ===============================
+  // DELETE USER
+  // ===============================
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
-
-  // @Post('import-expertise')
-  // @UseInterceptors(FileInterceptor('file'))
-  // async importExpertise(@UploadedFile() file: Express.Multer.File) {
-  //   if (!file) {
-  //     throw new BadRequestException('No file uploaded');
-  //   }
-
-  //   try {
-  //     // Parse the XLSX file
-  //     const workbook = XLSX.read(file.buffer, { type: 'buffer' });
-  //     const sheetName = workbook.SheetNames[0];
-  //     const worksheet = workbook.Sheets[sheetName];
-
-  //     // Convert to JSON
-  //     const rawData: any[] = XLSX.utils.sheet_to_json(worksheet, {
-  //       raw: false,
-  //       defval: '',
-  //     });
-
-  //     if (rawData.length === 0) {
-  //       throw new BadRequestException('File is empty or has no valid data');
-  //     }
-
-  //     // Map columns from XLSX to ImportExpertiseDto
-  //     // Expected columns: "Instructors Name", "Course Code"
-  //     const importData: ImportExpertiseDto[] = rawData.map((row) => ({
-  //       instructor_name:
-  //         row['Instructors Name'] ||
-  //         row['Instructor Name'] ||
-  //         row['instructor_name'] ||
-  //         row['Instructor'] ||
-  //         '',
-  //       course_code:
-  //         row['Course Code'] || row['course_code'] || row['Code'] || '',
-  //     }));
-
-  //     // Import expertise
-  //     const results = await this.userService.importExpertise(importData);
-
-  //     return {
-  //       message: 'Import completed',
-  //       ...results,
-  //     };
-  //   } catch (error) {
-  //     throw new BadRequestException(
-  //       `Failed to process file: ${error.message}`,
-  //     );
-  //   }
-  // }
 }

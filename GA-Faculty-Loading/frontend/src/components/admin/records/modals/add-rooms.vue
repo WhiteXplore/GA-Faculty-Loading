@@ -181,12 +181,12 @@ export default {
   watch: {
     "form.room_type"(newType) {
       if (newType === "Lecture") {
-        this.form.institute_id = "";
+        this.form.institute_id = null;
         this.searchInstituteQuery = "";
       }
 
       if (newType === "Laboratory") {
-        this.form.building_id = "";
+        this.form.building_id = null;
         this.searchBuildingQuery = "";
       }
     },
@@ -205,15 +205,26 @@ export default {
     },
 
     filteredBuildings() {
-      if (!this.searchBuildingQuery) return this.buildings;
+      let filtered = this.buildings;
 
-      return this.buildings.filter((building) =>
-        building.building_name
-          .toLowerCase()
-          .includes(this.searchBuildingQuery.toLowerCase()),
-      );
+      if (this.searchBuildingQuery) {
+        filtered = filtered.filter((building) =>
+          building.building_name
+            .toLowerCase()
+            .includes(this.searchBuildingQuery.toLowerCase()),
+        );
+      }
+
+      // Sort by Area number (Area 1 → Area 7)
+      return filtered.sort((a, b) => {
+        const areaA =
+          parseInt(a.buildingArea?.area_name?.replace("Area ", "")) || 0;
+        const areaB =
+          parseInt(b.buildingArea?.area_name?.replace("Area ", "")) || 0;
+
+        return areaA - areaB;
+      });
     },
-
     isEditMode() {
       return !!this.roomData;
     },
@@ -266,18 +277,29 @@ export default {
       }
 
       try {
+        const payload = {
+          ...this.form,
+          room_capacity: Number(this.form.room_capacity),
+          institute_id: this.form.institute_id
+            ? Number(this.form.institute_id)
+            : null,
+          building_id: this.form.building_id
+            ? Number(this.form.building_id)
+            : null,
+        };
+
         if (this.isEditMode) {
           await axios.patch(
             process.env.VUE_APP_API_BASE_URL +
               `/rooms/update-room/${this.roomData.room_id}`,
-            this.form,
+            payload,
           );
 
           toast.success("Room updated successfully!");
         } else {
           await axios.post(
             process.env.VUE_APP_API_BASE_URL + "/rooms/add-rooms",
-            this.form,
+            payload,
           );
 
           toast.success("Room added successfully!");

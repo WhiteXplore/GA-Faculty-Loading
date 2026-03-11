@@ -208,6 +208,45 @@
       @refresh="loadBuildings"
     />
   </div>
+  <div
+    v-if="showDeleteModal"
+    class="fixed inset-0 bg-gray-800 bg-opacity-40 flex justify-center items-center z-50"
+  >
+    <div
+      class="rounded-xl shadow-lg w-[320px] md:w-[420px] bg-white py-6 px-4 flex flex-col items-center"
+    >
+      <div
+        class="rounded-full w-20 h-20 flex justify-center items-center bg-red-300 animate-pulse"
+      >
+        <icon name="question" class="w-10 h-10 text-white" />
+      </div>
+
+      <h1 class="text-[16px] font-semibold mt-4">Delete Confirmation</h1>
+
+      <p class="mt-2 text-[13px] text-center px-8">
+        Are you sure you want to delete
+        <b>{{ areaToDelete?.area_name }}</b> ? This action cannot be undone.
+      </p>
+
+      <div class="w-full h-[1px] rounded-md bg-gray-200 mt-4"></div>
+
+      <div class="tracking-wide flex gap-2 mt-4">
+        <button
+          class="bg-red-400 p-2 px-3 text-[13px] rounded-md text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md"
+          @click="showDeleteModal = false"
+        >
+          No, Cancel
+        </button>
+
+        <button
+          class="bg-green-400 p-2 px-3 text-[13px] rounded-md text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
+          @click="confirmDelete"
+        >
+          Yes, Delete
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -238,6 +277,9 @@ export default {
 
       selectedBuilding: null,
       showEditModal: false,
+
+      showDeleteModal: false,
+      areaToDelete: null,
     };
   },
 
@@ -314,21 +356,28 @@ export default {
       this.showEditModal = true;
     },
 
-    async toggleDelete(item) {
+    toggleDelete(item) {
+      this.areaToDelete = item;
+      this.showDeleteModal = true;
+    },
+
+    async confirmDelete() {
       try {
         await axios.delete(
           process.env.VUE_APP_API_BASE_URL +
-            `/building-areas/${item.building_area_id}`, // ✅ FIXED
+            `/building-areas/${this.areaToDelete.building_area_id}`,
         );
 
         toast.success("Building area deleted successfully");
+
+        this.showDeleteModal = false;
+        this.areaToDelete = null;
 
         this.loadBuildings();
       } catch (error) {
         toast.error("Failed to delete building area");
       }
     },
-
     changePage(page) {
       this.currentPage = Math.max(1, Math.min(page, this.totalPages));
     },

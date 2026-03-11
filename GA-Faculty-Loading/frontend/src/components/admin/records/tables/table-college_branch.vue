@@ -81,7 +81,7 @@
                   College Branch Name
                 </th>
 
-                <th class="px-4 py-3 text-center font-normal w-[30%]">
+                <th class="px-4 py-3 text-center font-normal w-[1%]">
                   Actions
                 </th>
               </tr>
@@ -108,7 +108,7 @@
 
                     <button
                       class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                      @click="toggleDelete(branch)"
+                      @click="openDeleteModal(branch)"
                     >
                       <icon name="delete" /> Delete
                     </button>
@@ -182,6 +182,50 @@
     @close="closeModal"
     @refresh="refreshTable"
   />
+  <!-- Delete Confirmation Modal -->
+  <div
+    v-if="showDeleteModal"
+    class="fixed inset-0 bg-gray-800 bg-opacity-40 flex justify-center items-center z-50 w-min-screen"
+  >
+    <div
+      class="rounded-xl shadow-lg w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
+    >
+      <div
+        class="rounded-full w-16 h-16 md:w-20 md:h-20 flex justify-center items-center bg-red-300 animate-pulse"
+      >
+        <icon
+          name="question"
+          class="w-8 h-8 md:w-10 md:h-10 text-white flex justify-center items-center"
+        />
+      </div>
+
+      <h1 class="text-[14px] md:text-[16px] font-semibold mt-4">
+        Delete Confirmation
+      </h1>
+      <p class="mt-2 text-[12px] md:text-[13px] text-center px-8">
+        Are you sure you want to delete
+        <b>{{ branchToDelete?.college_branch_name }}</b
+        >?This action cannot be undone.
+      </p>
+
+      <div class="w-full h-[1px] rounded-md bg-gray-200 mt-4"></div>
+
+      <div class="tracking-wide flex gap-2 mt-4">
+        <button
+          class="bg-red-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md"
+          @click="showDeleteModal = false"
+        >
+          No, Cancel
+        </button>
+        <button
+          class="bg-green-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
+          @click="confirmDelete"
+        >
+          Yes, Delete
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -211,6 +255,9 @@ export default {
 
       selectedBranch: null,
       showEditModal: false,
+
+      showDeleteModal: false,
+      branchToDelete: null,
     };
   },
 
@@ -288,19 +335,28 @@ export default {
       this.showEditModal = false;
       this.selectedBranch = null;
     },
+    openDeleteModal(branch) {
+      this.branchToDelete = branch;
+      this.showDeleteModal = true;
+    },
 
     refreshTable() {
       this.loadBranches();
     },
+    async confirmDelete() {
+      if (!this.branchToDelete) return;
 
-    async toggleDelete(branch) {
       try {
         await axios.delete(
           process.env.VUE_APP_API_BASE_URL +
-            `/college-branch/delete-id/${branch.college_branch_id}`,
+            `/college-branch/${this.branchToDelete.college_branch_id}`,
         );
 
         toast.success("Branch deleted successfully");
+
+        this.showDeleteModal = false;
+        this.branchToDelete = null;
+
         this.loadBranches();
       } catch (error) {
         toast.error("Failed to delete branch");

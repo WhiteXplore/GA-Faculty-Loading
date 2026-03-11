@@ -183,122 +183,124 @@ export class UserService {
     return results;
   }
 
-  // async importExpertise(
-  //   importData: ImportExpertiseDto[],
-  // ): Promise<ImportResult> {
-  //   const results: ImportResult = { success: 0, failed: 0, errors: [] };
+  async importExpertise(
+    importData: ImportExpertiseDto[],
+  ): Promise<ImportResult> {
+    const results: ImportResult = { success: 0, failed: 0, errors: [] };
 
-  //   const users = await this.userRepository.find();
-  //   const courses = await this.courseRepository.find();
+    const users = await this.userRepository.find();
+    const courses = await this.courseRepository.find();
+    const existingExpertise = await this.userExpertiseRepository.find({
+      relations: ['user', 'course'],
+    });
 
-  //   for (let i = 0; i < importData.length; i++) {
-  //     try {
-  //       const expertiseData = importData[i];
+    // -----------------------------
+    // FAST LOOKUP MAPS
+    // -----------------------------
 
-  //       if (!expertiseData.instructor_name || !expertiseData.course_code) {
-  //         results.failed++;
-  //         results.errors.push({
-  //           row: i + 2,
-  //           error: 'Missing required fields',
-  //           data: expertiseData,
-  //         });
-  //         continue;
-  //       }
+    const userMap = new Map<string, User_Accounts>();
+    const courseMap = new Map<string, Course>();
+    const existingMap = new Set<string>();
 
-  //       // Normalize instructor name from Excel
-  //       const instructorName = expertiseData.instructor_name
-  //         .trim()
-  //         .replace(/\s+/g, ' ')
-  //         .toLowerCase();
+    users.forEach((u) => {
+      const key = `${u.first_name.toLowerCase()} ${u.last_name.toLowerCase()}`;
+      userMap.set(key, u);
+    });
 
-  //       let user: User_Accounts | undefined = undefined;
+    courses.forEach((c) => {
+      const key = c.course_code.replace(/\s+/g, '').toUpperCase();
+      courseMap.set(key, c);
+    });
 
-  //       const instructorName = expertiseData.instructor_name
-  //         .trim()
-  //         .replace(/\s+/g, ' ')
-  //         .toLowerCase();
+    existingExpertise.forEach((e) => {
+      const key = `${e.user.id}-${e.course.course_id}`;
+      existingMap.add(key);
+    });
 
-  //       const nameParts = instructorName.split(' ');
+    const expertiseToInsert: UserExpertise[] = [];
 
-  //       const excelLastName = nameParts[nameParts.length - 1];
-  //       const excelFirstName = nameParts
-  //         .slice(0, nameParts.length - 1)
-  //         .join(' ');
+    // -----------------------------
+    // PROCESS EXCEL DATA
+    // -----------------------------
 
-  //       let user = users.find((u) => {
-  //         const dbFirst = u.first_name.toLowerCase();
-  //         const dbLast = u.last_name.toLowerCase();
+    for (let i = 0; i < importData.length; i++) {
+      const row = importData[i];
 
-  //         return dbLast === excelLastName && dbFirst.includes(excelFirstName);
-  //       });
+      if (!row.instructor_name || !row.course_code) {
+        results.failed++;
+        results.errors.push({
+          row: i + 2,
+          error: 'Missing instructor or course',
+        });
+        continue;
+      }
 
-  //       if (!user) {
-  //         results.failed++;
-  //         results.errors.push({
-  //           row: i + 2,
-  //           error: `Instructor not found: ${expertiseData.instructor_name}`,
-  //           data: expertiseData,
-  //         });
-  //         continue;
-  //       }
+      const instructor = row.instructor_name
+        .trim()
+        .replace(/\s+/g, ' ')
+        .toLowerCase();
 
-  //       // Normalize course code
-  //       const courseCode = expertiseData.course_code
-  //         .trim()
-  //         .replace(/\s+/g, '')
-  //         .toUpperCase();
+      const parts = instructor.split(' ');
+      const first = parts[0];
+      const last = parts[parts.length - 1];
 
-  //       const course = courses.find(
-  //         (c) => c.course_code.replace(/\s+/g, '').toUpperCase() === courseCode,
-  //       );
+      const userKey = `${first} ${last}`;
+      const user = userMap.get(userKey);
 
-  //       if (!course) {
-  //         results.failed++;
-  //         results.errors.push({
-  //           row: i + 2,
-  //           error: `Course not found: ${courseCode}`,
-  //           data: expertiseData,
-  //         });
-  //         continue;
-  //       }
+      if (!user) {
+        results.failed++;
+        results.errors.push({
+          row: i + 2,
+          error: `Instructor not found: ${row.instructor_name}`,
+        });
+        continue;
+      }
 
-  //       // Check if expertise already exists
-  //       const existingExpertise = await this.userExpertiseRepository.findOne({
-  //         where: {
-  //           user: { id: user.id },
-  //           course: { course_id: course.course_id },
-  //         },
-  //         relations: ['user', 'course'],
-  //       });
+      const courseCode = row.course_code
+        .trim()
+        .replace(/\s+/g, '')
+        .toUpperCase();
 
-  //       if (existingExpertise) {
-  //         results.failed++;
-  //         results.errors.push({
-  //           row: i + 2,
-  //           error: `Expertise already exists for ${instructorName} - ${courseCode}`,
-  //           data: expertiseData,
-  //         });
-  //         continue;
-  //       }
+      const course = courseMap.get(courseCode);
 
-  //       const newExpertise = this.userExpertiseRepository.create({
-  //         user: user,
-  //         course: course,
-  //       });
+      if (!course) {
+        results.failed++;
+        results.errors.push({
+          row: i + 2,
+          error: `Course not found: ${courseCode}`,
+        });
+        continue;
+      }
 
-  //       await this.userExpertiseRepository.save(newExpertise);
+      const key = `${user.id}-${course.course_id}`;
 
-  //       results.success++;
-  //     } catch (error) {
-  //       results.failed++;
-  //       results.errors.push({
-  //         row: i + 2,
-  //         error: error.message || 'Unknown error',
-  //         data: importData[i],
-  //       });
-  //     }
-  //   }
+      if (existingMap.has(key)) {
+        results.failed++;
+        results.errors.push({
+          row: i + 2,
+          error: `Duplicate expertise`,
+        });
+        continue;
+      }
 
-  //   return results;
-  // }
+      const expertise = this.userExpertiseRepository.create({
+        user,
+        course,
+      });
+
+      expertiseToInsert.push(expertise);
+      existingMap.add(key);
+      results.success++;
+    }
+
+    // -----------------------------
+    // BULK INSERT (FAST)
+    // -----------------------------
+
+    if (expertiseToInsert.length > 0) {
+      await this.userExpertiseRepository.save(expertiseToInsert);
+    }
+
+    return results;
+  }
 }
