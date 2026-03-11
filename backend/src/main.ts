@@ -2,32 +2,44 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
+import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   try {
     const app = await NestFactory.create(AppModule);
 
-    // Enable global validation
-    app.useGlobalPipes(new ValidationPipe());
+    // 🔹 Increase request body size limit
+    app.use(bodyParser.json({ limit: '10mb' }));
+    app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
-    // Use cookie parser
+    // 🔹 Enable global validation
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+      }),
+    );
+
+    // 🔹 Cookie parser
     app.use(cookieParser());
+
     const curdate = new Date();
 
-    // CORS configuration
+    // 🔹 CORS configuration
     const whiteList = ['http://localhost:8080', 'http://localhost:5173'];
     app.enableCors({
       origin: (origin, callback) => {
         if (!origin || whiteList.includes(origin)) {
           callback(null, true);
           console.log(
-            'allowed cors for: ',
+            'allowed cors for:',
             origin + ' Date: ' + curdate.toString().substring(0, 24),
           );
         } else {
           callback(new Error('Not allowed by CORS'));
           console.log(
-            'blocked cors for: ',
+            'blocked cors for:',
             origin + ' Date: ' + curdate.toString().substring(0, 24),
           );
         }
@@ -36,7 +48,7 @@ async function bootstrap() {
       credentials: true,
     });
 
-    // Listen on environment port or fallback to 8000
+    // 🔹 Listen on environment port or fallback to 8000
     const port = process.env.PORT || 8000;
     await app.listen(port);
 

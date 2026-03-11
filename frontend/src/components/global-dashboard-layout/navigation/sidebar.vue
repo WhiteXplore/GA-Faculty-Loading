@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-defaultGreen w-screen h-screen flex animate-scaleUp">
+  <div class="bg-defaultGreen h-screen flex animate-scaleUp">
     <!-- Sidebar -->
     <div
-      :class="{ 'w-16': !isExpanded, 'w-64': isExpanded }"
+      :class="{ 'w-[60px]': !isExpanded, 'w-[240px]': isExpanded }"
       class="h-full fixed left-0 top-0 bg-defaultGreen text-white p-3 transition-all duration-300 ease-in-out"
       v-if="user.role"
     >
@@ -11,7 +11,7 @@
         <icon
           :name="'burger'"
           class="cursor-pointer"
-          :class="{ 'mr-3 mt-1': !isExpanded }"
+          :class="{ 'flex w-full justify-center items-center ': !isExpanded }"
         />
       </div>
 
@@ -24,6 +24,7 @@
             'w-16 rounded-full border-white border ': isExpanded,
             hidden: !isExpanded,
           }"
+          whitespace-nowrap
         />
         <p
           :class="{
@@ -35,7 +36,7 @@
         </p>
         <p
           :class="{
-            'text-[12px] font-medium tracking-wider': isExpanded,
+            'text-[13px] font-medium tracking-wider': isExpanded,
             hidden: !isExpanded,
           }"
         >
@@ -46,29 +47,48 @@
       <div v-if="isExpanded" class="w-full h-0.5 bg-[#fbfbfb] mt-4"></div>
 
       <!-- Dynamic Menu -->
-      <div class="flex flex-col mt-6 gap-2 tracking-wide text-[12px] w-full">
-        <template v-for="section in roleMenuSections" :key="section.title">
-          <div v-if="isExpanded" class="text-md text-white mt-1 text-left">
-            {{ section.title }}
-          </div>
-          <div v-for="item in section.items" :key="item.name" class="w-full">
-            <!-- Non-children router-link -->
-            <router-link
-              v-if="!item.children"
-              :to="item.route"
-              class="flex items-center w-full gap-5 p-2 rounded-md transition-all duration-200"
+      <div
+        :class="[
+          'flex flex-col justify-between mt-6 tracking-wide text-[13px] w-full',
+          isExpanded ? 'h-[calc(100vh-200px)]' : 'h-[90vh]',
+        ]"
+      >
+        <!-- TOP MENU -->
+        <div class="flex flex-col gap-2 overflow-auto scrollbar-glass">
+          <div v-for="item in topMenuItems" :key="item.name" class="w-full">
+            <!-- Special sync item -->
+            <div
+              v-if="item.name === 'Class & Assigned Courses'"
+              @click="syncProgramYearCourses(item.route)"
+              class="flex items-center w-full gap-5 rounded-md transition-all duration-200 cursor-pointer select-none"
               :class="[
                 $route.path.startsWith(item.route)
-                  ? 'bg-white text-green-700'
-                  : 'text-white hover:bg-white hover:text-gray-800',
-                !isExpanded ? 'justify-center' : 'justify-start',
+                  ? 'bg-white text-green-700 p-2'
+                  : 'text-white hover:bg-white hover:text-gray-800 p-2',
+                !isExpanded ? 'justify-center h-8' : 'justify-start',
+              ]"
+            >
+              <icon :name="item.icon" />
+              <span v-show="isExpanded">{{ item.name }}</span>
+            </div>
+
+            <!-- Router Link -->
+            <router-link
+              v-else-if="!item.children"
+              :to="item.route"
+              class="flex items-center w-full gap-5 rounded-md transition-all duration-200"
+              :class="[
+                $route.path.startsWith(item.route)
+                  ? 'bg-white text-green-700 p-2'
+                  : 'text-white hover:bg-white hover:text-gray-800 p-2',
+                !isExpanded ? 'justify-center h-8' : 'justify-start',
               ]"
             >
               <icon :name="item.icon" />
               <span v-show="isExpanded">{{ item.name }}</span>
             </router-link>
 
-            <!-- Collapsible Parent -->
+            <!-- Dropdown -->
             <div v-else>
               <div
                 @click="toggleDropdown(item.name)"
@@ -92,6 +112,7 @@
                   <icon :name="item.icon" />
                   <span v-show="isExpanded">{{ item.name }}</span>
                 </div>
+
                 <icon
                   name="arrow-down"
                   v-show="isExpanded"
@@ -101,19 +122,20 @@
               </div>
 
               <transition name="slide">
-                <div v-show="isDropdownOpen === item.name && isExpanded">
+                <div
+                  v-show="isDropdownOpen === item.name && isExpanded"
+                  class="max-h-[400px] overflow-y-auto"
+                >
                   <router-link
                     v-for="(sub, index) in item.children"
                     :key="sub.name"
                     :to="sub.route"
-                    class="block w-full py-2 px-[60px] text-[12px] transition-all duration-200 text-left border border-white"
+                    class="block w-full py-2 px-[50px] text-[13px] transition-all duration-200 text-left border border-white"
                     :class="[
                       $route.path.startsWith(sub.route)
-                        ? 'bg-defaultGreen text-white '
+                        ? 'bg-defaultGreen text-white'
                         : 'bg-white text-gray-800 hover:bg-gray-200',
-                      index === item.children.length - 1
-                        ? 'rounded-b-md border border-white'
-                        : '',
+                      index === item.children.length - 1 ? 'rounded-b-md' : '',
                     ]"
                   >
                     {{ sub.name }}
@@ -122,22 +144,100 @@
               </transition>
             </div>
           </div>
-        </template>
+        </div>
+
+        <!-- BOTTOM MENU -->
+        <div class="flex flex-col gap-2">
+          <div v-for="item in bottomMenuItems" :key="item.name" class="w-full">
+            <!-- Router -->
+            <router-link
+              v-if="!item.children"
+              :to="item.route"
+              class="flex items-center w-full gap-5 rounded-md transition-all duration-200"
+              :class="[
+                $route.path.startsWith(item.route)
+                  ? 'bg-white text-green-700 p-2'
+                  : 'text-white hover:bg-white hover:text-gray-800 p-2',
+                !isExpanded ? 'justify-center h-8' : 'justify-start',
+              ]"
+            >
+              <icon :name="item.icon" />
+              <span v-show="isExpanded">{{ item.name }}</span>
+            </router-link>
+
+            <!-- Dropdown -->
+            <div v-else>
+              <div
+                @click="toggleDropdown(item.name)"
+                class="flex items-center justify-between w-full p-2 cursor-pointer transition-all duration-200"
+                :class="[
+                  isDropdownOpen === item.name
+                    ? `bg-white text-gray-800 ${
+                        !isExpanded ? 'rounded-md' : 'rounded-t-md'
+                      }`
+                    : 'text-white hover:bg-white hover:text-gray-800 hover:rounded-md',
+                ]"
+              >
+                <div
+                  :class="[
+                    !isExpanded
+                      ? 'justify-center w-full'
+                      : 'justify-start gap-5',
+                  ]"
+                  class="flex items-center"
+                >
+                  <icon :name="item.icon" />
+                  <span v-show="isExpanded">{{ item.name }}</span>
+                </div>
+
+                <icon
+                  name="arrow-down"
+                  v-show="isExpanded"
+                  class="transition-transform"
+                  :class="{ 'rotate-180': isDropdownOpen === item.name }"
+                />
+              </div>
+
+              <transition name="slide">
+                <div
+                  v-show="isDropdownOpen === item.name && isExpanded"
+                  class="max-h-[400px] overflow-y-auto"
+                >
+                  <router-link
+                    v-for="(sub, index) in item.children"
+                    :key="sub.name"
+                    :to="sub.route"
+                    class="block w-full py-2 px-[50px] text-[13px] transition-all duration-200 text-left border border-white"
+                    :class="[
+                      $route.path.startsWith(sub.route)
+                        ? 'bg-defaultGreen text-white'
+                        : 'bg-white text-gray-800 hover:bg-gray-200',
+                      index === item.children.length - 1 ? 'rounded-b-md' : '',
+                    ]"
+                  >
+                    {{ sub.name }}
+                  </router-link>
+                </div>
+              </transition>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Main Content -->
+
     <div
       :class="{
-        'ml-16': !isExpanded,
-        'ml-64': isExpanded,
+        'ml-[70px]': !isExpanded,
+        'ml-[240px]': isExpanded,
       }"
-      class="flex-grow transition-all pt-2 min-h-screen rounded-t-xl overflow-hidden z-50"
+      class="flex-grow transition-all max-h-screen rounded-t-xl overflow-y-auto z-50 mt-2"
     >
       <slot>
-        <div class="bg-white w-auto h-full shadow mr-2 rounded-t-xl">
+        <div class="bg-white shadow rounded-t-xl h-full w-full">
           <adminTopbar />
-          <div class="p-2">
+          <div class="">
             <router-view></router-view>
           </div>
         </div>
@@ -148,7 +248,7 @@
 
 <script>
 import icon from "@/assets/icon.vue";
-import adminTopbar from "../../../components/global-dashboard-layout/navigation/topbar.vue";
+import adminTopbar from "./Topbar.vue";
 import axios from "axios";
 
 export default {
@@ -163,7 +263,8 @@ export default {
       menuItemsByRole: {
         Admin: [
           {
-            title: "Home",
+            // title: "Home",
+            title: "",
             items: [
               {
                 name: "Dashboard",
@@ -173,61 +274,73 @@ export default {
             ],
           },
           {
-            title: "Records",
+            // title: "Records Management",
+            title: "",
             items: [
               {
                 name: "Setup",
-                icon: "setting",
+                icon: "set-up",
+                bottom: true,
                 children: [
                   // { name: "Instructors", route: "/instructors" },
                   { name: "Institutes", route: "/institutes" },
-                  { name: "Curriculum", route: "/curriculums" },
+                  { name: "Curriculum", route: "/curriculum" },
                   { name: "Courses", route: "/courses" },
                   { name: "Rooms", route: "/rooms" },
+                  { name: "School Years", route: "/school-years" },
+                  { name: "System Overview", route: "/system-overview" },
                 ],
               },
-              { name: "Faculty List", icon: "users", route: "/instructors" },
               {
-                name: "Class List",
-                icon: "folder",
-                route: "/admin-assign-classes",
+                name: "Faculty List",
+                icon: "faculty-list",
+                route: "/instructors",
+              },
+
+              // {
+              //   name: "Assigned Course",
+              //   icon: "class-list",
+              //   route: "/admin-assigned-courses",
+              // },
+              {
+                name: "Year & Section",
+                icon: "class-list",
+                route: "/year-section",
               },
             ],
           },
           {
-            title: "Generation",
+            // title: "Generation",
+            title: "",
             items: [
               {
-                icon: "arrow-path",
+                icon: "faculty-loading",
                 name: "Faculty Loading",
                 route: "/faculty-loads",
               },
+            ],
+          },
+          {
+            // title: "Documents",
+            title: "",
+            items: [
               {
-                icon: "folder",
-                name: "Exam Scheduling",
-                route: "/exam-loading",
+                icon: "prospectus",
+                name: "Prospectus",
+                route: "/report-curriculum-offers",
               },
             ],
           },
           {
-            title: "Documents",
+            // title: "Accounts",
+            title: "",
+
             items: [
               {
-                name: "Reports",
-                icon: "reports",
-                children: [
-                  { name: "Prospectus", route: "/report-curriculum-offers" },
-                ],
-              },
-            ],
-          },
-          {
-            title: "Accounts",
-            items: [
-              {
-                name: "User Management",
-                icon: "users",
-                children: [{ name: "Users list", route: "/user-accounts" }],
+                name: "Users List",
+                icon: "user-account",
+                route: "/user-accounts",
+                bottom: true,
               },
             ],
           },
@@ -248,14 +361,31 @@ export default {
             title: "Record Management",
             items: [
               {
-                name: "Courses",
-                icon: "setting",
-                route: "/program-courses",
+                name: "Setup",
+                icon: "set-up",
+                bottom: true,
+                children: [
+                  { name: "Courses", route: "/program-chair-courses" },
+                  {
+                    name: "Year & Section",
+                    route: "/program-chair-year-section",
+                  },
+                  // {
+                  //   name: "Assign Course",
+                  //   route: "/program-chair-assigned-courses",
+                  // },
+                ],
+              },
+
+              {
+                name: "Faculty List",
+                icon: "faculty-list",
+                route: "/program-chair-faculty-list",
               },
               {
-                name: "Assign Classes",
-                icon: "reports",
-                route: "/program-chairperson-assign-classes",
+                name: "Class & Assigned Courses",
+                icon: "class-list",
+                route: "/program-chair-class-assigned-classes",
               },
             ],
           },
@@ -264,14 +394,9 @@ export default {
             title: "Load Management",
             items: [
               {
-                name: "Load Generation",
-                icon: "arrow-path",
-                route: "/load-generation",
-              },
-              {
-                name: "Faculty Loading",
-                icon: "users",
-                route: "/program-faculty-loading",
+                name: "Generated Load",
+                icon: "faculty-loading",
+                route: "/program-final-schedules",
               },
             ],
           },
@@ -279,9 +404,9 @@ export default {
             title: "Documents",
             items: [
               {
-                name: "Prospectus",
-                icon: "reports",
-                route: "/report-curriculum-offers",
+                name: "Faculty Expertise Overview",
+                icon: "expertise",
+                route: "/faculty-expertise",
               },
             ],
           },
@@ -326,6 +451,17 @@ export default {
     roleMenuSections() {
       return this.menuItemsByRole[this.user.role] || [];
     },
+    topMenuItems() {
+      return this.roleMenuSections.flatMap((section) =>
+        section.items.filter((item) => !item.bottom),
+      );
+    },
+
+    bottomMenuItems() {
+      return this.roleMenuSections.flatMap((section) =>
+        section.items.filter((item) => item.bottom),
+      );
+    },
   },
   mounted() {
     this.fetchUser();
@@ -337,8 +473,28 @@ export default {
     },
   },
   methods: {
+    async syncProgramYearCourses(route) {
+      try {
+        const response = await axios.post(
+          process.env.VUE_APP_API_BASE_URL +
+            "/program-year-courses/sync-from-classes",
+          { withCredentials: true },
+        );
+        console.log("Sync successful:", response.data);
+        this.$router.push(route);
+      } catch (error) {
+        console.error("Failed to sync:", error);
+      }
+    },
+    closeDropdown() {
+      this.isDropdownOpen = null;
+    },
+
     toggleSidebar() {
       this.isExpanded = !this.isExpanded;
+      if (!this.isExpanded) {
+        this.isDropdownOpen = null;
+      }
     },
     toggleDropdown(name) {
       this.isExpanded = true;
@@ -352,7 +508,7 @@ export default {
       for (const item of allDropdownItems) {
         if (item.children) {
           const match = item.children.find((child) =>
-            path.startsWith(child.route)
+            path.startsWith(child.route),
           );
           if (match || path.startsWith(item.route)) {
             this.isExpanded = true;
@@ -364,9 +520,12 @@ export default {
     },
     async fetchUser() {
       try {
-        const response = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/me",
+          {
+            withCredentials: true,
+          },
+        );
         if (response.data) {
           this.user = response.data;
           console.log("Authenticated User:", this.user);
@@ -399,5 +558,42 @@ export default {
 .slide-leave-from {
   transform: translateY(0);
   opacity: 1;
+}
+
+/* 🌿 Glass Effect Scrollbar */
+.scrollbar-glass::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-glass::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+  border-radius: 10px;
+}
+
+.scrollbar-glass::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0.15)
+  );
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.scrollbar-glass::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.45),
+    rgba(255, 255, 255, 0.25)
+  );
+}
+
+/* 🦊 Firefox Support */
+.scrollbar-glass {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.4) rgba(255, 255, 255, 0.1);
 }
 </style>

@@ -30,13 +30,13 @@
       <!-- Buttons -->
       <div class="tracking-wide flex gap-2 mt-4">
         <button
-          class="bg-red-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md"
+          class="bg-gray-100 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-gray-500 hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md"
           @click="closeModal"
         >
           No, Cancel
         </button>
         <button
-          class="bg-green-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
+          class="bg-defaultGreen p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-defaultGreen hover:text-defaultGreen hover:shadow-md"
           @click="toggleLogout"
         >
           Yes, Signout
@@ -61,7 +61,7 @@ export default {
   methods: {
     async toggleLogout() {
       try {
-        await axios.post("http://localhost:8000/auth/logout");
+        await axios.post(process.env.VUE_APP_API_BASE_URL + "/auth/logout");
         this.$emit("close"); // Inform parent to close the modal
         localStorage.removeItem("role");
         localStorage.removeItem("studentData");

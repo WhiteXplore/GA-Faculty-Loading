@@ -84,7 +84,7 @@
           <!-- Buttons -->
           <div class="tracking-wide flex justify-end gap-2 mt-4">
             <button
-              class="bg-red-600 p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
+              class="bg-gray-200 p-2 px-3 rounded-lg text-gray-700 hover:bg-white border hover:border-gray-800 hover:text-gray-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
               @click="$emit('close')"
             >
               Cancel
@@ -93,7 +93,7 @@
               class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
               type="submit"
             >
-              {{ isEdit ? "Update" : "Submit" }}
+              {{ isEdit ? "Save Changes" : "Submit" }}
             </button>
           </div>
         </div>
@@ -159,42 +159,47 @@ export default {
         if (this.isEdit) {
           // Update Institute
           const instituteResponse = await axios.patch(
-            `http://localhost:8000/institute/update-institute/${this.editData.institute_id}`,
+            process.env.VUE_APP_API_BASE_URL +
+              `/institute/update-institute/${this.editData.institute_id}`,
             {
               institute_name: this.form.institute_name,
               institute_code: this.form.institute_code,
-            }
+            },
           );
           instituteId = instituteResponse.data.institute_id;
 
           // Update Program
           await axios.patch(
-            `http://localhost:8000/programs/update-program/${this.editData.program_id}`,
+            process.env.VUE_APP_API_BASE_URL +
+              `/programs/update-program/${this.editData.program_id}`,
             {
               program_name: this.form.program_name,
               program_code: this.form.program_code,
               institute_id: instituteId,
-            }
+            },
           );
 
           toast.success("Institute and Program updated successfully!");
         } else {
           // Add Institute
           const instituteResponse = await axios.post(
-            "http://localhost:8000/institute/add-institute",
+            process.env.VUE_APP_API_BASE_URL + "/institute/add-institute",
             {
               institute_name: this.form.institute_name,
               institute_code: this.form.institute_code,
-            }
+            },
           );
           instituteId = instituteResponse.data.institute_id;
 
           // Add Program
-          await axios.post("http://localhost:8000/programs/add-programs", {
-            program_name: this.form.program_name,
-            program_code: this.form.program_code,
-            institute_id: instituteId,
-          });
+          await axios.post(
+            process.env.VUE_APP_API_BASE_URL + "/programs/add-programs",
+            {
+              program_name: this.form.program_name,
+              program_code: this.form.program_code,
+              institute_id: instituteId,
+            },
+          );
 
           toast.success("Institute and Program added successfully!");
         }

@@ -185,7 +185,7 @@
                 class="bg-defaultGreen p-2 px-4 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
                 type="submit"
               >
-                {{ isEditMode ? "Update" : "Submit" }}
+                {{ isEditMode ? "Save Changes" : "Submit" }}
               </button>
             </div>
           </div>
@@ -301,17 +301,21 @@ export default {
       try {
         if (this.isEditMode) {
           // UPDATE
-          await axios.put(
-            `http://localhost:8000/auth/update/${this.form.id}`,
+          await axios.patch(
+            process.env.VUE_APP_API_BASE_URL + `/auth/update/${this.form.id}`,
             this.form,
             { withCredentials: true }
           );
           toast.success("User updated successfully!");
         } else {
           // ADD
-          await axios.post("http://localhost:8000/auth/register", this.form, {
-            withCredentials: true,
-          });
+          await axios.post(
+            process.env.VUE_APP_API_BASE_URL + "/auth/register",
+            this.form,
+            {
+              withCredentials: true,
+            }
+          );
           toast.success("User registered successfully!");
           const audio = new Audio(require("@/assets/add.mp3"));
           audio.play();

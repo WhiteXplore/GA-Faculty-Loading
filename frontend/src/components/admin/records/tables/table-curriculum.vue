@@ -1,47 +1,45 @@
 <template>
   <div v-if="isTable" class=" ">
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / Curriculum Offers
       </div>
 
       <div
         @click="toggleAdd"
-        class="flex items-center gap-2 px-3 py-2 bg-white text-green-600 rounded-xl shadow-sm hover:shadow-md border border-green-500 hover:bg-defaultGreen hover:text-white transition-all duration-300 cursor-pointer"
+        class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
       >
         <div
-          class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full group-hover:bg-white transition-colors duration-300"
+          class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
         >
-          <icon
-            :name="'circle-add'"
-            class="w-4 h-4 text-green-600 transition-colors duration-300 group-hover:text-green-600"
-          />
+          <icon name="circle-add" />
         </div>
+
         <span class="font-medium text-sm">Add Curriculum</span>
       </div>
     </div>
 
+    <!-- Table -->
     <div class="mt-4 overflow-x-auto border p-3 rounded-xl bg-white">
-      <!-- Top controls -->
+      <!-- Top Controls -->
       <div
-        class="flex justify-between items-center flex-wrap gap-3 sm:gap-4 text-gray-700 bg-white"
+        class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
       >
         <!-- Items per page -->
         <div class="flex items-center gap-2">
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md focus:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
             </select>
             <!-- Custom arrow -->
             <div
-              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-600 transition-colors"
+              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-defaultGreen transition-colors"
             >
               <svg
                 class="w-4 h-4"
@@ -72,7 +70,7 @@
           />
           <!-- Search icon -->
           <div
-            class="absolute inset-y-0 left-3 flex items-center text-green-600 pointer-events-none transition-colors"
+            class="absolute inset-y-0 left-3 flex items-center text-defaultGreen pointer-events-none transition-colors"
           >
             <svg
               class="w-4 h-4"
@@ -89,82 +87,71 @@
       </div>
 
       <!-- Table -->
-      <div class="w-full rounded-xl mt-1 overflow-hidden">
-        <div
-          class="overflow-y-auto transition-all duration-300 rounded-xl"
-          :class="tableHeightClass"
-        >
-          <table
-            class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
+      <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+        <table class="min-w-full text-sm text-gray-700 border-collapse">
+          <thead
+            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
-            <thead
-              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
-            >
-              <tr>
-                <th class="w-10 px-4 py-2 text-left rounded-tl-lg font-normal">
-                  ID
-                </th>
-                <th class="px-4 py-3 text-left font-normal">Program Name</th>
-                <th class="px-4 py-3 text-left font-normal">Curriculum Name</th>
-                <th class="px-4 py-3 text-left font-normal">Effective Year</th>
+            <tr>
+              <th class="px-4 py-3 text-left font-normal w-[45%]">
+                Program Title
+              </th>
 
-                <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(curriculum_data, index) in paginatedData"
-                :key="curriculum_data.curriculum_id"
-                class="bg-white hover:bg-green-50 transition-all border border-gray-200 rounded-md shadow-sm"
+              <th class="px-4 py-3 font-normal text-center w-[33%]">
+                Effective Year
+              </th>
+
+              <th
+                class="px-4 py-3 text-center rounded-tr-lg font-normal w-[25%]"
               >
-                <td class="px-4 py-2 text-left">{{ startIndex + index }}</td>
-                <td class="px-4 py-2 text-left">
-                  {{ curriculum_data.program?.program_name }}
-                </td>
-                <td class="px-4 py-2 text-left">
-                  {{ curriculum_data.curriculum_name }}
-                </td>
-                <td class="px-4 py-2 text-left">
-                  {{ curriculum_data.curriculum_effective }}
-                </td>
-                <td class="px-4 py-2 text-left">
-                  <div class="flex gap-2">
-                    <button
-                      class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
-                      @click="toggleEdit(curriculum_data)"
-                    >
-                      <icon name="edit" /> Edit
-                    </button>
-                    <button
-                      class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                      @click="toggleDelete(curriculum_data)"
-                    >
-                      <icon name="delete" /> Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr v-if="paginatedData.length === 0">
-                <td colspan="8" class="text-center py-8 text-gray-400">
-                  No records found
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="curriculum_data in paginatedData"
+              :key="curriculum_data.curriculum_id"
+              class="hover:bg-green-50 transition-all border-t"
+            >
+              <td class="px-4 py-3 text-left">
+                {{ curriculum_data.program?.program_name }}
+              </td>
+              <td class="px-4 py-3 text-center">
+                {{ curriculum_data.curriculum_end_year }}
+              </td>
+              <td class="px-4 py-3 text-left flex justify-center">
+                <div class="flex gap-2">
+                  <button
+                    class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
+                    @click="toggleEdit(curriculum_data)"
+                  >
+                    <icon name="edit" /> Edit
+                  </button>
+                  <button
+                    class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                    @click="toggleDelete(curriculum_data)"
+                  >
+                    <icon name="delete" /> Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr v-if="paginatedData.length === 0">
+              <td colspan="8" class="text-center py-8 text-gray-400">
+                No records found
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
-          <span>
-            Showing {{ startIndex }} to {{ endIndex }} of
-            {{ filteredData.length }} entries
-          </span>
+        <div class="text-gray-700 text-sm">
+          Showing {{ startIndex }} to {{ endIndex }} of
+          {{ filteredData.length }} entries
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-1 text-sm">
           <button
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
@@ -179,7 +166,7 @@
                 ' bg-defaultGreen text-white': currentPage === page,
                 'bg-gray-200 text-gray-700': currentPage !== page,
               }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+              class="px-3 py-1 rounded-md hover:bg-green-300"
             >
               {{ page }}
             </button>
@@ -195,6 +182,7 @@
       </div>
     </div>
   </div>
+
   <addCurriculum
     v-if="isAdd"
     mode="add"
@@ -259,7 +247,7 @@ import icon from "@/assets/icon.vue";
 import addCurriculum from "../modals/add-curriculum.vue";
 
 import { toast } from "vue3-toastify";
-import { useFetchDataStore } from "../../../../store/fetch-data-store";
+import { useFetchDataStore } from "@/store/fetch-data-store";
 import { mapState } from "pinia";
 import axios from "axios";
 export default {
@@ -314,11 +302,22 @@ export default {
       return end > this.filteredData.length ? this.filteredData.length : end;
     },
     pageNumbers() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
-    },
-    tableHeightClass() {
-      const count = this.paginatedData.length;
-      return count <= 10 ? "h-auto" : "h-[65vh]";
+      const total = this.totalPages;
+      if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
+
+      let start = this.currentPage - 1;
+      let end = this.currentPage + 1;
+
+      if (start < 1) {
+        start = 1;
+        end = 3;
+      }
+      if (end > total) {
+        end = total;
+        start = total - 2;
+      }
+
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
   },
   methods: {
@@ -337,10 +336,11 @@ export default {
     toggleEdit(item) {
       this.selectedCurriculum = {
         curriculum_id: item.curriculum_id,
-        program_id: item.program_id || item.program?.program_id, // support nested
-        curriculum_name: item.curriculum_name,
-        curriculum_effective: item.curriculum_effective,
+        program_id: item.program_id ?? item.program?.program_id,
+        curriculum_start_year: item.curriculum_start_year,
+        curriculum_end_year: item.curriculum_end_year,
       };
+
       this.showEditModal = true;
     },
     toggleDelete(item) {
@@ -356,7 +356,10 @@ export default {
       const curriculumId = this.recordToDelete.curriculum_id;
 
       axios
-        .delete(`http://localhost:8000/curriculums/delete-id/${curriculumId}`)
+        .delete(
+          process.env.VUE_APP_API_BASE_URL +
+            `/curriculums/delete-id/${curriculumId}`,
+        )
         .then(() => {
           this.recordToDelete = null;
           this.showDeleteModal = false;

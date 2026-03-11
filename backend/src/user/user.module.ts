@@ -5,6 +5,8 @@ import { UserController } from './user.controller';
 import { User_Accounts } from './entities/user.entity';
 import { UserExpertise } from './entities/user_expertise.entity';
 import { UserOtherExpertise } from './entities/user_other_expertise.entity';
+import { Program } from 'src/programs/entities/program.entity';
+import { Course } from 'src/courses/entities/course.entity';
 UserOtherExpertise;
 @Module({
   imports: [
@@ -12,6 +14,8 @@ UserOtherExpertise;
       User_Accounts,
       UserExpertise,
       UserOtherExpertise,
+      Program,
+      Course,
     ]),
   ],
   controllers: [UserController],

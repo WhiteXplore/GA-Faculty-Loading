@@ -1,51 +1,46 @@
 <template>
-  <!-- Top Bar -->
   <div
-    class="bg-white shadow-md px-4 py-2 flex justify-between items-center rounded-t-lg"
+    class="bg-white shadow-md px-3 py-2 flex justify-between items-center rounded-t-lg"
   >
-    <!-- Left Section: Title -->
-    <div class="text-green-900 font-bold text-lg tracking-wide">
+    <!-- Left: Title -->
+    <div class="text-green-900 font-semibold text-md tracking-wide">
       Faculty Loading & Exam Scheduler
     </div>
 
-    <!-- Center Section: Date, Time -->
+    <!-- Center: Date/Time -->
     <div class="flex flex-col items-center">
-      <div class="text-center">
-        <div class="text-sm font-medium text-gray-600">
-          {{ formattedDate }}
-        </div>
-        <div class="text-sm text-gray-500">
-          {{ formattedTime }}
-        </div>
-      </div>
+      <div class="text-sm font-medium text-gray-600">{{ formattedDate }}</div>
+      <!-- <div class="text-sm text-gray-500">{{ formattedTime }}</div> -->
     </div>
 
-    <!-- Right Section -->
-    <div class="flex items-center gap-3">
-      <!-- Year Selector -->
-      <div class="relative w-26">
+    <!-- Right: Dropdown + Profile -->
+    <div class="flex items-center gap-2">
+      <!-- Dropdown -->
+      <div v-if="activeYears.length > 1" class="relative flex items-center">
         <select
-          id="year"
-          v-model="selectedYear"
-          @change="updateYear"
-          class="w-full appearance-none rounded-full border border-green-600 bg-white px-4 py-1.5 pr-10 text-green-900 text-sm font-semibold shadow-md cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:outline-none hover:shadow-lg"
+          v-model="selectedSchoolYearId"
+          @change="updateSchoolYear"
+          @focus="isDropdownOpen = true"
+          @blur="isDropdownOpen = false"
+          class="appearance-none rounded-full border border-green-600 bg-white py-2 pl-4 pr-10 text-center text-green-900 text-sm font-semibold shadow-md cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-lg"
         >
+          <option value="" disabled>Select Active School Year</option>
           <option
-            v-for="year in years"
-            :key="year"
-            :value="year"
-            class="text-sm"
+            v-for="sy in activeYears"
+            :key="sy.school_year_id"
+            :value="sy.school_year_id"
           >
-            {{ year }}
+            {{ sy.school_year_name }} — {{ getSemesterLabel(sy.semester) }}
           </option>
         </select>
 
         <!-- Custom Dropdown Icon -->
         <div
-          class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-green-700"
+          class="pointer-events-none absolute right-3 flex items-center transition-transform duration-300 text-green-700"
+          :class="{ 'rotate-180': isDropdownOpen }"
         >
           <svg
-            class="w-4 h-4"
+            class="w-5 h-5"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
@@ -60,9 +55,20 @@
         </div>
       </div>
 
+      <!-- Static text if one or none -->
+      <div
+        v-else
+        class="bg-green-50 border border-green-600 rounded-full px-5 py-1.5 shadow-md text-green-900 text-sm font-semibold flex items-center justify-center"
+      >
+        <span v-if="activeYears.length === 1">
+          {{ activeYears[0].school_year_name }} —
+          {{ getSemesterLabel(activeYears[0].semester) }}
+        </span>
+        <span v-else class="text-gray-500">No Active Year</span>
+      </div>
+
       <!-- Profile -->
       <div class="flex items-center gap-2">
-        <!-- Profile Picture -->
         <div
           ref="profileIcon"
           class="w-10 h-10 rounded-full border-2 border-transparent hover:border-green-500 cursor-pointer transition"
@@ -70,12 +76,11 @@
         >
           <img
             src="../../../assets/img/users.png"
-            alt="Profile Picture"
+            alt="Profile"
             class="w-full h-full rounded-full object-cover"
           />
         </div>
 
-        <!-- User Info -->
         <div class="text-left leading-tight">
           <h1 class="text-sm font-semibold text-gray-800">
             {{ user.last_name }}, {{ user.first_name || "Guest" }}
@@ -97,19 +102,20 @@
 <script>
 import axios from "axios";
 import Profile from "./profile-setting.vue";
-import { useFetchDataStore } from "@/store/fetch-data-store";
+import { eventBus } from "@/bus/event-bus";
 
 export default {
   name: "TopBarPage",
   components: { Profile },
   data() {
-    const currentYear = new Date().getFullYear();
     return {
       isOpenProfile: false,
       user: {},
-      selectedYear: currentYear,
-      years: Array.from({ length: 10 }, (_, i) => currentYear - i),
+      schoolYears: [],
+      selectedSchoolYearId: "",
       currentTime: new Date(),
+      isDropdownOpen: false,
+      stopBus: null,
     };
   },
   computed: {
@@ -129,87 +135,101 @@ export default {
         hour12: true,
       });
     },
-  },
-  mounted() {
-    this.fetchUser();
-    this.fetchActiveYear();
-
-    this.timer = setInterval(() => {
-      this.currentTime = new Date();
-    }, 1000);
-
-    document.addEventListener("click", this.handleClickOutside);
-  },
-  beforeUnmount() {
-    clearInterval(this.timer);
-    document.removeEventListener("click", this.handleClickOutside);
+    activeYears() {
+      return this.schoolYears.filter((y) => y.is_active);
+    },
   },
   methods: {
     toggleOpenProfile() {
       this.isOpenProfile = !this.isOpenProfile;
     },
-    handleClickOutside(event) {
-      const dropdown = this.$refs.profileDropdown;
-      const icon = this.$refs.profileIcon;
-      if (
-        this.isOpenProfile &&
-        dropdown &&
-        !dropdown.contains(event.target) &&
-        icon &&
-        !icon.contains(event.target)
-      ) {
-        this.isOpenProfile = false;
-      }
-    },
 
     async fetchUser() {
       try {
-        const response = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
-        if (response.data) {
-          this.user = response.data;
-        } else {
-          this.$router.push("/");
-          location.reload();
-        }
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
+        const res = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/me",
+          { withCredentials: true },
+        );
+        this.user = res.data || {};
+      } catch {
         this.$router.push("/");
       }
     },
 
-    async fetchActiveYear() {
+    async fetchSchoolYears() {
       try {
-        const res = await axios.get("http://localhost:8000/active-year/active");
-        if (res.data) {
-          this.selectedYear = res.data.year;
+        const res = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/school-year/get-school-years",
+        );
+        this.schoolYears = res.data.map((y) => ({ ...y }));
 
-          // 👇 sync to store so TableCourses reacts
-          const store = useFetchDataStore();
-          store.year = res.data.year;
+        // Auto-select the most recent active year if nothing is selected
+        if (!this.selectedSchoolYearId) {
+          this.autoSelectActiveYear();
         }
-      } catch (error) {
-        console.error("Failed to fetch active year:", error);
+      } catch (err) {
+        console.error(err);
       }
     },
 
-    async updateYear() {
-      try {
-        const res = await axios.post("http://localhost:8000/active-year", {
-          year: this.selectedYear,
-        });
-        if (res.data?.year) {
-          this.selectedYear = res.data.year;
+    autoSelectActiveYear() {
+      const activeList = this.activeYears.sort(
+        (a, b) => new Date(b.updated_at) - new Date(a.updated_at),
+      );
 
-          // 👇 sync to store so TableCourses refreshes
-          const store = useFetchDataStore();
-          store.year = res.data.year;
-        }
-      } catch (error) {
-        console.error("Failed to update active year:", error);
+      if (activeList.length > 0) {
+        this.selectedSchoolYearId = activeList[0].school_year_id;
+
+        // Emit full object to eventBus
+        eventBus.emit(activeList[0]);
       }
     },
+
+    getSemesterLabel(sem) {
+      return sem === 1 ? "1st Semester" : sem === 2 ? "2nd Semester" : "";
+    },
+
+    async updateSchoolYear() {
+      const selectedSY = this.schoolYears.find(
+        (y) => y.school_year_id === this.selectedSchoolYearId,
+      );
+      if (!selectedSY) return;
+
+      try {
+        // Update timestamp (backend)
+        await axios.patch(
+          process.env.VUE_APP_API_BASE_URL +
+            `/school-year/update-timestamp/${selectedSY.school_year_id}`,
+        );
+
+        // Emit the full school year object to eventBus for reactive listeners
+        eventBus.emit(selectedSY);
+      } catch (err) {
+        console.error("Failed to update school year:", err);
+      }
+    },
+  },
+
+  mounted() {
+    this.fetchUser();
+    this.fetchSchoolYears();
+
+    // Listen to eventBus for updates
+    this.stopBus = eventBus.on(async (newSY) => {
+      if (!newSY) return;
+
+      // Refetch school years to get updated is_active status
+      await this.fetchSchoolYears();
+
+      // Select the new active year if it’s active
+      if (newSY.is_active) {
+        this.selectedSchoolYearId = newSY.school_year_id;
+      }
+    });
+  },
+
+  beforeUnmount() {
+    if (this.stopBus) this.stopBus();
   },
 };
 </script>

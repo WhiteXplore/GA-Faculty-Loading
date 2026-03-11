@@ -13,13 +13,26 @@ export class CurriculumService {
   ) {}
 
   async create(createCurriculumDto: CreateCurriculumDto): Promise<Curriculum> {
+    const existing = await this.curriculumRepository.findOne({
+      where: {
+        institute_id: createCurriculumDto.institute_id,
+        program_id: createCurriculumDto.program_id,
+        curriculum_start_year: createCurriculumDto.curriculum_start_year,
+        curriculum_end_year: createCurriculumDto.curriculum_end_year,
+      },
+    });
+
+    if (existing) {
+      return existing;
+    }
+
     const newCurriculum = this.curriculumRepository.create(createCurriculumDto);
+
     return await this.curriculumRepository.save(newCurriculum);
   }
-
   async findAll(): Promise<Curriculum[]> {
     return await this.curriculumRepository.find({
-      relations: ['program'],
+      relations: ['program', 'program.institute'],
     });
   }
 

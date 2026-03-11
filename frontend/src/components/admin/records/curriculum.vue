@@ -2,7 +2,9 @@
   <div class="px-2 mt-2">
     <!-- Headers -->
     <div class="flex justify-between items-start">
-      <h1 class="font-semibold tracking-wide text-md">Curriculum Offers</h1>
+      <h1 class="font-semibold tracking-wide text-sm px-1">
+        Curriculum Offers
+      </h1>
     </div>
 
     <!-- Main Content  -->

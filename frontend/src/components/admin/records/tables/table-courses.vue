@@ -1,27 +1,40 @@
 <template>
   <div v-if="isTable">
     <!-- Header -->
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4">Pages / Courses</div>
-
-      <div
-        @click="toggleAdd"
-        class="flex items-center gap-2 px-3 py-2 bg-white text-green-600 rounded-xl shadow-sm hover:shadow-md border border-green-500 hover:bg-defaultGreen hover:text-white transition-all duration-300 cursor-pointer"
-      >
+      <div class="flex items-center gap-2">
+        <!-- Upload & Add -->
         <div
-          class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full group-hover:bg-white transition-colors duration-300"
+          @click="isUploadModal = true"
+          class="flex items-center gap-2 px-3 py-2 border text-blue-600 border-blue-600 rounded-xl hover:bg-blue-700 hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
         >
-          <icon
-            :name="'circle-add'"
-            class="w-4 h-4 text-green-600 transition-colors duration-300 group-hover:text-green-600"
-          />
+          <div
+            class="p-1 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center"
+          >
+            <icon name="uploads" />
+          </div>
+          <span class="font-medium text-sm">Upload Course</span>
         </div>
-        <span class="font-medium text-sm">Add Course</span>
+
+        <div
+          @click="toggleAdd"
+          class="flex items-center gap-2 px-3 py-2 border bg-defaultGreen text-white border-green-600 rounded-lg hover:bg-white hover:text-defaultGreen hover:shadow-lg cursor-pointer transition duration-200"
+        >
+          <div
+            class="p-1 bg-white hover:bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
+          >
+            <icon name="circle-add" />
+          </div>
+
+          <span class="font-medium text-sm">Add Course</span>
+        </div>
       </div>
     </div>
 
-    <!-- Controls -->
+    <!-- Table -->
     <div class="mt-4 overflow-x-auto border p-3 rounded-xl bg-white">
+      <!-- Top Controls -->
       <div
         class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
       >
@@ -30,17 +43,15 @@
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md focus:shadow-md"
               @change="changePage(1)"
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
             </select>
-            <!-- Custom arrow -->
             <div
-              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
+              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-defaultGreen"
             >
               <svg
                 class="w-4 h-4"
@@ -57,57 +68,36 @@
               </svg>
             </div>
           </div>
-          <span class="text-sm font-medium">Per page</span>
+          <span class="text-sm font-medium text-gray-600">Per page</span>
         </div>
-
-        <!-- Filters -->
-        <div class="flex items-center gap-3 flex-wrap">
-          <!-- Curriculum Filter -->
-          <div class="relative">
+        <div class="flex gap-2">
+          <!-- Curriculum filter -->
+          <div class="relative" v-if="user?.role === 'Admin'">
             <select
               v-model="selectedCurriculum"
-              class="appearance-none rounded-full border border-green-600 bg-white px-4 py-2 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
-              @change="changePage(1)"
+              @change="currentPage = 1"
+              class="rounded-full border border-green-600 px-4 py-1.5 text-green-900 text-sm font-semibold shadow-sm cursor-pointer"
             >
               <option value="">All Curriculums</option>
               <option
-                v-for="(curr, idx) in uniqueCurriculums"
-                :key="idx"
+                v-for="curr in uniqueCurriculums"
+                :key="curr"
                 :value="curr"
               >
                 {{ curr }}
               </option>
             </select>
-            <!-- Custom arrow -->
-            <div
-              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-700"
-            >
-              <svg
-                class="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </div>
           </div>
 
-          <!-- Search -->
-          <div class="relative">
+          <!-- Search input -->
+          <div class="relative w-full sm:w-[280px]">
             <input
               v-model="searchQuery"
+              @input="currentPage = 1"
               type="text"
-              placeholder="Search..."
-              class="rounded-full border border-green-600 bg-white px-4 py-2 pl-10 text-sm shadow-sm w-[250px] transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
-              @input="changePage(1)"
+              placeholder="Search courses..."
+              class="rounded-full border border-green-600 px-4 py-2 pl-10 text-sm shadow-sm w-full"
             />
-            <!-- Search icon -->
             <div
               class="absolute inset-y-0 left-3 flex items-center text-green-700 pointer-events-none"
             >
@@ -127,61 +117,54 @@
       </div>
 
       <!-- Table -->
-      <div class="w-full mt-1 rounded-xl overflow-hidden">
-        <div
-          class="overflow-y-auto transition-all duration-300"
-          :class="tableHeightClass"
-        >
-          <table
-            class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
-          >
+      <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+        <div class="max-h-[69vh] overflow-y-auto">
+          <table class="min-w-full text-sm text-gray-700 border-collapse">
             <thead
               class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
               <tr>
-                <th class="px-4 py-3 text-left rounded-tl-lg">#</th>
-                <th class="px-4 py-2 text-left">Curriculum</th>
-                <th class="px-4 py-2 text-left">Course Code</th>
-                <th class="px-4 py-2 text-left">Description</th>
-                <th class="px-4 py-2 text-center">Semester</th>
-                <th class="px-4 py-2 text-center">Year Level</th>
-                <th class="px-4 py-2 text-center">Lecture</th>
-                <th class="px-4 py-2 text-center">Lab</th>
-                <th class="px-4 py-2 text-center">Units</th>
-                <th class="px-4 py-2 text-center">Pre-req</th>
-                <th class="px-4 py-2 text-left rounded-tr-lg">Actions</th>
+                <th class="px-4 py-3 text-left font-normal">Course Code</th>
+                <th class="px-4 py-3 text-left font-normal">Course Title</th>
+                <th class="px-4 py-3 text-center font-normal">Semester</th>
+                <th class="px-4 py-3 text-center font-normal">Year Level</th>
+                <th class="px-4 py-3 text-center font-normal">Lecture</th>
+                <th class="px-4 py-3 text-center font-normal">Lab</th>
+                <th class="px-4 py-3 text-center font-normal">Units</th>
+                <th class="px-4 py-3 text-center font-normal">Pre-requisite</th>
+                <th class="px-4 py-3 text-center rounded-tr-lg font-normal">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr
-                v-for="(c, index) in paginatedData"
+                v-for="c in paginatedData"
                 :key="c.course_id"
-                class="bg-white hover:bg-green-50 transition border rounded-md shadow-sm"
+                class="hover:bg-green-50 border-t transition-all"
               >
-                <td class="px-4 py-2">{{ startIndex + index }}</td>
-                <td class="px-4 py-2">{{ c.curriculum?.curriculum_name }}</td>
-                <td class="px-4 py-2">{{ c.course_code }}</td>
-                <td class="px-4 py-2">{{ c.course_description }}</td>
-                <td class="px-4 py-2 text-center">{{ c.course_semester }}</td>
-                <td class="px-4 py-2 text-center">{{ c.course_level }}</td>
-                <td class="px-4 py-2 text-center">{{ c.course_lec }}</td>
-                <td class="px-4 py-2 text-center">{{ c.course_lab }}</td>
-                <td class="px-4 py-2 text-center">
+                <td class="px-4 py-3">{{ c.course_code }}</td>
+                <td class="px-4 py-3">{{ c.course_title }}</td>
+                <td class="px-4 py-3 text-center">{{ c.course_semester }}</td>
+                <td class="px-4 py-3 text-center">{{ c.course_level }}</td>
+                <td class="px-4 py-3 text-center">{{ c.course_lec }}</td>
+                <td class="px-4 py-3 text-center">{{ c.course_lab }}</td>
+                <td class="px-4 py-3 text-center">
                   {{ c.course_lec + c.course_lab }}
                 </td>
-                <td class="px-4 py-2 text-center">
+                <td class="px-4 py-3 text-center">
                   {{ c.course_requisite || "-" }}
                 </td>
-                <td class="px-4 py-2">
+                <td class="px-4 py-3 flex justify-center">
                   <div class="flex gap-2">
                     <button
-                      class="px-3 py-1 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
+                      class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
                       @click="toggleEdit(c)"
                     >
                       <icon name="edit" /> Edit
                     </button>
                     <button
-                      class="px-3 py-1 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
+                      class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
                       @click="toggleDelete(c)"
                     >
                       <icon name="delete" /> Delete
@@ -190,7 +173,7 @@
                 </td>
               </tr>
               <tr v-if="paginatedData.length === 0">
-                <td colspan="11" class="text-center py-8 text-gray-400">
+                <td colspan="9" class="text-center py-8 text-gray-400">
                   No records found
                 </td>
               </tr>
@@ -201,15 +184,15 @@
 
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
+        <div class="text-gray-700 text-sm">
           Showing {{ startIndex }} to {{ endIndex }} of
-          {{ filteredData.length }} entries
+          {{ filteredCourses.length }} entries
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-1 text-sm">
           <button
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
-            class="px-3 py-1 bg-gray-300 text-gray-700 rounded-l-md hover:bg-gray-400"
+            class="px-3 py-1 bg-gray-300 rounded-l-md hover:bg-gray-400"
           >
             &lt;
           </button>
@@ -221,14 +204,14 @@
               'bg-defaultGreen text-white': currentPage === page,
               'bg-gray-200 text-gray-700': currentPage !== page,
             }"
-            class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+            class="px-3 py-1 rounded-md hover:bg-green-300"
           >
             {{ page }}
           </button>
           <button
             @click="changePage(currentPage + 1)"
             :disabled="currentPage === totalPages"
-            class="px-3 py-1 bg-gray-300 text-gray-700 rounded-r-md hover:bg-gray-400"
+            class="px-3 py-1 bg-gray-300 rounded-r-md hover:bg-gray-400"
           >
             &gt;
           </button>
@@ -237,66 +220,34 @@
     </div>
   </div>
 
-  <!-- Add / Edit Modals -->
-  <addCourses v-if="isAddCourses" @close="closeView" @refresh="loadCourses" />
+  <!-- Add/Edit/Upload Modals -->
+
   <addCourses
-    v-if="showEditModal && selectedCourse"
+    v-if="(showEditModal && selectedCourse) || isAddCourses"
     :courseData="selectedCourse"
     @close="closeModal"
     @refresh="loadCourses"
   />
-
-  <!-- Delete Confirmation -->
-  <div v-if="showDeleteModal" class="fixed inset-0 z-50">
-    <div class="absolute inset-0 bg-gray-800 bg-opacity-40"></div>
-    <div
-      class="rounded-xl border w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-    >
-      <div
-        class="rounded-full w-16 h-16 md:w-20 md:h-20 flex justify-center items-center bg-red-300 animate-pulse"
-      >
-        <icon
-          name="question"
-          class="w-8 h-8 md:w-10 md:h-10 text-white flex justify-center items-center"
-        />
-      </div>
-      <h1 class="text-[14px] md:text-[16px] font-semibold mt-4">
-        Delete Confirmation
-      </h1>
-      <p class="mt-2 text-[12px] md:text-[13px] text-center px-8">
-        Are you sure you want to delete this record? This action cannot be
-        undone.
-      </p>
-      <div class="w-full h-[1px] rounded-md bg-gray-200 mt-4"></div>
-      <div class="tracking-wide flex gap-2 mt-4">
-        <button
-          class="bg-red-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md"
-          @click="showDeleteModal = false"
-        >
-          No, Cancel
-        </button>
-        <button
-          class="bg-green-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
-          @click="confirmDelete"
-        >
-          Yes, Delete
-        </button>
-      </div>
-    </div>
-  </div>
+  <uploadCourses
+    v-if="isUploadModal"
+    @close="isUploadModal = false"
+    @refresh="loadCourses"
+  />
 </template>
 
 <script>
 import icon from "@/assets/icon.vue";
-import { toast } from "vue3-toastify";
 import addCourses from "../modals/add-courses.vue";
+import uploadCourses from "../modals/upload-course.vue";
 import { useFetchDataStore } from "../../../../store/fetch-data-store";
 import { mapState } from "pinia";
 import axios from "axios";
+import { eventBus } from "@/bus/event-bus";
 
 export default {
   name: "TableCourses",
-  components: { icon, addCourses },
+  components: { icon, addCourses, uploadCourses },
+
   data() {
     return {
       currentPage: 1,
@@ -304,176 +255,155 @@ export default {
       searchQuery: "",
       selectedCurriculum: "",
       isAddCourses: false,
-      isEdit: false,
       isTable: true,
-      isUploadData: false,
-      showDeleteModal: false,
-      recordToDelete: null,
-      selectedCourse: null,
+      isUploadModal: false,
       showEditModal: false,
-      activeYear: null,
-      user: null, // 👈 add local user here
+      selectedCourse: null,
+      user: null,
+      activeSchoolYear: null,
+      stopEventBus: null,
     };
   },
+
   computed: {
-    ...mapState(useFetchDataStore, ["courses", "year"]),
+    ...mapState(useFetchDataStore, ["courses", "activeYear"]),
 
     uniqueCurriculums() {
-      const names = this.filteredCourses.map(
-        (c) => c.curriculum?.curriculum_name
-      );
-      return [...new Set(names.filter(Boolean))];
+      const names = this.courses
+        .map((c) => c.curriculum?.program?.program_name)
+        .filter(Boolean);
+      return [...new Set(names)];
     },
 
     filteredCourses() {
       let result = this.courses || [];
 
-      const currentUser = this.user; // ✅ now use local user
-
-      if (currentUser?.role === "Program Chairperson") {
+      if (this.user?.role === "Program Chairperson") {
         result = result.filter(
           (c) =>
             String(c.curriculum?.program?.institute?.institute_id) ===
-              String(currentUser.institute_id) &&
-            String(c.curriculum?.program_id) === String(currentUser.program_id)
+              String(this.user.institute_id) &&
+            String(c.curriculum?.program_id) === String(this.user.program_id),
         );
       }
 
-      if (this.activeYear) {
+      if (this.activeSchoolYear) {
         result = result.filter(
           (c) =>
-            String(c.curriculum?.curriculum_effective) ===
-            String(this.activeYear)
+            String(c.curriculum?.curriculum_start_year) ===
+              String(this.activeSchoolYear.start_year) &&
+            String(c.curriculum?.curriculum_end_year) ===
+              String(this.activeSchoolYear.end_year) &&
+            Number(c.course_semester) ===
+              Number(this.activeSchoolYear.semester),
         );
       }
 
       if (this.selectedCurriculum) {
         result = result.filter(
-          (c) => c.curriculum?.curriculum_name === this.selectedCurriculum
+          (c) =>
+            c.curriculum?.program?.program_name === this.selectedCurriculum,
         );
       }
 
       if (this.searchQuery) {
-        const query = this.searchQuery.toLowerCase();
+        const q = this.searchQuery.toLowerCase();
         result = result.filter(
           (c) =>
-            c.course_code?.toLowerCase().includes(query) ||
-            c.course_description?.toLowerCase().includes(query) ||
-            c.curriculum?.curriculum_name?.toLowerCase().includes(query)
+            c.course_code?.toLowerCase().includes(q) ||
+            c.course_title?.toLowerCase().includes(q) ||
+            c.curriculum?.curriculum_name?.toLowerCase().includes(q),
         );
       }
 
       return result;
     },
 
-    filteredData() {
-      return this.filteredCourses;
-    },
-
     paginatedData() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
-      return this.filteredData.slice(start, start + this.itemsPerPage);
+      return this.filteredCourses.slice(start, start + this.itemsPerPage);
     },
 
     totalPages() {
-      return Math.ceil(this.filteredData.length / this.itemsPerPage) || 1;
+      return Math.ceil(this.filteredCourses.length / this.itemsPerPage) || 1;
     },
+
     pageNumbers() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      const total = this.totalPages;
+      if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
+      let start = this.currentPage - 1;
+      let end = this.currentPage + 1;
+      if (start < 1) start = 1;
+      if (end > total) end = total;
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
+
     startIndex() {
-      return this.filteredData.length === 0
+      return this.filteredCourses.length === 0
         ? 0
         : (this.currentPage - 1) * this.itemsPerPage + 1;
     },
+
     endIndex() {
-      const end = this.currentPage * this.itemsPerPage;
-      return Math.min(end, this.filteredData.length);
-    },
-    tableHeightClass() {
-      const count = this.paginatedData.length;
-      return count <= 10 ? "h-auto" : "h-[65vh]";
+      return Math.min(
+        this.currentPage * this.itemsPerPage,
+        this.filteredCourses.length,
+      );
     },
   },
+
   methods: {
-    async loadCourses() {
-      const store = useFetchDataStore();
-      await store.fetchCourses();
-    },
-    async loadActiveYear() {
-      const store = useFetchDataStore();
-      await store.fetchActiveYear();
-      this.activeYear = store.year;
-    },
     async fetchUser() {
       try {
-        const response = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
-        if (response.data) {
-          this.user = response.data; // ✅ save into local state
-          console.log("Authenticated User:", this.user);
-        } else {
-          this.$router.push("/");
-        }
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
+        const res = await axios.get(
+          `${process.env.VUE_APP_API_BASE_URL}/auth/me`,
+          { withCredentials: true },
+        );
+        this.user = res.data || null;
+      } catch {
         this.$router.push("/");
       }
     },
 
-    toggleAdd() {
-      this.isAddCourses = true;
-      this.isTable = true;
+    async loadCourses() {
+      const store = useFetchDataStore();
+      await store.fetchCourses();
     },
-    toggleEdit(item) {
-      this.selectedCourse = item;
+
+    toggleAdd() {
+      this.selectedCourse = null;
+      this.showEditModal = false;
+      this.isAddCourses = true;
+    },
+    toggleEdit(course) {
+      this.isAddCourses = false;
+      this.selectedCourse = course;
       this.showEditModal = true;
     },
-    toggleDelete(item) {
-      this.recordToDelete = item;
-      this.showDeleteModal = true;
-    },
-    confirmDelete() {
-      if (!this.recordToDelete || isNaN(this.recordToDelete.course_id)) {
-        toast.error("Invalid course ID.");
-        return;
-      }
-      axios
-        .delete(
-          `http://localhost:8000/courses/delete-id/${this.recordToDelete.course_id}`
-        )
-        .then(() => {
-          this.showDeleteModal = false;
-          this.recordToDelete = null;
-          this.loadCourses();
-          toast.success("Record deleted successfully");
-        });
+    closeModal() {
+      this.isAddCourses = false;
+      this.showEditModal = false;
+      this.selectedCourse = null;
     },
     changePage(page) {
       this.currentPage = Math.max(1, Math.min(page, this.totalPages));
     },
-    closeView() {
-      this.isAddCourses = false;
-      this.isUploadData = false;
-    },
-    closeModal() {
-      this.showEditModal = false;
-      this.selectedCourse = null;
-    },
   },
-  watch: {
-    year(newVal) {
-      if (newVal) {
-        this.activeYear = newVal;
-        this.loadCourses();
-      }
-    },
+
+  mounted() {
+    this.fetchUser();
+    this.loadCourses();
+
+    this.stopEventBus = eventBus.on((newYear) => {
+      if (!newYear) return;
+      this.activeSchoolYear = newYear;
+      this.currentPage = 1;
+      this.loadCourses();
+    });
   },
-  async mounted() {
-    await this.fetchUser();
-    await this.loadActiveYear(); // fetch year first
-    await this.loadCourses(); // then fetch courses
+
+  beforeUnmount() {
+    this.stopEventBus?.();
   },
 };
 </script>

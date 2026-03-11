@@ -338,7 +338,7 @@ export default {
     async addEvent(event) {
       try {
         await axios.post(
-          "http://localhost:8000/calendar/add-calendar-event",
+          process.env.VUE_APP_API_BASE_URL + "/calendar/add-calendar-event",
           event
         );
         await this.fetchDataStore.fetchCalendarEvents();
@@ -360,7 +360,8 @@ export default {
     async saveEvent() {
       try {
         await axios.patch(
-          `http://localhost:8000/calendar/update-calendar-event/${this.selectedEvent.id}`,
+          process.env.VUE_APP_API_BASE_URL +
+            `/calendar/update-calendar-event/${this.selectedEvent.id}`,
           this.selectedEvent
         );
         await this.fetchDataStore.fetchCalendarEvents();
@@ -373,7 +374,8 @@ export default {
     async deleteEvent() {
       try {
         await axios.delete(
-          `http://localhost:8000/calendar/delete-calendar-event/${this.selectedEvent.id}`
+          process.env.VUE_APP_API_BASE_URL +
+            `/calendar/delete-calendar-event/${this.selectedEvent.id}`
         );
         await this.fetchDataStore.fetchCalendarEvents();
         this.closeEventModal();

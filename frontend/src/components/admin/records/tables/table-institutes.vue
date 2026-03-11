@@ -1,23 +1,21 @@
 <template>
   <div v-if="isTable">
     <!-- Header & Add Button -->
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / Institute
       </div>
       <div
         @click="toggleAdd"
-        class="flex items-center gap-2 px-3 py-2 bg-white text-green-600 rounded-xl shadow-sm hover:shadow-md border border-green-500 hover:bg-defaultGreen hover:text-white transition-all duration-300 cursor-pointer"
+        class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
       >
         <div
-          class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full group-hover:bg-white transition-colors duration-300"
+          class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
         >
-          <icon
-            :name="'circle-add'"
-            class="w-4 h-4 text-green-600 transition-colors duration-300 group-hover:text-green-600"
-          />
+          <icon name="circle-add" />
         </div>
-        <span class="font-medium text-sm">Add Institute </span>
+
+        <span class="font-medium text-sm">Add Institute</span>
       </div>
     </div>
 
@@ -32,10 +30,9 @@
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
@@ -90,54 +87,47 @@
       </div>
 
       <!-- Data Table -->
-      <div class="w-full mt-1 rounded-xl shadow overflow-hidden">
-        <div
-          :class="tableHeightClass"
-          class="overflow-y-auto transition-all duration-300"
-        >
-          <table
-            class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
-          >
+      <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+        <!-- Scrollable body wrapper -->
+        <div class="max-h-[69vh] overflow-y-auto">
+          <table class="min-w-full text-sm text-gray-700 border-collapse">
             <thead
               class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
               <tr>
-                <th class="w-10 px-4 py-2 text-left rounded-tl-lg font-normal">
-                  ID
-                </th>
                 <th class="px-4 py-3 text-left font-normal">Institute Code</th>
-                <th class="px-4 py-3 text-left font-normal">
-                  Institute Description
-                </th>
+                <th class="px-4 py-3 text-left font-normal">Institute Title</th>
                 <th class="px-4 py-3 text-left font-normal">Program Code</th>
-                <th class="px-4 py-3 text-left font-normal">
-                  Program Description
+                <th class="px-4 py-3 text-left font-normal w-[30%]">
+                  Program Title
                 </th>
-                <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
+                <th
+                  class="px-4 py-3 text-center rounded-tr-lg font-normal w-[20%]"
+                >
                   Actions
                 </th>
               </tr>
             </thead>
+
             <tbody>
               <tr
-                v-for="(program, index) in paginatedData"
+                v-for="program in paginatedData"
                 :key="program.program_id"
-                class="bg-white hover:bg-green-50 transition-all border border-gray-200 rounded-md shadow-sm"
+                class="hover:bg-green-50 transition-all border-t"
               >
-                <td class="px-4 py-2 text-left">{{ startIndex + index }}</td>
-                <td class="px-4 py-2 text-left">
+                <td class="px-4 py-3 border-t border-gray-200">
                   {{ program.institute?.institute_code }}
                 </td>
-                <td class="px-4 py-2 text-left">
+                <td class="px-4 py-3 border-t border-gray-200">
                   {{ program.institute?.institute_name }}
                 </td>
-                <td class="px-4 py-2 text-left">
+                <td class="px-4 py-3 border-t border-gray-200">
                   {{ program.program_code }}
                 </td>
-                <td class="px-4 py-2 text-left">
+                <td class="px-4 py-3 border-t border-gray-200">
                   {{ program.program_name }}
                 </td>
-                <td class="px-4 py-2 text-left">
+                <td class="px-4 py-3 flex justify-center">
                   <div class="flex gap-2">
                     <button
                       class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
@@ -154,8 +144,12 @@
                   </div>
                 </td>
               </tr>
+
               <tr v-if="paginatedData.length === 0">
-                <td colspan="5" class="text-center py-8 text-gray-400">
+                <td
+                  colspan="6"
+                  class="text-center py-8 text-gray-400 border-t border-gray-200"
+                >
                   No records found
                 </td>
               </tr>
@@ -166,11 +160,11 @@
 
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
+        <div class="text-gray-700 text-sm">
           Showing {{ startIndex }} to {{ endIndex }} of
           {{ filteredData.length }} entries
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-1 text-sm">
           <button
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
@@ -185,7 +179,7 @@
                 'bg-defaultGreen text-white': currentPage === page,
                 'bg-gray-200 text-gray-700': currentPage !== page,
               }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+              class="px-3 py-1 rounded-md hover:bg-green-300"
             >
               {{ page }}
             </button>
@@ -280,14 +274,34 @@ export default {
   },
   computed: {
     ...mapState(useFetchDataStore, ["programs", "institutes"]),
+
     filteredData() {
       const query = this.searchQuery.toLowerCase();
-      return this.programs.filter((item) =>
-        `${item.institute?.institute_name} ${item.program_code} ${item.program_name}`
+
+      // Step 1: Filter programs by search query
+      const filtered = this.programs.filter((item) =>
+        `${item.institute?.institute_name} ${item.institute?.institute_code} ${item.program_code} ${item.program_name}`
           .toLowerCase()
-          .includes(query)
+          .includes(query),
       );
+
+      // Step 2: Remove duplicates based on all 4 fields
+      const unique = [];
+      const seen = new Set();
+
+      for (const item of filtered) {
+        const key = `${item.institute?.institute_name || ""}|${
+          item.institute?.institute_code || ""
+        }|${item.program_code}|${item.program_name}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          unique.push(item);
+        }
+      }
+
+      return unique;
     },
+
     totalPages() {
       return Math.ceil(this.filteredData.length / this.itemsPerPage) || 1;
     },
@@ -305,13 +319,25 @@ export default {
       return end > this.filteredData.length ? this.filteredData.length : end;
     },
     pageNumbers() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
-    },
-    tableHeightClass() {
-      const count = this.paginatedData.length;
-      return count <= 10 ? "h-auto" : "h-[65vh]";
+      const total = this.totalPages;
+      if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
+
+      let start = this.currentPage - 1;
+      let end = this.currentPage + 1;
+
+      if (start < 1) {
+        start = 1;
+        end = 3;
+      }
+      if (end > total) {
+        end = total;
+        start = total - 2;
+      }
+
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
   },
+
   methods: {
     async loadPrograms() {
       const store = useFetchDataStore();
@@ -323,20 +349,12 @@ export default {
       this.editData = null;
     },
     toggleEdit(program) {
-      // Log the program you clicked
-      console.log("Edit clicked for program:", program);
-
-      // Set the program to edit
       this.editData = {
         ...program,
-        // Ensure the nested institute object is preserved
         institute: program.institute || null,
       };
-
-      // Open the modal
       this.isAdd = true;
     },
-
     toggleDelete(program) {
       this.recordToDelete = program;
       this.showDeleteModal = true;
@@ -348,7 +366,8 @@ export default {
       }
       axios
         .delete(
-          `http://localhost:8000/programs/delete-id/${this.recordToDelete.program_id}`
+          process.env.VUE_APP_API_BASE_URL +
+            `/programs/delete-id/${this.recordToDelete.program_id}`,
         )
         .then(() => {
           this.recordToDelete = null;

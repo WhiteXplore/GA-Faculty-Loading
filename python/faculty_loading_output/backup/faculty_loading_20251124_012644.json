@@ -1,0 +1,6533 @@
+{
+  "metadata": {
+    "generated_at": "2025-11-24 01:26:44",
+    "max_load": 18,
+    "total_faculty": 237,
+    "faculty_with_assignments": 138,
+    "faculty_without_assignments": 99
+  },
+  "faculty_loads": [
+    {
+      "faculty_id": 35,
+      "faculty_name": "Abdul Jamara",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 151,
+          "course_code": "RES2M",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 42,
+      "faculty_name": "Abel Sadji",
+      "total_units": 15.67,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 2,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 64,
+          "course_code": "MATH 6",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 67,
+          "course_code": "MATH 6",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 81,
+          "course_code": "MATH111",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 82,
+          "course_code": "MATH111",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 83,
+          "course_code": "MATH111",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 43,
+      "faculty_name": "Alberto, Sumaoy",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 97,
+          "course_code": "TMBC223",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 102,
+          "course_code": "TMBC223",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 114,
+          "course_code": "ELEC 221",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 115,
+          "course_code": "ELEC 221",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 37,
+      "faculty_name": "Aldrhiela Lonzaga",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 58,
+          "course_code": "ITSPEC4",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 59,
+          "course_code": "ITSPEC4",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 60,
+          "course_code": "ITSPEC4",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 62,
+          "course_code": "ITSPEC4",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 44,
+      "faculty_name": "Aleya Obeda",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 122,
+          "course_code": "PAELEC2",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 122,
+          "course_code": "SPCOR2 NEW",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 123,
+          "course_code": "PAELEC2",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 123,
+          "course_code": "SPCOR2 NEW",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 130,
+          "course_code": "PAELEC2",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 130,
+          "course_code": "SPCOR2 NEW",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 39,
+      "faculty_name": "Alje Canoy",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 77,
+          "course_code": "STS 121",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 28,
+      "faculty_name": "Alneza Bangasin",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 81,
+          "course_code": "ENG111",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 82,
+          "course_code": "ENG111",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 83,
+          "course_code": "ENG111",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 86,
+          "course_code": "ENG111",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 143,
+          "course_code": "LIT121",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 144,
+          "course_code": "LIT 223",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 41,
+      "faculty_name": "Ana Lagarto",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 64,
+          "course_code": "GEELECT3",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 67,
+          "course_code": "GEELECT3",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 124,
+          "course_code": "PA3212",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 125,
+          "course_code": "PA3212",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 131,
+          "course_code": "PA3212",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 134,
+          "course_code": "PA3212",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 31,
+      "faculty_name": "Anababes Catala",
+      "total_units": 12.67,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 2,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 65,
+          "course_code": "STAT",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 69,
+          "course_code": "STAT",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 150,
+          "course_code": "TTL2M",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 150,
+          "course_code": "MATH 212",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 40,
+      "faculty_name": "Analiza Pana",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 52,
+          "course_code": "Math 111",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 53,
+          "course_code": "Math 111",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 54,
+          "course_code": "Math 111",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 55,
+          "course_code": "Math 111",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 147,
+          "course_code": "MATH 121",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 149,
+          "course_code": "MATH 121",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 30,
+      "faculty_name": "Analyn Casipe",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 52,
+          "course_code": "IT Elec1",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 53,
+          "course_code": "IT Elec1",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 54,
+          "course_code": "IT Elec1",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 55,
+          "course_code": "IT Elec1",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 58,
+          "course_code": "IT 323",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 59,
+          "course_code": "IT 323",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 38,
+      "faculty_name": "Angie Padoran",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 32,
+      "faculty_name": "Ann Cereno",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 140,
+          "course_code": "SCI221",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 26,
+      "faculty_name": "Anselmo Anobong Jr.",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 73,
+          "course_code": "MB322",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 96,
+          "course_code": "GEELECT1",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 99,
+          "course_code": "GEELECT1",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 100,
+          "course_code": "GEELECT1",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 25,
+      "faculty_name": "April Acdal",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 104,
+          "course_code": "RR325",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 104,
+          "course_code": "ER327",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 107,
+          "course_code": "RR325",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 107,
+          "course_code": "ER327",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 108,
+          "course_code": "RR325",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 108,
+          "course_code": "ER327",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 29,
+      "faculty_name": "Arcelyn Basilisco",
+      "total_units": 15.0,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 0,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 80,
+          "course_code": "FT 222",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 101,
+          "course_code": "TMBC325",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 111,
+          "course_code": "ENTREP 123",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 112,
+          "course_code": "ENTREP 123",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 113,
+          "course_code": "ENTREP 123",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 33,
+      "faculty_name": "Ariel Gamao",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 58,
+          "course_code": "ITSPEC3",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 59,
+          "course_code": "ITSPEC3",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 60,
+          "course_code": "ITSPEC3",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 62,
+          "course_code": "ITSPEC3",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 36,
+      "faculty_name": "Ariel Jumamil",
+      "total_units": 15.0,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 0,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 154,
+          "course_code": "TTL 2B",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 155,
+          "course_code": "TTL 2B",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 157,
+          "course_code": "THE322",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 158,
+          "course_code": "THE322",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 159,
+          "course_code": "TTL 2B",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 27,
+      "faculty_name": "Ariel, Balio",
+      "total_units": 15.0,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 0,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 154,
+          "course_code": "THE223",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 155,
+          "course_code": "THE223",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 157,
+          "course_code": "THE326",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 158,
+          "course_code": "THE326",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 159,
+          "course_code": "THE223",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 34,
+      "faculty_name": "Aunel Guillergan",
+      "total_units": 15.0,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 0,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 96,
+          "course_code": "TM121",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 99,
+          "course_code": "TM121",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 100,
+          "course_code": "TM121",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 101,
+          "course_code": "TM325",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 101,
+          "course_code": "TMELECT4 NEW",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 269,
+      "faculty_name": "BACOMM Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 255,
+      "faculty_name": "BPA Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 253,
+      "faculty_name": "BSDRM Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 258,
+      "faculty_name": "BSEDENG Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 259,
+      "faculty_name": "BSEDMATH Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 257,
+      "faculty_name": "BSEDSCI Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 254,
+      "faculty_name": "BSENTREP Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 248,
+      "faculty_name": "BSFAS Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 250,
+      "faculty_name": "BSFT Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 251,
+      "faculty_name": "BSIS Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 249,
+      "faculty_name": "BSMB Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 256,
+      "faculty_name": "BSSW Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 252,
+      "faculty_name": "BSTM Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 261,
+      "faculty_name": "BTLED Prog Chair",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 50,
+      "faculty_name": "Benjie Solarte",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 137,
+          "course_code": "Sci 122",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 139,
+          "course_code": "Sci 122",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 49,
+      "faculty_name": "Bernandita Rodriguez",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 70,
+          "course_code": "FISH326",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 71,
+          "course_code": "FISH326",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 45,
+      "faculty_name": "Bonita Cantere",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 105,
+          "course_code": "SS 112",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 110,
+          "course_code": "SS 112",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 48,
+      "faculty_name": "Boyeth Pelone",
+      "total_units": 15.0,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 0,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 104,
+          "course_code": "DRMRES1",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 105,
+          "course_code": "SCI121_DRM",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 107,
+          "course_code": "DRMRES1",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 108,
+          "course_code": "DRMRES1",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 110,
+          "course_code": "SCI121_DRM",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 46,
+      "faculty_name": "Bryan Macarayo",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 116,
+          "course_code": "ENTREP 3212",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 117,
+          "course_code": "ENTREP 3212",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 118,
+          "course_code": "ENTREP 3212",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 47,
+      "faculty_name": "Bryan Villarojo",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 140,
+          "course_code": "TTL 2S",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 141,
+          "course_code": "RES2S",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 142,
+          "course_code": "RES2S",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 56,
+      "faculty_name": "Caressha Bernaldez",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 80,
+          "course_code": "PE4",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 56,
+          "course_code": "PE 4",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 57,
+          "course_code": "PE 4",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 61,
+          "course_code": "PE 4",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 114,
+          "course_code": "PE 224",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 115,
+          "course_code": "PE 224",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 59,
+      "faculty_name": "Carl Castañeda",
+      "total_units": 9.67,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 2,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 72,
+          "course_code": "Bio 104",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 75,
+          "course_code": "Bio 104",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 76,
+          "course_code": "MBELEC1",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 54,
+      "faculty_name": "Carl Ganal",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 163,
+          "course_code": "MA222",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 164,
+          "course_code": "COMM321",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 63,
+      "faculty_name": "Carlo Perez",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 111,
+          "course_code": "PE 122",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 112,
+          "course_code": "PE 122",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 113,
+          "course_code": "PE 122",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 53,
+      "faculty_name": "Carylmae Balmores",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 72,
+          "course_code": "PE2 NEW",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 75,
+          "course_code": "PE2 NEW",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 81,
+          "course_code": "PE2",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 82,
+          "course_code": "PE2",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 83,
+          "course_code": "PE2",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 86,
+          "course_code": "PE2",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 61,
+      "faculty_name": "Celeste Ligutom",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 147,
+          "course_code": "FIL2",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 149,
+          "course_code": "FIL2",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 162,
+          "course_code": "LIT2",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 162,
+          "course_code": "Fil 2",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 166,
+          "course_code": "LIT2",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 166,
+          "course_code": "Fil 2",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 58,
+      "faculty_name": "Christhelle Gerona",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 104,
+          "course_code": "RR323",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 107,
+          "course_code": "RR323",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 108,
+          "course_code": "RR323",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 55,
+      "faculty_name": "Christian Tipudan",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 60,
+      "faculty_name": "Christina Lahaylahay",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 64,
+          "course_code": "Bio 122",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 67,
+          "course_code": "Bio 122",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 62,
+      "faculty_name": "Christy Relox",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 57,
+      "faculty_name": "Claire Garcia",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 52,
+          "course_code": "Eng 111",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 53,
+          "course_code": "Eng 111",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 54,
+          "course_code": "Eng 111",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 55,
+          "course_code": "Eng 111",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 144,
+          "course_code": "LIT 221",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 146,
+          "course_code": "ENG 323 NEW",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 52,
+      "faculty_name": "Crisalie Bacarro",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 97,
+          "course_code": "TMELECT2 NEW",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 101,
+          "course_code": "TMC328",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 102,
+          "course_code": "TMELECT2 NEW",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 64,
+      "faculty_name": "Criscire Palabrica",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 140,
+          "course_code": "SCI223",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 51,
+      "faculty_name": "Cristopher Añana",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 56,
+          "course_code": "IT 222",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 57,
+          "course_code": "IT 222",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 61,
+          "course_code": "IT 222",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 67,
+      "faculty_name": "Cristover Vidal",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 86,
+          "course_code": "MATH111",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 150,
+          "course_code": "Math 222",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 151,
+          "course_code": "MATH322",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 65,
+      "faculty_name": "Cyril Ranara",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 64,
+          "course_code": "Fish 121",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 67,
+          "course_code": "Fish 121",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 66,
+      "faculty_name": "Czarina Giangan",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 56,
+          "course_code": "GEELECT2",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 57,
+          "course_code": "GEELECT2",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 61,
+          "course_code": "GEELECT2",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 70,
+      "faculty_name": "Daisy Gabule",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 101,
+          "course_code": "TMBME1",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 116,
+          "course_code": "CBMEC 321",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 117,
+          "course_code": "CBMEC 321",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 118,
+          "course_code": "CBMEC 321",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 68,
+      "faculty_name": "Danica Aba",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 96,
+          "course_code": "TMC123",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 99,
+          "course_code": "TMC123",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 100,
+          "course_code": "TMC123",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 101,
+          "course_code": "TMFL2",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 71,
+      "faculty_name": "Daryl Jakosalem",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 77,
+          "course_code": "SS 121",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 69,
+      "faculty_name": "Dave Filipinas",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 72,
+      "faculty_name": "Edison Bernaldez",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 76,
+          "course_code": "SS 123",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 78,
+      "faculty_name": "Edison Molina",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 72,
+          "course_code": "PHYSICS121",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 75,
+          "course_code": "PHYSICS121",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 73,
+      "faculty_name": "Eirene Canlom",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 103,
+          "course_code": "P221",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 106,
+          "course_code": "P221",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 79,
+      "faculty_name": "Elioena Resma",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 101,
+          "course_code": "TMBME2 NEW",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 80,
+      "faculty_name": "Elmer Namoc",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 74,
+      "faculty_name": "Erlyn Dag-uman",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 75,
+      "faculty_name": "Ester Generale",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 104,
+          "course_code": "ER328",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 107,
+          "course_code": "ER328",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 108,
+          "course_code": "ER328",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 77,
+      "faculty_name": "Eunice Manalo",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 76,
+      "faculty_name": "Evelyn Lumaday",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 83,
+      "faculty_name": "Felmark Levara",
+      "total_units": 15.0,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 0,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 77,
+          "course_code": "SS 122",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 122,
+          "course_code": "SPCOR3 NEW",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 123,
+          "course_code": "SPCOR3 NEW",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 130,
+          "course_code": "SPCOR3 NEW",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 133,
+          "course_code": "SPCOR3 NEW",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 84,
+      "faculty_name": "Flonie Romulo",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 58,
+          "course_code": "IT 321",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 59,
+          "course_code": "IT 321",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 60,
+          "course_code": "IT 321",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 62,
+          "course_code": "IT 321",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 89,
+          "course_code": "IS321",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 90,
+          "course_code": "IS321",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 81,
+      "faculty_name": "Florie Fermil",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 82,
+      "faculty_name": "Frincess Cajano",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 104,
+          "course_code": "RR324",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 107,
+          "course_code": "RR324",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 108,
+          "course_code": "RR324",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 91,
+      "faculty_name": "Gerry Gallano",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 94,
+      "faculty_name": "Gertrude Tampus",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 81,
+          "course_code": "IS 121",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 82,
+          "course_code": "IS 121",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 83,
+          "course_code": "IS 121",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 86,
+          "course_code": "IS 121",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 87,
+      "faculty_name": "Girley Gumanao",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 73,
+          "course_code": "MBELEC3",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 90,
+      "faculty_name": "Gladys Bacsa",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 97,
+          "course_code": "TMC225",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 97,
+          "course_code": "TMC226",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 102,
+          "course_code": "TMC225",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 102,
+          "course_code": "TMC226",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 92,
+      "faculty_name": "Glecy Cabasa",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 85,
+      "faculty_name": "Glenna Apostol",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 111,
+          "course_code": "SS113",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 112,
+          "course_code": "SS113",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 113,
+          "course_code": "SS113",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 89,
+      "faculty_name": "Glenne Lagura",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 124,
+          "course_code": "PARES2",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 125,
+          "course_code": "PARES2",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 131,
+          "course_code": "PARES2",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 134,
+          "course_code": "PARES2",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 86,
+      "faculty_name": "Grace Guanzon",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 65,
+          "course_code": "FISH224",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 69,
+          "course_code": "FISH224",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 70,
+          "course_code": "FISH328",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 71,
+          "course_code": "FISH328",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 88,
+      "faculty_name": "Gregg Galgo",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 93,
+      "faculty_name": "Gretchen Olivar",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 84,
+          "course_code": "IS222",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 85,
+          "course_code": "IS222",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 87,
+          "course_code": "IS222",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 88,
+          "course_code": "IS222",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 89,
+          "course_code": "ISSPEC5",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 90,
+          "course_code": "ISSPEC5",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 247,
+      "faculty_name": "Gretchen Olivar",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 95,
+      "faculty_name": "Hana Dacua",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 98,
+      "faculty_name": "Hannah Lolong",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 56,
+          "course_code": "IT 221",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 57,
+          "course_code": "IT 221",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 58,
+          "course_code": "IT 324",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 59,
+          "course_code": "IT 324",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 60,
+          "course_code": "IT 323",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 60,
+          "course_code": "IT 324",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 99,
+      "faculty_name": "Hannah Pamilgan",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 151,
+          "course_code": "MATH321",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 97,
+      "faculty_name": "Hariza Magallon",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 96,
+      "faculty_name": "Hazel Gameng",
+      "total_units": 15.0,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 0,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 89,
+          "course_code": "ISELEC3",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 90,
+          "course_code": "ISELEC3",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 91,
+          "course_code": "ISELEC3",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 92,
+          "course_code": "ISELEC3",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 93,
+          "course_code": "ISELEC3",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 105,
+      "faculty_name": "Ian Delos Reyes",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 100,
+      "faculty_name": "Ian Padios",
+      "total_units": 15.0,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 0,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 89,
+          "course_code": "ISSPEC6",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 90,
+          "course_code": "ISSPEC6",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 91,
+          "course_code": "ISSPEC6",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 92,
+          "course_code": "ISSPEC6",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 93,
+          "course_code": "ISSPEC6",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 104,
+      "faculty_name": "Ian Somosot",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 157,
+          "course_code": "RES2T",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 157,
+          "course_code": "THE324",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 158,
+          "course_code": "RES2T",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 158,
+          "course_code": "THE324",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 103,
+      "faculty_name": "Iris Salmorin",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 116,
+          "course_code": "ST323",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 117,
+          "course_code": "ST323",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 118,
+          "course_code": "ST323",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 101,
+      "faculty_name": "Ivan Escaño III",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 102,
+      "faculty_name": "Ivy Lumangtad",
+      "total_units": 15.0,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 0,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 111,
+          "course_code": "ENTREP 124",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 112,
+          "course_code": "ENTREP 124",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 113,
+          "course_code": "ENTREP 124",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 114,
+          "course_code": "ST 221",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 115,
+          "course_code": "ST 221",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 123,
+      "faculty_name": "Janela Las Duce",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 105,
+          "course_code": "DRM 121",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 110,
+          "course_code": "DRM 121",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 133,
+      "faculty_name": "Janine Rulona",
+      "total_units": 9.33,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 1,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 141,
+          "course_code": "EDUC 322",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 142,
+          "course_code": "EDUC 322",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 146,
+          "course_code": "ENG 322 NEW",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 106,
+      "faculty_name": "Jay Esparcia",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 61,
+          "course_code": "IT 221",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 62,
+          "course_code": "IT 324",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 119,
+      "faculty_name": "Jay Gulanes",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 56,
+          "course_code": "IT 223",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 57,
+          "course_code": "IT 223",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 61,
+          "course_code": "IT 223",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 62,
+          "course_code": "IT 323",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 114,
+      "faculty_name": "Jean Centina",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 131,
+      "faculty_name": "Jeralyn Montaño",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 84,
+          "course_code": "ISELEC1",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 85,
+          "course_code": "ISELEC1",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 87,
+          "course_code": "ISELEC1",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 88,
+          "course_code": "ISELEC1",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 89,
+          "course_code": "ISSPEC4",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 90,
+          "course_code": "ISSPEC4",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 108,
+      "faculty_name": "Jeremy Barnido",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 113,
+      "faculty_name": "Jerico Catipay",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 80,
+          "course_code": "PHYS 221",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 141,
+          "course_code": "SCI321",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 142,
+          "course_code": "SCI321",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 124,
+      "faculty_name": "Jerome Llevado",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 140,
+      "faculty_name": "Jerson Viagedor",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 52,
+          "course_code": "IT 121",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 53,
+          "course_code": "IT 121",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 54,
+          "course_code": "IT 121",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 55,
+          "course_code": "IT 121",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 153,
+          "course_code": "TLE 121",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 156,
+          "course_code": "TLE 121",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 126,
+      "faculty_name": "Jeruel Luminarias",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 109,
+      "faculty_name": "Jesebel Besas",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 78,
+          "course_code": "FT RES 1",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 111,
+      "faculty_name": "Jetro Bulawan",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 116,
+          "course_code": "ENTREP 3213",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 117,
+          "course_code": "ENTREP 3213",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 118,
+          "course_code": "ENTREP 3213",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 120,
+      "faculty_name": "Jezreyll Cabasag",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 163,
+          "course_code": "MA221",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 164,
+          "course_code": "COMM322",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 164,
+          "course_code": "COMM323",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 134,
+      "faculty_name": "Jhun Vistal",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 103,
+          "course_code": "P225",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 103,
+          "course_code": "PM228",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 106,
+          "course_code": "P225",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 106,
+          "course_code": "PM228",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 136,
+      "faculty_name": "Jineva Sucnaan",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 112,
+      "faculty_name": "Joan Alipoyo",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 72,
+          "course_code": "MB 121",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 75,
+          "course_code": "MB 121",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 117,
+      "faculty_name": "Joanaros Fahit",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 118,
+      "faculty_name": "Joannie Consarva",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 103,
+          "course_code": "PM227",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 106,
+          "course_code": "PM227",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 116,
+      "faculty_name": "Jocelyn Dayot",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 121,
+      "faculty_name": "John Dela Cruz",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 125,
+      "faculty_name": "John Mercaral",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 81,
+          "course_code": "IS 122",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 82,
+          "course_code": "IS 122",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 83,
+          "course_code": "IS 122",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 86,
+          "course_code": "IS 122",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 115,
+      "faculty_name": "John Saligan",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 114,
+          "course_code": "ELEC 222",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 115,
+          "course_code": "ELEC 222",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 132,
+      "faculty_name": "John Teman",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 129,
+      "faculty_name": "Jonalyn Mamoso",
+      "total_units": 15.0,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 0,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 154,
+          "course_code": "THE222",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 155,
+          "course_code": "THE222",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 157,
+          "course_code": "THE323",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 158,
+          "course_code": "THE323",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 159,
+          "course_code": "THE222",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 128,
+      "faculty_name": "Jonette Mahinay",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 76,
+          "course_code": "AH GEELECT3",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 138,
+      "faculty_name": "Jonilyn Dabalos",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 130,
+      "faculty_name": "Joshua Ascaño",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 135,
+      "faculty_name": "Josiedel Santamaria",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 107,
+      "faculty_name": "Jovanne Alejandrino",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 110,
+      "faculty_name": "Jovito Bolacoy",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 56,
+          "course_code": "ITSPEC1",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 57,
+          "course_code": "ITSPEC1",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 61,
+          "course_code": "ITSPEC1",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 84,
+          "course_code": "ISSPEC1",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 85,
+          "course_code": "ISSPEC1",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 87,
+          "course_code": "ISSPEC1",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 127,
+      "faculty_name": "Jude Magdayao",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 137,
+      "faculty_name": "Julie Tadle",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 84,
+          "course_code": "IS221",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 85,
+          "course_code": "IS221",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 87,
+          "course_code": "IS221",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 88,
+          "course_code": "IS221",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 139,
+      "faculty_name": "Jumar Buladaco",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 122,
+      "faculty_name": "Junry Lanoy",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 145,
+      "faculty_name": "Kara Dupay",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 150,
+      "faculty_name": "Karl Amper",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 143,
+          "course_code": "ENG121",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 141,
+      "faculty_name": "Karla Gumanao",
+      "total_units": 15.0,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 0,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 97,
+          "course_code": "TM223",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 102,
+          "course_code": "TM223",
+          "program_id": 139,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 116,
+          "course_code": "ST324",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 117,
+          "course_code": "ST324",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 118,
+          "course_code": "ST324",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 151,
+      "faculty_name": "Keenly Pasion",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 143,
+      "faculty_name": "Kim Dodongan",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 147,
+          "course_code": "MATH 122",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 149,
+          "course_code": "MATH 122",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 150,
+          "course_code": "Math 221",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 144,
+      "faculty_name": "Kim Drajido",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 146,
+      "faculty_name": "Kim Roca",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 142,
+      "faculty_name": "Kimberly Solano",
+      "total_units": 15.0,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 0,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 153,
+          "course_code": "EDUC 121",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 154,
+          "course_code": "THE221",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 155,
+          "course_code": "THE221",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 156,
+          "course_code": "EDUC 121",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 159,
+          "course_code": "THE221",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 152,
+      "faculty_name": "Kimberly Sulla",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 162,
+          "course_code": "Comm 121",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 163,
+          "course_code": "COMM222",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 166,
+          "course_code": "Comm 121",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 149,
+      "faculty_name": "Kres-Ann Oclarit",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 148,
+      "faculty_name": "Krillette Mahinay",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 76,
+          "course_code": "SCIENCE200",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 147,
+      "faculty_name": "Kristine Gumanao",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 73,
+          "course_code": "MB321",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 76,
+          "course_code": "MB221",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 160,
+      "faculty_name": "Lady Nalzaro",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 153,
+      "faculty_name": "Lanie Gerodias-Albert",
+      "total_units": 15.67,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 2,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 65,
+          "course_code": "FISH225",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 65,
+          "course_code": "FISH226",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 69,
+          "course_code": "FISH225",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 69,
+          "course_code": "FISH226",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 70,
+          "course_code": "FISH327",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 158,
+      "faculty_name": "Lea Legarda",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 156,
+      "faculty_name": "Leizel Esprela",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 80,
+          "course_code": "STAT 221",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 161,
+      "faculty_name": "Leonida Piorac",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 162,
+      "faculty_name": "Lib Mapansa",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 151,
+          "course_code": "MATH323",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 151,
+          "course_code": "MATH324",
+          "program_id": 146,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 154,
+      "faculty_name": "Libh Limama",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 122,
+          "course_code": "PA226",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 123,
+          "course_code": "PA226",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 130,
+          "course_code": "PA226",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 133,
+          "course_code": "PA226",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 159,
+      "faculty_name": "Lord Mondigo",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 70,
+          "course_code": "FISHRES1",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 71,
+          "course_code": "FISHRES1",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 155,
+      "faculty_name": "Louie Bersano",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 64,
+          "course_code": "Fish 122",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 67,
+          "course_code": "Fish 122",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 157,
+      "faculty_name": "Louray Bereber",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 103,
+          "course_code": "P224",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 105,
+          "course_code": "DRM 122",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 106,
+          "course_code": "P224",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 110,
+          "course_code": "DRM 122",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 164,
+      "faculty_name": "Maiko Anicoy",
+      "total_units": 3.33,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 1,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 146,
+          "course_code": "EDUC 321A",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 175,
+      "faculty_name": "Manuel Jarabe Jr.",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 179,
+      "faculty_name": "Marcel Dagohoy",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 122,
+          "course_code": "PA224",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 123,
+          "course_code": "PA224",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 130,
+          "course_code": "PA224",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 133,
+          "course_code": "PA224",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 183,
+      "faculty_name": "Maria Kasuyo",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 103,
+          "course_code": "P223",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 106,
+          "course_code": "P223",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 178,
+      "faculty_name": "Maria Umbrosa",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 144,
+          "course_code": "LIT 222",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 170,
+      "faculty_name": "Marjun Dawal",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 168,
+      "faculty_name": "Mark Bangcaya",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 58,
+          "course_code": "IT 322",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 59,
+          "course_code": "IT 322",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 60,
+          "course_code": "IT 322",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 62,
+          "course_code": "IT 322",
+          "program_id": 137,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 184,
+      "faculty_name": "Mark Buladaco",
+      "total_units": 12.0,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 0,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 84,
+          "course_code": "IS223",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 85,
+          "course_code": "IS223",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 87,
+          "course_code": "IS223",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 88,
+          "course_code": "IS223",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 173,
+      "faculty_name": "Mary Cuda",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 182,
+      "faculty_name": "Mary Fuentes",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 176,
+      "faculty_name": "Mary Ilagan",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 181,
+      "faculty_name": "Mary Pesania",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 137,
+          "course_code": "Sci 121",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 139,
+          "course_code": "Sci 121",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 165,
+      "faculty_name": "Maybelyn Arcenio",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 103,
+          "course_code": "P222",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 106,
+          "course_code": "P222",
+          "program_id": 140,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 180,
+      "faculty_name": "Mayka Dumagil",
+      "total_units": 6.67,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 2,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 65,
+          "course_code": "PE4 BSFAS",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 69,
+          "course_code": "PE4 BSFAS",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 169,
+      "faculty_name": "Melissa Dalumay",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 163,
+      "faculty_name": "Michael Andam",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 172,
+      "faculty_name": "Michael Gatchalian",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 166,
+      "faculty_name": "Michael Sameon",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 171,
+      "faculty_name": "Michel Esmalla",
+      "total_units": 13.33,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 4,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 141,
+          "course_code": "SCI323",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 141,
+          "course_code": "EDUC323",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 142,
+          "course_code": "SCI323",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 142,
+          "course_code": "EDUC323",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 167,
+      "faculty_name": "Mico Novecio",
+      "total_units": 3.33,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 1,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 146,
+          "course_code": "ENG 324 NEW",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 174,
+      "faculty_name": "Moses Albarico",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 72,
+          "course_code": "Chem 100",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 75,
+          "course_code": "Chem 100",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 177,
+      "faculty_name": "Myrelle Olita",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 190,
+      "faculty_name": "Nancy Raiz",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 189,
+      "faculty_name": "Nelma Loja",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 88,
+          "course_code": "ISSPEC1",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 191,
+      "faculty_name": "Nenito Toledo",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 78,
+          "course_code": "FT 324",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 185,
+      "faculty_name": "Nezel Bantayan",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 188,
+      "faculty_name": "Nino Helorentino",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 186,
+      "faculty_name": "NiÑo Fabia",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 187,
+      "faculty_name": "Nolie Guadalquiver",
+      "total_units": 15.33,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 1,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 154,
+          "course_code": "EDUC 221B",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 154,
+          "course_code": "EDUC 222B",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 155,
+          "course_code": "EDUC 221B",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 155,
+          "course_code": "EDUC 222B",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 157,
+          "course_code": "EDUC 321B",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 195,
+      "faculty_name": "Paquito Relox",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 78,
+          "course_code": "FT 321",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 80,
+          "course_code": "FT 221",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 194,
+      "faculty_name": "Philip Paja",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 89,
+          "course_code": "IS323",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 89,
+          "course_code": "IS322",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 90,
+          "course_code": "IS323",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 90,
+          "course_code": "IS322",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 91,
+          "course_code": "IS323",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 91,
+          "course_code": "IS322",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 193,
+      "faculty_name": "Phrencess Jumamoy",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 192,
+      "faculty_name": "Princess Driz",
+      "total_units": 3.33,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 1,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 146,
+          "course_code": "ENG 325 NEW",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 196,
+      "faculty_name": "Queen Gado",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 198,
+      "faculty_name": "Rachel Ramos",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 205,
+      "faculty_name": "Rafael Dela Peña",
+      "total_units": 15.0,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 0,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 91,
+          "course_code": "ISSPEC5",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 92,
+          "course_code": "IS322",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 92,
+          "course_code": "ISSPEC5",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 93,
+          "course_code": "IS322",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 93,
+          "course_code": "ISSPEC5",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 211,
+      "faculty_name": "Raquel Ladday",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 203,
+      "faculty_name": "Ray Gumapit",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 199,
+      "faculty_name": "Razul Arboneda",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 202,
+      "faculty_name": "Reban Fajardo",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 217,
+      "faculty_name": "Regine Dayagro",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 210,
+      "faculty_name": "Renel Jugarap",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 140,
+          "course_code": "SCI222",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 219,
+      "faculty_name": "Resty Perote",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 77,
+          "course_code": "CHM 121",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 80,
+          "course_code": "CHM 221",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 222,
+      "faculty_name": "Revrev Tio",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 208,
+      "faculty_name": "Rey Rebucas",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 144,
+          "course_code": "EDUC 221A",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 213,
+      "faculty_name": "Reymart Mancao",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 220,
+      "faculty_name": "Rezelle Sobradil",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 209,
+      "faculty_name": "Ria Tabinas",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 77,
+          "course_code": "FT 121",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 206,
+      "faculty_name": "Rizalyn Duran",
+      "total_units": 9.67,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 2,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 140,
+          "course_code": "EDUC 222A",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 141,
+          "course_code": "SCI324",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 142,
+          "course_code": "SCI324",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 214,
+      "faculty_name": "Roanne Anunciado",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 91,
+          "course_code": "IS321",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 92,
+          "course_code": "IS321",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 93,
+          "course_code": "IS321",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 197,
+      "faculty_name": "Roben Adjadan",
+      "total_units": 15.33,
+      "total_lecture_hours": 15,
+      "total_lab_hours": 1,
+      "number_of_classes": 5,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 153,
+          "course_code": "TLE 122",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 154,
+          "course_code": "TLE221",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 155,
+          "course_code": "TLE221",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 156,
+          "course_code": "TLE 122",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 157,
+          "course_code": "THE321",
+          "program_id": 148,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 221,
+      "faculty_name": "Rodrigo Sumuob",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 215,
+      "faculty_name": "Rogelio Masangkay",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 201,
+      "faculty_name": "Rolando Bansag Jr",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 207,
+      "faculty_name": "Romallie Galleto",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 124,
+          "course_code": "PA3210",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 124,
+          "course_code": "PA3213",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 125,
+          "course_code": "PA3210",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 125,
+          "course_code": "PA3213",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 131,
+          "course_code": "PA3210",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 131,
+          "course_code": "PA3213",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 204,
+      "faculty_name": "Ronald Decano",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 72,
+          "course_code": "Math",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 75,
+          "course_code": "Math",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 218,
+      "faculty_name": "Rosebud Padios",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 212,
+      "faculty_name": "Rosie Tejada",
+      "total_units": 9.33,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 1,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 70,
+          "course_code": "BIO323",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 71,
+          "course_code": "BIO323",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 73,
+          "course_code": "MBRES1",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 216,
+      "faculty_name": "Rozel Asna",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 73,
+          "course_code": "SS 113",
+          "program_id": 135,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 200,
+      "faculty_name": "Ryan Balolot",
+      "total_units": 3.0,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 0,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 144,
+          "course_code": "TTL 2E",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 225,
+      "faculty_name": "SABAR HASAN",
+      "total_units": 6.67,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 2,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 141,
+          "course_code": "SCI322",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 142,
+          "course_code": "SCI322",
+          "program_id": 144,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 229,
+      "faculty_name": "Sadie Law-ay",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 230,
+      "faculty_name": "Saimehen Iluis",
+      "total_units": 12.67,
+      "total_lecture_hours": 12,
+      "total_lab_hours": 2,
+      "number_of_classes": 4,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 163,
+          "course_code": "COMM221",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 163,
+          "course_code": "COMM223",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 164,
+          "course_code": "COMM324",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 164,
+          "course_code": "TSD321",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 238,
+      "faculty_name": "Samsel Pampilon",
+      "total_units": 6.33,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 1,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 144,
+          "course_code": "ENG 221 NEW",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 146,
+          "course_code": "RES 2E",
+          "program_id": 145,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 237,
+      "faculty_name": "Samuel Plando",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 231,
+      "faculty_name": "Sancho Macalisang",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 233,
+      "faculty_name": "Sarah Dimaocor",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 232,
+      "faculty_name": "Shaira Manos",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 223,
+      "faculty_name": "Sharmaine Cabugwason",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 114,
+          "course_code": "ST 222",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 115,
+          "course_code": "ST 222",
+          "program_id": 141,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 227,
+      "faculty_name": "Sharyl Alo",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 239,
+      "faculty_name": "Sherwin Sarania",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 228,
+      "faculty_name": "Sigfred Jorge",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 234,
+      "faculty_name": "Sigfred Navasquez",
+      "total_units": 3.33,
+      "total_lecture_hours": 3,
+      "total_lab_hours": 1,
+      "number_of_classes": 1,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 164,
+          "course_code": "COMM325",
+          "program_id": 147,
+          "institute_id": 66,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 226,
+      "faculty_name": "Sofia Huesca",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 240,
+      "faculty_name": "Sol Sotomil",
+      "total_units": 6.67,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 2,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 70,
+          "course_code": "FISHELECT 5",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        },
+        {
+          "class_id": 71,
+          "course_code": "FISHELECT 5",
+          "program_id": 134,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 1,
+          "units_load": 3.33
+        }
+      ]
+    },
+    {
+      "faculty_id": 235,
+      "faculty_name": "Stacey Monta",
+      "total_units": 9.0,
+      "total_lecture_hours": 9,
+      "total_lab_hours": 0,
+      "number_of_classes": 3,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 91,
+          "course_code": "ISSPEC4",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 92,
+          "course_code": "ISSPEC4",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 93,
+          "course_code": "ISSPEC4",
+          "program_id": 138,
+          "institute_id": 64,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 224,
+      "faculty_name": "Sunshine Enaguas",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 236,
+      "faculty_name": "Syndell Palle",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 241,
+      "faculty_name": "Troy Ancho",
+      "total_units": 18.0,
+      "total_lecture_hours": 18,
+      "total_lab_hours": 0,
+      "number_of_classes": 6,
+      "load_status": "FULL",
+      "assigned_classes": [
+        {
+          "class_id": 122,
+          "course_code": "PA225",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 123,
+          "course_code": "PA225",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 124,
+          "course_code": "PA3211",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 124,
+          "course_code": "SPCOR5",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 125,
+          "course_code": "PA3211",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 125,
+          "course_code": "SPCOR5",
+          "program_id": 142,
+          "institute_id": 65,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 242,
+      "faculty_name": "Vanesa Cabasan",
+      "total_units": 6.0,
+      "total_lecture_hours": 6,
+      "total_lab_hours": 0,
+      "number_of_classes": 2,
+      "load_status": "PARTIAL",
+      "assigned_classes": [
+        {
+          "class_id": 78,
+          "course_code": "FT 322",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        },
+        {
+          "class_id": 78,
+          "course_code": "FT 323",
+          "program_id": 136,
+          "institute_id": 63,
+          "lecture_hours": 3,
+          "lab_hours": 0,
+          "units_load": 3.0
+        }
+      ]
+    },
+    {
+      "faculty_id": 243,
+      "faculty_name": "Vanessa Fu",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 244,
+      "faculty_name": "Vhonevie Paquit",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 245,
+      "faculty_name": "Walter Horcerada",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    },
+    {
+      "faculty_id": 246,
+      "faculty_name": "Welvin Orantes",
+      "total_units": 0,
+      "total_lecture_hours": 0,
+      "total_lab_hours": 0,
+      "number_of_classes": 0,
+      "load_status": "NONE",
+      "assigned_classes": []
+    }
+  ]
+}

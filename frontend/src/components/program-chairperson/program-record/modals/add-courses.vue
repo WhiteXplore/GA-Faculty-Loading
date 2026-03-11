@@ -209,7 +209,7 @@
           <!-- Buttons -->
           <div class="flex justify-end gap-2 mt-4">
             <button
-              class="bg-red-600 p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-red-800 hover:text-red-800"
+              class="bg-gray-100 text-gray-600 p-2 px-3 rounded-lg hover:bg-white border hover:border-gray-800 hover:text-gray-800"
               @click="$emit('close')"
             >
               Cancel
@@ -218,7 +218,7 @@
               class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800"
               type="submit"
             >
-              {{ isEdit ? "Update" : "Submit" }}
+              {{ isEdit ? "Save Changes" : "Submit" }}
             </button>
           </div>
         </div>
@@ -287,7 +287,7 @@ export default {
       if (!this.searchCurriculumQuery) return this.curriculums;
       const q = this.searchCurriculumQuery.toLowerCase();
       return this.curriculums.filter((c) =>
-        c.curriculum_name?.toLowerCase().includes(q)
+        c.curriculum_name?.toLowerCase().includes(q),
       );
     },
     filteredCourse() {
@@ -296,13 +296,14 @@ export default {
         (course) =>
           (course.course_code?.toLowerCase().includes(q) ||
             course.course_description?.toLowerCase().includes(q)) &&
-          this.form.curriculum_id === course.curriculum_id
+          this.form.curriculum_id === course.curriculum_id,
       );
     },
     filteredTags() {
       const q = this.searchTagQuery.toLowerCase();
       return this.availableTags.filter(
-        (t) => t.toLowerCase().includes(q) && !this.form.course_tags.includes(t)
+        (t) =>
+          t.toLowerCase().includes(q) && !this.form.course_tags.includes(t),
       );
     },
   },
@@ -321,7 +322,7 @@ export default {
     },
     removeRequisite(code) {
       this.form.course_requisite = this.form.course_requisite.filter(
-        (c) => c !== code
+        (c) => c !== code,
       );
     },
     selectTag(tag) {
@@ -342,16 +343,17 @@ export default {
 
         if (this.isEdit) {
           // EDIT
-          await axios.put(
-            `http://localhost:8000/courses/update-course/${this.courseData.course_id}`,
-            payload
+          await axios.patch(
+            process.env.VUE_APP_API_BASE_URL +
+              `/courses/update-course/${this.courseData.course_id}`,
+            payload,
           );
           toast.success("Course updated successfully!");
         } else {
           // ADD
           await axios.post(
-            "http://localhost:8000/courses/add-courses",
-            payload
+            process.env.VUE_APP_API_BASE_URL + "/courses/add-courses",
+            payload,
           );
           toast.success("Course added successfully!");
         }
@@ -360,13 +362,13 @@ export default {
         this.$emit("close");
 
         const audio = new Audio(
-          require(`@/assets/${this.isEdit ? "update.mp3" : "add.mp3"}`)
+          require(`@/assets/${this.isEdit ? "update.mp3" : "add.mp3"}`),
         );
         audio.play();
       } catch (err) {
         console.error(err);
         toast.error(
-          this.isEdit ? "Failed to update course." : "Failed to add course."
+          this.isEdit ? "Failed to update course." : "Failed to add course.",
         );
       }
     },

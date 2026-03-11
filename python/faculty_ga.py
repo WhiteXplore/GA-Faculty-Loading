@@ -10,6 +10,7 @@ CHANGES: scheduling now *prioritizes faculty_expertise* strictly:
  - All assignments (lecture or lab) only consider faculty listed in faculty_expertise for that course.
  - When multiple eligible faculty exist, the algorithm picks the one with the LOWEST projected load (ties broken randomly).
  - No fallback to non-expert faculty.
+ - Only courses matching selected year/semester or year=0/semester=0 are used.
 """
 
 import random
@@ -21,7 +22,7 @@ from sqlalchemy import create_engine, Table, MetaData, select
 # MySQL Connection (adjust creds/host/db as needed)
 # =========================
 DB_USER = "root"
-DB_PASS = "admin12345.."
+DB_PASS = "root"
 DB_HOST = "127.0.0.2"
 DB_PORT = 3306
 DB_NAME = "dnsc_class_scheduler"
@@ -37,7 +38,6 @@ metadata = MetaData()
 # CONFIGURATION
 # =========================
 DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-# integer hour markers (12 => lunchtime gap)
 TIME_SLOTS = [8, 9, 10, 11, 13, 14, 15, 16, 17]
 POPULATION_SIZE = 50
 GENERATIONS = 200
@@ -55,6 +55,8 @@ faculty_expertise_table = Table(
 courses_table = Table("course_view", metadata, autoload_with=engine)
 assigned_set_courses_table = Table(
     "assigned_set_courses", metadata, autoload_with=engine)
+selected_year_sem_table = Table(
+    "selected_year_sem", metadata, autoload_with=engine)
 
 
 def fetch_table_data(table):
@@ -71,9 +73,21 @@ faculty = fetch_table_data(faculty_table)
 faculty_expertise = fetch_table_data(faculty_expertise_table)
 courses = fetch_table_data(courses_table)
 assigned_set_courses = fetch_table_data(assigned_set_courses_table)
+selected_year_sem = fetch_table_data(selected_year_sem_table)
 
 # =========================
-# ROOMS (local/static for now)
+# PICK CURRENT YEAR/SEM
+# =========================
+if selected_year_sem:
+    current_year_sem = selected_year_sem[-1]  # latest selection
+    selected_year = current_year_sem.get("year")
+    selected_semester = current_year_sem.get("semester")
+else:
+    selected_year = None
+    selected_semester = None
+
+# =========================
+# ROOMS (local/static)
 # =========================
 rooms = [
     {"room_id": 1, "room_name": "IC Room 101",
@@ -87,48 +101,38 @@ rooms = [
     {"room_id": 5, "room_name": "IC Room 104",
         "room_category": "Lecture", "institute_id": 1},
     {"room_id": 6, "room_name": "ITED BACCOM LECTURE 101",
-     "room_category": "Lecture", "institute_id": 3},
+        "room_category": "Lecture", "institute_id": 3},
 ]
+
+# =========================
+# HELPER DATA STRUCTURES
+# =========================
+faculty_completed_sets = {f["faculty_id"]: {} for f in faculty}
+FACULTY_MAX_COURSES_PER_SET = 2
+faculty_set_course_count = {f["faculty_id"]: {} for f in faculty}
 
 # =========================
 # HELPER FUNCTIONS
 # =========================
-faculty_completed_sets = {f["faculty_id"]: {} for f in faculty}
-
-FACULTY_MAX_COURSES_PER_SET = 2  # max courses a faculty can take per set
-faculty_set_course_count = {f["faculty_id"]: {}
-                            for f in faculty}  # {faculty_id: {set_name: count}}
 
 
 def can_assign_faculty_to_course(faculty_id, set_name):
-    """Return True if faculty can take a course in this set (all previous sets completed AND per-set course limit)."""
     completed_sets = faculty_completed_sets.get(faculty_id, {})
     for prev_set, completed in completed_sets.items():
         if not completed:
             return False
-
-    # check per-set course limit
     set_counts = faculty_set_course_count.get(faculty_id, {})
     if set_counts.get(set_name, 0) >= FACULTY_MAX_COURSES_PER_SET:
         return False
-
     return True
 
 
 def faculty_load_summary(schedule):
-    """
-    Returns dict: {faculty_id: total_units}
-    """
     load = calculate_faculty_load(schedule)
     return {fid: round(units, 2) for fid, units in load.items()}
 
 
 def calculate_faculty_load(schedule):
-    """
-    Calculate faculty load in units:
-      - Lecture blocks: add (end_hour - start_hour) hours
-      - Laboratory 1-hour block: add 1/3 unit (per 1-hour lab block)
-    """
     load = {}
     for blk in schedule:
         fid = blk.get("faculty_id")
@@ -139,16 +143,11 @@ def calculate_faculty_load(schedule):
                 "start_hour", 0)) - blk.get("start_hour", 0))
             load[fid] = load.get(fid, 0) + hours
         elif blk.get("type") == "Laboratory":
-            # labs are stored as 1-hour blocks; each lab hour counts as 1/3
             load[fid] = load.get(fid, 0) + (1 / 3)
     return load
 
 
 def check_availability(schedule, day, start_hour, end_hour, faculty_id=None, room_id=None, other_schedule=None):
-    """
-    Check if faculty or room is free between start_hour and end_hour on given day.
-    Overlap detection: two blocks overlap if not (A.end <= B.start or A.start >= B.end).
-    """
     if other_schedule is None:
         other_schedule = []
     for block in (schedule or []) + (other_schedule or []):
@@ -158,7 +157,6 @@ def check_availability(schedule, day, start_hour, end_hour, faculty_id=None, roo
         b_end = block.get("end_hour")
         if b_start is None or b_end is None:
             continue
-        # check overlap
         if not (end_hour <= b_start or start_hour >= b_end):
             if faculty_id is not None and block.get("faculty_id") == faculty_id:
                 return False
@@ -168,17 +166,24 @@ def check_availability(schedule, day, start_hour, end_hour, faculty_id=None, roo
 
 
 def get_courses_for_set(set_name):
-    course_ids = [a["course_id"]
-                  for a in assigned_set_courses if a.get("set") == set_name]
+    filtered_assignments = [
+        a for a in assigned_set_courses
+        if a.get("set") == set_name
+        and ((a.get("year") == selected_year and a.get("semester") == selected_semester)
+             or (a.get("year") == 0 and a.get("semester") == 0))
+    ]
+    course_ids = [a["course_id"] for a in filtered_assignments]
     return [c for c in courses if c.get("course_id") in course_ids]
 
 
 def faculty_ids_for_course(course_id):
-    """
-    Return faculty IDs from faculty_expertise for this course only.
-    This ensures we *only* consider expert faculty.
-    """
     return [ue["faculty_id"] for ue in faculty_expertise if ue.get("course_id") == course_id]
+
+
+def mark_set_completed(faculty_id, set_name):
+    if faculty_id not in faculty_completed_sets:
+        faculty_completed_sets[faculty_id] = {}
+    faculty_completed_sets[faculty_id][set_name] = True
 
 
 def pick_conflict_free_faculty(schedule, day, start_hour, end_hour, eligible_faculty_ids, other_schedule=None, faculty_load=None, block_type="Lecture", set_name=None):
@@ -417,14 +422,6 @@ def place_single_hour(schedule, existing_schedule, faculty_load, set_name, cours
             return True
     return False
 
-
-# =========================
-# After placing all course units, mark set as completed
-# =========================
-def mark_set_completed(faculty_id, set_name):
-    if faculty_id not in faculty_completed_sets:
-        faculty_completed_sets[faculty_id] = {}
-    faculty_completed_sets[faculty_id][set_name] = True
 
 # =========================
 # Inside create_individual: update after scheduling each course
@@ -687,14 +684,32 @@ def schedule_to_object(schedule, faculty_list, room_list):
 # =========================
 if __name__ == "__main__":
     random.seed()
-    all_sets = sorted(set(a.get("set") for a in assigned_set_courses))
-    all_schedules = {}
-
-    # ← Add these here, before looping over sets
-    faculty_completed_sets = {f["faculty_id"]: {} for f in faculty}
     accumulated_blocks = []
 
-    # Main loop over sets
+    # Ensure selected_year and selected_semester are ints
+    if selected_year is not None and selected_semester is not None:
+        selected_year = int(selected_year)
+        selected_semester = int(selected_semester)
+    else:
+        print("No selected year/semester found in DB!")
+        exit(1)
+
+    print(f"Selected year/semester: {selected_year} {selected_semester}")
+
+    # Only include sets that have courses for selected year/semester or year=0/semester=0
+    all_sets = sorted(set(
+        a.get("set") for a in assigned_set_courses
+        if ((int(a.get("year")) == selected_year and int(a.get("semester")) == selected_semester)
+            or (int(a.get("year")) == 0 and int(a.get("semester")) == 0))
+    ))
+
+    print(f"Sets to schedule: {all_sets}")
+
+    if not all_sets:
+        print("No sets found for the selected year/semester. Exiting.")
+        exit(0)
+
+    all_schedules = {}
     for s in all_sets:
         print(
             f"Generating schedule for set: {s} (considering {len(accumulated_blocks)} accumulated blocks)")
@@ -706,7 +721,7 @@ if __name__ == "__main__":
         obj = schedule_to_object(best_schedule, faculty, rooms)
         all_schedules[s] = obj
 
-        # add placed blocks to accumulated_blocks for next sets
+        # accumulate blocks
         for blk in best_schedule:
             accumulated_blocks.append({
                 "course_id": blk.get("course_id"),
@@ -721,9 +736,8 @@ if __name__ == "__main__":
                 "program_id": blk.get("program_id"),
             })
 
-        # mark all faculty in this set as completed
+        # mark faculty completed sets
         for blk in best_schedule:
             mark_set_completed(blk["faculty_id"], s)
 
-    # print final schedules
     print(json.dumps(all_schedules, indent=2))

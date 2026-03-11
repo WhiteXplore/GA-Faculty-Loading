@@ -1,6 +1,6 @@
 <template>
   <div v-if="isTable" class=" ">
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / Exam Schedules
       </div>
@@ -44,7 +44,6 @@
               class="px-1 py-1 border rounded-md"
               @change="changePage(1)"
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
@@ -185,7 +184,7 @@
                   ' bg-defaultGreen text-white': currentPage === page,
                   'bg-gray-200 text-gray-700': currentPage !== page,
                 }"
-                class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+                class="px-3 py-1 rounded-md hover:bg-green-300"
               >
                 {{ page }}
               </button>
@@ -232,7 +231,7 @@ export default {
     filteredData() {
       const query = this.searchQuery.toLowerCase();
       return this.exam_schedule_data.filter((item) =>
-        `${item.instructor || ""}`.toLowerCase().includes(query)
+        `${item.instructor || ""}`.toLowerCase().includes(query),
       );
     },
     totalPages() {
@@ -252,7 +251,22 @@ export default {
       return end > this.filteredData.length ? this.filteredData.length : end;
     },
     pageNumbers() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      const total = this.totalPages;
+      if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
+
+      let start = this.currentPage - 1;
+      let end = this.currentPage + 1;
+
+      if (start < 1) {
+        start = 1;
+        end = 3;
+      }
+      if (end > total) {
+        end = total;
+        start = total - 2;
+      }
+
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
   },
   methods: {
@@ -289,7 +303,8 @@ export default {
     confirmDelete() {
       if (!this.recordToDelete) return;
       this.exam_schedule_data = this.exam_schedule_data.filter(
-        (item) => item.exam_schedule_id !== this.recordToDelete.exam_schedule_id
+        (item) =>
+          item.exam_schedule_id !== this.recordToDelete.exam_schedule_id,
       );
       this.recordToDelete = null;
       this.showDeleteModal = false;

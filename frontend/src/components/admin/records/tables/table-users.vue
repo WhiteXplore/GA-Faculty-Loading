@@ -1,21 +1,60 @@
 <template>
   <div v-if="isTable">
     <!-- Header -->
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / User Accounts
       </div>
 
-      <div
-        @click="toggleAdd"
-        class="flex items-center gap-2 px-4 py-2 border text-green-600 border-green-600 rounded-xl hover:bg-green-700 hover:shadow-lg cursor-pointer transition duration-200"
-      >
+      <div class="flex gap-2">
         <div
-          class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
+          @click="toggleImportExpertise"
+          class="flex items-center gap-2 px-3 py-2 border text-purple-600 border-purple-600 rounded-xl hover:bg-purple-700 hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
         >
-          <icon :name="'add-account1.1'" class="w-4 h-4" />
+          <div
+            class="p-1 bg-purple-500 bg-opacity-20 rounded-full flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+              />
+            </svg>
+          </div>
+          <span class="font-medium text-sm">Import Expertise</span>
         </div>
-        <span class="font-medium text-sm">Add Accounts</span>
+
+        <div
+          @click="toggleImport"
+          class="flex items-center gap-2 px-3 py-2 border text-blue-600 border-blue-600 rounded-xl hover:bg-blue-700 hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
+        >
+          <div
+            class="p-1 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center"
+          >
+            <icon :name="'uploads'" class="w-4 h-4" />
+          </div>
+          <span class="font-medium text-sm">Import Users</span>
+        </div>
+
+        <div
+          @click="toggleAdd"
+          class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
+        >
+          <div
+            class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
+          >
+            <icon :name="'add-account1.1'" class="w-4 h-4" />
+          </div>
+          <span class="font-medium text-sm">Add Accounts</span>
+        </div>
       </div>
     </div>
 
@@ -30,10 +69,9 @@
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md"
               @change="changePage(1)"
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
@@ -88,88 +126,106 @@
       </div>
 
       <!-- Data Table -->
-      <div class="w-full rounded-xl mt-1 overflow-hidden">
-        <div
-          class="overflow-y-auto transition-all duration-300"
-          :class="tableHeightClass"
-        >
-          <table
-            class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
+      <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+        <table class="min-w-full text-sm text-gray-700 border-collapse">
+          <thead
+            class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
           >
-            <thead
-              class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
+            <tr>
+              <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
+                ID
+              </th>
+              <th class="px-4 py-3 text-left font-normal">Name</th>
+
+              <th class="px-4 py-3 text-left font-normal">Institute</th>
+              <th class="px-4 py-3 text-left font-normal">Program</th>
+              <th class="px-4 py-3 text-left font-normal">Position</th>
+              <th class="px-4 py-3 text-left font-normal">Email</th>
+              <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(user, index) in paginatedData"
+              :key="user.id"
+              class="hover:bg-green-50 transition-all border-t"
             >
-              <tr>
-                <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
-                  ID
-                </th>
-                <th class="px-4 py-3 text-left font-normal">Name</th>
+              <td class="px-4 py-3 text-left">{{ startIndex + index }}</td>
+              <td class="px-4 py-3 text-left">
+                {{ user.first_name }} {{ user.last_name }}
+              </td>
 
-                <th class="px-4 py-3 text-left font-normal">Institute</th>
-                <th class="px-4 py-3 text-left font-normal">Program</th>
-                <th class="px-4 py-3 text-left font-normal">Position</th>
-                <th class="px-4 py-3 text-left font-normal">Email</th>
-                <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(user, index) in paginatedData"
-                :key="user.id"
-                class="bg-white hover:bg-green-50 transition-all border border-gray-200 rounded-md shadow-sm"
-              >
-                <td class="px-4 py-3 text-left">{{ startIndex + index }}</td>
-                <td class="px-4 py-3 text-left">
-                  {{ user.first_name }} {{ user.last_name }}
-                </td>
-
-                <td class="px-4 py-3 text-left">
-                  {{ getInstituteName(user.institute_id) }}
-                </td>
-                <td class="px-4 py-3 text-left">
-                  {{ getProgramName(user.program_id) }}
-                </td>
-                <td class="px-4 py-3 text-left">{{ user.role }}</td>
-                <td class="px-4 py-3 text-left">{{ user.email }}</td>
-                <td class="px-4 py-3 text-left">
-                  <div class="flex gap-2">
-                    <button
-                      class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1"
-                      @click="toggleEdit(user)"
+              <td class="px-4 py-3 text-left">
+                {{ getInstituteName(user.institute_id) }}
+              </td>
+              <td class="px-4 py-3 text-left">
+                {{ getProgramName(user.program_id) }}
+              </td>
+              <td class="px-4 py-3 text-left">{{ user.role }}</td>
+              <td class="px-4 py-3 text-left">{{ user.email }}</td>
+              <td class="px-4 py-3 text-left">
+                <div class="flex gap-2 flex-wrap">
+                  <button
+                    class="px-3 py-1 h-8 border border-purple-300 hover:bg-purple-200 text-purple-700 rounded-lg flex items-center gap-1 text-xs font-medium"
+                    @click="toggleViewExpertise(user)"
+                    title="View Expertise"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                     >
-                      <icon name="edit" /> Edit
-                    </button>
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
+                    </svg>
+                    View
+                  </button>
 
-                    <button
-                      class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-900 rounded-lg flex items-center gap-1"
-                      @click="toggleDelete(user)"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr v-if="paginatedData.length === 0">
-                <td colspan="7" class="text-center py-6 text-gray-400">
-                  No records found
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                  <button
+                    class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1 text-xs font-medium"
+                    @click="toggleEdit(user)"
+                  >
+                    <icon name="edit" /> Edit
+                  </button>
+
+                  <button
+                    class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-900 rounded-lg flex items-center gap-1 text-xs font-medium"
+                    @click="toggleDelete(user)"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr v-if="paginatedData.length === 0">
+              <td colspan="7" class="text-center py-6 text-gray-400">
+                No records found
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
-          <span>
-            Showing {{ startIndex }} to {{ endIndex }} of
-            {{ filteredData.length }} entries
-          </span>
+        <div class="text-gray-700 text-sm">
+          Showing {{ startIndex }} to {{ endIndex }} of
+          {{ filteredData.length }} entries
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-1 text-sm">
           <button
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
@@ -184,7 +240,7 @@
                 'bg-defaultGreen text-white': currentPage === page,
                 'bg-gray-200 text-gray-700': currentPage !== page,
               }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+              class="px-3 py-1 rounded-md hover:bg-green-300"
             >
               {{ page }}
             </button>
@@ -208,6 +264,21 @@
     :userData="selectedUser"
     @close="closeModal"
     @refresh="loadUsers"
+  />
+  <importUsers
+    v-if="showImportModal"
+    @close="closeImportModal"
+    @refresh="loadUsers"
+  />
+  <importExpertise
+    v-if="showImportExpertiseModal"
+    @close="closeImportExpertiseModal"
+    @refresh="loadUsers"
+  />
+  <viewUserExpertise
+    v-if="showViewExpertiseModal && selectedUserExpertise"
+    :userData="selectedUserExpertise"
+    @close="closeViewExpertiseModal"
   />
 
   <!-- Delete Confirmation Modal -->
@@ -257,6 +328,9 @@
 <script>
 import icon from "@/assets/icon.vue";
 import addUsers from "../modals/add-users.vue";
+import importUsers from "../modals/import-users.vue";
+import importExpertise from "../modals/import-expertise.vue";
+import viewUserExpertise from "../modals/view-user-expertise.vue";
 
 import { toast } from "vue3-toastify";
 import { useFetchDataStore } from "../../../../store/fetch-data-store";
@@ -268,6 +342,9 @@ export default {
   components: {
     icon,
     addUsers,
+    importUsers,
+    importExpertise,
+    viewUserExpertise,
   },
   data() {
     return {
@@ -277,8 +354,12 @@ export default {
       isAdd: false,
       isTable: true,
       showDeleteModal: false,
+      showImportModal: false,
+      showImportExpertiseModal: false,
+      showViewExpertiseModal: false,
       recordToDelete: null,
       selectedUser: null, // ✅ fixed
+      selectedUserExpertise: null,
       showEditModal: false,
       isDeleting: false,
     };
@@ -290,7 +371,7 @@ export default {
       return this.users.filter((user) =>
         `${user.first_name} ${user.last_name} ${user.role} ${user.email}`
           .toLowerCase()
-          .includes(query)
+          .includes(query),
       );
     },
     totalPages() {
@@ -310,7 +391,22 @@ export default {
       return end > this.filteredData.length ? this.filteredData.length : end;
     },
     pageNumbers() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      const total = this.totalPages;
+      if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
+
+      let start = this.currentPage - 1;
+      let end = this.currentPage + 1;
+
+      if (start < 1) {
+        start = 1;
+        end = 3;
+      }
+      if (end > total) {
+        end = total;
+        start = total - 2;
+      }
+
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
   },
   methods: {
@@ -331,6 +427,16 @@ export default {
       this.isAdd = true;
       this.isTable = true;
     },
+    toggleImport() {
+      this.showImportModal = true;
+    },
+    toggleImportExpertise() {
+      this.showImportExpertiseModal = true;
+    },
+    toggleViewExpertise(user) {
+      this.selectedUserExpertise = user;
+      this.showViewExpertiseModal = true;
+    },
     toggleEdit(user) {
       this.selectedUser = user; // ✅ fixed
       this.showEditModal = true;
@@ -349,7 +455,9 @@ export default {
       this.isDeleting = true;
 
       try {
-        await axios.delete(`http://localhost:8000/auth/remove/${userId}`);
+        await axios.delete(
+          process.env.VUE_APP_API_BASE_URL + `/auth/remove/${userId}`,
+        );
         this.recordToDelete = null;
         this.showDeleteModal = false;
 
@@ -376,6 +484,16 @@ export default {
     closeModal() {
       this.showEditModal = false;
       this.selectedUser = null;
+    },
+    closeImportModal() {
+      this.showImportModal = false;
+    },
+    closeImportExpertiseModal() {
+      this.showImportExpertiseModal = false;
+    },
+    closeViewExpertiseModal() {
+      this.showViewExpertiseModal = false;
+      this.selectedUserExpertise = null;
     },
   },
   mounted() {

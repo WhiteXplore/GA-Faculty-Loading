@@ -16,7 +16,6 @@ export const useFetchDataStore = defineStore("fetchData", {
     bachelors: [],
     masters: [],
     doctorates: [],
-    projecs: [],
     institutes: [],
     detailedReportCurriculum: [],
     calendarEvents: [],
@@ -24,20 +23,105 @@ export const useFetchDataStore = defineStore("fetchData", {
     rawusers: [],
     assignClass: [],
     faculty: [],
-    year: null, // will hold active year only
+    final_schedules: [],
+    class_sections: [],
+    unscheduled_meetings: [],
+    college_branch: [],
+    faculty_branch: [],
+    year: null, // currently selected year
+    activeYears: [],
+    activeYear: null, // latest active year for table filtering
+    lastUpdatedAt: null,
     loading: false,
     error: null,
+    activeYearInterval: null, // for polling
   }),
 
   actions: {
+    async fetchFacultyBranch() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL +
+            "/faculty-branch/get-all-faculty-branch",
+        );
+        this.faculty_branch = data;
+      } catch (err) {
+        this.error = err.message || "Failed to fetch faculty_branch";
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async fetchCollegeBranch() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL +
+            "/college-branch/get-college-branch",
+        );
+        this.college_branch = data;
+      } catch (err) {
+        this.error = err.message || "Failed to fetch college_branch";
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async fetchUnscheduledMeetings() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL +
+            "/unscheduled-meetings/get-all-unscheduled-meetings",
+        );
+        this.unscheduled_meetings = data;
+      } catch (err) {
+        this.error = err.message || "Failed to fetch unscheduled_meetings";
+      } finally {
+        this.loading = false;
+      }
+    },
+    async fetchClassSections() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/class/get-classes",
+        );
+        this.sections = data;
+      } catch (err) {
+        this.error = err.message || "Failed to fetch sections";
+      } finally {
+        this.loading = false;
+      }
+    },
+    async fetchFinalSchedules() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL +
+            "/final-generated-class-schedule/get-all-final-schedules",
+        );
+        this.final_schedules = data;
+      } catch (err) {
+        this.error = err.message || "Failed to fetch final schedules";
+      } finally {
+        this.loading = false;
+      }
+    },
     async fetchInstructors() {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/instructors/get-instructors"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/instructors/get-instructors",
         );
-        this.instructors = response.data;
+        this.instructors = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch instructors";
       } finally {
@@ -49,10 +133,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/courses/get-courses"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/courses/get-courses",
         );
-        this.courses = response.data;
+        this.courses = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch courses";
       } finally {
@@ -64,10 +148,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/curriculums/get-curriculums"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/curriculums/get-curriculums",
         );
-        this.curriculums = response.data;
+        this.curriculums = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch curriculums";
       } finally {
@@ -79,10 +163,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/programs/get-programs"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/programs/get-programs",
         );
-        this.programs = response.data;
+        this.programs = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch programs";
       } finally {
@@ -94,10 +178,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/sections/get-sections"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/sections/get-sections",
         );
-        this.sections = response.data;
+        this.sections = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch sections";
       } finally {
@@ -109,10 +193,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/rooms/get-rooms"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/rooms/get-rooms",
         );
-        this.rooms = response.data;
+        this.rooms = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch rooms";
       } finally {
@@ -124,8 +208,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get("http://localhost:8000/time/get-time");
-        this.time = response.data;
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/time/get-time",
+        );
+        this.time = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch time";
       } finally {
@@ -137,10 +223,11 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/class-schedules/get-class-schedules"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL +
+            "/class-schedules/get-class-schedules",
         );
-        this.schedulers = response.data;
+        this.schedulers = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch schedulers";
       } finally {
@@ -152,10 +239,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/projected/get-projected"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/projected/get-projected",
         );
-        this.projects = response.data;
+        this.projects = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch projects";
       } finally {
@@ -167,10 +254,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/institute/get-institutes"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/institute/get-institutes",
         );
-        this.institutes = response.data;
+        this.institutes = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch institutes";
       } finally {
@@ -182,10 +269,11 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/courses/get-report-curriculum-offer"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL +
+            "/courses/get-report-curriculum-offer",
         );
-        this.detailedReportCurriculum = response.data;
+        this.detailedReportCurriculum = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch detailedReportCurriculum";
       } finally {
@@ -197,10 +285,11 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/calendar/get-all-calendar-events"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL +
+            "/calendar/get-all-calendar-events",
         );
-        this.calendarEvents = response.data;
+        this.calendarEvents = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch calendarEvents";
       } finally {
@@ -212,8 +301,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get("http://localhost:8000/auth/all");
-        this.users = response.data;
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/all-raw",
+        );
+        this.users = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch users";
       } finally {
@@ -225,10 +316,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/users/get-users"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/users/get-users",
         );
-        this.rawusers = response.data;
+        this.rawusers = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch rawusers";
       } finally {
@@ -240,10 +331,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/assign-class/get-assign-class"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/assign-class/get-assign-class",
         );
-        this.assignClass = response.data;
+        this.assignClass = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch assignClass";
       } finally {
@@ -255,10 +346,10 @@ export const useFetchDataStore = defineStore("fetchData", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(
-          "http://localhost:8000/instructors/raw"
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/instructors/raw",
         );
-        this.faculty = response.data;
+        this.faculty = data;
       } catch (err) {
         this.error = err.message || "Failed to fetch faculty";
       } finally {
@@ -266,34 +357,37 @@ export const useFetchDataStore = defineStore("fetchData", {
       }
     },
 
-    // ✅ Active year fetcher
-    async fetchActiveYear() {
+    // 🔹 Active years (real-time reactive)
+    async fetchActiveYears() {
       try {
-        const res = await axios.get("http://localhost:8000/active-year/active");
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/school-year/latest-active",
+        );
 
-        // If response is array → filter for isActive
-        if (Array.isArray(res.data)) {
-          const active = res.data.find((item) => item.isActive === true);
-          this.year = active ? active.year : null;
-        } else if (res.data && res.data.isActive) {
-          // If response is a single object
-          this.year = res.data.year;
-        } else {
-          this.year = null;
-        }
-      } catch (err) {
-        console.error("Failed to fetch active year:", err);
-      }
-    },
+        // Ensure array
+        const activeYearsArray = Array.isArray(data) ? data : [data];
 
-    async updateYear(newYear) {
-      try {
-        await axios.post("http://localhost:8000/active-year", {
-          year: newYear,
-        });
-        this.year = newYear; // ✅ instantly update local state
+        // Only active years
+        this.activeYears = activeYearsArray.filter((year) => year.is_active);
+
+        // Set the latest active year for table filtering
+        const previousYearId = this.activeYear?.school_year_id;
+        this.activeYear = this.activeYears[0] || null;
+
+        // Update timestamp
+        this.lastUpdatedAt =
+          this.activeYears.length > 0
+            ? new Date(this.activeYears[0].updated_at)
+            : null;
+
+        // Return true if year changed
+        return previousYearId !== this.activeYear?.school_year_id;
       } catch (err) {
-        console.error("Failed to update active year:", err);
+        console.error("❌ Failed to fetch school years:", err);
+        this.activeYears = [];
+        this.activeYear = null;
+        this.lastUpdatedAt = null;
+        return false;
       }
     },
   },

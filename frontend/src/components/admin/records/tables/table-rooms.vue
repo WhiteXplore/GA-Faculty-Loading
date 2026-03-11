@@ -1,47 +1,57 @@
 <template>
   <div v-if="isTable" class=" ">
-    <div class="text-sm flex justify-between">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
         Pages / Rooms Availability
       </div>
-
-      <div
-        @click="toggleAdd"
-        class="group flex items-center gap-2 px-3 py-2 bg-white text-green-600 rounded-xl shadow-sm hover:shadow-md border border-green-500 hover:bg-green-600 hover:text-white transition-all duration-300 cursor-pointer"
-      >
+      <div class="flex gap-2">
         <div
-          class="flex items-center justify-center w-5 h-5 bg-green-100 rounded-full group-hover:bg-white transition-colors duration-300"
+          @click="isUploadModal = true"
+          class="flex items-center gap-2 px-3 py-2 border text-blue-600 border-blue-600 rounded-xl hover:bg-blue-700 hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
         >
-          <icon
-            :name="'circle-add'"
-            class="w-4 h-4 text-green-600 transition-colors duration-300 group-hover:text-green-600"
-          />
+          <div
+            class="p-1 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center"
+          >
+            <icon name="uploads" />
+          </div>
+          <span class="font-medium text-sm">Upload Room</span>
         </div>
-        <span class="font-medium text-sm">Add Room</span>
+        <div
+          @click="toggleAdd"
+          class="flex items-center gap-2 px-3 py-2 border text-defaultGreen border-green-600 rounded-xl hover:bg-defaultGreen hover:text-white hover:shadow-lg cursor-pointer transition duration-200"
+        >
+          <div
+            class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
+          >
+            <icon name="circle-add" />
+          </div>
+
+          <span class="font-medium text-sm">Add Room</span>
+        </div>
       </div>
     </div>
 
+    <!-- Table -->
     <div class="mt-4 overflow-x-auto border p-3 rounded-xl bg-white">
-      <!-- Top controls -->
+      <!-- Top Controls -->
       <div
-        class="flex justify-between items-center flex-wrap gap-3 sm:gap-4 text-gray-700 bg-white"
+        class="flex justify-between items-center flex-wrap gap-3 text-gray-700 bg-white"
       >
         <!-- Items per page -->
         <div class="flex items-center gap-2">
           <div class="relative">
             <select
               v-model="itemsPerPage"
-              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1.5 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md focus:shadow-md"
+              class="appearance-none rounded-full border border-green-600 bg-white px-3 py-1 pr-8 text-green-900 text-sm font-semibold shadow-sm cursor-pointer transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 hover:shadow-md focus:shadow-md"
               @change="changePage(1)"
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
             </select>
             <!-- Custom arrow -->
             <div
-              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-green-600 transition-colors"
+              class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-defaultGreen transition-colors"
             >
               <svg
                 class="w-4 h-4"
@@ -72,7 +82,7 @@
           />
           <!-- Search icon -->
           <div
-            class="absolute inset-y-0 left-3 flex items-center text-green-600 pointer-events-none transition-colors"
+            class="absolute inset-y-0 left-3 flex items-center text-defaultGreen pointer-events-none transition-colors"
           >
             <svg
               class="w-4 h-4"
@@ -89,52 +99,65 @@
       </div>
 
       <!-- Table -->
-      <div class="w-full rounded-xl mt-1 overflow-hidden">
-        <div
-          class="overflow-y-auto transition-all duration-300"
-          :class="tableHeightClass"
-        >
-          <table
-            class="min-w-full table-auto border-separate border-spacing-y-2 text-sm text-gray-700"
-          >
+      <div class="w-full mt-3 rounded-xl border bg-white overflow-hidden">
+        <div class="max-h-[69vh] overflow-y-auto">
+          <table class="min-w-full text-sm text-gray-700 border-collapse">
             <thead
               class="bg-defaultGreen text-white sticky top-0 z-10 tracking-wide"
             >
               <tr>
-                <th class="w-10 px-4 py-3 text-left rounded-tl-lg font-normal">
-                  ID
+                <th class="px-4 py-3 text-left font-normal w-[18%]">
+                  Institute
                 </th>
-                <th class="px-4 py-3 text-left font-normal">Institute</th>
-                <th class="px-4 py-3 text-left font-normal">Room Name</th>
-                <th class="px-4 py-3 text-left font-normal">Room Type</th>
-                <th class="px-4 py-3 text-left font-normal">Room Capacity</th>
-                <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
+                <th class="px-4 py-3 text-left font-normal w-[15%]">
+                  Building Name
+                </th>
+                <th class="px-4 py-3 text-center font-normal w-[10%]">
+                  Level / Floor
+                </th>
+                <th class="px-4 py-3 text-left font-normal w-[15%]">
+                  Room Name
+                </th>
+
+                <th class="px-4 py-3 text-left font-normal w-[10%]">
+                  Room Type
+                </th>
+                <th class="px-4 py-3 text-center font-normal w-[10%]">
+                  Room Capacity
+                </th>
+                <th
+                  class="px-4 py-3 text-center rounded-tr-lg font-normal w-[20%]"
+                >
                   Actions
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr
-                v-for="(rooms_data, index) in paginatedData"
+                v-for="rooms_data in paginatedData"
                 :key="rooms_data.rooms_id"
-                class="bg-white hover:bg-green-50 transition-all border border-gray-200 rounded-md shadow-sm"
+                class="hover:bg-green-50 transition-all border-t"
               >
                 <td class="px-4 py-3 text-left">
-                  {{ startIndex + index }}
+                  {{ rooms_data.institute?.institute_code }}
                 </td>
                 <td class="px-4 py-3 text-left">
-                  {{ rooms_data.institute?.institute_name }}
+                  {{ rooms_data.building_name }}
+                </td>
+                <td class="px-4 py-3 text-center">
+                  {{ rooms_data.level }}
                 </td>
                 <td class="px-4 py-3 text-left">
                   {{ rooms_data.room_name }}
                 </td>
+
                 <td class="px-4 py-3 text-left">
                   {{ rooms_data.room_type }}
                 </td>
-                <td class="px-4 py-3 text-left">
+                <td class="px-4 py-3 text-center">
                   {{ rooms_data.room_capacity }}
                 </td>
-                <td class="px-4 py-3 text-left">
+                <td class="px-4 py-3 flex justify-center">
                   <div class="flex gap-2">
                     <button
                       class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-defaultGreen rounded-lg flex items-center gap-1"
@@ -152,7 +175,7 @@
                 </td>
               </tr>
               <tr v-if="paginatedData.length === 0">
-                <td colspan="6" class="text-center py-6 text-gray-400">
+                <td colspan="6" class="text-left py-6 text-gray-400">
                   No records found
                 </td>
               </tr>
@@ -160,16 +183,13 @@
           </table>
         </div>
       </div>
-
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4">
-        <div class="text-gray-700">
-          <span>
-            Showing {{ startIndex }} to {{ endIndex }} of
-            {{ filteredData.length }} entries
-          </span>
+        <div class="text-gray-700 text-sm">
+          Showing {{ startIndex }} to {{ endIndex }} of
+          {{ filteredData.length }} entries
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-1 text-sm">
           <button
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
@@ -184,7 +204,7 @@
                 ' bg-defaultGreen text-white': currentPage === page,
                 'bg-gray-200 text-gray-700': currentPage !== page,
               }"
-              class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+              class="px-3 py-1 rounded-md hover:bg-green-300"
             >
               {{ page }}
             </button>
@@ -208,6 +228,11 @@
     @close="closeModal"
     @refresh="loadRooms"
   />
+  <uploadRooms
+    v-if="isUploadModal"
+    @close="isUploadModal = false"
+    @refresh="loadRooms"
+  />
 
   <!-- Delete Confirmation Modal -->
   <div
@@ -216,7 +241,7 @@
   ></div>
   <div
     v-if="showDeleteModal"
-    class="rounded-xl shadow-lg w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 animate-slideUp"
+    class="rounded-xl shadow-lg w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
   >
     <div
       class="rounded-full w-16 h-16 md:w-20 md:h-20 flex justify-center items-center bg-red-300 animate-pulse"
@@ -230,7 +255,7 @@
     <h1 class="text-[14px] md:text-[16px] font-semibold mt-4">
       Delete Confirmation
     </h1>
-    <p class="mt-2 text-[12px] md:text-[13px] text-center px-8">
+    <p class="mt-2 text-[12px] md:text-[13px] text-left px-8">
       Are you sure you want to delete this record? This action cannot be undone.
     </p>
 
@@ -256,6 +281,7 @@
 <script>
 import icon from "@/assets/icon.vue";
 import addRooms from "../modals/add-rooms.vue";
+import uploadRooms from "../modals/upload-rooms.vue";
 import { toast } from "vue3-toastify";
 import { useFetchDataStore } from "../../../../store/fetch-data-store";
 import { mapState } from "pinia";
@@ -266,6 +292,7 @@ export default {
   components: {
     icon,
     addRooms,
+    uploadRooms,
   },
   data() {
     return {
@@ -280,6 +307,7 @@ export default {
       recordToDelete: null,
       selectedRoom: null,
       showEditModal: false,
+      isUploadModal: false,
     };
   },
   computed: {
@@ -296,7 +324,7 @@ export default {
         ]
           .join(" ")
           .toLowerCase()
-          .includes(query)
+          .includes(query),
       );
     },
 
@@ -317,7 +345,22 @@ export default {
       return end > this.filteredData.length ? this.filteredData.length : end;
     },
     pageNumbers() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      const total = this.totalPages;
+      if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
+
+      let start = this.currentPage - 1;
+      let end = this.currentPage + 1;
+
+      if (start < 1) {
+        start = 1;
+        end = 3;
+      }
+      if (end > total) {
+        end = total;
+        start = total - 2;
+      }
+
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
   },
   methods: {
@@ -350,7 +393,7 @@ export default {
       const roomId = this.recordToDelete.room_id;
 
       axios
-        .delete(`http://localhost:8000/rooms/delete-id/${roomId}`)
+        .delete(process.env.VUE_APP_API_BASE_URL + `/rooms/delete-id/${roomId}`)
         .then(() => {
           this.recordToDelete = null;
           this.showDeleteModal = false;

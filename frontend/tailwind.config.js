@@ -6,10 +6,22 @@ module.exports = {
       colors: {
         defaultGreen: "#147452",
       },
+
+      /* ✅ FONT SETUP */
       fontFamily: {
-        roboto: ["Roboto", "Helvetica", "Arial", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
+        sans: ["Poppins", "sans-serif"], // make poppins default
       },
+
+      /* ✅ OPTIONAL: semantic font weights */
+      fontWeight: {
+        light: "300",
+        regular: "400",
+        medium: "500",
+        semibold: "600",
+        bold: "700",
+      },
+
       keyframes: {
         spinSlow: {
           "0%": { transform: "rotate(0deg)" },
@@ -32,6 +44,7 @@ module.exports = {
           "100%": { transform: "scale(1)", opacity: 1 },
         },
       },
+
       animation: {
         spinSlow: "spinSlow 30s linear infinite",
         fadeIn: "fadeIn 0.6s ease-out forwards",

@@ -36,6 +36,7 @@
               placeholder="Search curriculum..."
               class="px-3 py-3 border w-full border-gray-600 rounded-md text-md text-gray-800"
               @focus="showCurriculumDropdown = true"
+              :disabled="isEdit"
             />
             <div
               v-if="showCurriculumDropdown && filteredCurriculum.length"
@@ -48,7 +49,8 @@
                 class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
                 @mousedown="selectcurriculum(curriculum)"
               >
-                {{ curriculum.curriculum_name }}
+                {{ curriculum.curriculum_end_year }} -
+                {{ curriculum.program.program_name }}
               </div>
             </div>
           </div>
@@ -199,16 +201,18 @@
           <!-- Buttons -->
           <div class="flex justify-end gap-2 mt-4">
             <button
-              class="bg-red-600 p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-red-800 hover:text-red-800"
+              type="button"
+              class="bg-gray-200 p-2 px-3 rounded-lg text-gray-700 hover:bg-white border hover:border-gray-800 hover:text-gray-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
               @click="$emit('close')"
             >
               Cancel
             </button>
+
             <button
-              class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800"
+              class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
               type="submit"
             >
-              {{ isEdit ? "Update" : "Submit" }}
+              {{ isEdit ? "Save Changes" : "Submit" }}
             </button>
           </div>
         </div>
@@ -247,39 +251,26 @@ export default {
       showCurriculumDropdown: false,
       searchRequisiteQuery: "",
       showRequisiteDropdown: false,
-      searchTagQuery: "",
-      showTagDropdown: false,
-      availableTags: [
-        "Computing",
-        "IT Fundamentals",
-        "Programming",
-        "Software Development",
-        "Filipino",
-        "Communication",
-        "Science",
-        "Technology",
-        "History",
-        "Culture",
-        "Psychology",
-        "Personal Development",
-        "Physical Education",
-        "Health",
-        "Writing Skills",
-      ],
     };
   },
+
   computed: {
     ...mapState(useFetchDataStore, ["curriculums", "courses"]),
     isEdit() {
       return !!this.courseData;
     },
+
     filteredCurriculum() {
       if (!this.searchCurriculumQuery) return this.curriculums;
+
       const q = this.searchCurriculumQuery.toLowerCase();
-      return this.curriculums.filter((c) =>
-        c.curriculum_name?.toLowerCase().includes(q)
+      return this.curriculums.filter(
+        (c) =>
+          c.curriculum_end_year?.toLowerCase().includes(q) ||
+          c.program.program_name?.toLowerCase().includes(q),
       );
     },
+
     filteredCourse() {
       const q = this.searchRequisiteQuery.toLowerCase();
       return this.courses.filter(
@@ -287,32 +278,37 @@ export default {
           (course.course_code?.toLowerCase().includes(q) ||
             course.course_description?.toLowerCase().includes(q)) &&
           this.form.curriculum_id === course.curriculum_id &&
-          !this.form.course_requisite.includes(course.course_code) // skip selected
+          !this.form.course_requisite.includes(course.course_code),
       );
     },
   },
+
   methods: {
     ...mapActions(useFetchDataStore, ["fetchCurriculums", "fetchCourses"]),
-    cancelRequisites() {
-      this.showRequisiteInput = false;
-      this.form.course_requisite = []; // clear all selected
-      this.searchRequisiteQuery = ""; // clear input
-    },
+
     selectcurriculum(curr) {
       this.form.curriculum_id = curr.curriculum_id;
-      this.searchCurriculumQuery = curr.curriculum_name;
+      this.searchCurriculumQuery = `${curr.curriculum_end_year} - ${curr.program.program_name}`;
       this.showCurriculumDropdown = false;
     },
+
     selectcourse(course) {
       if (!this.form.course_requisite.includes(course.course_code)) {
         this.form.course_requisite.push(course.course_code);
       }
       this.showRequisiteDropdown = false;
     },
+
     removeRequisite(code) {
       this.form.course_requisite = this.form.course_requisite.filter(
-        (c) => c !== code
+        (c) => c !== code,
       );
+    },
+
+    cancelRequisites() {
+      this.showRequisiteInput = false;
+      this.form.course_requisite = [];
+      this.searchRequisiteQuery = "";
     },
 
     async submitData() {
@@ -324,52 +320,53 @@ export default {
 
         if (this.isEdit) {
           await axios.patch(
-            `http://localhost:8000/courses/update-course/${this.courseData.course_id}`,
-            payload
+            `${process.env.VUE_APP_API_BASE_URL}/courses/update-course/${this.courseData.course_id}`,
+            payload,
           );
           toast.success("Course updated successfully!");
         } else {
           await axios.post(
-            "http://localhost:8000/courses/add-courses",
-            payload
+            `${process.env.VUE_APP_API_BASE_URL}/courses/add-courses`,
+            payload,
           );
           toast.success("Course added successfully!");
         }
 
         this.$emit("refresh");
         this.$emit("close");
-
-        // Play audio, but handle errors separately
-        try {
-          const audio = new Audio(
-            require(`@/assets/${this.isEdit ? "update.mp3" : "add.mp3"}`)
-          );
-          await audio.play();
-        } catch (audioErr) {
-          console.warn("Audio failed to play:", audioErr);
-        }
       } catch (err) {
         console.error(err);
         toast.error(
-          this.isEdit ? "Failed to update course." : "Failed to add course."
+          this.isEdit ? "Failed to update course." : "Failed to add course.",
         );
       }
     },
   },
+
   mounted() {
     this.fetchCurriculums();
     this.fetchCourses();
 
-    // if editing, fill the form
     if (this.isEdit) {
       this.form = {
-        ...this.courseData,
+        curriculum_id: this.courseData.curriculum_id,
+        course_code: this.courseData.course_code,
+        course_description: this.courseData.course_description,
+        course_semester: this.courseData.course_semester,
+        course_lab: this.courseData.course_lab,
+        course_lec: this.courseData.course_lec,
+        course_level: this.courseData.course_level,
         course_requisite: this.courseData.course_requisite
           ? this.courseData.course_requisite.split(",")
           : [],
       };
-      this.searchCurriculumQuery =
-        this.courseData.curriculum?.curriculum_name || "";
+
+      // ✅ FINAL FIX FOR EDIT MODE
+      if (this.courseData.curriculum) {
+        this.searchCurriculumQuery =
+          `${this.courseData.curriculum.curriculum_end_year} - ` +
+          `${this.courseData.curriculum.program.program_name}`;
+      }
     }
   },
 };

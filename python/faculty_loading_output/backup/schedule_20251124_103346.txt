@@ -1,0 +1,5619 @@
+====================================================================================================
+                                   CLASS SCHEDULE
+====================================================================================================
+Generated on: 2025-11-24 10:33:47
+Total Scheduled Meetings: 464
+Total Unscheduled Meetings: 13
+====================================================================================================
+
+
+====================================================================================================
+ MONDAY
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : RR325
+Type        : Lecture
+Faculty     : April Acdal (ID: 25)
+Room        : ROOM 202 (ID: 35)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 104
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : MB322
+Type        : Lecture
+Faculty     : Anselmo Anobong Jr. (ID: 26)
+Room        : SB 1 (ID: 71)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 73
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : THE223
+Type        : Lecture
+Faculty     : Ariel, Balio (ID: 27)
+Room        : Biolab (ID: 11)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 154
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ENG111
+Type        : Lecture
+Faculty     : Alneza Bangasin (ID: 28)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 81
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : FT 222
+Type        : Lecture
+Faculty     : Arcelyn Basilisco (ID: 29)
+Room        : SB 2 (ID: 72)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 80
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IT Elec1
+Type        : Lecture
+Faculty     : Analyn Casipe (ID: 30)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 52
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : STAT
+Type        : Lecture
+Faculty     : Anababes Catala (ID: 31)
+Room        : SB 3 (ID: 73)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 65
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SCI221
+Type        : Lecture
+Faculty     : Ann Cereno (ID: 32)
+Room        : TED1 (ID: 14)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 140
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ITSPEC3
+Type        : Lecture
+Faculty     : Ariel Gamao (ID: 33)
+Room        : AB 3-3 (ID: 62)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 58
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TM121
+Type        : Lecture
+Faculty     : Aunel Guillergan (ID: 34)
+Room        : ROOM 203 (ID: 36)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 96
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : RES2M
+Type        : Lecture
+Faculty     : Abdul Jamara (ID: 35)
+Room        : TED2 (ID: 15)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 151
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TTL 2B
+Type        : Lecture
+Faculty     : Ariel Jumamil (ID: 36)
+Room        : TED3 (ID: 16)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 154
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ITSPEC4
+Type        : Lecture
+Faculty     : Aldrhiela Lonzaga (ID: 37)
+Room        : AB 3-4 (ID: 63)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 58
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : STS 121
+Type        : Lecture
+Faculty     : Alje Canoy (ID: 39)
+Room        : SB 4 (ID: 74)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 77
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : Math 111
+Type        : Lecture
+Faculty     : Analiza Pana (ID: 40)
+Room        : AB 3-5 (ID: 64)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 52
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : GEELECT3
+Type        : Lecture
+Faculty     : Ana Lagarto (ID: 41)
+Room        : AB 1-4 (ID: 75)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 64
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : MATH 6
+Type        : Lecture
+Faculty     : Abel Sadji (ID: 42)
+Room        : AB 1-5 (ID: 76)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 64
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TMBC223
+Type        : Lecture
+Faculty     : Alberto, Sumaoy (ID: 43)
+Room        : ROOM 204 (ID: 37)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 97
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PAELEC2
+Type        : Lecture
+Faculty     : Aleya Obeda (ID: 44)
+Room        : ROOM 205 (ID: 38)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 122
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SS 112
+Type        : Lecture
+Faculty     : Bonita Cantere (ID: 45)
+Room        : ROOM 206 (ID: 39)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 105
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ENTREP 3212
+Type        : Lecture
+Faculty     : Bryan Macarayo (ID: 46)
+Room        : ROOM 207 (ID: 40)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 116
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TTL 2S
+Type        : Lecture
+Faculty     : Bryan Villarojo (ID: 47)
+Room        : TED 4 (ID: 17)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 140
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : DRMRES1
+Type        : Lecture
+Faculty     : Boyeth Pelone (ID: 48)
+Room        : AB 4-1 (ID: 41)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 104
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : FISH326
+Type        : Lecture
+Faculty     : Bernandita Rodriguez (ID: 49)
+Room        : AB 1-6 (ID: 77)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 70
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : Sci 122
+Type        : Lecture
+Faculty     : Benjie Solarte (ID: 50)
+Room        : ROOM 11 (ID: 18)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 137
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IT 222
+Type        : Lecture
+Faculty     : Cristopher Añana (ID: 51)
+Room        : AB 3-6 (ID: 65)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 56
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TMELECT2 NEW
+Type        : Lecture
+Faculty     : Crisalie Bacarro (ID: 52)
+Room        : AB 4-2 (ID: 42)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 97
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PE2 NEW
+Type        : Lecture
+Faculty     : Carylmae Balmores (ID: 53)
+Room        : AB 2-2 (ID: 78)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 72
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : MA222
+Type        : Lecture
+Faculty     : Carl Ganal (ID: 54)
+Room        : ROOM 12 (ID: 19)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 163
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PE4
+Type        : Lecture
+Faculty     : Caressha Bernaldez (ID: 56)
+Room        : AB 2-3 (ID: 79)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 80
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : Eng 111
+Type        : Lecture
+Faculty     : Claire Garcia (ID: 57)
+Room        : AB 3-7 (ID: 66)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 52
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : RR323
+Type        : Lecture
+Faculty     : Christhelle Gerona (ID: 58)
+Room        : AB 4-3 (ID: 43)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 104
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : Bio 104
+Type        : Lecture
+Faculty     : Carl Castañeda (ID: 59)
+Room        : RC 1A (ID: 80)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 72
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : Bio 122
+Type        : Lecture
+Faculty     : Christina Lahaylahay (ID: 60)
+Room        : RC 1B (ID: 81)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 64
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : FIL2
+Type        : Lecture
+Faculty     : Celeste Ligutom (ID: 61)
+Room        : ROOM 13 (ID: 20)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 147
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PE 122
+Type        : Lecture
+Faculty     : Carlo Perez (ID: 63)
+Room        : AB 4-4 (ID: 44)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 111
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SCI223
+Type        : Lecture
+Faculty     : Criscire Palabrica (ID: 64)
+Room        : ROOM 14 (ID: 21)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 140
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : Fish 121
+Type        : Lecture
+Faculty     : Cyril Ranara (ID: 65)
+Room        : RC 1C (ID: 82)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 64
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : GEELECT2
+Type        : Lecture
+Faculty     : Czarina Giangan (ID: 66)
+Room        : Cottage 6 (ID: 67)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 56
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : MATH111
+Type        : Lecture
+Faculty     : Cristover Vidal (ID: 67)
+Room        : Cottage 7 (ID: 68)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 86
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TMC123
+Type        : Lecture
+Faculty     : Danica Aba (ID: 68)
+Room        : AB 4-5 (ID: 45)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 96
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TMBME1
+Type        : Lecture
+Faculty     : Daisy Gabule (ID: 70)
+Room        : AB 4-6 (ID: 46)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 101
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SS 121
+Type        : Lecture
+Faculty     : Daryl Jakosalem (ID: 71)
+Room        : RC 2 (ID: 83)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 77
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SS 123
+Type        : Lecture
+Faculty     : Edison Bernaldez (ID: 72)
+Room        : IFT 1 (ID: 84)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 76
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : P221
+Type        : Lecture
+Faculty     : Eirene Canlom (ID: 73)
+Room        : AB 4-7 (ID: 47)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 103
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ER328
+Type        : Lecture
+Faculty     : Ester Generale (ID: 75)
+Room        : Cottage 1 (ID: 48)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 104
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PHYSICS121
+Type        : Lecture
+Faculty     : Edison Molina (ID: 78)
+Room        : Navigation Room (ID: 85)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 72
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TMBME2 NEW
+Type        : Lecture
+Faculty     : Elioena Resma (ID: 79)
+Room        : Cottage 2 (ID: 49)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 101
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : RR324
+Type        : Lecture
+Faculty     : Frincess Cajano (ID: 82)
+Room        : Cottage 3 (ID: 50)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 104
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SPCOR3 NEW
+Type        : Lecture
+Faculty     : Felmark Levara (ID: 83)
+Room        : Cottage 4 (ID: 51)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 122
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IT 321
+Type        : Lecture
+Faculty     : Flonie Romulo (ID: 84)
+Room        : GDA Lab (ID: 69)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 58
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SS113
+Type        : Lecture
+Faculty     : Glenna Apostol (ID: 85)
+Room        : Cottage 5 (ID: 52)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 111
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PARES2
+Type        : Lecture
+Faculty     : Glenne Lagura (ID: 89)
+Room        : Cottage 6 (ID: 53)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 124
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TMC225
+Type        : Lecture
+Faculty     : Gladys Bacsa (ID: 90)
+Room        : Cottage 7 (ID: 54)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 97
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IS222
+Type        : Lecture
+Faculty     : Gretchen Olivar (ID: 93)
+Room        : IC LEC 1 (ID: 70)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 84
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : MATH321
+Type        : Lecture
+Faculty     : Hannah Pamilgan (ID: 99)
+Room        : AB 1-1 (tle) (ID: 22)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 151
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : RES2T
+Type        : Lecture
+Faculty     : Ian Somosot (ID: 104)
+Room        : AB 1-2 (tle) (ID: 23)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 157
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SCI321
+Type        : Lecture
+Faculty     : Jerico Catipay (ID: 113)
+Room        : AB 2-4 (ID: 24)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 141
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : MA221
+Type        : Lecture
+Faculty     : Jezreyll Cabasag (ID: 120)
+Room        : AB 2-5 (ID: 25)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 163
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : THE222
+Type        : Lecture
+Faculty     : Jonalyn Mamoso (ID: 129)
+Room        : AB 2-6 (ID: 26)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 154
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : EDUC 322
+Type        : Lecture
+Faculty     : Janine Rulona (ID: 133)
+Room        : AB 2-7 (ID: 27)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 141
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TLE 121
+Type        : Lecture
+Faculty     : Jerson Viagedor (ID: 140)
+Room        : NTED 1 (ID: 28)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 153
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : EDUC 121
+Type        : Lecture
+Faculty     : Kimberly Solano (ID: 142)
+Room        : NTED 2 (ID: 29)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 153
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : MATH 122
+Type        : Lecture
+Faculty     : Kim Dodongan (ID: 143)
+Room        : NTED 3 (ID: 30)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 147
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ENG121
+Type        : Lecture
+Faculty     : Karl Amper (ID: 150)
+Room        : NTED 4 (ID: 31)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 143
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : Comm 121
+Type        : Lecture
+Faculty     : Kimberly Sulla (ID: 152)
+Room        : NTED 5 (ID: 32)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 162
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : MATH323
+Type        : Lecture
+Faculty     : Lib Mapansa (ID: 162)
+Room        : NTED 6 (ID: 33)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 151
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : EDUC 321A
+Type        : Lecture
+Faculty     : Maiko Anicoy (ID: 164)
+Room        : NTED 7 (ID: 34)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 146
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 9:00 AM
+Course      : ENG 324 NEW
+Type        : Laboratory
+Faculty     : Mico Novecio (ID: 167)
+Room        : Edtech Lab (ID: 12)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 146
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 9:00 AM
+Course      : SCI323
+Type        : Laboratory
+Faculty     : Michel Esmalla (ID: 171)
+Room        : Chem Lab (ID: 13)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 141
+
+----------------------------------------------------------------------------------------------------
+Time        : 9:00 AM - 10:00 AM
+Course      : EDUC323
+Type        : Laboratory
+Faculty     : Michel Esmalla (ID: 171)
+Room        : Edtech Lab (ID: 12)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 141
+
+----------------------------------------------------------------------------------------------------
+Time        : 9:00 AM - 10:00 AM
+Course      : EDUC 321B
+Type        : Laboratory
+Faculty     : Nolie Guadalquiver (ID: 187)
+Room        : Chem Lab (ID: 13)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 157
+
+----------------------------------------------------------------------------------------------------
+Time        : 10:00 AM - 11:00 AM
+Course      : SCI323
+Type        : Laboratory
+Faculty     : Michel Esmalla (ID: 171)
+Room        : Edtech Lab (ID: 12)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 142
+
+----------------------------------------------------------------------------------------------------
+Time        : 10:00 AM - 11:00 AM
+Course      : ENG 325 NEW
+Type        : Laboratory
+Faculty     : Princess Driz (ID: 192)
+Room        : Chem Lab (ID: 13)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 146
+
+----------------------------------------------------------------------------------------------------
+Time        : 11:00 AM - 12:00 PM
+Course      : ENG 322 NEW
+Type        : Laboratory
+Faculty     : Janine Rulona (ID: 133)
+Room        : Edtech Lab (ID: 12)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 146
+
+----------------------------------------------------------------------------------------------------
+Time        : 11:00 AM - 12:00 PM
+Course      : EDUC 321A
+Type        : Laboratory
+Faculty     : Maiko Anicoy (ID: 164)
+Room        : Chem Lab (ID: 13)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 146
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ER327
+Type        : Lecture
+Faculty     : April Acdal (ID: 25)
+Room        : ROOM 202 (ID: 35)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 104
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : GEELECT1
+Type        : Lecture
+Faculty     : Anselmo Anobong Jr. (ID: 26)
+Room        : ROOM 203 (ID: 36)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 96
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : THE223
+Type        : Lecture
+Faculty     : Ariel, Balio (ID: 27)
+Room        : Biolab (ID: 11)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 155
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ENG111
+Type        : Lecture
+Faculty     : Alneza Bangasin (ID: 28)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 82
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : TMBC325
+Type        : Lecture
+Faculty     : Arcelyn Basilisco (ID: 29)
+Room        : ROOM 204 (ID: 37)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 101
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IT Elec1
+Type        : Lecture
+Faculty     : Analyn Casipe (ID: 30)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 53
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : STAT
+Type        : Lecture
+Faculty     : Anababes Catala (ID: 31)
+Room        : SB 1 (ID: 71)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 69
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ITSPEC3
+Type        : Lecture
+Faculty     : Ariel Gamao (ID: 33)
+Room        : AB 3-3 (ID: 62)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 59
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : TM121
+Type        : Lecture
+Faculty     : Aunel Guillergan (ID: 34)
+Room        : ROOM 205 (ID: 38)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 99
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : TTL 2B
+Type        : Lecture
+Faculty     : Ariel Jumamil (ID: 36)
+Room        : TED1 (ID: 14)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 155
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ITSPEC4
+Type        : Lecture
+Faculty     : Aldrhiela Lonzaga (ID: 37)
+Room        : AB 3-4 (ID: 63)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 59
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : Math 111
+Type        : Lecture
+Faculty     : Analiza Pana (ID: 40)
+Room        : AB 3-5 (ID: 64)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 53
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : GEELECT3
+Type        : Lecture
+Faculty     : Ana Lagarto (ID: 41)
+Room        : SB 2 (ID: 72)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 67
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : MATH 6
+Type        : Lecture
+Faculty     : Abel Sadji (ID: 42)
+Room        : SB 3 (ID: 73)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 67
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : TMBC223
+Type        : Lecture
+Faculty     : Alberto, Sumaoy (ID: 43)
+Room        : ROOM 206 (ID: 39)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 102
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : SPCOR2 NEW
+Type        : Lecture
+Faculty     : Aleya Obeda (ID: 44)
+Room        : ROOM 207 (ID: 40)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 122
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : SS 112
+Type        : Lecture
+Faculty     : Bonita Cantere (ID: 45)
+Room        : AB 4-1 (ID: 41)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 110
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ENTREP 3212
+Type        : Lecture
+Faculty     : Bryan Macarayo (ID: 46)
+Room        : AB 4-2 (ID: 42)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 117
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : RES2S
+Type        : Lecture
+Faculty     : Bryan Villarojo (ID: 47)
+Room        : TED2 (ID: 15)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 141
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : SCI121_DRM
+Type        : Lecture
+Faculty     : Boyeth Pelone (ID: 48)
+Room        : AB 4-3 (ID: 43)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 105
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : FISH326
+Type        : Lecture
+Faculty     : Bernandita Rodriguez (ID: 49)
+Room        : SB 4 (ID: 74)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 71
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : Sci 122
+Type        : Lecture
+Faculty     : Benjie Solarte (ID: 50)
+Room        : TED3 (ID: 16)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 139
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IT 222
+Type        : Lecture
+Faculty     : Cristopher Añana (ID: 51)
+Room        : AB 3-6 (ID: 65)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 57
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : TMC328
+Type        : Lecture
+Faculty     : Crisalie Bacarro (ID: 52)
+Room        : AB 4-4 (ID: 44)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 101
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PE2 NEW
+Type        : Lecture
+Faculty     : Carylmae Balmores (ID: 53)
+Room        : AB 1-4 (ID: 75)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 75
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : COMM321
+Type        : Lecture
+Faculty     : Carl Ganal (ID: 54)
+Room        : TED 4 (ID: 17)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 164
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PE 4
+Type        : Lecture
+Faculty     : Caressha Bernaldez (ID: 56)
+Room        : AB 3-7 (ID: 66)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 56
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : Eng 111
+Type        : Lecture
+Faculty     : Claire Garcia (ID: 57)
+Room        : Cottage 6 (ID: 67)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 53
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : RR323
+Type        : Lecture
+Faculty     : Christhelle Gerona (ID: 58)
+Room        : AB 4-5 (ID: 45)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 107
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : Bio 104
+Type        : Lecture
+Faculty     : Carl Castañeda (ID: 59)
+Room        : AB 1-5 (ID: 76)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 75
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : Bio 122
+Type        : Lecture
+Faculty     : Christina Lahaylahay (ID: 60)
+Room        : AB 1-6 (ID: 77)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 67
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : FIL2
+Type        : Lecture
+Faculty     : Celeste Ligutom (ID: 61)
+Room        : ROOM 11 (ID: 18)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 149
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PE 122
+Type        : Lecture
+Faculty     : Carlo Perez (ID: 63)
+Room        : AB 4-6 (ID: 46)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 112
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : Fish 121
+Type        : Lecture
+Faculty     : Cyril Ranara (ID: 65)
+Room        : AB 2-2 (ID: 78)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 67
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : GEELECT2
+Type        : Lecture
+Faculty     : Czarina Giangan (ID: 66)
+Room        : Cottage 7 (ID: 68)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 57
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : Math 222
+Type        : Lecture
+Faculty     : Cristover Vidal (ID: 67)
+Room        : ROOM 12 (ID: 19)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 150
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : TMC123
+Type        : Lecture
+Faculty     : Danica Aba (ID: 68)
+Room        : AB 4-7 (ID: 47)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 99
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : CBMEC 321
+Type        : Lecture
+Faculty     : Daisy Gabule (ID: 70)
+Room        : Cottage 1 (ID: 48)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 116
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : P221
+Type        : Lecture
+Faculty     : Eirene Canlom (ID: 73)
+Room        : Cottage 2 (ID: 49)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 106
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ER328
+Type        : Lecture
+Faculty     : Ester Generale (ID: 75)
+Room        : Cottage 3 (ID: 50)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 107
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PHYSICS121
+Type        : Lecture
+Faculty     : Edison Molina (ID: 78)
+Room        : AB 2-3 (ID: 79)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 75
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : RR324
+Type        : Lecture
+Faculty     : Frincess Cajano (ID: 82)
+Room        : Cottage 4 (ID: 51)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 107
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : SS 122
+Type        : Lecture
+Faculty     : Felmark Levara (ID: 83)
+Room        : RC 1A (ID: 80)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 77
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IT 321
+Type        : Lecture
+Faculty     : Flonie Romulo (ID: 84)
+Room        : GDA Lab (ID: 69)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 59
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : SS113
+Type        : Lecture
+Faculty     : Glenna Apostol (ID: 85)
+Room        : Cottage 5 (ID: 52)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 112
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : FISH224
+Type        : Lecture
+Faculty     : Grace Guanzon (ID: 86)
+Room        : RC 1B (ID: 81)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 65
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : MBELEC3
+Type        : Lecture
+Faculty     : Girley Gumanao (ID: 87)
+Room        : RC 1C (ID: 82)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 73
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PARES2
+Type        : Lecture
+Faculty     : Glenne Lagura (ID: 89)
+Room        : Cottage 6 (ID: 53)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 125
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : TMC226
+Type        : Lecture
+Faculty     : Gladys Bacsa (ID: 90)
+Room        : Cottage 7 (ID: 54)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 97
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IS222
+Type        : Lecture
+Faculty     : Gretchen Olivar (ID: 93)
+Room        : IC LEC 1 (ID: 70)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 85
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : THE324
+Type        : Lecture
+Faculty     : Ian Somosot (ID: 104)
+Room        : ROOM 13 (ID: 20)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 157
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : FT RES 1
+Type        : Lecture
+Faculty     : Jesebel Besas (ID: 109)
+Room        : RC 2 (ID: 83)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 78
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : MB 121
+Type        : Lecture
+Faculty     : Joan Alipoyo (ID: 112)
+Room        : IFT 1 (ID: 84)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 72
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PHYS 221
+Type        : Lecture
+Faculty     : Jerico Catipay (ID: 113)
+Room        : Navigation Room (ID: 85)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 80
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : COMM322
+Type        : Lecture
+Faculty     : Jezreyll Cabasag (ID: 120)
+Room        : ROOM 14 (ID: 21)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 164
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : THE222
+Type        : Lecture
+Faculty     : Jonalyn Mamoso (ID: 129)
+Room        : AB 1-1 (tle) (ID: 22)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 155
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : EDUC 322
+Type        : Lecture
+Faculty     : Janine Rulona (ID: 133)
+Room        : AB 1-2 (tle) (ID: 23)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 142
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : TLE 121
+Type        : Lecture
+Faculty     : Jerson Viagedor (ID: 140)
+Room        : AB 2-4 (ID: 24)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 156
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : THE221
+Type        : Lecture
+Faculty     : Kimberly Solano (ID: 142)
+Room        : AB 2-5 (ID: 25)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 154
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : MATH 122
+Type        : Lecture
+Faculty     : Kim Dodongan (ID: 143)
+Room        : AB 2-6 (ID: 26)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 149
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : COMM222
+Type        : Lecture
+Faculty     : Kimberly Sulla (ID: 152)
+Room        : AB 2-7 (ID: 27)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 163
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : MATH324
+Type        : Lecture
+Faculty     : Lib Mapansa (ID: 162)
+Room        : NTED 1 (ID: 28)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 151
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ENG 324 NEW
+Type        : Lecture
+Faculty     : Mico Novecio (ID: 167)
+Room        : NTED 2 (ID: 29)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 146
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : SCI323
+Type        : Lecture
+Faculty     : Michel Esmalla (ID: 171)
+Room        : NTED 3 (ID: 30)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 141
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : LIT 222
+Type        : Lecture
+Faculty     : Maria Umbrosa (ID: 178)
+Room        : NTED 4 (ID: 31)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 144
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : Sci 121
+Type        : Lecture
+Faculty     : Mary Pesania (ID: 181)
+Room        : NTED 5 (ID: 32)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 137
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : EDUC 221B
+Type        : Lecture
+Faculty     : Nolie Guadalquiver (ID: 187)
+Room        : NTED 6 (ID: 33)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 154
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ENG 325 NEW
+Type        : Lecture
+Faculty     : Princess Driz (ID: 192)
+Room        : NTED 7 (ID: 34)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 146
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 2:00 PM
+Course      : THE321
+Type        : Laboratory
+Faculty     : Roben Adjadan (ID: 197)
+Room        : Edtech Lab (ID: 12)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 157
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 2:00 PM
+Course      : SCI324
+Type        : Laboratory
+Faculty     : Rizalyn Duran (ID: 206)
+Room        : Chem Lab (ID: 13)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 141
+
+----------------------------------------------------------------------------------------------------
+Time        : 2:00 PM - 3:00 PM
+Course      : SCI324
+Type        : Laboratory
+Faculty     : Rizalyn Duran (ID: 206)
+Room        : Edtech Lab (ID: 12)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 142
+
+----------------------------------------------------------------------------------------------------
+Time        : 2:00 PM - 3:00 PM
+Course      : SCI322
+Type        : Laboratory
+Faculty     : SABAR HASAN (ID: 225)
+Room        : Chem Lab (ID: 13)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 141
+
+----------------------------------------------------------------------------------------------------
+Time        : 3:00 PM - 4:00 PM
+Course      : SCI322
+Type        : Laboratory
+Faculty     : SABAR HASAN (ID: 225)
+Room        : Edtech Lab (ID: 12)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 142
+
+----------------------------------------------------------------------------------------------------
+Time        : 3:00 PM - 4:00 PM
+Course      : COMM324
+Type        : Laboratory
+Faculty     : Saimehen Iluis (ID: 230)
+Room        : Chem Lab (ID: 13)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 164
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : RR325
+Type        : Lecture
+Faculty     : April Acdal (ID: 25)
+Room        : ROOM 202 (ID: 35)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 107
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : GEELECT1
+Type        : Lecture
+Faculty     : Anselmo Anobong Jr. (ID: 26)
+Room        : ROOM 203 (ID: 36)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 99
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : THE326
+Type        : Lecture
+Faculty     : Ariel, Balio (ID: 27)
+Room        : Biolab (ID: 11)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 157
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ENG111
+Type        : Lecture
+Faculty     : Alneza Bangasin (ID: 28)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 83
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ENTREP 123
+Type        : Lecture
+Faculty     : Arcelyn Basilisco (ID: 29)
+Room        : ROOM 204 (ID: 37)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 111
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IT Elec1
+Type        : Lecture
+Faculty     : Analyn Casipe (ID: 30)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 54
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : TTL2M
+Type        : Lecture
+Faculty     : Anababes Catala (ID: 31)
+Room        : TED1 (ID: 14)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 150
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ITSPEC3
+Type        : Lecture
+Faculty     : Ariel Gamao (ID: 33)
+Room        : AB 3-3 (ID: 62)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 60
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : TM121
+Type        : Lecture
+Faculty     : Aunel Guillergan (ID: 34)
+Room        : ROOM 205 (ID: 38)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 100
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : THE322
+Type        : Lecture
+Faculty     : Ariel Jumamil (ID: 36)
+Room        : TED2 (ID: 15)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 157
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ITSPEC4
+Type        : Lecture
+Faculty     : Aldrhiela Lonzaga (ID: 37)
+Room        : AB 3-4 (ID: 63)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 60
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : Math 111
+Type        : Lecture
+Faculty     : Analiza Pana (ID: 40)
+Room        : AB 3-5 (ID: 64)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 54
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PA3212
+Type        : Lecture
+Faculty     : Ana Lagarto (ID: 41)
+Room        : ROOM 206 (ID: 39)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 124
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : MATH111
+Type        : Lecture
+Faculty     : Abel Sadji (ID: 42)
+Room        : AB 3-6 (ID: 65)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 81
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ELEC 221
+Type        : Lecture
+Faculty     : Alberto, Sumaoy (ID: 43)
+Room        : ROOM 207 (ID: 40)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 114
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PAELEC2
+Type        : Lecture
+Faculty     : Aleya Obeda (ID: 44)
+Room        : AB 4-1 (ID: 41)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 123
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ENTREP 3212
+Type        : Lecture
+Faculty     : Bryan Macarayo (ID: 46)
+Room        : AB 4-2 (ID: 42)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 118
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : RES2S
+Type        : Lecture
+Faculty     : Bryan Villarojo (ID: 47)
+Room        : TED3 (ID: 16)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 142
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : DRMRES1
+Type        : Lecture
+Faculty     : Boyeth Pelone (ID: 48)
+Room        : AB 4-3 (ID: 43)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 107
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IT 222
+Type        : Lecture
+Faculty     : Cristopher Añana (ID: 51)
+Room        : AB 3-7 (ID: 66)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 61
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : TMELECT2 NEW
+Type        : Lecture
+Faculty     : Crisalie Bacarro (ID: 52)
+Room        : AB 4-4 (ID: 44)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 102
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PE2
+Type        : Lecture
+Faculty     : Carylmae Balmores (ID: 53)
+Room        : Cottage 6 (ID: 67)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 81
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PE 4
+Type        : Lecture
+Faculty     : Caressha Bernaldez (ID: 56)
+Room        : Cottage 7 (ID: 68)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 57
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : Eng 111
+Type        : Lecture
+Faculty     : Claire Garcia (ID: 57)
+Room        : GDA Lab (ID: 69)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 54
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : RR323
+Type        : Lecture
+Faculty     : Christhelle Gerona (ID: 58)
+Room        : AB 4-5 (ID: 45)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 108
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : MBELEC1
+Type        : Lecture
+Faculty     : Carl Castañeda (ID: 59)
+Room        : SB 1 (ID: 71)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 76
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : LIT2
+Type        : Lecture
+Faculty     : Celeste Ligutom (ID: 61)
+Room        : TED 4 (ID: 17)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 162
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PE 122
+Type        : Lecture
+Faculty     : Carlo Perez (ID: 63)
+Room        : AB 4-6 (ID: 46)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 113
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : GEELECT2
+Type        : Lecture
+Faculty     : Czarina Giangan (ID: 66)
+Room        : IC LEC 1 (ID: 70)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 61
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : MATH322
+Type        : Lecture
+Faculty     : Cristover Vidal (ID: 67)
+Room        : ROOM 11 (ID: 18)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 151
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : TMC123
+Type        : Lecture
+Faculty     : Danica Aba (ID: 68)
+Room        : AB 4-7 (ID: 47)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 100
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : CBMEC 321
+Type        : Lecture
+Faculty     : Daisy Gabule (ID: 70)
+Room        : Cottage 1 (ID: 48)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 117
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ER328
+Type        : Lecture
+Faculty     : Ester Generale (ID: 75)
+Room        : Cottage 2 (ID: 49)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 108
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : RR324
+Type        : Lecture
+Faculty     : Frincess Cajano (ID: 82)
+Room        : Cottage 3 (ID: 50)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 108
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : SPCOR3 NEW
+Type        : Lecture
+Faculty     : Felmark Levara (ID: 83)
+Room        : Cottage 4 (ID: 51)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 123
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : SS113
+Type        : Lecture
+Faculty     : Glenna Apostol (ID: 85)
+Room        : Cottage 5 (ID: 52)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 113
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : FISH224
+Type        : Lecture
+Faculty     : Grace Guanzon (ID: 86)
+Room        : SB 2 (ID: 72)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 69
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PARES2
+Type        : Lecture
+Faculty     : Glenne Lagura (ID: 89)
+Room        : Cottage 6 (ID: 53)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 131
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : TMC225
+Type        : Lecture
+Faculty     : Gladys Bacsa (ID: 90)
+Room        : Cottage 7 (ID: 54)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 102
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : RES2T
+Type        : Lecture
+Faculty     : Ian Somosot (ID: 104)
+Room        : ROOM 12 (ID: 19)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 158
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : MB 121
+Type        : Lecture
+Faculty     : Joan Alipoyo (ID: 112)
+Room        : SB 3 (ID: 73)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 75
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : SCI321
+Type        : Lecture
+Faculty     : Jerico Catipay (ID: 113)
+Room        : ROOM 13 (ID: 20)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 142
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : COMM323
+Type        : Lecture
+Faculty     : Jezreyll Cabasag (ID: 120)
+Room        : ROOM 14 (ID: 21)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 164
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : AH GEELECT3
+Type        : Lecture
+Faculty     : Jonette Mahinay (ID: 128)
+Room        : SB 4 (ID: 74)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 76
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : THE323
+Type        : Lecture
+Faculty     : Jonalyn Mamoso (ID: 129)
+Room        : AB 1-1 (tle) (ID: 22)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 157
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ENG 322 NEW
+Type        : Lecture
+Faculty     : Janine Rulona (ID: 133)
+Room        : AB 1-2 (tle) (ID: 23)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 146
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : THE221
+Type        : Lecture
+Faculty     : Kimberly Solano (ID: 142)
+Room        : AB 2-4 (ID: 24)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 155
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : Math 221
+Type        : Lecture
+Faculty     : Kim Dodongan (ID: 143)
+Room        : AB 2-5 (ID: 25)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 150
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : MB321
+Type        : Lecture
+Faculty     : Kristine Gumanao (ID: 147)
+Room        : AB 1-4 (ID: 75)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 73
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : SCIENCE200
+Type        : Lecture
+Faculty     : Krillette Mahinay (ID: 148)
+Room        : AB 1-5 (ID: 76)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 76
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : Comm 121
+Type        : Lecture
+Faculty     : Kimberly Sulla (ID: 152)
+Room        : AB 2-6 (ID: 26)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 166
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : FISH225
+Type        : Lecture
+Faculty     : Lanie Gerodias-Albert (ID: 153)
+Room        : AB 1-6 (ID: 77)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 65
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : Fish 122
+Type        : Lecture
+Faculty     : Louie Bersano (ID: 155)
+Room        : AB 2-2 (ID: 78)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 64
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : STAT 221
+Type        : Lecture
+Faculty     : Leizel Esprela (ID: 156)
+Room        : AB 2-3 (ID: 79)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 80
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : FISHRES1
+Type        : Lecture
+Faculty     : Lord Mondigo (ID: 159)
+Room        : RC 1A (ID: 80)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 70
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : EDUC323
+Type        : Lecture
+Faculty     : Michel Esmalla (ID: 171)
+Room        : AB 2-7 (ID: 27)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 141
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : Chem 100
+Type        : Lecture
+Faculty     : Moses Albarico (ID: 174)
+Room        : RC 1B (ID: 81)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 72
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PE4 BSFAS
+Type        : Lecture
+Faculty     : Mayka Dumagil (ID: 180)
+Room        : RC 1C (ID: 82)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 65
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : Sci 121
+Type        : Lecture
+Faculty     : Mary Pesania (ID: 181)
+Room        : NTED 1 (ID: 28)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 139
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : EDUC 222B
+Type        : Lecture
+Faculty     : Nolie Guadalquiver (ID: 187)
+Room        : NTED 2 (ID: 29)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 154
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : FT 324
+Type        : Lecture
+Faculty     : Nenito Toledo (ID: 191)
+Room        : RC 2 (ID: 83)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 78
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : FT 321
+Type        : Lecture
+Faculty     : Paquito Relox (ID: 195)
+Room        : IFT 1 (ID: 84)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 78
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : TLE 122
+Type        : Lecture
+Faculty     : Roben Adjadan (ID: 197)
+Room        : NTED 3 (ID: 30)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 153
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : TTL 2E
+Type        : Lecture
+Faculty     : Ryan Balolot (ID: 200)
+Room        : NTED 4 (ID: 31)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 144
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : Math
+Type        : Lecture
+Faculty     : Ronald Decano (ID: 204)
+Room        : Navigation Room (ID: 85)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 72
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : EDUC 222A
+Type        : Lecture
+Faculty     : Rizalyn Duran (ID: 206)
+Room        : NTED 5 (ID: 32)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 140
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : EDUC 221A
+Type        : Lecture
+Faculty     : Rey Rebucas (ID: 208)
+Room        : NTED 6 (ID: 33)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 144
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : SCI222
+Type        : Lecture
+Faculty     : Renel Jugarap (ID: 210)
+Room        : NTED 7 (ID: 34)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 140
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 5:00 PM
+Course      : TSD321
+Type        : Laboratory
+Faculty     : Saimehen Iluis (ID: 230)
+Room        : Edtech Lab (ID: 12)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 164
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 5:00 PM
+Course      : COMM325
+Type        : Laboratory
+Faculty     : Sigfred Navasquez (ID: 234)
+Room        : Chem Lab (ID: 13)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 164
+
+----------------------------------------------------------------------------------------------------
+Time        : 5:00 PM - 6:00 PM
+Course      : RES 2E
+Type        : Laboratory
+Faculty     : Samsel Pampilon (ID: 238)
+Room        : Edtech Lab (ID: 12)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 146
+
+----------------------------------------------------------------------------------------------------
+Time        : 7:00 PM - 8:00 PM
+Course      : EDUC323
+Type        : Laboratory
+Faculty     : Michel Esmalla (ID: 171)
+Room        : Edtech Lab (ID: 12)
+Room Type   : Laboratory
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 142
+
+
+====================================================================================================
+ TUESDAY
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ER327
+Type        : Lecture
+Faculty     : April Acdal (ID: 25)
+Room        : ROOM 202 (ID: 35)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 107
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : GEELECT1
+Type        : Lecture
+Faculty     : Anselmo Anobong Jr. (ID: 26)
+Room        : ROOM 203 (ID: 36)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 100
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : THE326
+Type        : Lecture
+Faculty     : Ariel, Balio (ID: 27)
+Room        : Biolab (ID: 11)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 158
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ENG111
+Type        : Lecture
+Faculty     : Alneza Bangasin (ID: 28)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 86
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ENTREP 123
+Type        : Lecture
+Faculty     : Arcelyn Basilisco (ID: 29)
+Room        : ROOM 204 (ID: 37)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 112
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IT Elec1
+Type        : Lecture
+Faculty     : Analyn Casipe (ID: 30)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 55
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : MATH 212
+Type        : Lecture
+Faculty     : Anababes Catala (ID: 31)
+Room        : TED1 (ID: 14)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 150
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ITSPEC3
+Type        : Lecture
+Faculty     : Ariel Gamao (ID: 33)
+Room        : AB 3-3 (ID: 62)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 62
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TM325
+Type        : Lecture
+Faculty     : Aunel Guillergan (ID: 34)
+Room        : ROOM 205 (ID: 38)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 101
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : THE322
+Type        : Lecture
+Faculty     : Ariel Jumamil (ID: 36)
+Room        : TED2 (ID: 15)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 158
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ITSPEC4
+Type        : Lecture
+Faculty     : Aldrhiela Lonzaga (ID: 37)
+Room        : AB 3-4 (ID: 63)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 62
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : Math 111
+Type        : Lecture
+Faculty     : Analiza Pana (ID: 40)
+Room        : AB 3-5 (ID: 64)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 55
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PA3212
+Type        : Lecture
+Faculty     : Ana Lagarto (ID: 41)
+Room        : ROOM 206 (ID: 39)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 125
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : MATH111
+Type        : Lecture
+Faculty     : Abel Sadji (ID: 42)
+Room        : AB 3-6 (ID: 65)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 82
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ELEC 221
+Type        : Lecture
+Faculty     : Alberto, Sumaoy (ID: 43)
+Room        : ROOM 207 (ID: 40)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 115
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SPCOR2 NEW
+Type        : Lecture
+Faculty     : Aleya Obeda (ID: 44)
+Room        : AB 4-1 (ID: 41)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 123
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : DRMRES1
+Type        : Lecture
+Faculty     : Boyeth Pelone (ID: 48)
+Room        : AB 4-2 (ID: 42)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 108
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PE2
+Type        : Lecture
+Faculty     : Carylmae Balmores (ID: 53)
+Room        : AB 3-7 (ID: 66)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 82
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PE 4
+Type        : Lecture
+Faculty     : Caressha Bernaldez (ID: 56)
+Room        : Cottage 6 (ID: 67)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 61
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : Eng 111
+Type        : Lecture
+Faculty     : Claire Garcia (ID: 57)
+Room        : Cottage 7 (ID: 68)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 55
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : Fil 2
+Type        : Lecture
+Faculty     : Celeste Ligutom (ID: 61)
+Room        : TED3 (ID: 16)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 162
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TMFL2
+Type        : Lecture
+Faculty     : Danica Aba (ID: 68)
+Room        : AB 4-3 (ID: 43)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 101
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : CBMEC 321
+Type        : Lecture
+Faculty     : Daisy Gabule (ID: 70)
+Room        : AB 4-4 (ID: 44)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 118
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SPCOR3 NEW
+Type        : Lecture
+Faculty     : Felmark Levara (ID: 83)
+Room        : AB 4-5 (ID: 45)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 130
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IT 321
+Type        : Lecture
+Faculty     : Flonie Romulo (ID: 84)
+Room        : GDA Lab (ID: 69)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 60
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : FISH328
+Type        : Lecture
+Faculty     : Grace Guanzon (ID: 86)
+Room        : SB 1 (ID: 71)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 70
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PARES2
+Type        : Lecture
+Faculty     : Glenne Lagura (ID: 89)
+Room        : AB 4-6 (ID: 46)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 134
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TMC226
+Type        : Lecture
+Faculty     : Gladys Bacsa (ID: 90)
+Room        : AB 4-7 (ID: 47)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 102
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IS222
+Type        : Lecture
+Faculty     : Gretchen Olivar (ID: 93)
+Room        : IC LEC 1 (ID: 70)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 87
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ENTREP 124
+Type        : Lecture
+Faculty     : Ivy Lumangtad (ID: 102)
+Room        : Cottage 1 (ID: 48)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 111
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ST323
+Type        : Lecture
+Faculty     : Iris Salmorin (ID: 103)
+Room        : Cottage 2 (ID: 49)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 116
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : THE324
+Type        : Lecture
+Faculty     : Ian Somosot (ID: 104)
+Room        : TED 4 (ID: 17)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 158
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ENTREP 3213
+Type        : Lecture
+Faculty     : Jetro Bulawan (ID: 111)
+Room        : Cottage 3 (ID: 50)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 116
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ELEC 222
+Type        : Lecture
+Faculty     : John Saligan (ID: 115)
+Room        : Cottage 4 (ID: 51)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 114
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PM227
+Type        : Lecture
+Faculty     : Joannie Consarva (ID: 118)
+Room        : Cottage 5 (ID: 52)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 103
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : DRM 121
+Type        : Lecture
+Faculty     : Janela Las Duce (ID: 123)
+Room        : Cottage 6 (ID: 53)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 105
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : THE323
+Type        : Lecture
+Faculty     : Jonalyn Mamoso (ID: 129)
+Room        : ROOM 11 (ID: 18)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 158
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : P225
+Type        : Lecture
+Faculty     : Jhun Vistal (ID: 134)
+Room        : Cottage 7 (ID: 54)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 103
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : EDUC 121
+Type        : Lecture
+Faculty     : Kimberly Solano (ID: 142)
+Room        : ROOM 12 (ID: 19)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 156
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : MB221
+Type        : Lecture
+Faculty     : Kristine Gumanao (ID: 147)
+Room        : SB 2 (ID: 72)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 76
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : FISH226
+Type        : Lecture
+Faculty     : Lanie Gerodias-Albert (ID: 153)
+Room        : SB 3 (ID: 73)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 65
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : Fish 122
+Type        : Lecture
+Faculty     : Louie Bersano (ID: 155)
+Room        : SB 4 (ID: 74)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 67
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : FISHRES1
+Type        : Lecture
+Faculty     : Lord Mondigo (ID: 159)
+Room        : AB 1-4 (ID: 75)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 71
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SCI323
+Type        : Lecture
+Faculty     : Michel Esmalla (ID: 171)
+Room        : ROOM 13 (ID: 20)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 142
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : Chem 100
+Type        : Lecture
+Faculty     : Moses Albarico (ID: 174)
+Room        : AB 1-5 (ID: 76)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 75
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PE4 BSFAS
+Type        : Lecture
+Faculty     : Mayka Dumagil (ID: 180)
+Room        : AB 1-6 (ID: 77)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 69
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : EDUC 221B
+Type        : Lecture
+Faculty     : Nolie Guadalquiver (ID: 187)
+Room        : ROOM 14 (ID: 21)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 155
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : FT 221
+Type        : Lecture
+Faculty     : Paquito Relox (ID: 195)
+Room        : AB 2-2 (ID: 78)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 80
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TLE221
+Type        : Lecture
+Faculty     : Roben Adjadan (ID: 197)
+Room        : AB 1-1 (tle) (ID: 22)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 154
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : Math
+Type        : Lecture
+Faculty     : Ronald Decano (ID: 204)
+Room        : AB 2-3 (ID: 79)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 75
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SCI324
+Type        : Lecture
+Faculty     : Rizalyn Duran (ID: 206)
+Room        : AB 1-2 (tle) (ID: 23)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 141
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : FT 121
+Type        : Lecture
+Faculty     : Ria Tabinas (ID: 209)
+Room        : RC 1A (ID: 80)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 77
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : BIO323
+Type        : Lecture
+Faculty     : Rosie Tejada (ID: 212)
+Room        : RC 1B (ID: 81)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 70
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SS 113
+Type        : Lecture
+Faculty     : Rozel Asna (ID: 216)
+Room        : RC 1C (ID: 82)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 73
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : CHM 121
+Type        : Lecture
+Faculty     : Resty Perote (ID: 219)
+Room        : RC 2 (ID: 83)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 77
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : SCI322
+Type        : Lecture
+Faculty     : SABAR HASAN (ID: 225)
+Room        : AB 2-4 (ID: 24)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 141
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : COMM221
+Type        : Lecture
+Faculty     : Saimehen Iluis (ID: 230)
+Room        : AB 2-5 (ID: 25)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 163
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : COMM325
+Type        : Lecture
+Faculty     : Sigfred Navasquez (ID: 234)
+Room        : AB 2-6 (ID: 26)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 164
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ENG 221 NEW
+Type        : Lecture
+Faculty     : Samsel Pampilon (ID: 238)
+Room        : AB 2-7 (ID: 27)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 144
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : FISHELECT 5
+Type        : Lecture
+Faculty     : Sol Sotomil (ID: 240)
+Room        : IFT 1 (ID: 84)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 70
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : FT 322
+Type        : Lecture
+Faculty     : Vanesa Cabasan (ID: 242)
+Room        : Navigation Room (ID: 85)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 78
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : RR325
+Type        : Lecture
+Faculty     : April Acdal (ID: 25)
+Room        : ROOM 202 (ID: 35)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 108
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : THE223
+Type        : Lecture
+Faculty     : Ariel, Balio (ID: 27)
+Room        : Biolab (ID: 11)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 159
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : LIT121
+Type        : Lecture
+Faculty     : Alneza Bangasin (ID: 28)
+Room        : TED1 (ID: 14)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 143
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ENTREP 123
+Type        : Lecture
+Faculty     : Arcelyn Basilisco (ID: 29)
+Room        : ROOM 203 (ID: 36)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 113
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IT 323
+Type        : Lecture
+Faculty     : Analyn Casipe (ID: 30)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 58
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : TMELECT4 NEW
+Type        : Lecture
+Faculty     : Aunel Guillergan (ID: 34)
+Room        : ROOM 204 (ID: 37)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 101
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : TTL 2B
+Type        : Lecture
+Faculty     : Ariel Jumamil (ID: 36)
+Room        : TED2 (ID: 15)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 159
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : MATH 121
+Type        : Lecture
+Faculty     : Analiza Pana (ID: 40)
+Room        : TED3 (ID: 16)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 147
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PA3212
+Type        : Lecture
+Faculty     : Ana Lagarto (ID: 41)
+Room        : ROOM 205 (ID: 38)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 131
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : MATH111
+Type        : Lecture
+Faculty     : Abel Sadji (ID: 42)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 83
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PAELEC2
+Type        : Lecture
+Faculty     : Aleya Obeda (ID: 44)
+Room        : ROOM 206 (ID: 39)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 130
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : SCI121_DRM
+Type        : Lecture
+Faculty     : Boyeth Pelone (ID: 48)
+Room        : ROOM 207 (ID: 40)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 110
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PE2
+Type        : Lecture
+Faculty     : Carylmae Balmores (ID: 53)
+Room        : AB 3-3 (ID: 62)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 83
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PE 224
+Type        : Lecture
+Faculty     : Caressha Bernaldez (ID: 56)
+Room        : AB 4-1 (ID: 41)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 114
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : LIT 221
+Type        : Lecture
+Faculty     : Claire Garcia (ID: 57)
+Room        : TED 4 (ID: 17)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 144
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : LIT2
+Type        : Lecture
+Faculty     : Celeste Ligutom (ID: 61)
+Room        : ROOM 11 (ID: 18)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 166
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : SPCOR3 NEW
+Type        : Lecture
+Faculty     : Felmark Levara (ID: 83)
+Room        : AB 4-2 (ID: 42)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 133
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IT 321
+Type        : Lecture
+Faculty     : Flonie Romulo (ID: 84)
+Room        : AB 3-4 (ID: 63)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 62
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : FISH328
+Type        : Lecture
+Faculty     : Grace Guanzon (ID: 86)
+Room        : SB 1 (ID: 71)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 71
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IS222
+Type        : Lecture
+Faculty     : Gretchen Olivar (ID: 93)
+Room        : AB 3-5 (ID: 64)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 88
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IS 121
+Type        : Lecture
+Faculty     : Gertrude Tampus (ID: 94)
+Room        : AB 3-6 (ID: 65)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 81
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ISELEC3
+Type        : Lecture
+Faculty     : Hazel Gameng (ID: 96)
+Room        : AB 3-7 (ID: 66)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 89
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IT 221
+Type        : Lecture
+Faculty     : Hannah Lolong (ID: 98)
+Room        : Cottage 6 (ID: 67)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 56
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ISSPEC6
+Type        : Lecture
+Faculty     : Ian Padios (ID: 100)
+Room        : Cottage 7 (ID: 68)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 89
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ENTREP 124
+Type        : Lecture
+Faculty     : Ivy Lumangtad (ID: 102)
+Room        : AB 4-3 (ID: 43)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 112
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ST323
+Type        : Lecture
+Faculty     : Iris Salmorin (ID: 103)
+Room        : AB 4-4 (ID: 44)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 117
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IT 221
+Type        : Lecture
+Faculty     : Jay Esparcia (ID: 106)
+Room        : GDA Lab (ID: 69)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 61
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ITSPEC1
+Type        : Lecture
+Faculty     : Jovito Bolacoy (ID: 110)
+Room        : IC LEC 1 (ID: 70)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 56
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ENTREP 3213
+Type        : Lecture
+Faculty     : Jetro Bulawan (ID: 111)
+Room        : AB 4-5 (ID: 45)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 117
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ELEC 222
+Type        : Lecture
+Faculty     : John Saligan (ID: 115)
+Room        : AB 4-6 (ID: 46)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 115
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PM227
+Type        : Lecture
+Faculty     : Joannie Consarva (ID: 118)
+Room        : AB 4-7 (ID: 47)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 106
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : DRM 121
+Type        : Lecture
+Faculty     : Janela Las Duce (ID: 123)
+Room        : Cottage 1 (ID: 48)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 110
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : THE222
+Type        : Lecture
+Faculty     : Jonalyn Mamoso (ID: 129)
+Room        : ROOM 12 (ID: 19)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 159
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PM228
+Type        : Lecture
+Faculty     : Jhun Vistal (ID: 134)
+Room        : Cottage 2 (ID: 49)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 103
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : TM223
+Type        : Lecture
+Faculty     : Karla Gumanao (ID: 141)
+Room        : Cottage 3 (ID: 50)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 97
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : THE221
+Type        : Lecture
+Faculty     : Kimberly Solano (ID: 142)
+Room        : ROOM 13 (ID: 20)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 159
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : FISH225
+Type        : Lecture
+Faculty     : Lanie Gerodias-Albert (ID: 153)
+Room        : SB 2 (ID: 72)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 69
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PA226
+Type        : Lecture
+Faculty     : Libh Limama (ID: 154)
+Room        : Cottage 4 (ID: 51)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 122
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : P224
+Type        : Lecture
+Faculty     : Louray Bereber (ID: 157)
+Room        : Cottage 5 (ID: 52)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 103
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : P222
+Type        : Lecture
+Faculty     : Maybelyn Arcenio (ID: 165)
+Room        : Cottage 6 (ID: 53)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 103
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : EDUC323
+Type        : Lecture
+Faculty     : Michel Esmalla (ID: 171)
+Room        : ROOM 14 (ID: 21)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 142
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PA224
+Type        : Lecture
+Faculty     : Marcel Dagohoy (ID: 179)
+Room        : Cottage 7 (ID: 54)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 122
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : EDUC 222B
+Type        : Lecture
+Faculty     : Nolie Guadalquiver (ID: 187)
+Room        : AB 1-1 (tle) (ID: 22)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 155
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : TLE221
+Type        : Lecture
+Faculty     : Roben Adjadan (ID: 197)
+Room        : AB 1-2 (tle) (ID: 23)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 155
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : SCI324
+Type        : Lecture
+Faculty     : Rizalyn Duran (ID: 206)
+Room        : AB 2-4 (ID: 24)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 142
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : BIO323
+Type        : Lecture
+Faculty     : Rosie Tejada (ID: 212)
+Room        : SB 3 (ID: 73)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 71
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : CHM 221
+Type        : Lecture
+Faculty     : Resty Perote (ID: 219)
+Room        : SB 4 (ID: 74)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 80
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : SCI322
+Type        : Lecture
+Faculty     : SABAR HASAN (ID: 225)
+Room        : AB 2-5 (ID: 25)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 144
+Institute ID: 66
+Class ID    : 142
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : COMM223
+Type        : Lecture
+Faculty     : Saimehen Iluis (ID: 230)
+Room        : AB 2-6 (ID: 26)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 163
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : RES 2E
+Type        : Lecture
+Faculty     : Samsel Pampilon (ID: 238)
+Room        : AB 2-7 (ID: 27)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 146
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : FISHELECT 5
+Type        : Lecture
+Faculty     : Sol Sotomil (ID: 240)
+Room        : AB 1-4 (ID: 75)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 71
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : FT 323
+Type        : Lecture
+Faculty     : Vanesa Cabasan (ID: 242)
+Room        : AB 1-5 (ID: 76)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 136
+Institute ID: 63
+Class ID    : 78
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ER327
+Type        : Lecture
+Faculty     : April Acdal (ID: 25)
+Room        : ROOM 202 (ID: 35)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 108
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : LIT 223
+Type        : Lecture
+Faculty     : Alneza Bangasin (ID: 28)
+Room        : Biolab (ID: 11)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 144
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IT 323
+Type        : Lecture
+Faculty     : Analyn Casipe (ID: 30)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 59
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : MATH 121
+Type        : Lecture
+Faculty     : Analiza Pana (ID: 40)
+Room        : TED1 (ID: 14)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 146
+Institute ID: 66
+Class ID    : 149
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PA3212
+Type        : Lecture
+Faculty     : Ana Lagarto (ID: 41)
+Room        : ROOM 203 (ID: 36)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 134
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : SPCOR2 NEW
+Type        : Lecture
+Faculty     : Aleya Obeda (ID: 44)
+Room        : ROOM 204 (ID: 37)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 130
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PE2
+Type        : Lecture
+Faculty     : Carylmae Balmores (ID: 53)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 86
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PE 224
+Type        : Lecture
+Faculty     : Caressha Bernaldez (ID: 56)
+Room        : ROOM 205 (ID: 38)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 115
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ENG 323 NEW
+Type        : Lecture
+Faculty     : Claire Garcia (ID: 57)
+Room        : TED2 (ID: 15)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 145
+Institute ID: 66
+Class ID    : 146
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : Fil 2
+Type        : Lecture
+Faculty     : Celeste Ligutom (ID: 61)
+Room        : TED3 (ID: 16)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 166
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IS321
+Type        : Lecture
+Faculty     : Flonie Romulo (ID: 84)
+Room        : AB 3-3 (ID: 62)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 89
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ISSPEC5
+Type        : Lecture
+Faculty     : Gretchen Olivar (ID: 93)
+Room        : AB 3-4 (ID: 63)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 89
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IS 121
+Type        : Lecture
+Faculty     : Gertrude Tampus (ID: 94)
+Room        : AB 3-5 (ID: 64)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 82
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ISELEC3
+Type        : Lecture
+Faculty     : Hazel Gameng (ID: 96)
+Room        : AB 3-6 (ID: 65)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 90
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IT 221
+Type        : Lecture
+Faculty     : Hannah Lolong (ID: 98)
+Room        : AB 3-7 (ID: 66)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 57
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ISSPEC6
+Type        : Lecture
+Faculty     : Ian Padios (ID: 100)
+Room        : Cottage 6 (ID: 67)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 90
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ENTREP 124
+Type        : Lecture
+Faculty     : Ivy Lumangtad (ID: 102)
+Room        : ROOM 206 (ID: 39)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 113
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ST323
+Type        : Lecture
+Faculty     : Iris Salmorin (ID: 103)
+Room        : ROOM 207 (ID: 40)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 118
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IT 324
+Type        : Lecture
+Faculty     : Jay Esparcia (ID: 106)
+Room        : Cottage 7 (ID: 68)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 62
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ITSPEC1
+Type        : Lecture
+Faculty     : Jovito Bolacoy (ID: 110)
+Room        : GDA Lab (ID: 69)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 57
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ENTREP 3213
+Type        : Lecture
+Faculty     : Jetro Bulawan (ID: 111)
+Room        : AB 4-1 (ID: 41)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 118
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IT 223
+Type        : Lecture
+Faculty     : Jay Gulanes (ID: 119)
+Room        : IC LEC 1 (ID: 70)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 56
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : P225
+Type        : Lecture
+Faculty     : Jhun Vistal (ID: 134)
+Room        : AB 4-2 (ID: 42)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 106
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : TM223
+Type        : Lecture
+Faculty     : Karla Gumanao (ID: 141)
+Room        : AB 4-3 (ID: 43)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 139
+Institute ID: 65
+Class ID    : 102
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : FISH226
+Type        : Lecture
+Faculty     : Lanie Gerodias-Albert (ID: 153)
+Room        : SB 1 (ID: 71)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 69
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PA226
+Type        : Lecture
+Faculty     : Libh Limama (ID: 154)
+Room        : AB 4-4 (ID: 44)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 123
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : DRM 122
+Type        : Lecture
+Faculty     : Louray Bereber (ID: 157)
+Room        : AB 4-5 (ID: 45)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 105
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : P222
+Type        : Lecture
+Faculty     : Maybelyn Arcenio (ID: 165)
+Room        : AB 4-6 (ID: 46)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 106
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PA224
+Type        : Lecture
+Faculty     : Marcel Dagohoy (ID: 179)
+Room        : AB 4-7 (ID: 47)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 123
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : P223
+Type        : Lecture
+Faculty     : Maria Kasuyo (ID: 183)
+Room        : Cottage 1 (ID: 48)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 103
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : EDUC 321B
+Type        : Lecture
+Faculty     : Nolie Guadalquiver (ID: 187)
+Room        : TED 4 (ID: 17)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 157
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : TLE 122
+Type        : Lecture
+Faculty     : Roben Adjadan (ID: 197)
+Room        : ROOM 11 (ID: 18)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 156
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PA3210
+Type        : Lecture
+Faculty     : Romallie Galleto (ID: 207)
+Room        : Cottage 2 (ID: 49)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 124
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : MBRES1
+Type        : Lecture
+Faculty     : Rosie Tejada (ID: 212)
+Room        : SB 2 (ID: 72)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 135
+Institute ID: 63
+Class ID    : 73
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ST 222
+Type        : Lecture
+Faculty     : Sharmaine Cabugwason (ID: 223)
+Room        : Cottage 3 (ID: 50)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 114
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : COMM324
+Type        : Lecture
+Faculty     : Saimehen Iluis (ID: 230)
+Room        : ROOM 12 (ID: 19)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 164
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PA225
+Type        : Lecture
+Faculty     : Troy Ancho (ID: 241)
+Room        : Cottage 4 (ID: 51)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 122
+
+
+====================================================================================================
+ WEDNESDAY
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IS321
+Type        : Lecture
+Faculty     : Flonie Romulo (ID: 84)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 90
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ISSPEC5
+Type        : Lecture
+Faculty     : Gretchen Olivar (ID: 93)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 90
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IS 121
+Type        : Lecture
+Faculty     : Gertrude Tampus (ID: 94)
+Room        : AB 3-3 (ID: 62)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 83
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ISELEC3
+Type        : Lecture
+Faculty     : Hazel Gameng (ID: 96)
+Room        : AB 3-4 (ID: 63)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 91
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IT 324
+Type        : Lecture
+Faculty     : Hannah Lolong (ID: 98)
+Room        : AB 3-5 (ID: 64)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 58
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ISSPEC6
+Type        : Lecture
+Faculty     : Ian Padios (ID: 100)
+Room        : AB 3-6 (ID: 65)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 91
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ST 221
+Type        : Lecture
+Faculty     : Ivy Lumangtad (ID: 102)
+Room        : ROOM 202 (ID: 35)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 114
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ITSPEC1
+Type        : Lecture
+Faculty     : Jovito Bolacoy (ID: 110)
+Room        : AB 3-7 (ID: 66)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 61
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IT 223
+Type        : Lecture
+Faculty     : Jay Gulanes (ID: 119)
+Room        : Cottage 6 (ID: 67)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 57
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IS 122
+Type        : Lecture
+Faculty     : John Mercaral (ID: 125)
+Room        : Cottage 7 (ID: 68)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 81
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ISELEC1
+Type        : Lecture
+Faculty     : Jeralyn Montaño (ID: 131)
+Room        : GDA Lab (ID: 69)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 84
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PM228
+Type        : Lecture
+Faculty     : Jhun Vistal (ID: 134)
+Room        : ROOM 203 (ID: 36)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 106
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IS221
+Type        : Lecture
+Faculty     : Julie Tadle (ID: 137)
+Room        : IC LEC 1 (ID: 70)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 84
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ST324
+Type        : Lecture
+Faculty     : Karla Gumanao (ID: 141)
+Room        : ROOM 204 (ID: 37)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 116
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : FISH327
+Type        : Lecture
+Faculty     : Lanie Gerodias-Albert (ID: 153)
+Room        : SB 1 (ID: 71)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 134
+Institute ID: 63
+Class ID    : 70
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PA226
+Type        : Lecture
+Faculty     : Libh Limama (ID: 154)
+Room        : ROOM 205 (ID: 38)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 130
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : P224
+Type        : Lecture
+Faculty     : Louray Bereber (ID: 157)
+Room        : ROOM 206 (ID: 39)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 106
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PA224
+Type        : Lecture
+Faculty     : Marcel Dagohoy (ID: 179)
+Room        : ROOM 207 (ID: 40)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 130
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : P223
+Type        : Lecture
+Faculty     : Maria Kasuyo (ID: 183)
+Room        : AB 4-1 (ID: 41)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 106
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : THE321
+Type        : Lecture
+Faculty     : Roben Adjadan (ID: 197)
+Room        : Biolab (ID: 11)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 148
+Institute ID: 66
+Class ID    : 157
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PA3213
+Type        : Lecture
+Faculty     : Romallie Galleto (ID: 207)
+Room        : AB 4-2 (ID: 42)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 124
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ST 222
+Type        : Lecture
+Faculty     : Sharmaine Cabugwason (ID: 223)
+Room        : AB 4-3 (ID: 43)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 115
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : TSD321
+Type        : Lecture
+Faculty     : Saimehen Iluis (ID: 230)
+Room        : TED1 (ID: 14)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 147
+Institute ID: 66
+Class ID    : 164
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PA225
+Type        : Lecture
+Faculty     : Troy Ancho (ID: 241)
+Room        : AB 4-4 (ID: 44)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 123
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IS 121
+Type        : Lecture
+Faculty     : Gertrude Tampus (ID: 94)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 86
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ISELEC3
+Type        : Lecture
+Faculty     : Hazel Gameng (ID: 96)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 92
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IT 324
+Type        : Lecture
+Faculty     : Hannah Lolong (ID: 98)
+Room        : AB 3-3 (ID: 62)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 59
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ISSPEC6
+Type        : Lecture
+Faculty     : Ian Padios (ID: 100)
+Room        : AB 3-4 (ID: 63)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 92
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ST 221
+Type        : Lecture
+Faculty     : Ivy Lumangtad (ID: 102)
+Room        : ROOM 202 (ID: 35)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 115
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ISSPEC1
+Type        : Lecture
+Faculty     : Jovito Bolacoy (ID: 110)
+Room        : AB 3-5 (ID: 64)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 84
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IT 223
+Type        : Lecture
+Faculty     : Jay Gulanes (ID: 119)
+Room        : AB 3-6 (ID: 65)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 61
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IS 122
+Type        : Lecture
+Faculty     : John Mercaral (ID: 125)
+Room        : AB 3-7 (ID: 66)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 82
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ISELEC1
+Type        : Lecture
+Faculty     : Jeralyn Montaño (ID: 131)
+Room        : Cottage 6 (ID: 67)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 85
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IS221
+Type        : Lecture
+Faculty     : Julie Tadle (ID: 137)
+Room        : Cottage 7 (ID: 68)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 85
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IT 121
+Type        : Lecture
+Faculty     : Jerson Viagedor (ID: 140)
+Room        : GDA Lab (ID: 69)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 52
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ST324
+Type        : Lecture
+Faculty     : Karla Gumanao (ID: 141)
+Room        : ROOM 203 (ID: 36)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 117
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PA226
+Type        : Lecture
+Faculty     : Libh Limama (ID: 154)
+Room        : ROOM 204 (ID: 37)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 133
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : DRM 122
+Type        : Lecture
+Faculty     : Louray Bereber (ID: 157)
+Room        : ROOM 205 (ID: 38)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 140
+Institute ID: 65
+Class ID    : 110
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IT 322
+Type        : Lecture
+Faculty     : Mark Bangcaya (ID: 168)
+Room        : IC LEC 1 (ID: 70)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 58
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PA224
+Type        : Lecture
+Faculty     : Marcel Dagohoy (ID: 179)
+Room        : ROOM 206 (ID: 39)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 133
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PA3210
+Type        : Lecture
+Faculty     : Romallie Galleto (ID: 207)
+Room        : ROOM 207 (ID: 40)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 125
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PA3211
+Type        : Lecture
+Faculty     : Troy Ancho (ID: 241)
+Room        : AB 4-1 (ID: 41)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 124
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ISELEC3
+Type        : Lecture
+Faculty     : Hazel Gameng (ID: 96)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 93
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IT 323
+Type        : Lecture
+Faculty     : Hannah Lolong (ID: 98)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 60
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ISSPEC6
+Type        : Lecture
+Faculty     : Ian Padios (ID: 100)
+Room        : AB 3-3 (ID: 62)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 93
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ISSPEC1
+Type        : Lecture
+Faculty     : Jovito Bolacoy (ID: 110)
+Room        : AB 3-4 (ID: 63)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 85
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IT 323
+Type        : Lecture
+Faculty     : Jay Gulanes (ID: 119)
+Room        : AB 3-5 (ID: 64)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 62
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IS 122
+Type        : Lecture
+Faculty     : John Mercaral (ID: 125)
+Room        : AB 3-6 (ID: 65)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 83
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ISELEC1
+Type        : Lecture
+Faculty     : Jeralyn Montaño (ID: 131)
+Room        : AB 3-7 (ID: 66)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 87
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IS221
+Type        : Lecture
+Faculty     : Julie Tadle (ID: 137)
+Room        : Cottage 6 (ID: 67)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 87
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IT 121
+Type        : Lecture
+Faculty     : Jerson Viagedor (ID: 140)
+Room        : Cottage 7 (ID: 68)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 53
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ST324
+Type        : Lecture
+Faculty     : Karla Gumanao (ID: 141)
+Room        : ROOM 202 (ID: 35)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 141
+Institute ID: 65
+Class ID    : 118
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IT 322
+Type        : Lecture
+Faculty     : Mark Bangcaya (ID: 168)
+Room        : GDA Lab (ID: 69)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 59
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IS223
+Type        : Lecture
+Faculty     : Mark Buladaco (ID: 184)
+Room        : IC LEC 1 (ID: 70)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 84
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : PA3213
+Type        : Lecture
+Faculty     : Romallie Galleto (ID: 207)
+Room        : ROOM 203 (ID: 36)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 125
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : SPCOR5
+Type        : Lecture
+Faculty     : Troy Ancho (ID: 241)
+Room        : ROOM 204 (ID: 37)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 124
+
+
+====================================================================================================
+ THURSDAY
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IT 324
+Type        : Lecture
+Faculty     : Hannah Lolong (ID: 98)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 60
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ISSPEC1
+Type        : Lecture
+Faculty     : Jovito Bolacoy (ID: 110)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 87
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IS 122
+Type        : Lecture
+Faculty     : John Mercaral (ID: 125)
+Room        : AB 3-3 (ID: 62)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 86
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ISELEC1
+Type        : Lecture
+Faculty     : Jeralyn Montaño (ID: 131)
+Room        : AB 3-4 (ID: 63)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 88
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IS221
+Type        : Lecture
+Faculty     : Julie Tadle (ID: 137)
+Room        : AB 3-5 (ID: 64)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 88
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IT 121
+Type        : Lecture
+Faculty     : Jerson Viagedor (ID: 140)
+Room        : AB 3-6 (ID: 65)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 54
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IT 322
+Type        : Lecture
+Faculty     : Mark Bangcaya (ID: 168)
+Room        : AB 3-7 (ID: 66)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 60
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IS223
+Type        : Lecture
+Faculty     : Mark Buladaco (ID: 184)
+Room        : Cottage 6 (ID: 67)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 85
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ISSPEC1
+Type        : Lecture
+Faculty     : Nelma Loja (ID: 189)
+Room        : Cottage 7 (ID: 68)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 88
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IS323
+Type        : Lecture
+Faculty     : Philip Paja (ID: 194)
+Room        : GDA Lab (ID: 69)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 89
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ISSPEC5
+Type        : Lecture
+Faculty     : Rafael Dela Peña (ID: 205)
+Room        : IC LEC 1 (ID: 70)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 91
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PA3210
+Type        : Lecture
+Faculty     : Romallie Galleto (ID: 207)
+Room        : ROOM 202 (ID: 35)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 131
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : PA3211
+Type        : Lecture
+Faculty     : Troy Ancho (ID: 241)
+Room        : ROOM 203 (ID: 36)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 125
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ISSPEC4
+Type        : Lecture
+Faculty     : Jeralyn Montaño (ID: 131)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 89
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IT 121
+Type        : Lecture
+Faculty     : Jerson Viagedor (ID: 140)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 55
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IT 322
+Type        : Lecture
+Faculty     : Mark Bangcaya (ID: 168)
+Room        : AB 3-3 (ID: 62)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 137
+Institute ID: 64
+Class ID    : 62
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IS223
+Type        : Lecture
+Faculty     : Mark Buladaco (ID: 184)
+Room        : AB 3-4 (ID: 63)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 87
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IS322
+Type        : Lecture
+Faculty     : Philip Paja (ID: 194)
+Room        : AB 3-5 (ID: 64)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 89
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IS322
+Type        : Lecture
+Faculty     : Rafael Dela Peña (ID: 205)
+Room        : AB 3-6 (ID: 65)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 92
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : PA3213
+Type        : Lecture
+Faculty     : Romallie Galleto (ID: 207)
+Room        : ROOM 202 (ID: 35)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 131
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IS321
+Type        : Lecture
+Faculty     : Roanne Anunciado (ID: 214)
+Room        : AB 3-7 (ID: 66)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 91
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ISSPEC4
+Type        : Lecture
+Faculty     : Stacey Monta (ID: 235)
+Room        : Cottage 6 (ID: 67)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 91
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : SPCOR5
+Type        : Lecture
+Faculty     : Troy Ancho (ID: 241)
+Room        : ROOM 203 (ID: 36)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 142
+Institute ID: 65
+Class ID    : 125
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ISSPEC4
+Type        : Lecture
+Faculty     : Jeralyn Montaño (ID: 131)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 90
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IS223
+Type        : Lecture
+Faculty     : Mark Buladaco (ID: 184)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 88
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IS323
+Type        : Lecture
+Faculty     : Philip Paja (ID: 194)
+Room        : AB 3-3 (ID: 62)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 90
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ISSPEC5
+Type        : Lecture
+Faculty     : Rafael Dela Peña (ID: 205)
+Room        : AB 3-4 (ID: 63)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 92
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IS321
+Type        : Lecture
+Faculty     : Roanne Anunciado (ID: 214)
+Room        : AB 3-5 (ID: 64)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 92
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : ISSPEC4
+Type        : Lecture
+Faculty     : Stacey Monta (ID: 235)
+Room        : AB 3-6 (ID: 65)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 92
+
+
+====================================================================================================
+ FRIDAY
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IS322
+Type        : Lecture
+Faculty     : Philip Paja (ID: 194)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 90
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IS322
+Type        : Lecture
+Faculty     : Rafael Dela Peña (ID: 205)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 93
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : IS321
+Type        : Lecture
+Faculty     : Roanne Anunciado (ID: 214)
+Room        : AB 3-3 (ID: 62)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 93
+
+----------------------------------------------------------------------------------------------------
+Time        : 8:00 AM - 11:00 AM
+Course      : ISSPEC4
+Type        : Lecture
+Faculty     : Stacey Monta (ID: 235)
+Room        : AB 3-4 (ID: 63)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 93
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : IS323
+Type        : Lecture
+Faculty     : Philip Paja (ID: 194)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 91
+
+----------------------------------------------------------------------------------------------------
+Time        : 1:00 PM - 4:00 PM
+Course      : ISSPEC5
+Type        : Lecture
+Faculty     : Rafael Dela Peña (ID: 205)
+Room        : AB 3-2 (ID: 61)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 93
+
+----------------------------------------------------------------------------------------------------
+Time        : 4:00 PM - 7:00 PM
+Course      : IS322
+Type        : Lecture
+Faculty     : Philip Paja (ID: 194)
+Room        : AB 3-1 (ID: 60)
+Room Type   : Lecture
+Capacity    : 40 (Class Size: 30)
+Program ID  : 138
+Institute ID: 64
+Class ID    : 91
+
+
+====================================================================================================
+ UNSCHEDULED MEETINGS
+====================================================================================================
+
+Course: STAT | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: STAT | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: MATH 6 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: MATH 6 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: Bio 104 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: Bio 104 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: FISH226 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: FISH226 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: PE4 BSFAS | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: PE4 BSFAS | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: MBRES1 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: FISHELECT 5 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found
+Course: FISHELECT 5 | Type: Laboratory | Hours: 1 | Reason: No available room/time slot found

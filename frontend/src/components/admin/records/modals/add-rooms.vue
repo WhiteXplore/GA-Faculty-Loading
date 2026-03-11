@@ -55,6 +55,33 @@
               </div>
             </div>
 
+            <!-- Building Name   -->
+            <div class="w-full space-y-2">
+              <label for="building_name" class="font-bold"
+                >Building Name:</label
+              >
+              <input
+                v-model="form.building_name"
+                type="text"
+                id="building_name"
+                required
+                class="w-full border px-3 py-3 border-gray-600 rounded-md text-md text-gray-800"
+                placeholder="Enter building name"
+              />
+            </div>
+
+            <!-- Floor Level  -->
+            <div class="w-full space-y-2">
+              <label for="level" class="font-bold">Floor Level:</label>
+              <input
+                v-model="form.level"
+                type="text"
+                id="level"
+                required
+                class="w-full border px-3 py-3 border-gray-600 rounded-md text-md text-gray-800"
+                placeholder="Enter floor level"
+              />
+            </div>
             <!-- Room Name -->
             <div class="w-full space-y-2">
               <label for="room_name" class="font-bold">Room Name:</label>
@@ -104,7 +131,7 @@
           <!-- Buttons -->
           <div class="tracking-wide flex justify-end gap-2 mt-4">
             <button
-              class="bg-red-600 p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
+              class="bg-gray-200 p-2 px-3 rounded-lg text-gray-700 hover:bg-white border hover:border-gray-800 hover:text-gray-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
               @click="$emit('close')"
             >
               Cancel
@@ -113,7 +140,7 @@
               class="bg-defaultGreen p-2 px-3 rounded-lg text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md transform transition-all duration-300 hover:scale-105"
               type="submit"
             >
-              {{ isEditMode ? "Update" : "Submit" }}
+              {{ isEditMode ? "Save Changes" : "Submit" }}
             </button>
           </div>
         </div>
@@ -147,7 +174,7 @@ export default {
       return this.institutes.filter((institute) =>
         institute.institute_name
           .toLowerCase()
-          .includes(this.searchInstituteQuery.toLowerCase())
+          .includes(this.searchInstituteQuery.toLowerCase()),
       );
     },
     isEditMode() {
@@ -161,6 +188,8 @@ export default {
         room_name: "",
         room_type: "",
         room_capacity: "",
+        building_name: "",
+        level: "",
       },
       searchInstituteQuery: "",
       showInstituteDropdown: false,
@@ -183,16 +212,20 @@ export default {
       try {
         if (this.isEditMode) {
           // UPDATE existing room
-          await axios.put(
-            `http://localhost:8000/rooms/update-id/${this.roomData.room_id}`,
-            this.form
+          await axios.patch(
+            process.env.VUE_APP_API_BASE_URL +
+              `/rooms/update-room/${this.roomData.room_id}`,
+            this.form,
           );
           toast.success("Room updated successfully!");
           const audio = new Audio(require("@/assets/add.mp3"));
           audio.play();
         } else {
           // ADD new room
-          await axios.post("http://localhost:8000/rooms/add-rooms", this.form);
+          await axios.post(
+            process.env.VUE_APP_API_BASE_URL + "/rooms/add-rooms",
+            this.form,
+          );
           toast.success("Room added successfully!");
           const audio = new Audio(require("@/assets/add.mp3"));
           audio.play();
@@ -202,7 +235,7 @@ export default {
         this.$emit("close");
       } catch (error) {
         toast.error(
-          this.isEditMode ? "Failed to update room" : "Failed to add room"
+          this.isEditMode ? "Failed to update room" : "Failed to add room",
         );
       }
     },
@@ -217,6 +250,8 @@ export default {
         room_name: this.roomData.room_name,
         room_type: this.roomData.room_type,
         room_capacity: this.roomData.room_capacity,
+        building_name: this.roomData.building_name,
+        level: this.roomData.level,
       };
       this.searchInstituteQuery = this.roomData.institute?.institute_name || "";
     }

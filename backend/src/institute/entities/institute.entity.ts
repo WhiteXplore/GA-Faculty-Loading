@@ -6,10 +6,10 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Instructor } from 'src/instructors/entities/instructor.entity';
 import { Program } from 'src/programs/entities/program.entity';
 import { Room } from 'src/rooms/entities/room.entity';
 import { User_Accounts } from 'src/user/entities/user.entity';
+
 @Entity('institutes')
 export class Institute {
   @PrimaryGeneratedColumn()
@@ -27,8 +27,7 @@ export class Institute {
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date;
 
-  @OneToMany(() => Instructor, (instructor) => instructor.institute)
-  instructors: Instructor[];
+  // 🔹 Relations
 
   @OneToMany(() => Program, (program) => program.institute)
   programs: Program[];

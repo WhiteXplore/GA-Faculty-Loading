@@ -1,19 +1,8 @@
 <template>
-  <div v-if="isTable" class=" ">
-    <div class="text-sm flex justify-between">
+  <div v-if="isTable">
+    <div class="text-sm flex justify-between px-1">
       <div class="text-[13px] text-text mt-4 font-regular">
-        Pages / Faculty Loads
-      </div>
-      <div
-        @click="toggleAdd"
-        class="flex items-center gap-2 px-4 py-2 border text-green-600 border-green-600 rounded-xl hover:shadow-lg cursor-pointer transition duration-200"
-      >
-        <div
-          class="p-1 bg-defaultGreen bg-opacity-20 rounded-full flex items-center justify-center"
-        >
-          <icon :name="'arrow-path'" class="w-4 h-4" />
-        </div>
-        <span class="font-medium text-sm">Auto Generation</span>
+        Pages / Final Schedules
       </div>
     </div>
 
@@ -28,7 +17,6 @@
               class="px-1 py-1 border rounded-md"
               @change="changePage(1)"
             >
-              <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
@@ -42,7 +30,7 @@
               v-model="searchQuery"
               type="text"
               class="px-3 w-[300px] py-2 border rounded-md"
-              placeholder="Search..."
+              placeholder="Search by faculty, course, or room..."
               @input="changePage(1)"
             />
           </div>
@@ -66,9 +54,11 @@
                   >
                     ID
                   </th>
-                  <th class="px-4 py-3 text-left font-normal">Instructors</th>
-                  <th class="px-4 py-3 text-left font-normal">Instutute</th>
-                  <th class="px-4 py-3 text-left font-normal">Program</th>
+                  <th class="px-4 py-3 text-left font-normal">Faculty</th>
+                  <th class="px-4 py-3 text-left font-normal">Course</th>
+                  <th class="px-4 py-3 text-left font-normal">Room</th>
+                  <th class="px-4 py-3 text-left font-normal">Day</th>
+                  <th class="px-4 py-3 text-left font-normal">Time</th>
                   <th class="px-4 py-3 text-left rounded-tr-lg font-normal">
                     Actions
                   </th>
@@ -76,35 +66,33 @@
               </thead>
               <tbody>
                 <tr
-                  v-for="(instructor_data, index) in paginatedData"
-                  :key="instructor_data.instructor_id"
-                  class="bg-white hover:bg-green-50 transition-all border border-gray-200 rounded-md shadow-sm"
+                  v-for="(schedule, index) in paginatedData"
+                  :key="schedule.id"
+                  class="hover:bg-green-50 transition-all border-t"
                 >
                   <td class="px-4 py-2 text-left">
                     {{ startIndex + index }}
                   </td>
                   <td class="px-4 py-2 text-left">
-                    {{ instructor_data.instructor_fname }}
-                    {{ instructor_data.instructor_mname }}
-                    {{ instructor_data.instructor_lname }}
+                    {{ schedule.faculty_name }}
                   </td>
                   <td class="px-4 py-2 text-left">
-                    {{ instructor_data.institute?.institute_name }}
+                    {{ schedule.course_code }}
                   </td>
-                  <td class="px-4 py-2 text-left">
-                    {{ instructor_data.program?.program_name }}
-                  </td>
+                  <td class="px-4 py-2 text-left">{{ schedule.room_name }}</td>
+                  <td class="px-4 py-2 text-left">{{ schedule.day }}</td>
+                  <td class="px-4 py-2 text-left">{{ schedule.time_slot }}</td>
                   <td class="px-4 py-2 text-left">
                     <div class="flex gap-2">
                       <button
                         class="px-3 py-1 h-8 border border-green-300 hover:bg-green-200 text-green-800 rounded-lg flex items-center gap-1"
-                        @click="toggleEdit(instructor_data)"
+                        @click="toggleEdit(schedule)"
                       >
                         <icon name="edit" /> Edit
                       </button>
                       <button
                         class="px-3 py-1 h-8 border border-red-300 hover:bg-red-200 text-red-800 rounded-lg flex items-center gap-1"
-                        @click="toggleDelete(instructor_data)"
+                        @click="toggleDelete(schedule)"
                       >
                         <icon name="delete" /> Delete
                       </button>
@@ -113,7 +101,7 @@
                 </tr>
                 <tr v-if="paginatedData.length === 0">
                   <td colspan="12" class="text-center py-8 text-gray-400">
-                    No records found
+                    No schedules found
                   </td>
                 </tr>
               </tbody>
@@ -144,7 +132,7 @@
                   ' bg-defaultGreen text-white': currentPage === page,
                   'bg-gray-200 text-gray-700': currentPage !== page,
                 }"
-                class="px-3 py-1 mx-1 rounded-md hover:bg-green-300"
+                class="px-3 py-1 rounded-md hover:bg-green-300"
               >
                 {{ page }}
               </button>
@@ -165,84 +153,78 @@
   <!-- Delete Confirmation Modal -->
   <div
     v-if="showDeleteModal"
-    class="fixed inset-0 bg-gray-800 bg-opacity-40 flex justify-center items-center z-50 w-min-screen"
-  ></div>
-  <div
-    v-if="showDeleteModal"
-    class="rounded-xl shadow-lg w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
+    class="fixed inset-0 bg-gray-800 bg-opacity-40 flex justify-center items-center z-50"
   >
     <div
-      class="rounded-full w-16 h-16 md:w-20 md:h-20 flex justify-center items-center bg-red-300 animate-pulse"
+      class="rounded-xl shadow-lg w-[300px] md:w-[400px] bg-white py-6 px-4 flex flex-col items-center"
     >
-      <icon
-        name="question"
-        class="w-8 h-8 md:w-10 md:h-10 text-white flex justify-center items-center"
-      />
-    </div>
-
-    <h1 class="text-[14px] md:text-[16px] font-semibold mt-4">
-      Delete Confirmation
-    </h1>
-    <p class="mt-2 text-[12px] md:text-[13px] text-center px-8">
-      Are you sure you want to delete this record? This action cannot be undone.
-    </p>
-
-    <div class="w-full h-[1px] rounded-md bg-gray-200 mt-4"></div>
-
-    <div class="tracking-wide flex gap-2 mt-4">
-      <button
-        class="bg-red-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md"
-        @click="showDeleteModal = false"
+      <div
+        class="rounded-full w-16 h-16 md:w-20 md:h-20 flex justify-center items-center bg-red-300 animate-pulse"
       >
-        No, Cancel
-      </button>
-      <button
-        class="bg-green-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
-        @click="confirmDelete"
-      >
-        Yes, Delete
-      </button>
+        <icon
+          name="question"
+          class="w-8 h-8 md:w-10 md:h-10 text-white flex justify-center items-center"
+        />
+      </div>
+
+      <h1 class="text-[14px] md:text-[16px] font-semibold mt-4">
+        Delete Confirmation
+      </h1>
+      <p class="mt-2 text-[12px] md:text-[13px] text-center px-8">
+        Are you sure you want to delete this schedule? This action cannot be
+        undone.
+      </p>
+
+      <div class="w-full h-[1px] rounded-md bg-gray-200 mt-4"></div>
+
+      <div class="tracking-wide flex gap-2 mt-4">
+        <button
+          class="bg-red-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-red-800 hover:text-red-800 hover:shadow-md"
+          @click="showDeleteModal = false"
+        >
+          No, Cancel
+        </button>
+        <button
+          class="bg-green-400 p-2 px-3 text-[11px] md:text-[13px] rounded-md text-white hover:bg-white border hover:border-green-800 hover:text-green-800 hover:shadow-md"
+          @click="confirmDelete"
+        >
+          Yes, Delete
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import icon from "@/assets/icon.vue";
-
-import { toast } from "vue3-toastify";
-import { useFetchDataStore } from "../../../../store/fetch-data-store";
-import { mapState } from "pinia";
 import axios from "axios";
+import { toast } from "vue3-toastify";
 
 export default {
-  name: "TableInstructorPage",
-  components: {
-    icon,
-  },
+  name: "TableFinalSchedules",
+  components: { icon },
   data() {
     return {
+      finalSchedules: [],
+      loading: false,
+      error: null,
       currentPage: 1,
       itemsPerPage: 10,
       searchQuery: "",
-      isAddFacultyLoad: false,
-      isRecordVisible: false,
-      isEdit: false,
       isTable: true,
       showDeleteModal: false,
       recordToDelete: null,
-      selectedInstructor: null,
-      showEditModal: false,
+      selectedSchedule: null,
     };
   },
   computed: {
-    ...mapState(useFetchDataStore, ["instructors"]),
-
     filteredData() {
       const query = this.searchQuery.toLowerCase();
-      return this.instructors.filter((item) =>
-        `${item.instructor_fname} ${item.instructor_mname} ${item.instructor_lname}`
-          .toLowerCase()
-          .includes(query)
+      return this.finalSchedules.filter(
+        (item) =>
+          item.faculty_name.toLowerCase().includes(query) ||
+          item.course_code.toLowerCase().includes(query) ||
+          item.room_name.toLowerCase().includes(query),
       );
     },
     totalPages() {
@@ -262,71 +244,71 @@ export default {
       return end > this.filteredData.length ? this.filteredData.length : end;
     },
     pageNumbers() {
-      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      const total = this.totalPages;
+      if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
+
+      let start = this.currentPage - 1;
+      let end = this.currentPage + 1;
+
+      if (start < 1) {
+        start = 1;
+        end = 3;
+      }
+      if (end > total) {
+        end = total;
+        start = total - 2;
+      }
+
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     },
   },
   methods: {
-    async loadInstructors() {
-      const store = useFetchDataStore();
-      await store.fetchInstructors();
+    async fetchFinalSchedules() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const { data } = await axios.get(
+          process.env.VUE_APP_API_BASE_URL +
+            "/final-generated-class-schedule/get-all-final-schedules",
+        );
+        this.finalSchedules = data;
+      } catch (err) {
+        this.error = err.message || "Failed to fetch final schedules";
+        toast.error(this.error);
+      } finally {
+        this.loading = false;
+      }
     },
-    toggleAdd() {
-      this.isAddFacultyLoad = true;
-      this.isTable = true;
+    toggleEdit(schedule) {
+      this.selectedSchedule = schedule;
+      // open your edit modal here
     },
-    toggleEdit(item) {
-      this.selectedInstructor = item;
-      this.showEditModal = true;
-    },
-
-    toggleDelete(item) {
-      this.recordToDelete = item;
+    toggleDelete(schedule) {
+      this.recordToDelete = schedule;
       this.showDeleteModal = true;
     },
     async confirmDelete() {
       if (!this.recordToDelete) return;
       try {
         await axios.delete(
-          `http://localhost:8000/instructors/delete-id/${this.recordToDelete.instructor_id}`
+          process.env.VUE_APP_API_BASE_URL +
+            `/final-generated-class-schedule/delete/${this.recordToDelete.id}`,
         );
-
-        // Play sound after successful delete
-        const audio = new Audio(require("@/assets/delete.mp3"));
-        audio.play();
-
-        // Refresh store
-        const store = useFetchDataStore();
-        await store.fetchInstructors();
-
-        this.recordToDelete = null;
+        toast.success("Schedule deleted successfully");
+        this.fetchFinalSchedules();
         this.showDeleteModal = false;
-        toast.success("Instructor deleted successfully");
+        this.recordToDelete = null;
       } catch (error) {
-        toast.error("Failed to delete record");
-        console.error("Delete error:", error);
+        toast.error("Failed to delete schedule");
+        console.error(error);
       }
     },
     changePage(page) {
       this.currentPage = Math.max(1, Math.min(page, this.totalPages));
     },
-    closeView() {
-      this.isAddFacultyLoad = false;
-      this.isUploadData = false;
-    },
-    closeModal() {
-      this.showEditModal = false;
-      this.selectedInstructor = null;
-    },
-    handleBackToTable() {
-      this.isRecordVisible = false;
-      this.isEdit = false;
-      this.isAddFacultyLoad = false;
-      this.isUploadData = false;
-      this.isTable = true;
-    },
   },
   mounted() {
-    this.loadInstructors();
+    this.fetchFinalSchedules();
   },
 };
 </script>

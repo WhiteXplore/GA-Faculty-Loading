@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="currentUser"
-    class="p-6 text-gray-800 w-full min-h-screen bg-[#F4F6F8] rounded-t-xl"
+    class="p-6 text-gray-800 w-full min-h-[70vh] bg-[#F4F6F8] rounded-t-xl"
   >
     <!-- Header -->
     <div class="flex justify-between items-center pr-5">
@@ -14,7 +14,7 @@
     </div>
 
     <!-- Main Layout with Sidebar -->
-    <div class="flex h-[81vh] overflow-hidden rounded-xl bg-white">
+    <div class="flex h-[80vh] overflow-hidden rounded-xl bg-white">
       <!-- Sidebar -->
       <div class="w-64 border-r bg-white p-4">
         <ul class="space-y-2">
@@ -24,7 +24,7 @@
               :class="[
                 'w-full text-left px-3 py-2 rounded-lg',
                 activeTab === 'profile'
-                  ? 'bg-green-100 text-green-700 font-semibold'
+                  ? 'bg-defaultGreen text-white font-semibold'
                   : 'hover:bg-gray-100',
               ]"
             >
@@ -37,7 +37,7 @@
               :class="[
                 'w-full text-left px-3 py-2 rounded-lg',
                 activeTab === 'preference'
-                  ? 'bg-green-100 text-green-700 font-semibold'
+                  ? 'bg-defaultGreen text-white font-semibold'
                   : 'hover:bg-gray-100',
               ]"
             >
@@ -97,7 +97,7 @@ import addInstructor from "@/components/faculty/faculty-records/modals/add-users
 import addExpertise from "@/components/faculty/faculty-records/modals/add-expertise.vue";
 import personalInformation from "./personal-information.vue";
 import preferenceSection from "./preference-section.vue";
-import { useFetchDataStore } from "../../../../store/fetch-data-store";
+import { useFetchDataStore } from "@/store/fetch-data-store";
 import { mapState, mapActions } from "pinia";
 
 export default {
@@ -128,9 +128,12 @@ export default {
     ...mapActions(useFetchDataStore, ["fetchRawUsers"]),
     async getSubId() {
       try {
-        const response = await axios.get("http://localhost:8000/auth/me", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          process.env.VUE_APP_API_BASE_URL + "/auth/me",
+          {
+            withCredentials: true,
+          }
+        );
         if (response.data && response.data.sub) {
           this.subId = response.data.sub;
           await this.fetchRawUsers();

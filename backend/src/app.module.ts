@@ -4,7 +4,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { HttpModule } from '@nestjs/axios';
-import { InstructorsModule } from './instructors/instructors.module';
 import { CoursesModule } from './courses/courses.module';
 import { CurriculumModule } from './curriculum/curriculum.module';
 import { ProgramsModule } from './programs/programs.module';
@@ -13,7 +12,15 @@ import { InstituteModule } from './institute/institute.module';
 import { CalendarModule } from './calendar/calendar.module';
 import { AssignClassModule } from './assign_class/assign_class.module';
 import { GeneratedScheduledModule } from './generated_scheduled/generated_scheduled.module';
-import { ActiveYearModule } from './active_year/active_year.module';
+import { SchoolYearModule } from './school_year/school_year.module';
+import { ClassModule } from './class/class.module';
+import { ProgramYearCoursesModule } from './program_year_courses/program_year_courses.module';
+import { FinalGeneratedClassScheduleModule } from './final_generated_class_schedule/final_generated_class_schedule.module';
+import { CollegeBranchModule } from './college_branch/college_branch.module';
+import { UnscheduledMeetingsModule } from './unscheduled_meetings/unscheduled_meetings.module';
+import { FacultyBranchModule } from './faculty_branch/faculty_branch.module';
+import { BuildingsModule } from './buildings/buildings.module';
+import { BuildingAreasModule } from './building_areas/building_areas.module';
 
 @Module({
   imports: [
@@ -37,7 +44,6 @@ import { ActiveYearModule } from './active_year/active_year.module';
     }),
     AuthModule,
     UserModule,
-    InstructorsModule,
     CoursesModule,
     CurriculumModule,
     ProgramsModule,
@@ -46,7 +52,15 @@ import { ActiveYearModule } from './active_year/active_year.module';
     CalendarModule,
     AssignClassModule,
     GeneratedScheduledModule,
-    ActiveYearModule,
+    SchoolYearModule,
+    ClassModule,
+    ProgramYearCoursesModule,
+    FinalGeneratedClassScheduleModule,
+    CollegeBranchModule,
+    UnscheduledMeetingsModule,
+    FacultyBranchModule,
+    BuildingsModule,
+    BuildingAreasModule,
   ],
 })
 export class AppModule {}

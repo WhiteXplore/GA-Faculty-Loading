@@ -29,4 +29,13 @@ export class AssignClass {
 
   @Column({ length: 5 })
   set: string;
+
+  // Add year column
+  @Column({ type: 'int' })
+  year: number;
+
+  // Add semester column
+  // 1 = 1st sem, 2 = 2nd sem, 3 = summer
+  @Column({ type: 'int' })
+  semester: number;
 }
